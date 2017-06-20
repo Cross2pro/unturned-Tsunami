@@ -93,8 +93,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Tsunami\BetaList.cs" />
+    <Compile Include="Tsunami\InfoList.cs" />
+    <Compile Include="Tsunami\PremiumList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tsunami\BanList.cs" />
+    <Compile Include="Tsunami\Config.cs" />
+    <Compile Include="Tsunami\DownloadableInfo.cs" />
     <Compile Include="Tsunami\Manager\Inject.cs" />
+    <Compile Include="Tsunami\Manager\Loader.cs" />
+    <Compile Include="Tsunami\Manager\TsunamiHack.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Info.txt" />
