@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TsunamiHack
 {
-    abstract class InfoList
+    public abstract class InfoList
     {
         private List<string> list;
     }

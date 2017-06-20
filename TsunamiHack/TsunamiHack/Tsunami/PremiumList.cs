@@ -6,8 +6,21 @@ using System.Threading.Tasks;
 
 namespace TsunamiHack
 {
-    class PremiumList : InfoList
+    public class PremiumList : InfoList
     {
         private List<String> UserList;
+
+        public PremiumList()
+        {
+            UserList = new List<string>();
+        }
+
+        public void addUser(string id)
+        {
+            if (id != null)
+            {
+                UserList.Add(id);
+            }
+        }
     }
 }

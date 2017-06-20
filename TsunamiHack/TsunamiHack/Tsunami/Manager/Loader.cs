@@ -18,6 +18,6 @@ namespace TsunamiHack.Tsunami.Manager
             
         }
 
-        public static void
+        
     }
 }

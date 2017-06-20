@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TsunamiHack.Tsunami
 {
-    class BetaList : InfoList
+    public class BetaList : InfoList
     {
         private List<String> UserList;
     }
