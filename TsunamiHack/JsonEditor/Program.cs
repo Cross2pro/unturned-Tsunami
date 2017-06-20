@@ -13,12 +13,16 @@ namespace JsonEditor
     {
         static void Main(string[] args)
         {
-            PremiumList list = new PremiumList();
-            list.addUser("463521");
-            list.addUser("896413");
+            var list = new InfoList();
+            list.addItem("654984");
+            list.addItem("543654");
 
-            var output = JsonConvert.SerializeObject(list);
-            File.WriteAllText("OutputList.txt", output);
+            var outp = JsonConvert.SerializeObject(list, Formatting.Indented);
+            File.WriteAllText("Output2.txt", outp);
+            Console.WriteLine("Done");
+            Console.ReadKey();
         }
     }
+
+    class 
 }

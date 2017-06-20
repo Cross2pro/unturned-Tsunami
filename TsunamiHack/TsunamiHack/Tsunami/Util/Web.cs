@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TsunamiHack.Tsunami
+namespace TsunamiHack.Tsunami.Util
 {
-    public class BetaList
+    class Web
     {
-        private List<String> UserList;
-        private int id;
+
     }
 }

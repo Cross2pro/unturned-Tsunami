@@ -4,11 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TsunamiHack.Tsunami
+namespace TsunamiHack.Tsunami.Util
 {
-    public class BetaList
+    class FileSystem
     {
-        private List<String> UserList;
-        private int id;
     }
 }
