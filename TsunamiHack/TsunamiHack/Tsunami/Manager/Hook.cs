@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TsunamiHack
 {
-    public class Class1
+    class manager_Hook
     {
     }
 }
