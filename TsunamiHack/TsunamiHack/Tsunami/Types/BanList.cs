@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace TsunamiHack.Tsunami
 {
-    public class BanList 
+    public class BanList : InfoList
     {
         private List<String> UserList;
-        private int id;
     }
 }

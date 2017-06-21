@@ -17,7 +17,7 @@ namespace TsunamiHack.Tsunami
             WebClient client = new WebClient();
             var list = client.DownloadString(url);
 
-            /*switch (t)
+            switch (t)
             {
                 case InfoType.PremiumList:
                     return JsonConvert.DeserializeObject<PremiumList>(list);
@@ -29,9 +29,8 @@ namespace TsunamiHack.Tsunami
                     throw new ArgumentException("HackInfo Does not return List!");
                 default:
                     return null;
-            }*/
+            }
 
-            return null;
         }
     }
 }
