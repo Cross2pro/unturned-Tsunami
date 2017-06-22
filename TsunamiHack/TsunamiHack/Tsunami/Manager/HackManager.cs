@@ -10,7 +10,10 @@ namespace TsunamiHack.Tsunami.Manager
 {
     class HackManager : MonoBehaviour
     {
-        private Menu.Main main;
+        public static Menu.Main main;
+        public static Menu.Keybind keybind;
+
+
         private GameObject obj;
 
         public void OnUpdate()
@@ -21,8 +24,10 @@ namespace TsunamiHack.Tsunami.Manager
                 {
                     obj = new GameObject();
                     main = obj.AddComponent<Menu.Main>();
+                    keybind = obj.AddComponent<Menu.Keybind>();
 
                     UnityEngine.Object.DontDestroyOnLoad(main);
+                    UnityEngine.Object.DontDestroyOnLoad(keybind);
                 }
             }
         }

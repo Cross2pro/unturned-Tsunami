@@ -94,6 +94,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Tsunami\Manager\HackManager.cs" />
+    <Compile Include="Tsunami\Menu\Keybind.cs" />
     <Compile Include="Tsunami\Menu\Main.cs" />
     <Compile Include="Tsunami\Types\BetaList.cs" />
     <Compile Include="Tsunami\Types\InfoList.cs" />
