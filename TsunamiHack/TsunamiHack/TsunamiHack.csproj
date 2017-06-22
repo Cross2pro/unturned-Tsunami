@@ -93,27 +93,20 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Tsunami\Manager\HackManager.cs" />
-    <Compile Include="Tsunami\Menu\Keybind.cs" />
-    <Compile Include="Tsunami\Menu\Main.cs" />
-    <Compile Include="Tsunami\Types\BetaList.cs" />
-    <Compile Include="Tsunami\Types\InfoList.cs" />
-    <Compile Include="Tsunami\Types\PremiumList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tsunami\Types\BanList.cs" />
-    <Compile Include="Tsunami\Types\Config.cs" />
-    <Compile Include="Tsunami\Util\DownloadableInfo.cs" />
-    <Compile Include="Tsunami\Manager\Inject.cs" />
-    <Compile Include="Tsunami\Manager\Loader.cs" />
-    <Compile Include="Tsunami\Manager\TsunamiHack.cs" />
-    <Compile Include="Tsunami\Util\FileSystem.cs" />
-    <Compile Include="Tsunami\Util\Web.cs" />
+    <Compile Include="Tsunami\Manager\Manager.cs" />
+    <Compile Include="Tsunami\Manager\Quake.cs" />
+    <Compile Include="Tsunami\Manager\Hook.cs" />
+    <Compile Include="Tsunami\IMenuParent.cs" />
+    <Compile Include="Tsunami\Menu\Main.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Info.txt" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Tsunami\Lib\" />
+    <Folder Include="Tsunami\Types\" />
+    <Folder Include="Tsunami\Util\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

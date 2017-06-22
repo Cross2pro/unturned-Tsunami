@@ -1,1 +1,1 @@
-﻿
+﻿Hilighter -> Injector -> instance of Tsunami -> calls manager -> load all objs
