@@ -34,6 +34,14 @@ namespace TsunamiHack.Tsunami.Manager
 
                     UnityEngine.Object.DontDestroyOnLoad(main);
                     UnityEngine.Object.DontDestroyOnLoad(keybind);
+
+                    /*ComponentList.Add( main = obj.AddComponent<Menu.Main>());
+                    ComponentList.Add( keybind = obj.AddComponent<Lib.Keybinds>());
+
+                    foreach (var obj in ComponentList)
+                    {
+                        UnityEngine.Object.DontDestroyOnLoad(obj);
+                    }*/
                 }
             }
         }

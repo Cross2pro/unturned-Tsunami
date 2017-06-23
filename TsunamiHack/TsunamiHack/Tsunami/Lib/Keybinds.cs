@@ -7,13 +7,13 @@ using UnityEngine;
 
 namespace TsunamiHack.Tsunami.Lib
 {
-    class Keybinds : MonoBehaviour, ILibParent
+    class Keybinds : MonoBehaviour
     {
-        public void Start()
+        private void Start()
         {
         }
 
-        public void Update()
+        private void Update()
         {
             if (Input.GetKeyUp(KeyCode.F1))
             {

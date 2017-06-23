@@ -26,10 +26,7 @@ namespace TsunamiHack.Tsunami.Menu
 
         private void OnGUI()
         {
-            if (menuOpened)
-            {
                 windowRect = GUI.Window(1, windowRect, new GUI.WindowFunction(WindowFunct), "Main Menu");
-            }
         }
 
         private void WindowFunct(int id)
