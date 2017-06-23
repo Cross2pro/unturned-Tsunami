@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using SDG.Unturned;
@@ -15,6 +16,11 @@ namespace TsunamiHack.Tsunami.Manager
 
 
         private GameObject obj;
+
+        public WaveMaker()
+        {
+            //Rebrand("Tsunami Hack By Tidal", "Tidal");
+        }
 
         public void OnUpdate()
         {
@@ -31,5 +37,11 @@ namespace TsunamiHack.Tsunami.Manager
                 }
             }
         }
+
+        #region Other Methods
+
+        
+
+        #endregion
     }
 }

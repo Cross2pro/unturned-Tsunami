@@ -20,7 +20,7 @@ namespace TsunamiHack.Tsunami.Menu
 
         public void Start()
         {
-            var size = new Vector2(100,300);
+            var size = new Vector2(200,300);
             windowRect = Util.MenuTools.getRectAtLoc(size, MenuTools.Horizontal.RightMid,MenuTools.Vertical.Center, false);
         }
 
