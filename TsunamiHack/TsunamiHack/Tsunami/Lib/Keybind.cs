@@ -9,7 +9,9 @@ namespace TsunamiHack.Tsunami.Lib
 {
     class Keybind
     {
-        public static void CheckKeypress()
+
+
+        public static void Check()
         {
             
         }

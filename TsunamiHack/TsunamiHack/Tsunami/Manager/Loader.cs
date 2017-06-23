@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TsunamiHack.Tsunami.Types;
+﻿using TsunamiHack.Tsunami.Types;
 
 namespace TsunamiHack.Tsunami.Manager
 {
     class Loader
     {
 
-        static void LoadAdd()
+        public static void LoadAll()
         {
             try
             {
@@ -24,17 +19,20 @@ namespace TsunamiHack.Tsunami.Manager
             }
         }
 
-        static void LoadConfig()
+        public static void LoadConfig()
         {
             
         }
 
-        static void LoadKeybinds()
+        public static void LoadKeybinds()
         {
-            
+            if (Util.FileIO.KeybindsExist())
+            {
+                LoadKeybinds();
+            }   
         }
 
-        static void LoadDownloads()
+        public static void LoadDownloads()
         {
             
         }

@@ -5,26 +5,39 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using SDG.Unturned;
+using TsunamiHack.Tsunami.Types;
 using UnityEngine;
 
 namespace TsunamiHack.Tsunami.Manager
 {
     class WaveMaker
     {
+        public static KeybindConfig Keybinds;
+
+        private bool firstTime;
+
         public static Menu.Main main;
         public static Menu.Keybind keybind;
 
 
         private GameObject obj;
 
+
         public WaveMaker()
         {
-            //Rebrand("Tsunami Hack By Tidal", "Tidal");
+
         }
+
+        public void Start()
+        {
+            //check if its first time
+            //check if on ban list
+        }
+
 
         public void OnUpdate()
         {
-            if (Provider.isConnected)
+            if (Provider.isConnected)       //add all hack objects
             {
                 if (obj == null)
                 {
@@ -38,10 +51,6 @@ namespace TsunamiHack.Tsunami.Manager
             }
         }
 
-        #region Other Methods
 
-        
-
-        #endregion
     }
 }

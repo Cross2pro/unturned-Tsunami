@@ -18,9 +18,8 @@ namespace TsunamiHack.Tsunami.Manager
             //Add all hack components
             //Call loader
 
-            Rebrand("Tsunami Hack By Tidal", "Tidal");
-
-            //Loader.LoadAll();
+            Loader.LoadAll();
+            WM.Start();
         }
 
         public void Update()
@@ -33,19 +32,6 @@ namespace TsunamiHack.Tsunami.Manager
         public void OnGUI()
         {
             //nothing
-        }
-
-
-        private static void Rebrand(string app, string author, string version = null)
-        {
-            typeof(Provider).GetField("APP_NAME", BindingFlags.Public | BindingFlags.Static).SetValue(null, app);
-            typeof(Provider).GetField("APP_AUTHOR", BindingFlags.Public | BindingFlags.Static).SetValue(null, author);
-
-            if (version != null)
-            {
-                typeof(Provider).GetField("APP_VERSION", BindingFlags.Public | BindingFlags.Static).SetValue(null, version);
-
-            }
         }
     }
 }
