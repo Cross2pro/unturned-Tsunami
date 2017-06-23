@@ -26,10 +26,26 @@ namespace TsunamiHack.Tsunami.Util
             return true;
         }
 
-        public static bool CreateKeybinds()
+        public static bool CreateKeybinds(out KeybindConfig keybinds)
         {
-            
+            try
+            {
+                keybinds = new KeybindConfig();
+                keybinds.addBind("Main", KeyCode.F1);
+                keybinds.addBind("Keybinds", KeyCode.F2);
+
+                var jsonstring = JsonConvert.SerializeObject(keybinds);
+                File.WriteAllText(_keybindPath, jsonstring);
+                return true;
+            }
+            catch (Exception e)
+            {
+
+                keybinds = null;
+                return false;
+            }
         }
+
 
     }
 }
