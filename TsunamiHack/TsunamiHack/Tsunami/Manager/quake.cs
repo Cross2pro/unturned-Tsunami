@@ -3,26 +3,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Pathfinding;
 using UnityEngine;
 
 namespace TsunamiHack.Tsunami.Manager
 {
     class Quake : MonoBehaviour
     {
-        Manager man = new Manager();
+        public WaveMaker WM;
 
         private void Start()
         {
-            man.Start();
+            WM.Start();
         }
 
         private void Update()
         {
-            man.Update();
+            WM.Start();
         }
 
         private void OnGUI()
         {
+            WM.OnGUI();
         }
     }
 }

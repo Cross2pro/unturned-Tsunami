@@ -7,9 +7,9 @@ using UnityEngine;
 
 namespace TsunamiHack.Tsunami.Manager
 {
-    class Hook : MonoBehaviour
+    public static class Hook
     {
-        public void Cast()
+        public static void Cast()
         {
             GameObject Hook;
             Quake inst;
@@ -20,17 +20,15 @@ namespace TsunamiHack.Tsunami.Manager
                 inst = Hook.AddComponent<Quake>();
                 UnityEngine.Object.DontDestroyOnLoad(inst);
             }
-            catch (Exception e)
+            catch(Exception e)
             {
-                Debug.Log($"Crash Occured @ {DateTime.Now}");
-                Debug.Log(e);
-                Debug.Log("---End---");
+                Util.Logging.Exception(e);
             }
 
-            if (UnityEngine.GameObject.Find("HookLineAndSinker") != null)
-            {
-                Debug.Log($"Hook Sucessful @ {DateTime.Now}");
-            }
+            if (UnityEngine.GameObject.Find("HookLineAndSinker"))
+                Util.Logging.logMsg("Sucess", "Hook injected");
+            else
+                Util.Logging.logMsg("Failed", "Hook Unable to be Injected");
         }
     }
 }

@@ -96,10 +96,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tsunami\ILibParent.cs" />
     <Compile Include="Tsunami\Lib\Keybinds.cs" />
-    <Compile Include="Tsunami\Manager\Manager.cs" />
-    <Compile Include="Tsunami\Manager\Quake.cs" />
-    <Compile Include="Tsunami\Manager\Hook.cs" />
     <Compile Include="Tsunami\IMenuParent.cs" />
+    <Compile Include="Tsunami\Manager\Hook.cs" />
+    <Compile Include="Tsunami\Manager\Quake.cs" />
+    <Compile Include="Tsunami\Manager\WaveMaker.cs" />
     <Compile Include="Tsunami\Menu\Main.cs" />
     <Compile Include="Tsunami\Util\Logging.cs" />
     <Compile Include="Tsunami\Util\MenuTools.cs" />

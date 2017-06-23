@@ -4,60 +4,38 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
-using TsunamiHack;
-using TsunamiHack.Tsunami.Util;
 
 namespace TsunamiHack.Tsunami.Menu
 {
-    public class Main : MonoBehaviour, IMenuParent
+    class Main : MonoBehaviour
     {
-        private bool menuOpened { get; set; }
+        public bool menuOpened = false;
+        private Rect windowRect = new Rect(20,20,100,300);
 
-        private Rect WindowRect;
-        private Vector2 WindowSize;
+        private bool bool1;
 
-        private bool button1;
-
-        public void Start()
+        private void Start()
         {
-            WindowSize = new Vector2(200, 450);
-            WindowRect = MenuTools.getRectAtLoc(WindowSize, MenuTools.HorizontalLoc.Center, MenuTools.VerticalLoc.Center, false);
+            
         }
 
-        public void Update()
+        private void Update()
         {
+            
         }
 
-        public void OnGUI()
+        private void OnGUI()
         {
             if (menuOpened)
             {
-                WindowRect = GUILayout.Window(1, WindowRect, new GUI.WindowFunction(MenuFunct), "Main Menu",new GUILayoutOption[0]);
+                windowRect = GUI.Window(1, windowRect, new GUI.WindowFunction(WindowFunct), "Main Menu");
             }
         }
 
-        public void MenuFunct(int id)
+        private void WindowFunct(int id)
         {
-            button1 = GUILayout.Toggle(button1, "Button 1 test");
+            bool1 = GUILayout.Toggle(bool1, "Test Button", new GUILayoutOption[0]);
             GUI.DragWindow();
         }
-
-        #region Interface Members
-
-        public void setMenuStatus(bool setting)
-        {
-            menuOpened = setting;
-        }
-
-        public void toggleMenuStatus()
-        {
-            menuOpened = !menuOpened;
-        }
-
-        public bool getMenuStatus()
-        {
-            return menuOpened;
-        }
-        #endregion
     }
 }

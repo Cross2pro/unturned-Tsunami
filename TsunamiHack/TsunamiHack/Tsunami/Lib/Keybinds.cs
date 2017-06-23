@@ -17,7 +17,7 @@ namespace TsunamiHack.Tsunami.Lib
         {
             if (Input.GetKeyUp(KeyCode.F1))
             {
-                Manager.Manager.main.toggleMenuStatus();
+                Manager.WaveMaker.main.menuOpened = !Manager.WaveMaker.main.menuOpened;
             }
         }
     }
