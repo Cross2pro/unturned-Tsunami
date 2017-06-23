@@ -3,36 +3,62 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SDG.Unturned;
+using TsunamiHack.Tsunami.Util;
 using UnityEngine;
 
 namespace TsunamiHack.Tsunami.Menu
 {
-    class Main : MonoBehaviour
+    class Main : MonoBehaviour, IMenuParent
     {
-        public bool menuOpened = false;
-        private Rect windowRect = new Rect(20,20,100,300);
+        public bool MenuOpened { get; private set; }
+        private Rect windowRect;
 
-        private bool bool1;
+        private bool testButton;
 
-        private void Start()
+        public void Start()
         {
-            
+            var size = new Vector2(200, 500);
+            windowRect = Util.MenuTools.getRectAtLoc(size, MenuTools.Horizontal.Center, MenuTools.Vertical.Center, false);
         }
 
-        private void Update()
+        public void Update()
         {
-            
         }
 
-        private void OnGUI()
+        public void OnGUI()
         {
-                windowRect = GUI.Window(1, windowRect, new GUI.WindowFunction(WindowFunct), "Main Menu");
+            if (Provider.isConnected)
+            {
+                if (MenuOpened)
+                {
+                    windowRect = GUI.Window(1, windowRect, new GUI.WindowFunction(MenuFunct), "Main Menu");
+                }
+            }
         }
 
-        private void WindowFunct(int id)
+        public void MenuFunct(int id)
         {
-            bool1 = GUILayout.Toggle(bool1, "Test Button", new GUILayoutOption[0]);
+            testButton = GUILayout.Toggle(testButton, "Test button", new GUILayoutOption[0]);
             GUI.DragWindow();
         }
+
+        #region Interface Members
+
+        public void setMenuStatus(bool setting)
+        {
+            MenuOpened = setting;
+        }
+
+        public void toggleMenuStatus()
+        {
+            MenuOpened = !MenuOpened;
+        }
+
+        public bool getMenuStatus()
+        {
+            return MenuOpened;
+        }
+        #endregion
     }
 }

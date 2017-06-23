@@ -9,7 +9,7 @@ namespace TsunamiHack.Tsunami.Util
 {
     class MenuTools
     {
-        public enum HorizontalLoc
+        public enum Horizontal
         {
             Left,
             LeftMid,
@@ -18,7 +18,7 @@ namespace TsunamiHack.Tsunami.Util
             Right
         };
 
-        public enum VerticalLoc
+        public enum Vertical
         {
             Top,
             TopMid,
@@ -27,7 +27,7 @@ namespace TsunamiHack.Tsunami.Util
             Bottom
         }
 
-        public static Rect getRectAtLoc(Vector2 menuSize, HorizontalLoc hori, VerticalLoc vert, bool usePadding, float padding = 0f)
+        public static Rect getRectAtLoc(Vector2 menuSize, Horizontal hori, Vertical vert, bool usePadding, float padding = 0f)
         {
             var outputRect = new Rect();
             int width = (int) menuSize.x;
@@ -38,23 +38,23 @@ namespace TsunamiHack.Tsunami.Util
 
             switch (hori)
             {
-                case HorizontalLoc.Left:
+                case Horizontal.Left:
                     xpos = 0;
                     if (usePadding)
                     {
                         xpos += (int) padding;
                     }
                     break;
-                case HorizontalLoc.LeftMid:
+                case Horizontal.LeftMid:
                     xpos = (((Screen.width / 2) / 2) - (width / 2));
                     break;
-                case HorizontalLoc.Center:
+                case Horizontal.Center:
                     xpos = ((Screen.width / 2) - (width / 2));
                     break;
-                case HorizontalLoc.RightMid:
+                case Horizontal.RightMid:
                     xpos = (((Screen.width / 2) + (Screen.width / 4)) - (width / 2));
                     break;
-                case HorizontalLoc.Right:
+                case Horizontal.Right:
                     xpos = Screen.width - width;
                     if (usePadding)
                     {
@@ -62,28 +62,28 @@ namespace TsunamiHack.Tsunami.Util
                     }
                     break;
                 default:
-                    goto case HorizontalLoc.Center;
+                    goto case Horizontal.Center;
             }
 
             switch (vert)
             {
-                case VerticalLoc.Top:
+                case Vertical.Top:
                     ypos = 0;
                     if (usePadding)
                     {
                         ypos += (int) padding;
                     }
                     break;
-                case VerticalLoc.TopMid:
+                case Vertical.TopMid:
                     ypos = ((Screen.height / 2) / 2) - (height / 2);
                     break;
-                case VerticalLoc.Center:
+                case Vertical.Center:
                     ypos = ((Screen.height / 2) - (height / 2));
                     break;
-                case VerticalLoc.BottomMid:
+                case Vertical.BottomMid:
                     ypos = ((Screen.height / 2) + (Screen.height / 4) - (height / 2));
                     break;
-                case VerticalLoc.Bottom:
+                case Vertical.Bottom:
                     ypos = Screen.height - height;
                     if (usePadding)
                     {
@@ -91,7 +91,7 @@ namespace TsunamiHack.Tsunami.Util
                     }
                     break;
                 default:
-                    goto case VerticalLoc.Center;
+                    goto case Vertical.Center;
             }
 
 

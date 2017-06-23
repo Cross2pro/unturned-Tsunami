@@ -11,24 +11,16 @@ namespace TsunamiHack.Tsunami.Manager
     {
         public static void Cast()
         {
-            GameObject Hook;
-            Quake inst;
-
             try
             {
-                Hook = new GameObject("HookLineAndSinker");
-                inst = Hook.AddComponent<Quake>();
-                UnityEngine.Object.DontDestroyOnLoad(inst);
+                GameObject hook = new GameObject();
+                Quake instance = hook.AddComponent<Quake>();
+                UnityEngine.Object.DontDestroyOnLoad(instance);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Util.Logging.Exception(e);
             }
-
-            if (UnityEngine.GameObject.Find("HookLineAndSinker"))
-                Util.Logging.logMsg("Sucess", "Hook injected");
-            else
-                Util.Logging.logMsg("Failed", "Hook Unable to be Injected");
         }
     }
 }

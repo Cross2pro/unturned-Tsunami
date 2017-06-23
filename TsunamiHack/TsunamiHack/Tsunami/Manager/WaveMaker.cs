@@ -10,19 +10,13 @@ namespace TsunamiHack.Tsunami.Manager
 {
     class WaveMaker
     {
+        public static Menu.Main main;
+        public static Menu.Keybind keybind;
+
+
         private GameObject obj;
 
-        public static Menu.Main main;
-        public static Lib.Keybinds keybind;
-
-        public List<UnityEngine.Object> ComponentList;
-
-        public void Start()
-        {
-            
-        }
-
-        public void Update()
+        public void OnUpdate()
         {
             if (Provider.isConnected)
             {
@@ -30,26 +24,12 @@ namespace TsunamiHack.Tsunami.Manager
                 {
                     obj = new GameObject();
                     main = obj.AddComponent<Menu.Main>();
-                    keybind = obj.AddComponent<Lib.Keybinds>();
+                    keybind = obj.AddComponent<Menu.Keybind>();
 
                     UnityEngine.Object.DontDestroyOnLoad(main);
                     UnityEngine.Object.DontDestroyOnLoad(keybind);
-
-                    /*ComponentList.Add( main = obj.AddComponent<Menu.Main>());
-                    ComponentList.Add( keybind = obj.AddComponent<Lib.Keybinds>());
-
-                    foreach (var obj in ComponentList)
-                    {
-                        UnityEngine.Object.DontDestroyOnLoad(obj);
-                    }*/
                 }
             }
         }
-
-        public void OnGUI()
-        {
-            
-        }
-
     }
 }
