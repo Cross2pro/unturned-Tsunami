@@ -12,6 +12,29 @@ namespace TsunamiHack.Tsunami.Menu
     {
         private bool menuOpened { get; set; }
 
+        private Rect WindowRect;
+
+
+        public void Start()
+        {
+            WindowRect = new Rect( ((Screen.width / 2) - 100) , ((Screen.height /2) + 225), 200, 450);
+        }
+
+        public void Update()
+        {
+        }
+
+        public void OnGUI()
+        {
+
+        }
+
+        public void MenuFunct(int id)
+        {
+        }
+
+        #region Interface Members
+
         public void setMenuStatus(bool setting)
         {
             menuOpened = setting;
@@ -22,20 +45,10 @@ namespace TsunamiHack.Tsunami.Menu
             menuOpened = !menuOpened;
         }
 
-        public void Start()
+        public bool getMenuStatus()
         {
+            return menuOpened;
         }
-
-        public void Update()
-        {
-        }
-
-        public void OnGUI()
-        {
-        }
-
-        public void MenuFunct(int id)
-        {
-        }
+        #endregion
     }
 }

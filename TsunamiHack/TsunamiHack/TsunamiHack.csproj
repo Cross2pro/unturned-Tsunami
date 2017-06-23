@@ -99,6 +99,8 @@
     <Compile Include="Tsunami\Manager\Hook.cs" />
     <Compile Include="Tsunami\IMenuParent.cs" />
     <Compile Include="Tsunami\Menu\Main.cs" />
+    <Compile Include="Tsunami\Util\Logging.cs" />
+    <Compile Include="Tsunami\Util\MenuTools.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Info.txt" />
@@ -106,7 +108,6 @@
   <ItemGroup>
     <Folder Include="Tsunami\Lib\" />
     <Folder Include="Tsunami\Types\" />
-    <Folder Include="Tsunami\Util\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
