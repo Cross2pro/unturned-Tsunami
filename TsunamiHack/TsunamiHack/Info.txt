@@ -1,1 +1,10 @@
-﻿Hilighter -> Injector -> instance of Tsunami -> calls manager -> load all objs
+﻿Highlighter -> Injector -> instance of Tsunami -> calls manager -> load all objs
+
+
+Lib - for any non menu gameobject
+Manager - for all classes that manage the functionality of the hack
+Menu - for all classes that generate hack menus, and inherit IMenuParent
+Util - all classes specifically designed for utility purposes
+Types - for all classes that are types used in manager or util classes
+
+

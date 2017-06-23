@@ -94,6 +94,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tsunami\ILibParent.cs" />
+    <Compile Include="Tsunami\Lib\Keybinds.cs" />
     <Compile Include="Tsunami\Manager\Manager.cs" />
     <Compile Include="Tsunami\Manager\Quake.cs" />
     <Compile Include="Tsunami\Manager\Hook.cs" />
@@ -106,7 +108,6 @@
     <Content Include="Info.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Tsunami\Lib\" />
     <Folder Include="Tsunami\Types\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

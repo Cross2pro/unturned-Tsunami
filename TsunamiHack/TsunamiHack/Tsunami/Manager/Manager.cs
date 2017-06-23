@@ -19,7 +19,8 @@ namespace TsunamiHack.Tsunami.Manager
 
         #region Menus
         private GameObject obj;
-        private Menu.Main main;
+        public static Menu.Main main;
+        public static Lib.Keybinds keybinds;
 
         #endregion
 

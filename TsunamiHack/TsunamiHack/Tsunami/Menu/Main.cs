@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using TsunamiHack;
+using TsunamiHack.Tsunami.Util;
 
 namespace TsunamiHack.Tsunami.Menu
 {
@@ -13,11 +14,14 @@ namespace TsunamiHack.Tsunami.Menu
         private bool menuOpened { get; set; }
 
         private Rect WindowRect;
+        private Vector2 WindowSize;
 
+        private bool button1;
 
         public void Start()
         {
-            WindowRect = new Rect( ((Screen.width / 2) - 100) , ((Screen.height /2) + 225), 200, 450);
+            WindowSize = new Vector2(200, 450);
+            WindowRect = MenuTools.getRectAtLoc(WindowSize, MenuTools.HorizontalLoc.Center, MenuTools.VerticalLoc.Center, false);
         }
 
         public void Update()
@@ -26,11 +30,16 @@ namespace TsunamiHack.Tsunami.Menu
 
         public void OnGUI()
         {
-
+            if (menuOpened)
+            {
+                WindowRect = GUILayout.Window(1, WindowRect, new GUI.WindowFunction(MenuFunct), "Main Menu",new GUILayoutOption[0]);
+            }
         }
 
         public void MenuFunct(int id)
         {
+            button1 = GUILayout.Toggle(button1, "Button 1 test");
+            GUI.DragWindow();
         }
 
         #region Interface Members
