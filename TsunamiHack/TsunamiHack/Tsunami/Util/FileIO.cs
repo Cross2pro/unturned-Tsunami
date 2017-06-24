@@ -28,6 +28,8 @@ namespace TsunamiHack.Tsunami.Util
 
         public static bool CreateKeybinds(out KeybindConfig keybinds)
         {
+            var success = false;
+
             try
             {
                 keybinds = new KeybindConfig();
@@ -36,14 +38,15 @@ namespace TsunamiHack.Tsunami.Util
 
                 var jsonstring = JsonConvert.SerializeObject(keybinds);
                 File.WriteAllText(_keybindPath, jsonstring);
-                return true;
+                success = true;
             }
             catch (Exception e)
             {
 
                 keybinds = null;
-                return false;
             }
+
+            return success;
         }
 
 

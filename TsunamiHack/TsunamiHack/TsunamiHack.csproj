@@ -98,11 +98,15 @@
     <Compile Include="Tsunami\IMenuParent.cs" />
     <Compile Include="Tsunami\Lib\Keybind.cs" />
     <Compile Include="Tsunami\Manager\Hook.cs" />
+    <Compile Include="Tsunami\Manager\Loader.cs" />
     <Compile Include="Tsunami\Manager\WaveMaker.cs" />
     <Compile Include="Tsunami\Manager\Quake.cs" />
     <Compile Include="Tsunami\Menu\Keybind.cs" />
     <Compile Include="Tsunami\Menu\Main.cs" />
+    <Compile Include="Tsunami\Types\Exceptions.cs" />
+    <Compile Include="Tsunami\Types\Keybind.cs" />
     <Compile Include="Tsunami\Types\KeybindConfig.cs" />
+    <Compile Include="Tsunami\Util\FileIO.cs" />
     <Compile Include="Tsunami\Util\Logging.cs" />
     <Compile Include="Tsunami\Util\MenuTools.cs" />
   </ItemGroup>
