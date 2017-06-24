@@ -14,13 +14,13 @@ namespace TsunamiHack.Tsunami.Manager
     {
         public static KeybindConfig Keybinds;
 
-        private bool firstTime;
+        private bool _firstTime;
 
-        public static Menu.Main main;
-        public static Menu.Keybind keybind;
+        public static Menu.Main Main;
+        public static Menu.Keybind Keybind;
 
 
-        private GameObject obj;
+        private GameObject _obj;
 
 
         public WaveMaker()
@@ -39,14 +39,14 @@ namespace TsunamiHack.Tsunami.Manager
         {
             if (Provider.isConnected)       //add all hack objects
             {
-                if (obj == null)
+                if (_obj == null)
                 {
-                    obj = new GameObject();
-                    main = obj.AddComponent<Menu.Main>();
-                    keybind = obj.AddComponent<Menu.Keybind>();
+                    _obj = new GameObject();
+                    Main = _obj.AddComponent<Menu.Main>();
+                    Keybind = _obj.AddComponent<Menu.Keybind>();
 
-                    UnityEngine.Object.DontDestroyOnLoad(main);
-                    UnityEngine.Object.DontDestroyOnLoad(keybind);
+                    UnityEngine.Object.DontDestroyOnLoad(Main);
+                    UnityEngine.Object.DontDestroyOnLoad(Keybind);
                 }
             }
         }

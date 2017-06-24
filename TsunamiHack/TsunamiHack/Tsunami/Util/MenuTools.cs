@@ -27,11 +27,11 @@ namespace TsunamiHack.Tsunami.Util
             Bottom
         }
 
-        public static Rect getRectAtLoc(Vector2 menuSize, Horizontal hori, Vertical vert, bool usePadding, float padding = 0f)
+        public static Rect GetRectAtLoc(Vector2 menuSize, Horizontal hori, Vertical vert, bool usePadding, float padding = 0f)
         {
-            var outputRect = new Rect();
-            int width = (int) menuSize.x;
-            int height = (int) menuSize.y;
+            var rect = new Rect();
+            var width = (int) menuSize.x;
+            var height = (int) menuSize.y;
 
             int xpos;
             int ypos;
@@ -97,7 +97,7 @@ namespace TsunamiHack.Tsunami.Util
 
             if (ypos + height > Screen.height)
             {
-                int difference = Screen.height - (ypos + height);
+                var difference = Screen.height - (ypos + height);
                 ypos -= difference;
 
                 if (usePadding)
@@ -115,7 +115,7 @@ namespace TsunamiHack.Tsunami.Util
             }
             else if (xpos + width > Screen.width)
             {
-                int difference = Screen.width - (xpos + width);
+                var difference = Screen.width - (xpos + width);
                 ypos -= difference;
 
                 if (usePadding)
@@ -133,9 +133,9 @@ namespace TsunamiHack.Tsunami.Util
                 }
             }
 
-            outputRect = new Rect(xpos, ypos, width, height);
+            rect = new Rect(xpos, ypos, width, height);
 
-            return outputRect;
+            return rect;
         }
     }
 }

@@ -25,7 +25,7 @@ namespace TsunamiHack.Tsunami.Types
 
         public bool setKey(KeyCode key)
         {
-            var dict = WaveMaker.Keybinds.getKeyDict();
+            var dict = WaveMaker.Keybinds.GetKeyDict();
 
             if (dict.ContainsKey(Name) || dict.ContainsValue(key))
             {

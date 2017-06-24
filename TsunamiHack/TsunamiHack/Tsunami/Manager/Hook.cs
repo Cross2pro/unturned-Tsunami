@@ -13,13 +13,18 @@ namespace TsunamiHack.Tsunami.Manager
         {
             try
             {
-                GameObject hook = new GameObject();
+                var hook = new GameObject();
                 Quake instance = hook.AddComponent<Quake>();
                 UnityEngine.Object.DontDestroyOnLoad(instance);
             }
             catch (Exception e)
             {
                 Util.Logging.Exception(e);
+
+                if (1 == 1)
+                {
+                    
+                }
             }
         }
     }

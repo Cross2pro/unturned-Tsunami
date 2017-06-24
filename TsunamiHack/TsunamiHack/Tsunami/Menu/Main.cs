@@ -13,16 +13,16 @@ namespace TsunamiHack.Tsunami.Menu
     class Main : MonoBehaviour, IMenuParent
     {
         public bool MenuOpened { get; private set; }
-        private Rect windowRect;
+        private Rect _windowRect;
 
-        private bool testButton;
+        private bool _testButton;
 
 
 
         public void Start()
         {
             var size = new Vector2(200, 500);
-            windowRect = Util.MenuTools.getRectAtLoc(size, MenuTools.Horizontal.Center, MenuTools.Vertical.Center, false);
+            _windowRect = Util.MenuTools.GetRectAtLoc(size, MenuTools.Horizontal.Center, MenuTools.Vertical.Center, false);
         }
 
         public void Update()
@@ -35,14 +35,14 @@ namespace TsunamiHack.Tsunami.Menu
             {
                 if (MenuOpened)
                 {
-                    windowRect = GUI.Window(1, windowRect, new GUI.WindowFunction(MenuFunct), "Main Menu");
+                    _windowRect = GUI.Window(1, _windowRect, new GUI.WindowFunction(MenuFunct), "Main Menu");
                 }
             }
         }
 
         public void MenuFunct(int id)
         {
-            testButton = GUILayout.Toggle(testButton, "Test button", new GUILayoutOption[0]);
+            _testButton = GUILayout.Toggle(_testButton, "Test button", new GUILayoutOption[0]);
             GUI.DragWindow();
         }
 

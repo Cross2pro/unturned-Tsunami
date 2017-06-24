@@ -28,7 +28,7 @@ namespace TsunamiHack.Tsunami.Manager
         {
             if (Util.FileIO.KeybindsExist())
             {
-                LoadKeybinds();
+                Util.FileIO.LoadKeybinds(out WaveMaker.Keybinds);
             }   
         }
 

@@ -12,8 +12,8 @@ namespace TsunamiHack.Tsunami.Menu
 {
     class Keybind : MonoBehaviour, IMenuParent
     {
-        public bool menuOpened { get; private set; }
-        private Rect windowRect;
+        public bool MenuOpened { get; private set; }
+        private Rect _windowRect;
 
         private KeyCode mainMenu;
         private KeyCode keybindMenu;
@@ -21,7 +21,7 @@ namespace TsunamiHack.Tsunami.Menu
         public void Start()
         {
             var size = new Vector2(200,300);
-            windowRect = Util.MenuTools.getRectAtLoc(size, MenuTools.Horizontal.RightMid,MenuTools.Vertical.Center, false);
+            _windowRect = Util.MenuTools.GetRectAtLoc(size, MenuTools.Horizontal.RightMid,MenuTools.Vertical.Center, false);
         }
 
         public void Update()
@@ -30,7 +30,7 @@ namespace TsunamiHack.Tsunami.Menu
             {
                 if (Input.GetKeyUp(KeyCode.F1))
                 {
-                    WaveMaker.main.toggleMenuStatus();
+                    WaveMaker.Main.toggleMenuStatus();
                 }
 
                 if (Input.GetKeyUp(KeyCode.F2))
@@ -46,9 +46,9 @@ namespace TsunamiHack.Tsunami.Menu
         {
             if (Provider.isConnected)
             {
-                if (menuOpened)
+                if (MenuOpened)
                 {
-                    windowRect = GUI.Window(2, windowRect, new GUI.WindowFunction(MenuFunct), "Keybind Menu");
+                    _windowRect = GUI.Window(2, _windowRect, new GUI.WindowFunction(MenuFunct), "Keybind Menu");
                 }
             }
         }
@@ -64,17 +64,17 @@ namespace TsunamiHack.Tsunami.Menu
 
         public void setMenuStatus(bool setting)
         {
-            menuOpened = setting;
+            MenuOpened = setting;
         }
 
         public void toggleMenuStatus()
         {
-            menuOpened = !menuOpened;
+            MenuOpened = !MenuOpened;
         }
 
         public bool getMenuStatus()
         {
-            return menuOpened;
+            return MenuOpened;
         }
 
     #endregion

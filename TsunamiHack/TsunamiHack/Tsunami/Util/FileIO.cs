@@ -12,7 +12,7 @@ namespace TsunamiHack.Tsunami.Util
 {
     class FileIO
     {
-        private static string _path = Application.persistentDataPath;
+        private static readonly string _path = Application.persistentDataPath;
         private static readonly string _keybindPath = _path + @"\Keybinds.dat";
         private static string _infoPath = _path + @"\Info.dat";
 
@@ -21,9 +21,21 @@ namespace TsunamiHack.Tsunami.Util
             return File.Exists(_keybindPath);
         }
 
-        public static bool LoadKeybinds()
+        public static bool LoadKeybinds(out KeybindConfig keybinds)
         {
-            return true;
+            var succeeded = false;
+            string raw = null;
+            keybinds = null;
+
+            if (File.Exists(_keybindPath))
+                raw = File.ReadAllText(_keybindPath);
+            else
+                return false;
+
+            keybinds = JsonConvert.DeserializeObject<KeybindConfig>(raw);
+            succeeded = true;
+
+            return succeeded;
         }
 
         public static bool CreateKeybinds(out KeybindConfig keybinds)
@@ -33,11 +45,10 @@ namespace TsunamiHack.Tsunami.Util
             try
             {
                 keybinds = new KeybindConfig();
-                keybinds.addBind("Main", KeyCode.F1);
-                keybinds.addBind("Keybinds", KeyCode.F2);
+                keybinds.AddBind("Main", KeyCode.F1);
+                keybinds.AddBind("Keybinds", KeyCode.F2);       //add other keybinds
 
-                var jsonstring = JsonConvert.SerializeObject(keybinds);
-                File.WriteAllText(_keybindPath, jsonstring);
+                SaveKeybinds(keybinds);
                 success = true;
             }
             catch (Exception e)
@@ -47,6 +58,12 @@ namespace TsunamiHack.Tsunami.Util
             }
 
             return success;
+        }
+
+        private static void SaveKeybinds(KeybindConfig config)
+        {
+            var json = JsonConvert.SerializeObject(config);
+            File.WriteAllText(_keybindPath, json);
         }
 
 

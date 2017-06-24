@@ -12,7 +12,12 @@ namespace TsunamiHack.Tsunami.Types
     {
         private Dictionary<string, KeyCode> KeyDict;
 
-        public void addBind(string name, KeyCode key)
+        public KeybindConfig()
+        {
+            KeyDict = new Dictionary<string, KeyCode>();
+        }
+
+        public void AddBind(string name, KeyCode key)
         {
 
             if (KeyDict.ContainsKey(name) || KeyDict.ContainsValue(key))
@@ -23,7 +28,7 @@ namespace TsunamiHack.Tsunami.Types
             KeyDict.Add(name, key);
         }
 
-        public KeyCode getBind(string name)
+        public KeyCode GetBind(string name)
         {
 
             if (KeyDict.ContainsKey(name))
@@ -40,15 +45,13 @@ namespace TsunamiHack.Tsunami.Types
             return KeyCode.F1;
         }
 
-        public string getName(KeyCode key)
+        public void RemoveBind(string name)
         {
-            if (KeyDict.ContainsValue(key))
-            {
-                foreach (var )
-            }
+            if (KeyDict.ContainsKey(name))
+                KeyDict.Remove(name);
         }
 
-        public Dictionary<string, KeyCode> getKeyDict()
+        public Dictionary<string, KeyCode> GetKeyDict()
         { 
             return KeyDict;
         }
