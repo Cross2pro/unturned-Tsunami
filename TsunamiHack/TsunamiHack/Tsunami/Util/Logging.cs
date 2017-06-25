@@ -18,7 +18,7 @@ namespace TsunamiHack.Tsunami.Util
             Debug.Log("---End---");
         }
 
-        public static void logMsg(string header, string msg, string footer = "END")
+        public static void LogMsg(string header, string msg, string footer = "END")
         {
             Debug.Log($"---{header}---");
             Debug.Log($"{msg} occured @ {DateTime.Now}");

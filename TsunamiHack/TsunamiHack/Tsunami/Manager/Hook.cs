@@ -20,11 +20,6 @@ namespace TsunamiHack.Tsunami.Manager
             catch (Exception e)
             {
                 Util.Logging.Exception(e);
-
-                if (1 == 1)
-                {
-                    
-                }
             }
         }
     }

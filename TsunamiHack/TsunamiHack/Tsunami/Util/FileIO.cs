@@ -46,7 +46,9 @@ namespace TsunamiHack.Tsunami.Util
             {
                 keybinds = new KeybindConfig();
                 keybinds.AddBind("Main", KeyCode.F1);
-                keybinds.AddBind("Keybinds", KeyCode.F2);       //add other keybinds
+                keybinds.AddBind("Keybinds", KeyCode.F2);
+
+                //TODO: add other keybinds
 
                 SaveKeybinds(keybinds);
                 success = true;

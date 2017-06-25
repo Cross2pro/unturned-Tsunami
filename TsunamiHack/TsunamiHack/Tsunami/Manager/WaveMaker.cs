@@ -37,7 +37,7 @@ namespace TsunamiHack.Tsunami.Manager
 
         public void OnUpdate()
         {
-            if (Provider.isConnected)       //add all hack objects
+            if (Provider.isConnected)
             {
                 if (_obj == null)
                 {
@@ -47,6 +47,8 @@ namespace TsunamiHack.Tsunami.Manager
 
                     UnityEngine.Object.DontDestroyOnLoad(Main);
                     UnityEngine.Object.DontDestroyOnLoad(Keybind);
+
+                    //TODO: add other hack objects
                 }
             }
         }

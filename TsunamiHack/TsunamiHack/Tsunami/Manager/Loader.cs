@@ -29,7 +29,7 @@ namespace TsunamiHack.Tsunami.Manager
             if (Util.FileIO.KeybindsExist())
             {
                 Util.FileIO.LoadKeybinds(out WaveMaker.Keybinds);
-            }   
+            }
         }
 
         public static void LoadDownloads()

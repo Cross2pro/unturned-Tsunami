@@ -23,7 +23,7 @@ namespace TsunamiHack.Tsunami.Types
         {            
         }
 
-        public bool setKey(KeyCode key)
+        public bool SetKey(KeyCode key)
         {
             var dict = WaveMaker.Keybinds.GetKeyDict();
 
