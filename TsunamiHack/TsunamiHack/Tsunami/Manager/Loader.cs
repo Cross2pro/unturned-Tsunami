@@ -28,13 +28,25 @@ namespace TsunamiHack.Tsunami.Manager
         {
             if (Util.FileIO.KeybindsExist())
             {
-                Util.FileIO.LoadKeybinds(out WaveMaker.Keybinds);
+                if (Util.FileIO.LoadKeybinds(out WaveMaker.Keybinds))
+                {
+                    Util.Logging.LogMsg("Internal Error", "Unable to load keybinds file");
+                    throw new UnableToLoadException("Unable to load keybinds file");
+                }
+            }
+            else
+            {
+                if (!Util.FileIO.CreateKeybinds(out WaveMaker.Keybinds) || WaveMaker.Keybinds == null)
+                {
+                    Util.Logging.LogMsg("Internal Error", "Unable to create keybinds file");
+                    throw new UnableToLoadException("Unable to create keybinds file");
+                }
             }
         }
 
         public static void LoadDownloads()
         {
-            
+            //TODO: add method calls for downloading lists
         }
 
     }
