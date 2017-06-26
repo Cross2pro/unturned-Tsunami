@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TsunamiHack.Tsunami.Types
 {
-    abstract class InfoList
+    public abstract class InfoList
     {
         private readonly List<string> UserList;
 

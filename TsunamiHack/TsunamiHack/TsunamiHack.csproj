@@ -106,6 +106,7 @@
     <Compile Include="Tsunami\Types\BanList.cs" />
     <Compile Include="Tsunami\Types\BetaList.cs" />
     <Compile Include="Tsunami\Types\Exceptions.cs" />
+    <Compile Include="Tsunami\Types\HackController.cs" />
     <Compile Include="Tsunami\Types\InfoList.cs" />
     <Compile Include="Tsunami\Types\Keybind.cs" />
     <Compile Include="Tsunami\Types\KeybindConfig.cs" />

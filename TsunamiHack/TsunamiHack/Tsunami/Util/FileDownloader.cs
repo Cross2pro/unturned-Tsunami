@@ -12,8 +12,8 @@ namespace TsunamiHack.Tsunami.Util
     class FileDownloader
     {
         private const string PremlistUrl = "https://pastebin.com/raw/KBRtvsdz";
-        private const string BanListUrl = "";
-        private const string BetaListUrl = "";
+        private const string BanListUrl = "https://pastebin.com/raw/AxXtzUVL";
+        private const string BetaListUrl = "https://pastebin.com/raw/849dzxjn";
 
         //TODO: add list urls
 
