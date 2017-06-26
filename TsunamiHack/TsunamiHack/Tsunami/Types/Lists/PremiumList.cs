@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TsunamiHack.Tsunami.Types
 {
-    class PremiumList : InfoList
+    public class PremiumList : InfoList
     {
     }
 }

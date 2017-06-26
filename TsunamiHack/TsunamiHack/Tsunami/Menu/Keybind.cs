@@ -30,7 +30,7 @@ namespace TsunamiHack.Tsunami.Menu
             {
                 if (Input.GetKeyUp(KeyCode.F1))
                 {
-                    WaveMaker.Main.toggleMenuStatus();
+                    WaveMaker.menuMain.toggleMenuStatus();
                 }
 
                 if (Input.GetKeyUp(KeyCode.F2))

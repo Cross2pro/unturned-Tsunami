@@ -1,4 +1,5 @@
-﻿using TsunamiHack.Tsunami.Types;
+﻿using SDG.Unturned;
+using TsunamiHack.Tsunami.Types;
 
 namespace TsunamiHack.Tsunami.Manager
 {
@@ -9,26 +10,78 @@ namespace TsunamiHack.Tsunami.Manager
         {
             try
             {
-                LoadConfig();
+                Util.FileIo.CheckDirectory();
+
+                WaveMaker.FirstTime = Util.FileIo.CheckIfFirstTime();
+
+                LoadConfigs();
                 LoadKeybinds();
                 LoadDownloads();
             }
             catch (UnableToLoadException e)
             {
-
+                WaveMaker.HackDisabled = true;
             }
         }
 
-        public static void LoadConfig()
+        private static void LoadConfigs()
         {
-            
+            // --- Friends ---
+
+            if (Util.FileIo.FriendsExist())
+            {
+                Util.FileIo.CreateFriends(out WaveMaker.Friends);
+
+                if (WaveMaker.Friends == null)
+                {
+                    Util.Logging.LogMsg("Internal Error", "Unable to load friends file");
+                    throw new UnableToLoadException("Unable to load friends file");
+                }
+            }
+            else
+            {
+                Util.FileIo.CreateFriends( out WaveMaker.Friends );
+
+                if (WaveMaker.Friends == null)
+                {
+                    Util.Logging.LogMsg( "Internal Error", "Unable to create friends file" );
+                    throw new UnableToLoadException( "Unable to create friends file" );
+                }
+            }
+
+            // --- Settings ---
+
+            if (Util.FileIo.SettingsExist())
+            {
+                Util.FileIo.LoadSettings(out WaveMaker.Settings);
+
+                if (WaveMaker.Settings == null)
+                {
+                    Util.Logging.LogMsg("Internal Error", "Unable to load settings file");
+                    throw new UnableToLoadException("Unable to load settings file");
+                }
+            }
+            else
+            {
+                Util.FileIo.CreateSettings(out WaveMaker.Settings);
+
+                if (WaveMaker.Settings == null)
+                {
+                    Util.Logging.LogMsg("Internal Error", "Unable to create settings file");
+                    throw new UnableToLoadException("Unable to create settings file");
+                }
+            }
+
+
         }
 
-        public static void LoadKeybinds()
+        private static void LoadKeybinds()
         {
-            if (Util.FileIO.KeybindsExist())
+            if (Util.FileIo.KeybindsExist())
             {
-                if (Util.FileIO.LoadKeybinds(out WaveMaker.Keybinds))
+                Util.FileIo.LoadKeybinds(out WaveMaker.Keybinds);
+
+                if (WaveMaker.Keybinds == null)
                 {
                     Util.Logging.LogMsg("Internal Error", "Unable to load keybinds file");
                     throw new UnableToLoadException("Unable to load keybinds file");
@@ -36,7 +89,7 @@ namespace TsunamiHack.Tsunami.Manager
             }
             else
             {
-                if (!Util.FileIO.CreateKeybinds(out WaveMaker.Keybinds) || WaveMaker.Keybinds == null)
+                if (!Util.FileIo.CreateKeybinds(out WaveMaker.Keybinds) || WaveMaker.Keybinds == null)
                 {
                     Util.Logging.LogMsg("Internal Error", "Unable to create keybinds file");
                     throw new UnableToLoadException("Unable to create keybinds file");
@@ -44,9 +97,11 @@ namespace TsunamiHack.Tsunami.Manager
             }
         }
 
-        public static void LoadDownloads()
+        private static void LoadDownloads()
         {
-            //TODO: add method calls for downloading lists
+            Util.FileDownloader.DownloadAll(out WaveMaker.Prem, out WaveMaker.Ban, out WaveMaker.Beta);
+            Util.FileDownloader.DownloadInfo(out WaveMaker.Controller);
+            
         }
 
     }

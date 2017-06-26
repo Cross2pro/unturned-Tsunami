@@ -6,18 +6,27 @@ using System.Text;
 using System.Threading.Tasks;
 using SDG.Unturned;
 using TsunamiHack.Tsunami.Types;
+using TsunamiHack.Tsunami.Types.Lists;
+using TsunamiHack.Tsunami.Types.Configs;
 using UnityEngine;
 
 namespace TsunamiHack.Tsunami.Manager
 {
     class WaveMaker
     {
+        public static PremiumList Prem;
+        public static BanList Ban;
+        public static BetaList Beta;
+        public static HackController Controller;
+        public static FriendsList Friends;
         public static KeybindConfig Keybinds;
+        public static Settings Settings;
 
-        private bool _firstTime;
+        public static bool FirstTime;
+        public static bool HackDisabled;
 
-        public static Menu.Main Main;
-        public static Menu.Keybind Keybind;
+        public static Menu.Main menuMain;
+        public static Menu.Keybind menuKeybind;
 
 
         private GameObject _obj;
@@ -25,7 +34,6 @@ namespace TsunamiHack.Tsunami.Manager
 
         public WaveMaker()
         {
-
         }
 
         public void Start()
@@ -42,11 +50,11 @@ namespace TsunamiHack.Tsunami.Manager
                 if (_obj == null)
                 {
                     _obj = new GameObject();
-                    Main = _obj.AddComponent<Menu.Main>();
-                    Keybind = _obj.AddComponent<Menu.Keybind>();
+                    menuMain = _obj.AddComponent<Menu.Main>();
+                    menuKeybind = _obj.AddComponent<Menu.Keybind>();
 
-                    UnityEngine.Object.DontDestroyOnLoad(Main);
-                    UnityEngine.Object.DontDestroyOnLoad(Keybind);
+                    UnityEngine.Object.DontDestroyOnLoad(menuMain);
+                    UnityEngine.Object.DontDestroyOnLoad(menuKeybind);
 
                     //TODO: add other hack objects
                 }

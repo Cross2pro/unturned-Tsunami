@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace TsunamiHack.Tsunami.Types
 {
-    class BetaList : InfoList
+    public class Setting
     {
+        public string Name;
+        public object Value;
     }
 }

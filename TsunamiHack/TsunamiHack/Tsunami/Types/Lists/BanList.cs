@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TsunamiHack.Tsunami.Types
 {
-    class BanList : InfoList
+    public class BanList : InfoList
     {
     }
 }

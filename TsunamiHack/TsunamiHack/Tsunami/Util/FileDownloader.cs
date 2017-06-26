@@ -9,17 +9,16 @@ using Newtonsoft.Json;
 
 namespace TsunamiHack.Tsunami.Util
 {
-    class FileDownloader
+    public class FileDownloader
     {
         private const string PremlistUrl = "https://pastebin.com/raw/KBRtvsdz";
         private const string BanListUrl = "https://pastebin.com/raw/AxXtzUVL";
         private const string BetaListUrl = "https://pastebin.com/raw/849dzxjn";
-
-        //TODO: add list urls
+        private const string ControllerInfoUrl = "https://pastebin.com/raw/v3VCgGCE";
 
         public enum ListType { Premium, Ban, Beta}
 
-        static void DownloadList(out InfoList list, ListType type)
+        public static void DownloadList(out InfoList list, ListType type)
         {
             list = null;
 
@@ -42,7 +41,7 @@ namespace TsunamiHack.Tsunami.Util
             list = JsonConvert.DeserializeObject<InfoList>(raw);
         }
 
-        static void DownloadAll(out PremiumList premiumList, out BanList banList, out BetaList betaList ) 
+        public static void DownloadAll(out PremiumList premiumList, out BanList banList, out BetaList betaList ) 
         {
             WebClient web = new WebClient();
 
@@ -54,8 +53,13 @@ namespace TsunamiHack.Tsunami.Util
 
             json = web.DownloadString(BetaListUrl);
             betaList = JsonConvert.DeserializeObject<BetaList>(json);
-        } 
+        }
 
-        //TODO: add method to download info pastebin for disabling hack etc
+        public static void DownloadInfo(out HackController ctrl)
+        {
+            WebClient web = new WebClient();
+            var raw = web.DownloadString(ControllerInfoUrl);
+            ctrl = JsonConvert.DeserializeObject<HackController>(raw);
+        }
     }
 }
