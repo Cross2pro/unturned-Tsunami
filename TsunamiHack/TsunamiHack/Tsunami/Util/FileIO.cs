@@ -10,6 +10,8 @@ namespace TsunamiHack.Tsunami.Util
 {
     class FileIo
     {
+        //TODO: Implement a way to check if a file is empty and if so create a file instead.
+
         private static readonly string Path = Application.persistentDataPath;
         private static readonly string Directory = Path + @"\Tsunami";
         private static readonly string KeybindPath = Directory + @"\Keybinds.dat";
@@ -40,34 +42,31 @@ namespace TsunamiHack.Tsunami.Util
             keybinds = JsonConvert.DeserializeObject<KeybindConfig>(raw);
         }
 
-        public static bool CreateKeybinds(out KeybindConfig keybinds)
+        public static void CreateKeybinds(out KeybindConfig keybinds)
         {
-            var success = false;
+            
+            var output = new KeybindConfig();
+            output.AddBind("Main Menu", KeyCode.F1);
+            output.AddBind("Keybind Menu", KeyCode.F2);
 
-            try
-            {
-                keybinds = new KeybindConfig();
-                keybinds.AddBind("Main", KeyCode.F1);
-                keybinds.AddBind("Keybinds", KeyCode.F2);
+            Util.Logging.LogMsg("Keybinds instance created","Instance created, binds added");   //remove later
 
-                //TODO: add other default keybinds
-
-                SaveKeybinds(keybinds);
-                success = true;
-            }
-            catch (Exception e)
-            {
-
-                keybinds = null;
-            }
-
-            return success;
+            SaveKeybinds(output);
+            keybinds = output;
         }
 
         private static void SaveKeybinds(KeybindConfig config)
         {
             var json = JsonConvert.SerializeObject(config);
+
+            if (!KeybindsExist())
+            {
+                File.Create(KeybindPath).Dispose();
+            }
+
             File.WriteAllText(KeybindPath, json);
+
+            Util.Logging.LogMsg("Keybinds pasted and saved", "saved");  //remove later
         }
 
         #endregion
@@ -133,30 +132,14 @@ namespace TsunamiHack.Tsunami.Util
 
         public static bool CheckIfFirstTime()
         {
-            if (File.Exists(InfoPath))
-            {
-                var time = File.ReadAllText(InfoPath);
+            var result = File.Exists(InfoPath);
 
-                try
-                {
-                    if (DateTime.Parse(time) == DateTime.Now)
-                    {
-                        return false;
-                    }
-                }
-                catch (Exception e)
-                {
-                    return true;
-                }
-
-                return false;
-            }
-            else
+            if (!result)
             {
                 File.Create(InfoPath);
-                File.WriteAllText(InfoPath, DateTime.Now.ToString());
-                return true;
             }
+
+            return result;
         }
 
         #endregion  

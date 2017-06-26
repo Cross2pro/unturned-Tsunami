@@ -20,10 +20,7 @@ namespace TsunamiHack.Tsunami.Util
 
         public static void LogMsg(string header, string msg, string footer = "END")
         {
-            Debug.Log($"---{header}---");
-            Debug.Log($"{msg} occured @ {DateTime.Now}");
-            Debug.Log($"---{footer}---");
-
+            Debug.Log($"\n\n---{header}--- // {msg} (Occured @ {DateTime.Now}) // ---{footer}---\n\n");
         }
     }
 }

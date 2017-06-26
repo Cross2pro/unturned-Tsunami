@@ -14,9 +14,10 @@ namespace TsunamiHack.Tsunami.Manager
 
                 WaveMaker.FirstTime = Util.FileIo.CheckIfFirstTime();
 
-                LoadConfigs();
+                //LoadConfigs();
+                Util.Logging.LogMsg( "Method Call", "Load called" );  //remove later
                 LoadKeybinds();
-                LoadDownloads();
+                //LoadDownloads();
             }
             catch (UnableToLoadException e)
             {
@@ -89,7 +90,11 @@ namespace TsunamiHack.Tsunami.Manager
             }
             else
             {
-                if (!Util.FileIo.CreateKeybinds(out WaveMaker.Keybinds) || WaveMaker.Keybinds == null)
+                Util.Logging.LogMsg("Changed values", "Keybinds dont exist");  //remove later
+
+                Util.FileIo.CreateKeybinds(out WaveMaker.Keybinds);
+
+                if (WaveMaker.Keybinds == null)
                 {
                     Util.Logging.LogMsg("Internal Error", "Unable to create keybinds file");
                     throw new UnableToLoadException("Unable to create keybinds file");

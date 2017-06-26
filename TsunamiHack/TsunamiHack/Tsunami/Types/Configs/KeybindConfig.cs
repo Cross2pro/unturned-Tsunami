@@ -10,7 +10,7 @@ namespace TsunamiHack.Tsunami.Types
 {
     public class KeybindConfig
     {
-        private Dictionary<string, KeyCode> KeyDict;
+        public Dictionary<string, KeyCode> KeyDict;
 
         public KeybindConfig()
         {
