@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using SDG.Unturned;
@@ -33,6 +34,11 @@ namespace TsunamiHack.Tsunami.Manager
 
         public void Start()
         {
+            
+//            Prem = new PremiumList();
+//            Ban = new BanList();
+//            Beta = new BetaList();
+            
             //check if its first time
             //check if on ban list
         }

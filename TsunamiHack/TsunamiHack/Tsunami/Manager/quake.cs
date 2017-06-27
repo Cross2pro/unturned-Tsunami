@@ -18,9 +18,8 @@ namespace TsunamiHack.Tsunami.Manager
             //Add all hack components
             //Call loader
 
-
-            WM.Start();
             Loader.LoadAll();
+            WM.Start();
         }
 
         public void Update()

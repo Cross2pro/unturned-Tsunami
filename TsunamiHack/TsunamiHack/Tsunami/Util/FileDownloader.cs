@@ -8,11 +8,12 @@ using System.Text;
 using System.Threading.Tasks;
 using TsunamiHack.Tsunami.Types;
 using Newtonsoft.Json;
+using SDG.Provider.Services;
 using TsunamiHack.Tsunami.Types.Lists;
 
 namespace TsunamiHack.Tsunami.Util
 {
-    public class FileDownloader
+    public static  class FileDownloader
     {
         private const string PremlistUrl = "https://pastebin.com/raw/KBRtvsdz";
         private const string BanListUrl = "https://pastebin.com/raw/AxXtzUVL";
@@ -27,6 +28,7 @@ namespace TsunamiHack.Tsunami.Util
             return true;
         }
 
+        [Obsolete]
         public static void DownloadList(out InfoList list, ListType type)
         {
             list = null;
@@ -49,48 +51,27 @@ namespace TsunamiHack.Tsunami.Util
 
             list = JsonConvert.DeserializeObject<InfoList>(raw);
         }
-        
-        //TODO: fix null reference exception caused by this method!!!
-        
-        public static void DownloadAll(out PremiumList premiumList, out BanList banList, out BetaList betaList )
+                
+        public static void DownloadAll(out PremiumList premiumList, out BanList banList, out BetaList betaList)
         {
             ServicePointManager.ServerCertificateValidationCallback = Validator;
-            
             var web = new WebClient();
-            
-            Util.Logging.LogMsg("Created", "Instance of webclient created");
-
             var json = "";
-            
-            try
-            {
-                Util.Logging.LogMsg("Attempt", "Trying to download string");
-                json = web.DownloadString(PremlistUrl);
-                Logging.LogMsg("Success", "String Downloaded Sucessfully");
-            }
-            catch (WebException e)
-            {
-                Util.Logging.LogMsg("FAILED", "Download Failed");
-                Util.Logging.Exception(e);
-            }
-            
-            
+
+            json = web.DownloadString(PremlistUrl);
             premiumList = JsonConvert.DeserializeObject<PremiumList>(json);
-            
-            Logging.LogMsg("Output", premiumList.UserList.Count.ToString());
 
-//            json = web.DownloadString(BanListUrl);
-//            banList = JsonConvert.DeserializeObject<BanList>(json);
+            json = web.DownloadString(BanListUrl);
+            banList = JsonConvert.DeserializeObject<BanList>(json);
 
-//            json = web.DownloadString(BetaListUrl);
-//            betaList = JsonConvert.DeserializeObject<BetaList>(json);
+            json = web.DownloadString(BetaListUrl);
+            betaList = JsonConvert.DeserializeObject<BetaList>(json);
 
-            banList = null;
-            betaList = null;
         }
 
         public static void DownloadInfo(out HackController ctrl)
         {
+            ServicePointManager.ServerCertificateValidationCallback = Validator;
             var web = new WebClient();
             var raw = web.DownloadString(ControllerInfoUrl);
             ctrl = JsonConvert.DeserializeObject<HackController>(raw);

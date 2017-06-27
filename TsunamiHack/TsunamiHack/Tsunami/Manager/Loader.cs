@@ -7,19 +7,17 @@ namespace TsunamiHack.Tsunami.Manager
 {
     class Loader
     {
-        //todo: remove all debug log calls
-        //todo: fix saving and serialization
-
+        
         public static void LoadAll()
         {
             try
             {
                 Util.FileIo.CheckDirectory();
 
-//                WaveMaker.FirstTime = Util.FileIo.CheckIfFirstTime();
+                WaveMaker.FirstTime = Util.FileIo.CheckIfFirstTime();
 
-//                LoadConfigs();
-//                LoadKeybinds();
+                LoadConfigs();
+                LoadKeybinds();
                 LoadDownloads();
             }
             catch (UnableToLoadException e)
@@ -109,7 +107,7 @@ namespace TsunamiHack.Tsunami.Manager
         private static void LoadDownloads()
         {
             Util.FileDownloader.DownloadAll(out WaveMaker.Prem, out WaveMaker.Ban, out WaveMaker.Beta);
-//            Util.FileDownloader.DownloadInfo(out WaveMaker.Controller);
+            Util.FileDownloader.DownloadInfo(out WaveMaker.Controller);
                    
         }
 

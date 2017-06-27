@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace TsunamiHack.Tsunami.Types.Lists
 {
+    [Obsolete]
     public abstract class InfoList
     {
-        public readonly List<string> UserList;
+        public List<string> UserList;
 
         public virtual string GetUserByIndex(int index)
         {
