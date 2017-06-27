@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace TsunamiHack.Tsunami.Types
+namespace TsunamiHack.Tsunami.Types.Configs
 {
     public class KeybindConfig
     {
@@ -53,7 +48,7 @@ namespace TsunamiHack.Tsunami.Types
 
         public Dictionary<string, KeyCode> GetKeyDict()
         { 
-            return KeyDict;
+             return KeyDict;
         }
             
     }

@@ -15,13 +15,15 @@ namespace TsunamiHack.Tsunami.Menu
         public bool MenuOpened { get; private set; }
         private Rect _windowRect;
 
+        //TODO: remove these keycodes and implement loaded keybind config
+        
         private KeyCode mainMenu;
         private KeyCode keybindMenu;
 
         public void Start()
         {
             var size = new Vector2(200,300);
-            _windowRect = Util.MenuTools.GetRectAtLoc(size, MenuTools.Horizontal.RightMid,MenuTools.Vertical.Center, false);
+            _windowRect = MenuTools.GetRectAtLoc(size, MenuTools.Horizontal.RightMid,MenuTools.Vertical.Center, false);
         }
 
         public void Update()
@@ -30,12 +32,12 @@ namespace TsunamiHack.Tsunami.Menu
             {
                 if (Input.GetKeyUp(KeyCode.F1))
                 {
-                    WaveMaker.menuMain.toggleMenuStatus();
+                    WaveMaker.MenuMain.ToggleMenuStatus();
                 }
 
                 if (Input.GetKeyUp(KeyCode.F2))
                 {
-                    toggleMenuStatus();
+                    ToggleMenuStatus();
                 }
                 
             }
@@ -48,7 +50,7 @@ namespace TsunamiHack.Tsunami.Menu
             {
                 if (MenuOpened)
                 {
-                    _windowRect = GUI.Window(2, _windowRect, new GUI.WindowFunction(MenuFunct), "Keybind Menu");
+                    _windowRect = GUI.Window(2, _windowRect, MenuFunct, "Keybind Menu");
                 }
             }
         }
@@ -62,17 +64,17 @@ namespace TsunamiHack.Tsunami.Menu
 
         #region Interface Members
 
-        public void setMenuStatus(bool setting)
+        public void SetMenuStatus(bool setting)
         {
             MenuOpened = setting;
         }
 
-        public void toggleMenuStatus()
+        public void ToggleMenuStatus()
         {
             MenuOpened = !MenuOpened;
         }
 
-        public bool getMenuStatus()
+        public bool GetMenuStatus()
         {
             return MenuOpened;
         }

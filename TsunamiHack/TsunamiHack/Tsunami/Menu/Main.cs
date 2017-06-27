@@ -22,7 +22,7 @@ namespace TsunamiHack.Tsunami.Menu
         public void Start()
         {
             var size = new Vector2(200, 500);
-            _windowRect = Util.MenuTools.GetRectAtLoc(size, MenuTools.Horizontal.Center, MenuTools.Vertical.Center, false);
+            _windowRect = MenuTools.GetRectAtLoc(size, MenuTools.Horizontal.Center, MenuTools.Vertical.Center, false);
         }
 
         public void Update()
@@ -35,14 +35,14 @@ namespace TsunamiHack.Tsunami.Menu
             {
                 if (MenuOpened)
                 {
-                    _windowRect = GUI.Window(1, _windowRect, new GUI.WindowFunction(MenuFunct), "Main Menu");
+                    _windowRect = GUI.Window(1, _windowRect, MenuFunct, "Main Menu");
                 }
             }
         }
 
         public void MenuFunct(int id)
         {
-            _testButton = GUILayout.Toggle(_testButton, "Test button", new GUILayoutOption[0]);
+            _testButton = GUILayout.Toggle(_testButton, "Test button");
             GUI.DragWindow();
         }
 
@@ -50,17 +50,17 @@ namespace TsunamiHack.Tsunami.Menu
 
         #region Interface Members
 
-        public void setMenuStatus(bool setting)
+        public void SetMenuStatus(bool setting)
         {
             MenuOpened = setting;
         }
 
-        public void toggleMenuStatus()
+        public void ToggleMenuStatus()
         {
             MenuOpened = !MenuOpened;
         }
 
-        public bool getMenuStatus()
+        public bool GetMenuStatus()
         {
             return MenuOpened;
         }

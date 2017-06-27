@@ -17,9 +17,9 @@ namespace TsunamiHack.Tsunami
         #endregion
 
         #region Menu Members
-        void setMenuStatus(bool setting);
-        void toggleMenuStatus();
-        bool getMenuStatus();
+        void SetMenuStatus(bool setting);
+        void ToggleMenuStatus();
+        bool GetMenuStatus();
         #endregion
     }
 }

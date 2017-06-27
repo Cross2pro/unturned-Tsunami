@@ -11,16 +11,16 @@ namespace TsunamiHack.Tsunami.Util
 {
     class Logging
     {
+        //TODO: Add method to output a list to file
+        
         public static void Exception(Exception e)
         {
-            Debug.Log($"---Exception occured @ {DateTime.Now}---");
-            Debug.Log(e);
-            Debug.Log("---End---");
+            Debug.Log($"\n\n\n--- Exception occured @ {DateTime.Now} ---\n{e}\n--- END ---\n\n\n");
         }
 
         public static void LogMsg(string header, string msg, string footer = "END")
         {
-            Debug.Log($"\n\n---{header}--- // {msg} (Occured @ {DateTime.Now}) // ---{footer}---\n\n");
+            Debug.Log($"\n\n---{header}---\n{msg} (Occured @ {DateTime.Now})\n---{footer}---\n\n");
         }
     }
 }

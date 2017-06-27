@@ -27,7 +27,7 @@ namespace TsunamiHack.Tsunami.Util
             }
         }
 
-        #region Keybinds
+    #region Keybinds
 
         public static bool KeybindsExist()
         {
@@ -49,7 +49,7 @@ namespace TsunamiHack.Tsunami.Util
             output.AddBind("Main Menu", KeyCode.F1);
             output.AddBind("Keybind Menu", KeyCode.F2);
 
-            Util.Logging.LogMsg("Keybinds instance created","Instance created, binds added");   //remove later
+            Logging.LogMsg("Keybinds instance created","Instance created, binds added");   //remove later
 
             SaveKeybinds(output);
             keybinds = output;
@@ -66,16 +66,16 @@ namespace TsunamiHack.Tsunami.Util
 
             File.WriteAllText(KeybindPath, json);
 
-            Util.Logging.LogMsg("Keybinds pasted and saved", "saved");  //remove later
+            Logging.LogMsg("Keybinds pasted and saved", "saved");  //remove later
         }
 
-        #endregion
+    #endregion
 
-        #region Friends
+    #region Friends
 
         public static bool FriendsExist()
         {
-            return File.Exists( FriendsPath );
+            return File.Exists(FriendsPath);
         }
 
         public static void LoadFriends(out FriendsList fList)
@@ -96,12 +96,18 @@ namespace TsunamiHack.Tsunami.Util
         private static void SaveFriends(FriendsList friends)
         {
             var json = JsonConvert.SerializeObject(friends);
+
+            if (!FriendsExist())
+            {
+                File.Create(FriendsPath).Dispose();
+            }
+
             File.WriteAllText(FriendsPath, json);
         }
 
-        #endregion
+    #endregion
 
-        #region Settings
+    #region Settings
 
         public static bool SettingsExist()
         {
@@ -117,18 +123,27 @@ namespace TsunamiHack.Tsunami.Util
         public static void CreateSettings(out Settings settings)
         {
             settings = new Settings();
+
+            //TODO: Add default settings
+
             SaveSettings(settings);
         }
 
         private static void SaveSettings(Settings settings)
         {
             var raw = JsonConvert.SerializeObject(settings);
+
+            if (!SettingsExist())
+            {
+                File.Create(SettingsPath).Dispose();
+            }
+
             File.WriteAllText(SettingsPath, raw);
         }
 
-        #endregion
+    #endregion
 
-        #region first time
+    #region first time
 
         public static bool CheckIfFirstTime()
         {
@@ -142,6 +157,6 @@ namespace TsunamiHack.Tsunami.Util
             return result;
         }
 
-        #endregion  
+    #endregion  
     }
 }

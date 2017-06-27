@@ -1,10 +1,14 @@
 ﻿using SDG.Unturned;
 using TsunamiHack.Tsunami.Types;
+using TsunamiHack.Tsunami.Types.Lists;
+using TsunamiHack.Tsunami.Util;
 
 namespace TsunamiHack.Tsunami.Manager
 {
     class Loader
     {
+        //todo: remove all debug log calls
+        //todo: fix saving and serialization
 
         public static void LoadAll()
         {
@@ -12,15 +16,15 @@ namespace TsunamiHack.Tsunami.Manager
             {
                 Util.FileIo.CheckDirectory();
 
-                WaveMaker.FirstTime = Util.FileIo.CheckIfFirstTime();
+//                WaveMaker.FirstTime = Util.FileIo.CheckIfFirstTime();
 
-                //LoadConfigs();
-                Util.Logging.LogMsg( "Method Call", "Load called" );  //remove later
-                LoadKeybinds();
-                //LoadDownloads();
+//                LoadConfigs();
+//                LoadKeybinds();
+                LoadDownloads();
             }
             catch (UnableToLoadException e)
             {
+                Util.Logging.Exception(e);
                 WaveMaker.HackDisabled = true;
             }
         }
@@ -31,7 +35,7 @@ namespace TsunamiHack.Tsunami.Manager
 
             if (Util.FileIo.FriendsExist())
             {
-                Util.FileIo.CreateFriends(out WaveMaker.Friends);
+                Util.FileIo.LoadFriends(out WaveMaker.Friends);
 
                 if (WaveMaker.Friends == null)
                 {
@@ -39,7 +43,7 @@ namespace TsunamiHack.Tsunami.Manager
                     throw new UnableToLoadException("Unable to load friends file");
                 }
             }
-            else
+            else 
             {
                 Util.FileIo.CreateFriends( out WaveMaker.Friends );
 
@@ -90,7 +94,7 @@ namespace TsunamiHack.Tsunami.Manager
             }
             else
             {
-                Util.Logging.LogMsg("Changed values", "Keybinds dont exist");  //remove later
+                        Util.Logging.LogMsg("Changed values", "Keybinds dont exist");  //remove later
 
                 Util.FileIo.CreateKeybinds(out WaveMaker.Keybinds);
 
@@ -105,8 +109,8 @@ namespace TsunamiHack.Tsunami.Manager
         private static void LoadDownloads()
         {
             Util.FileDownloader.DownloadAll(out WaveMaker.Prem, out WaveMaker.Ban, out WaveMaker.Beta);
-            Util.FileDownloader.DownloadInfo(out WaveMaker.Controller);
-            
+//            Util.FileDownloader.DownloadInfo(out WaveMaker.Controller);
+                   
         }
 
     }

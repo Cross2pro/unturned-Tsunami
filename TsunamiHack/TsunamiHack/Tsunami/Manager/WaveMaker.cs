@@ -25,16 +25,11 @@ namespace TsunamiHack.Tsunami.Manager
         public static bool FirstTime;
         public static bool HackDisabled;
 
-        public static Menu.Main menuMain;
-        public static Menu.Keybind menuKeybind;
+        public static Menu.Main MenuMain;
+        public static Menu.Keybind MenuKeybind;
 
 
         private GameObject _obj;
-
-
-        public WaveMaker()
-        {
-        }
 
         public void Start()
         {
@@ -50,11 +45,11 @@ namespace TsunamiHack.Tsunami.Manager
                 if (_obj == null)
                 {
                     _obj = new GameObject();
-                    menuMain = _obj.AddComponent<Menu.Main>();
-                    menuKeybind = _obj.AddComponent<Menu.Keybind>();
+                    MenuMain = _obj.AddComponent<Menu.Main>();
+                    MenuKeybind = _obj.AddComponent<Menu.Keybind>();
 
-                    UnityEngine.Object.DontDestroyOnLoad(menuMain);
-                    UnityEngine.Object.DontDestroyOnLoad(menuKeybind);
+                    UnityEngine.Object.DontDestroyOnLoad(MenuMain);
+                    UnityEngine.Object.DontDestroyOnLoad(MenuKeybind);
 
                     //TODO: add other hack objects
                 }

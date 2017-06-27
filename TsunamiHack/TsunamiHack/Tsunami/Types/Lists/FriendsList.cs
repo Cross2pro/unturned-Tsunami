@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TsunamiHack.Tsunami.Types.Lists
 {
@@ -10,14 +7,19 @@ namespace TsunamiHack.Tsunami.Types.Lists
     {
         public List<Friend> Userlist;
 
-        public void RemoveFriend(ulong Id)
+        public FriendsList()
         {
-           if(Array.Exists(Userlist.ToArray(), friend => friend.steamId == Id ))
+            Userlist = new List<Friend>();
+        }
+
+        public void RemoveFriend(ulong id)
+        {
+           if(Array.Exists(Userlist.ToArray(), friend => friend.SteamId == id ))
            {
 
                foreach (var friend in Userlist)
                {
-                   if (friend.steamId == Id)
+                   if (friend.SteamId == id)
                    {
                        Userlist.Remove(friend);
                    }
@@ -25,13 +27,13 @@ namespace TsunamiHack.Tsunami.Types.Lists
            }
         }
 
-        public void RemoveFriend(string Name)
+        public void RemoveFriend(string name)
         {
-            if (Array.Exists(Userlist.ToArray(), friend => friend.Name == Name))
+            if (Array.Exists(Userlist.ToArray(), friend => friend.Name == name))
             {
                 foreach (var friend in Userlist)
                 {
-                    if (friend.Name == Name)
+                    if (friend.Name == name)
                     {
                         Userlist.Remove(friend);
                     }

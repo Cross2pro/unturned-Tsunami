@@ -4,16 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TsunamiHack.Tsunami.Types
+namespace TsunamiHack.Tsunami.Types.Lists
 {
     public abstract class InfoList
     {
-        private readonly List<string> UserList;
+        public readonly List<string> UserList;
 
         public virtual string GetUserByIndex(int index)
         {
-            if (index > UserList.Count) return null;
-            return UserList[index];
+            return index > UserList.Count ? null : UserList[index];
         }
 
         public virtual string GetUserByName(string name)
@@ -28,6 +27,10 @@ namespace TsunamiHack.Tsunami.Types
             return UserList;
         }
 
-        //todo: add any more virtual methods for manipulating userlist
+        public virtual bool Contain(string item)
+        {
+            return UserList.Contains(item);
+        }
+
     }
 }

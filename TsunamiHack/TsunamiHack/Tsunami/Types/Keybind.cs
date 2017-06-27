@@ -31,11 +31,10 @@ namespace TsunamiHack.Tsunami.Types
             {
                 return false;
             }
-            else
-            {
-                Key = key;
-                return true;
-            }
+            
+            Key = key;
+            return true;
+           
         }
     }
 }

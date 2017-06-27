@@ -14,7 +14,7 @@ namespace TsunamiHack.Tsunami.Manager
             try
             {
                 var hook = new GameObject();
-                Quake instance = hook.AddComponent<Quake>();
+                var instance = hook.AddComponent<Quake>();
                 UnityEngine.Object.DontDestroyOnLoad(instance);
             }
             catch (Exception e)
