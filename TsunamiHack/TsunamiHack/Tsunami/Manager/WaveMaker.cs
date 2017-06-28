@@ -13,7 +13,7 @@ using UnityEngine;
 
 namespace TsunamiHack.Tsunami.Manager
 {
-    class WaveMaker
+    internal class WaveMaker
     {
         public static PremiumList Prem;
         public static BanList Ban;
@@ -34,10 +34,7 @@ namespace TsunamiHack.Tsunami.Manager
 
         public void Start()
         {
-            
-//            Prem = new PremiumList();
-//            Ban = new BanList();
-//            Beta = new BetaList();
+
             
             //check if its first time
             //check if on ban list
@@ -58,6 +55,11 @@ namespace TsunamiHack.Tsunami.Manager
                     UnityEngine.Object.DontDestroyOnLoad(MenuKeybind);
 
                     //TODO: add other hack objects
+
+                    if (FirstTime)
+                    {
+                        //TODO: add first time popup window
+                    }
                 }
             }
         }

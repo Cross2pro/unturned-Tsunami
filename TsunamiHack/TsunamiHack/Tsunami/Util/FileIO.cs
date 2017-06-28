@@ -1,18 +1,15 @@
 ﻿using System;
 using UnityEngine;
 using Newtonsoft.Json;
-using TsunamiHack.Tsunami.Types;
+using System.Collections.Generic;
 using System.IO;
 using TsunamiHack.Tsunami.Types.Lists;
 using TsunamiHack.Tsunami.Types.Configs;
 
 namespace TsunamiHack.Tsunami.Util
 {
-    class FileIo
+    internal class FileIo
     {
-        //TODO: Implement a way to check if a file is empty and if so create a file instead.
-        //TODO: Change all file io to streams
-
         private static readonly string Path = Application.persistentDataPath;
         private static readonly string Directory = Path + @"\Tsunami";
         private static readonly string KeybindPath = Directory + @"\Keybinds.dat";
@@ -31,9 +28,30 @@ namespace TsunamiHack.Tsunami.Util
             }
         }
 
-        public static void CheckEmpty(string path)
-        {
+        //TODO: add signature to file to ensure that you are using legit .dats
 
+        public static void CheckEmpty()
+        {
+            var list = new List<String>()
+            {
+                KeybindPath,
+                FriendsPath,
+                SettingsPath
+            };
+
+            foreach (var path in list)
+            {
+                if (File.Exists(path))
+                    _reader = new StreamReader(path);
+
+                var contents = _reader.ReadToEnd();
+
+                if (contents.Length < 1)
+                {
+                    File.Delete(path);
+                }
+
+            }
         }
 
     #region Keybinds
@@ -46,8 +64,6 @@ namespace TsunamiHack.Tsunami.Util
         [Obsolete]
         public static void LoadKeybinds(out KeybindConfig keybinds)
         {
-            keybinds = null;
-
             var raw = File.ReadAllText(KeybindPath);
             keybinds = JsonConvert.DeserializeObject<KeybindConfig>(raw);
         }
@@ -56,10 +72,11 @@ namespace TsunamiHack.Tsunami.Util
         {
             
             keybinds = new KeybindConfig();
-            keybinds.AddBind("Main Menu", KeyCode.F1);
-            keybinds.AddBind("Keybind Menu", KeyCode.F2);
+            keybinds.AddBind("main", KeyCode.F1);
+            keybinds.AddBind("visuals", KeyCode.F5);
+            keybinds.AddBind("keybinds", KeyCode.F6);
 
-            SaveKeybinds(keybinds);
+            StreamSaveKeybinds(keybinds);
         }
 
         [Obsolete]
@@ -87,8 +104,6 @@ namespace TsunamiHack.Tsunami.Util
         [Obsolete]
         public static void LoadFriends(out FriendsList fList)
         {
-            fList = null;
-
             var raw = File.ReadAllText(FriendsPath);
             fList = JsonConvert.DeserializeObject<FriendsList>(raw);
 
@@ -97,7 +112,7 @@ namespace TsunamiHack.Tsunami.Util
         public static void CreateFriends(out FriendsList fList)
         {
             fList = new FriendsList();
-            SaveFriends(fList);
+            StreamSaveFriends(fList);
         }
 
         [Obsolete]
@@ -135,7 +150,7 @@ namespace TsunamiHack.Tsunami.Util
 
             //TODO: Add default settings
 
-            SaveSettings(settings);
+            StreamSaveSettings(settings);
         }
 
         [Obsolete]
@@ -174,7 +189,6 @@ namespace TsunamiHack.Tsunami.Util
         public static void StreamLoadKeybinds(out KeybindConfig keybinds)
         {
             _reader = new StreamReader(KeybindPath);
-            keybinds = null;
             var json = _reader.ReadToEnd();
             _reader.Dispose();
             keybinds = JsonConvert.DeserializeObject<KeybindConfig>(json);
@@ -197,7 +211,6 @@ namespace TsunamiHack.Tsunami.Util
         public static void StreamLoadFriends(out FriendsList friends)
         {
             _reader = new StreamReader(FriendsPath);
-            friends = null;
             var json = _reader.ReadToEnd();
             _reader.Dispose();
             friends = JsonConvert.DeserializeObject<FriendsList>(json);
@@ -216,7 +229,6 @@ namespace TsunamiHack.Tsunami.Util
             _reader = new StreamReader(SettingsPath);
             var json = _reader.ReadToEnd();
             _reader.Dispose();
-            list = null;
             list = JsonConvert.DeserializeObject<Settings>(json);
         }
 

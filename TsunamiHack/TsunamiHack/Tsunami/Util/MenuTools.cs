@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace TsunamiHack.Tsunami.Util
 {
-    class MenuTools
+    internal class MenuTools
     {
         public enum Horizontal
         {

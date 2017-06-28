@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace TsunamiHack.Tsunami.Lib
 {
-    class Keybind
+    internal class Keybind
     {
 
 

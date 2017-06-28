@@ -9,7 +9,7 @@ using Debug = UnityEngine.Debug;
 
 namespace TsunamiHack.Tsunami.Util
 {
-    class Logging
+    internal class Logging
     {        
         public static void Exception(Exception e)
         {

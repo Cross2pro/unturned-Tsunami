@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TsunamiHack.Tsunami
 {
-    interface ILibParent
+    internal interface ILibParent
     {
         void Start();
         void Update();

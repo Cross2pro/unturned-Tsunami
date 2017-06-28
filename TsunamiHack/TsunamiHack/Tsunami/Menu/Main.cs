@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace TsunamiHack.Tsunami.Menu
 {
-    class Main : MonoBehaviour, IMenuParent
+    internal class Main : MonoBehaviour, IMenuParent
     {
         public bool MenuOpened { get; private set; }
         private Rect _windowRect;

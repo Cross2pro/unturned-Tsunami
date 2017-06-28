@@ -10,15 +10,12 @@ using UnityEngine;
 
 namespace TsunamiHack.Tsunami.Menu
 {
-    class Keybind : MonoBehaviour, IMenuParent
+    internal class Keybind : MonoBehaviour, IMenuParent
     {
         public bool MenuOpened { get; private set; }
         private Rect _windowRect;
 
-        //TODO: remove these keycodes and implement loaded keybind config
-        
-        private KeyCode mainMenu;
-        private KeyCode keybindMenu;
+        //TODO:implement loaded keybind config
 
         public void Start()
         {
@@ -28,19 +25,7 @@ namespace TsunamiHack.Tsunami.Menu
 
         public void Update()
         {
-            if (Provider.isConnected)
-            {
-                if (Input.GetKeyUp(KeyCode.F1))
-                {
-                    WaveMaker.MenuMain.ToggleMenuStatus();
-                }
-
-                if (Input.GetKeyUp(KeyCode.F2))
-                {
-                    ToggleMenuStatus();
-                }
-                
-            }
+            Lib.Keybind.Check();
 
         }
 
@@ -57,8 +42,9 @@ namespace TsunamiHack.Tsunami.Menu
 
         public void MenuFunct(int id)
         {
-            GUILayout.Button($"Main Menu : {mainMenu.ToString()}");
-            GUILayout.Button($"KeybindMenu : {keybindMenu.ToString()}");
+            GUILayout.Button($"Main Menu : {WaveMaker.Keybinds.GetBind("main").ToString()}");
+            GUILayout.Button($"Visuals Menu : {WaveMaker.Keybinds.GetBind("visuals").ToString()}");
+            GUILayout.Button($"Keybind Menu : {WaveMaker.Keybinds.GetBind("keybinds").ToString()}");
             GUI.DragWindow();
         }
 

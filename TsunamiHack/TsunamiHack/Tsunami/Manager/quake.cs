@@ -9,9 +9,9 @@ using UnityEngine;
 
 namespace TsunamiHack.Tsunami.Manager
 {
-    class Quake : MonoBehaviour
+    internal class Quake : MonoBehaviour
     {
-        WaveMaker WM = new WaveMaker();
+        private WaveMaker WM = new WaveMaker();
 
         public void Start()
         {
