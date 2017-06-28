@@ -92,8 +92,6 @@ namespace TsunamiHack.Tsunami.Manager
             }
             else
             {
-                        Util.Logging.LogMsg("Changed values", "Keybinds dont exist");  //remove later
-
                 Util.FileIo.CreateKeybinds(out WaveMaker.Keybinds);
 
                 if (WaveMaker.Keybinds == null)

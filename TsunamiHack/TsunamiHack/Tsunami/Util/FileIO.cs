@@ -11,6 +11,7 @@ namespace TsunamiHack.Tsunami.Util
     class FileIo
     {
         //TODO: Implement a way to check if a file is empty and if so create a file instead.
+        //TODO: Change all file io to streams
 
         private static readonly string Path = Application.persistentDataPath;
         private static readonly string Directory = Path + @"\Tsunami";
@@ -18,6 +19,9 @@ namespace TsunamiHack.Tsunami.Util
         private static readonly string InfoPath = Directory + @"\Info.dat";
         private static readonly string FriendsPath = Directory + @"\Friends.dat";
         private static readonly string SettingsPath = Directory + @"\Settings.dat";
+
+        private static StreamReader _reader;
+        private static StreamWriter _writer;
 
         public static void CheckDirectory()
         {
@@ -27,6 +31,11 @@ namespace TsunamiHack.Tsunami.Util
             }
         }
 
+        public static void CheckEmpty(string path)
+        {
+
+        }
+
     #region Keybinds
 
         public static bool KeybindsExist()
@@ -34,6 +43,7 @@ namespace TsunamiHack.Tsunami.Util
             return File.Exists(KeybindPath);
         }
 
+        [Obsolete]
         public static void LoadKeybinds(out KeybindConfig keybinds)
         {
             keybinds = null;
@@ -45,16 +55,14 @@ namespace TsunamiHack.Tsunami.Util
         public static void CreateKeybinds(out KeybindConfig keybinds)
         {
             
-            var output = new KeybindConfig();
-            output.AddBind("Main Menu", KeyCode.F1);
-            output.AddBind("Keybind Menu", KeyCode.F2);
+            keybinds = new KeybindConfig();
+            keybinds.AddBind("Main Menu", KeyCode.F1);
+            keybinds.AddBind("Keybind Menu", KeyCode.F2);
 
-            Logging.LogMsg("Keybinds instance created","Instance created, binds added");   //remove later
-
-            SaveKeybinds(output);
-            keybinds = output;
+            SaveKeybinds(keybinds);
         }
 
+        [Obsolete]
         private static void SaveKeybinds(KeybindConfig config)
         {
             var json = JsonConvert.SerializeObject(config);
@@ -65,8 +73,6 @@ namespace TsunamiHack.Tsunami.Util
             }
 
             File.WriteAllText(KeybindPath, json);
-
-            Logging.LogMsg("Keybinds pasted and saved", "saved");  //remove later
         }
 
     #endregion
@@ -78,6 +84,7 @@ namespace TsunamiHack.Tsunami.Util
             return File.Exists(FriendsPath);
         }
 
+        [Obsolete]
         public static void LoadFriends(out FriendsList fList)
         {
             fList = null;
@@ -93,6 +100,7 @@ namespace TsunamiHack.Tsunami.Util
             SaveFriends(fList);
         }
 
+        [Obsolete]
         private static void SaveFriends(FriendsList friends)
         {
             var json = JsonConvert.SerializeObject(friends);
@@ -114,6 +122,7 @@ namespace TsunamiHack.Tsunami.Util
             return File.Exists(SettingsPath);
         }
 
+        [Obsolete]
         public static void LoadSettings(out Settings settings )
         {
             var raw = File.ReadAllText(SettingsPath);
@@ -129,6 +138,7 @@ namespace TsunamiHack.Tsunami.Util
             SaveSettings(settings);
         }
 
+        [Obsolete]
         private static void SaveSettings(Settings settings)
         {
             var raw = JsonConvert.SerializeObject(settings);
@@ -158,5 +168,67 @@ namespace TsunamiHack.Tsunami.Util
         }
 
     #endregion  
+        
+    #region  Stream
+
+        public static void StreamLoadKeybinds(out KeybindConfig keybinds)
+        {
+            _reader = new StreamReader(KeybindPath);
+            keybinds = null;
+            var json = _reader.ReadToEnd();
+            _reader.Dispose();
+            keybinds = JsonConvert.DeserializeObject<KeybindConfig>(json);
+        }
+
+        public static void StreamSaveKeybinds( KeybindConfig config)
+        {
+            var json = JsonConvert.SerializeObject(config);
+            _writer = new StreamWriter(KeybindPath);
+
+            if (!KeybindsExist())
+            {
+                File.Create(KeybindPath).Dispose();
+            }
+            
+            _writer.Write(json);
+            _writer.Dispose();
+        }
+
+        public static void StreamLoadFriends(out FriendsList friends)
+        {
+            _reader = new StreamReader(FriendsPath);
+            friends = null;
+            var json = _reader.ReadToEnd();
+            _reader.Dispose();
+            friends = JsonConvert.DeserializeObject<FriendsList>(json);
+        }
+
+        public static void StreamSaveFriends(FriendsList list)
+        {
+            _writer = new StreamWriter(FriendsPath);
+            var json = JsonConvert.SerializeObject(list);
+            _writer.Write(json);
+            _writer.Dispose();
+        }
+
+        public static void StreamLoadSettings(out Settings list)
+        {
+            _reader = new StreamReader(SettingsPath);
+            var json = _reader.ReadToEnd();
+            _reader.Dispose();
+            list = null;
+            list = JsonConvert.DeserializeObject<Settings>(json);
+        }
+
+        public static void StreamSaveSettings(Settings settings)
+        {
+            _writer = new StreamWriter(SettingsPath);
+            var json = JsonConvert.SerializeObject(settings);
+            _writer.Write(json);
+            _writer.Dispose();
+        }
+        
+    #endregion
+    
     }
 }
