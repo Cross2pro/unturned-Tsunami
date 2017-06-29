@@ -42,15 +42,17 @@ namespace TsunamiHack.Tsunami.Util
             foreach (var path in list)
             {
                 if (File.Exists(path))
-                    _reader = new StreamReader(path);
-
-                var contents = _reader.ReadToEnd();
-
-                if (contents.Length < 1)
                 {
-                    File.Delete(path);
-                }
+                    _reader = new StreamReader(path);
+                    
+                    var contents = _reader.ReadToEnd();
 
+                    if (contents.Length < 1)
+                    {
+                        File.Delete(path);
+                    }
+                }
+                 
             }
         }
 

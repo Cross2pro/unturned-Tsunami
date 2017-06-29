@@ -16,6 +16,7 @@ namespace TsunamiHack.Tsunami.Menu
         private Rect _windowRect;
 
         private bool _testButton;
+        private bool _FreeFlight;
 
 
 
@@ -27,6 +28,7 @@ namespace TsunamiHack.Tsunami.Menu
 
         public void Update()
         {
+            Player.player.look.isOrbiting = _FreeFlight;
         }
 
         public void OnGUI()
@@ -43,6 +45,8 @@ namespace TsunamiHack.Tsunami.Menu
         public void MenuFunct(int id)
         {
             _testButton = GUILayout.Toggle(_testButton, "Test button");
+            _FreeFlight = GUILayout.Toggle(_FreeFlight, "Free Flight");
+
             GUI.DragWindow();
         }
 

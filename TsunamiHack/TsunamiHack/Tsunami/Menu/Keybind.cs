@@ -15,6 +15,8 @@ namespace TsunamiHack.Tsunami.Menu
         public bool MenuOpened { get; private set; }
         private Rect _windowRect;
 
+        public static bool KeybindsChanged;
+
         //TODO:implement loaded keybind config
 
         public void Start()
@@ -27,6 +29,13 @@ namespace TsunamiHack.Tsunami.Menu
         {
             Lib.Keybind.Check();
 
+            if (Provider.isConnected)
+            {
+                if (Input.GetKeyUp(KeyCode.F1))
+                {
+                    WaveMaker.MenuMain.ToggleMenuStatus();
+                }
+            }
         }
 
         public void OnGUI()
@@ -42,9 +51,12 @@ namespace TsunamiHack.Tsunami.Menu
 
         public void MenuFunct(int id)
         {
-            GUILayout.Button($"Main Menu : {WaveMaker.Keybinds.GetBind("main").ToString()}");
-            GUILayout.Button($"Visuals Menu : {WaveMaker.Keybinds.GetBind("visuals").ToString()}");
-            GUILayout.Button($"Keybind Menu : {WaveMaker.Keybinds.GetBind("keybinds").ToString()}");
+            GUILayout.Label($"Main Menu : {WaveMaker.Keybinds.GetBind("main").ToString()}");
+            GUILayout.Space(2f);
+            GUILayout.Label($"Visuals Menu : {WaveMaker.Keybinds.GetBind("visuals").ToString()}");
+            GUILayout.Space(2f);
+            GUILayout.Label($"Keybind Menu : {WaveMaker.Keybinds.GetBind("keybinds").ToString()}");
+            GUILayout.Space(2f);
             GUI.DragWindow();
         }
 

@@ -12,16 +12,7 @@ namespace TsunamiHack.Tsunami.Types.Configs
             KeyDict = new Dictionary<string, KeyCode>();
         }
 
-        public void AddBind(string name, KeyCode key)
-        {
-
-            if (KeyDict.ContainsKey(name) || KeyDict.ContainsValue(key))
-            {
-                return;
-            }
-
-            KeyDict.Add(name, key);
-        }
+    #region returns
 
         public KeyCode GetBind(string name)
         {
@@ -40,16 +31,70 @@ namespace TsunamiHack.Tsunami.Types.Configs
             return KeyCode.F1;
         }
 
+        public Dictionary<string, KeyCode> GetKeyDict()
+        { 
+             return KeyDict;
+        }
+
+        public List<string> GetNameList()
+        {
+            var list = new List<string>();
+            foreach (var key in KeyDict.Keys)
+            {
+                list.Add(key);
+            }
+            return list;
+        }
+
+        public List<KeyCode> GetCodeList()
+        {
+            var list = new List<KeyCode>();
+            foreach (var value in KeyDict.Values)
+            {
+                list.Add(value);
+            }
+            return list;
+        }
+
+        public bool BindExists(string name)
+        {
+            return KeyDict.ContainsKey(name);
+        }
+
+        public bool BindExists(KeyCode key)
+        {
+            return KeyDict.ContainsValue(key);
+        }
+        
+    #endregion
+        
+    #region manipulation
+        
+        public void AddBind(string name, KeyCode key)
+        {
+
+            if (KeyDict.ContainsKey(name) || KeyDict.ContainsValue(key))
+            {
+                return;
+            }
+
+            KeyDict.Add(name, key);
+        }
+        
         public void RemoveBind(string name)
         {
             if (KeyDict.ContainsKey(name))
                 KeyDict.Remove(name);
         }
 
-        public Dictionary<string, KeyCode> GetKeyDict()
-        { 
-             return KeyDict;
+        public bool ChangeBind(string name, KeyCode key)
+        {
+            return true;
         }
-            
+
+    #endregion
+
+
+        
     }
 }
