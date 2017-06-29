@@ -27,6 +27,16 @@ namespace TsunamiHack.Tsunami.Util
             Bottom
         }
 
+        /// <summary>
+        /// Uses supplied values to generate a rectangle for menus
+        /// </summary>
+        /// <param name="menuSize"> The width and height of the rectangle</param>
+        /// <param name="hori"> The horizontal placement</param>
+        /// <param name="vert"> The vertical placement</param>
+        /// <param name="usePadding"> Use padding or not</param>
+        /// <param name="padding"> optional padding ammount</param>
+        /// <returns> Returns rectangle based on input values</returns>
+        
         public static Rect GetRectAtLoc(Vector2 menuSize, Horizontal hori, Vertical vert, bool usePadding, float padding = 0f)
         {
             var rect = new Rect();

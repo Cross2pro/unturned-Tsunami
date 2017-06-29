@@ -23,35 +23,11 @@
     <favorites_list name="TsunamiHack" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Main.cs" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/TsunamiHack/Tsunami/Menu/Main.cs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="555">
-              <caret line="45" column="71" lean-forward="false" selection-start-line="45" selection-start-column="71" selection-end-line="45" selection-end-column="71" />
-              <folding>
-                <marker date="1498708389754" expanded="false" signature="6:211" ph="..." />
-                <marker date="1498708389754" expanded="true" signature="247:1522" ph="{...}" />
-                <marker date="1498708389754" expanded="true" signature="302:1520" ph="{...}" />
-                <marker date="1498708389754" expanded="true" signature="495:680" ph="{...}" />
-                <marker date="1498708389754" expanded="true" signature="710:730" ph="{...}" />
-                <marker date="1498708389754" expanded="true" signature="759:999" ph="{...}" />
-                <marker date="1498708389754" expanded="true" signature="807:989" ph="{...}" />
-                <marker date="1498708389754" expanded="true" signature="853:975" ph="{...}" />
-                <marker date="1498708389754" expanded="true" signature="1038:1169" ph="{...}" />
-                <marker date="1498708389754" expanded="true" signature="1181:1514" ph="Interface Members" />
-                <marker date="1498708389754" expanded="true" signature="1255:1309" ph="{...}" />
-                <marker date="1498708389754" expanded="true" signature="1349:1407" ph="{...}" />
-                <marker date="1498708389754" expanded="true" signature="1444:1495" ph="{...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/TsunamiHack/Tsunami/Manager/Quake.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/TsunamiHack/Tsunami/Menu/Main.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -80,12 +56,14 @@
         <option value="$PROJECT_DIR$/TsunamiHack/Tsunami/Lib/Keybind.cs" />
         <option value="$PROJECT_DIR$/TsunamiHack/Tsunami/Class1.cs" />
         <option value="$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/331E5BC6-0EF2-452A-A414-AA82B76FF6CF/6d/d22840f8/Provider.cs" />
-        <option value="$PROJECT_DIR$/TsunamiHack/Tsunami/Menu/Keybind.cs" />
         <option value="$PROJECT_DIR$/TsunamiHack/Tsunami/Types/Configs/KeybindConfig.cs" />
         <option value="$PROJECT_DIR$/TsunamiHack/Tsunami/Util/FileIo.cs" />
         <option value="$PROJECT_DIR$/TsunamiHack/Tsunami/Manager/Quake.cs" />
         <option value="$PROJECT_DIR$/TsunamiHack/Tsunami/Manager/Hook.cs" />
         <option value="$PROJECT_DIR$/TsunamiHack/Tsunami/Util/Provider.cs" />
+        <option value="$PROJECT_DIR$/TsunamiHack/Tsunami/Menu/Keybind.cs" />
+        <option value="$PROJECT_DIR$/TsunamiHack/Tsunami/Util/MenuTools.cs" />
+        <option value="$APPLICATION_CONFIG_DIR$/scratches/scratch.cs" />
         <option value="$PROJECT_DIR$/TsunamiHack/Tsunami/Menu/Main.cs" />
       </list>
     </option>
@@ -129,6 +107,20 @@
               <option name="myItemId" value="TsunamiHack (2 projects)" />
               <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TsunamiHack" />
+              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" />
+              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerViewPane$ProjectViewPaneTreeStructure$createRoot$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TsunamiHack (2 projects)" />
+              <option name="myItemType" value="com.jetbrains.resharper.projectView.solutionExplorer.SolutionExplorerNodeRider" />
+            </PATH_ELEMENT>
           </PATH>
         </subPane>
         <option name="show-file-system" value="false" />
@@ -141,6 +133,7 @@
     <property name="settings.editor.selected.configurable" value="UnitTestingId" />
     <property name="full.screen.before.presentation.mode" value="false" />
     <property name="ToolWindowDatabase.ShowToolbar" value="false" />
+    <property name="com.intellij.ide.scratch.LRUPopupBuilder$2/Languages" value="C#" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -245,12 +238,14 @@
       <workItem from="1498616108890" duration="8234000" />
       <workItem from="1498668881378" duration="13546000" />
       <workItem from="1498708286525" duration="106000" />
+      <workItem from="1498753963713" duration="111000" />
+      <workItem from="1498763088740" duration="3381000" />
     </task>
     <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="40568000" />
+    <option name="totallyTimeSpent" value="44060000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -262,29 +257,29 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1696" height="1026" extended-state="6" />
+    <frame x="-8" y="-8" width="1696" height="1026" extended-state="7" />
     <layout>
-      <window_info id="Project" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.17114915" sideWeight="0.5" order="5" side_tool="false" content_ui="combo" />
-      <window_info id="TODO" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3435208" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.13814181" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Errors In Solution" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3294621" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Build" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32861805" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32837406" sideWeight="0.5" order="6" side_tool="true" content_ui="tabs" />
       <window_info id="Unit Tests" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32943678" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.3294621" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32943678" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="NuGet" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32943678" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18581907" sideWeight="0.5" order="5" side_tool="false" content_ui="combo" />
+      <window_info id="Build" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32861805" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.3294621" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="TODO" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2125" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -323,13 +318,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/TsunamiHack/Tsunami/Util/Logging.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="23" column="91" lean-forward="false" selection-start-line="23" selection-start-column="91" selection-end-line="23" selection-end-column="91" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/TsunamiHack/Tsunami/Manager/Loader.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1245">
@@ -536,13 +524,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TsunamiHack/Tsunami/Util/MenuTools.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="107" column="26" lean-forward="true" selection-start-line="107" selection-start-column="26" selection-end-line="107" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/TsunamiHack/Tsunami/Util/Logging.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="240">
@@ -600,13 +581,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TsunamiHack/Tsunami/Menu/Keybind.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="735">
-          <caret line="61" column="0" lean-forward="false" selection-start-line="61" selection-start-column="0" selection-end-line="61" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/TsunamiHack/Tsunami/Util/FileIo.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="405">
@@ -643,24 +617,93 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/TsunamiHack/Tsunami/Menu/Keybind.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="630">
+          <caret line="50" column="13" lean-forward="false" selection-start-line="50" selection-start-column="13" selection-end-line="50" selection-end-column="13" />
+          <folding>
+            <marker date="1498763485460" expanded="false" signature="6:221" ph="..." />
+            <marker date="1498763485460" expanded="true" signature="257:2337" ph="{...}" />
+            <marker date="1498763485460" expanded="true" signature="315:2335" ph="{...}" />
+            <marker date="1498763485460" expanded="true" signature="530:715" ph="{...}" />
+            <marker date="1498763485460" expanded="true" signature="745:1237" ph="{...}" />
+            <marker date="1498763485460" expanded="true" signature="827:1122" ph="{...}" />
+            <marker date="1498763485460" expanded="true" signature="889:984" ph="{...}" />
+            <marker date="1498763485460" expanded="true" signature="1032:1108" ph="{...}" />
+            <marker date="1498763485460" expanded="true" signature="1124:1227" ph="/* PlayerPauseUI.active = MenuOpened; ... */" />
+            <marker date="1498763485460" expanded="true" signature="1266:1509" ph="{...}" />
+            <marker date="1498763485460" expanded="true" signature="1314:1499" ph="{...}" />
+            <marker date="1498763485460" expanded="true" signature="1360:1485" ph="{...}" />
+            <marker date="1498763485460" expanded="true" signature="1548:1989" ph="{...}" />
+            <marker date="1498763485460" expanded="true" signature="1999:2329" ph="Interface Members" />
+            <marker date="1498763485460" expanded="true" signature="2073:2127" ph="{...}" />
+            <marker date="1498763485460" expanded="true" signature="2167:2225" ph="{...}" />
+            <marker date="1498763485460" expanded="true" signature="2262:2313" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TsunamiHack/Tsunami/Util/MenuTools.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="480">
+          <caret line="37" column="61" lean-forward="false" selection-start-line="37" selection-start-column="61" selection-end-line="37" selection-end-column="61" />
+          <folding>
+            <marker date="1498765944690" expanded="false" signature="6:134" ph="..." />
+            <marker date="1498765944690" expanded="true" signature="170:4444" ph="{...}" />
+            <marker date="1498765944690" expanded="true" signature="201:4442" ph="{...}" />
+            <marker date="1498765944690" expanded="true" signature="238:357" ph="{...}" />
+            <marker date="1498765944690" expanded="true" signature="388:507" ph="{...}" />
+            <marker date="1498765944690" expanded="true" signature="517:1035" ph="/// Uses supplied values to generate a rectangle for menus ... " />
+            <marker date="1498765944690" expanded="true" signature="1171:4436" ph="{...}" />
+            <marker date="1498765944690" expanded="true" signature="1373:2361" ph="{...}" />
+            <marker date="1498765944690" expanded="true" signature="1491:1582" ph="{...}" />
+            <marker date="1498765944690" expanded="true" signature="2155:2246" ph="{...}" />
+            <marker date="1498765944690" expanded="true" signature="2388:3369" ph="{...}" />
+            <marker date="1498765944690" expanded="true" signature="2503:2594" ph="{...}" />
+            <marker date="1498765944690" expanded="true" signature="3165:3256" ph="{...}" />
+            <marker date="1498765944690" expanded="true" signature="3418:3660" ph="{...}" />
+            <marker date="1498765944690" expanded="true" signature="3567:3646" ph="{...}" />
+            <marker date="1498765944690" expanded="true" signature="3691:3856" ph="{...}" />
+            <marker date="1498765944690" expanded="true" signature="3763:3842" ph="{...}" />
+            <marker date="1498765944690" expanded="true" signature="3906:4146" ph="{...}" />
+            <marker date="1498765944690" expanded="true" signature="4053:4132" ph="{...}" />
+            <marker date="1498765944690" expanded="true" signature="4177:4343" ph="{...}" />
+            <marker date="1498765944690" expanded="true" signature="4250:4329" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/scratch.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="8" lean-forward="false" selection-start-line="0" selection-start-column="8" selection-end-line="0" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/TsunamiHack/Tsunami/Menu/Main.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="555">
-          <caret line="45" column="71" lean-forward="false" selection-start-line="45" selection-start-column="71" selection-end-line="45" selection-end-column="71" />
+        <state relative-caret-position="210">
+          <caret line="22" column="49" lean-forward="false" selection-start-line="22" selection-start-column="49" selection-end-line="22" selection-end-column="49" />
           <folding>
-            <marker date="1498708389754" expanded="false" signature="6:211" ph="..." />
-            <marker date="1498708389754" expanded="true" signature="247:1522" ph="{...}" />
-            <marker date="1498708389754" expanded="true" signature="302:1520" ph="{...}" />
-            <marker date="1498708389754" expanded="true" signature="495:680" ph="{...}" />
-            <marker date="1498708389754" expanded="true" signature="710:730" ph="{...}" />
-            <marker date="1498708389754" expanded="true" signature="759:999" ph="{...}" />
-            <marker date="1498708389754" expanded="true" signature="807:989" ph="{...}" />
-            <marker date="1498708389754" expanded="true" signature="853:975" ph="{...}" />
-            <marker date="1498708389754" expanded="true" signature="1038:1169" ph="{...}" />
-            <marker date="1498708389754" expanded="true" signature="1181:1514" ph="Interface Members" />
-            <marker date="1498708389754" expanded="true" signature="1255:1309" ph="{...}" />
-            <marker date="1498708389754" expanded="true" signature="1349:1407" ph="{...}" />
-            <marker date="1498708389754" expanded="true" signature="1444:1495" ph="{...}" />
+            <marker date="1498766466314" expanded="false" signature="6:211" ph="..." />
+            <marker date="1498766466314" expanded="true" signature="247:3178" ph="{...}" />
+            <marker date="1498766466314" expanded="true" signature="302:3176" ph="{...}" />
+            <marker date="1498766466314" expanded="true" signature="615:961" ph="{...}" />
+            <marker date="1498766466314" expanded="true" signature="991:1570" ph="{...}" />
+            <marker date="1498766466314" expanded="true" signature="1060:1560" ph="/* PlayerPauseUI.active = MenuOpened; ... */" />
+            <marker date="1498766466314" expanded="true" signature="1599:2020" ph="{...}" />
+            <marker date="1498766466314" expanded="true" signature="1647:1997" ph="{...}" />
+            <marker date="1498766466314" expanded="true" signature="1693:1815" ph="{...}" />
+            <marker date="1498766466314" expanded="true" signature="1848:1966" ph="{...}" />
+            <marker date="1498766466314" expanded="true" signature="2059:2706" ph="{...}" />
+            <marker date="1498766466314" expanded="true" signature="2264:2653" ph="{...}" />
+            <marker date="1498766466314" expanded="true" signature="2279:2597" ph="/* var pos = new Vector2((float)(Screen.width - 205), (float)(Screen.height - 105)); ... */" />
+            <marker date="1498766466314" expanded="true" signature="2749:2817" ph="{...}" />
+            <marker date="1498766466314" expanded="true" signature="2837:3170" ph="Interface Members" />
+            <marker date="1498766466314" expanded="true" signature="2911:2965" ph="{...}" />
+            <marker date="1498766466314" expanded="true" signature="3005:3063" ph="{...}" />
+            <marker date="1498766466314" expanded="true" signature="3100:3151" ph="{...}" />
           </folding>
         </state>
       </provider>

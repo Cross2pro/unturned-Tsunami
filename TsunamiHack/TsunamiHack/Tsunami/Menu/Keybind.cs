@@ -35,7 +35,14 @@ namespace TsunamiHack.Tsunami.Menu
                 {
                     WaveMaker.MenuMain.ToggleMenuStatus();
                 }
+                if (Input.GetKeyUp(KeyCode.F2))
+                {
+                    ToggleMenuStatus();
+                }
             }
+
+//            PlayerPauseUI.active = MenuOpened;
+//            PlayerUI.window.showCursor = MenuOpened;
         }
 
         public void OnGUI()
