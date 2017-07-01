@@ -34,6 +34,11 @@ namespace TsunamiHack.Tsunami.Menu
                 if (Input.GetKeyUp(KeyCode.F1))
                 {
                     WaveMaker.MenuMain.ToggleMenuStatus();
+
+                    if (WaveMaker.PopupController.GetPopup(WaveMaker.FtPopupId).PopupOpened)
+                    {
+                        WaveMaker.PopupController.GetPopup(WaveMaker.FtPopupId).PopupOpened = false;
+                    }
                 }
                 if (Input.GetKeyUp(KeyCode.F2))
                 {

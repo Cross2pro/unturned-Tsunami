@@ -5,6 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using TsunamiHack.Tsunami.Manager;
+using TsunamiHack.Tsunami.Util;
 using UnityEngine;
 
 namespace TsunamiHack.Tsunami.Lib
@@ -25,6 +26,7 @@ namespace TsunamiHack.Tsunami.Lib
         
         private static void UpdateVars()
         {
+            
             if (Menu.Keybind.KeybindsChanged)
             {
                 
@@ -34,6 +36,8 @@ namespace TsunamiHack.Tsunami.Lib
         public static void Check()
         {
             UpdateVars();
+
+           
         }
 
         public static void ChangeKeybind(string name, KeyCode newKey)

@@ -181,7 +181,7 @@ namespace TsunamiHack.Tsunami.Util
                 File.Create(InfoPath);
             }
 
-            return result;
+            return !result;
         }
 
     #endregion  
