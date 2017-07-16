@@ -23,7 +23,7 @@ namespace TsunamiHack.Tsunami.Types.Lists
             return UserList;
         }
 
-        public bool Contain(string item)
+        public bool Contains(string item)
         {
             return UserList.Contains(item);
         }

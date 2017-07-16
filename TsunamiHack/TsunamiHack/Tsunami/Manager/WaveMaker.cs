@@ -4,7 +4,6 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.Threading.Tasks;
 using SDG.Unturned;
 using TsunamiHack.Tsunami.Types;
 using TsunamiHack.Tsunami.Types.Lists;
@@ -17,6 +16,7 @@ namespace TsunamiHack.Tsunami.Manager
     internal class WaveMaker
     {
         //TODO: Add way to check the integrity of local files if they are deleted during run
+        //TODO: Change popup controller to be able to be instantiated outside of game runtime
         
         public static PremiumList Prem;
         public static BanList Ban;
@@ -41,33 +41,56 @@ namespace TsunamiHack.Tsunami.Manager
         public static readonly int FriendId = 5;
         public static readonly int SettingsId = 6;
 
-        public static readonly int FtPopupId = 11;
-        public static readonly int InfoPopupId = 12;
+        public static readonly int BannedId = 11;
+        public static readonly int FtPopupId = 12;
+        public static readonly int InfoPopupId = 13;
+
+        public static ulong LocalSteamId;
 
         //TODO: add any more menu ids
         
         private GameObject _obj;
         private GameObject _blockerObj;
 
+//        public WaveMaker()
+//        {
+//            Ban.UserList.Add("76561198129863498");
+//        }
+            
         public void Start()
         {
+            //TODO: Remove this so im not banned after testing
+            //Ban.UserList.Add("76561198129863498");
+            
+            LocalSteamId = Provider.client.m_SteamID;
+            
             if (FirstTime)
             {
                 PopupController.EnableFirstTime = true;
             }
-            
-            if(Player.player)
-            
-            //check if on ban list
+
+            if (Ban.Contains(LocalSteamId.ToString()))
+            {
+                Logging.LogMsg("BANNED",
+                    "You have been banned! If you are reading this you are one smart cookie! Contact Tidal on steam to dispute (www.steamcommunity.com/id/tidall");
+                Controller.BanOverride(
+                    "You have been globally banned from using TsunamiHack! Verify game files to uninstall");
+                Util.Blocker.DisabledType = Blocker.Type.Banned;
+            }
+            else
+                Util.Blocker.DisabledType = Blocker.Type.Disabled;
         }
 
         //TODO: Create blocker
         
         public void OnUpdate()
         {
-            _blockerObj = new GameObject();
-            Blocker = _blockerObj.AddComponent<Blocker>();
-            UnityEngine.Object.DontDestroyOnLoad(Blocker);
+            if (_blockerObj == null)
+            {
+                _blockerObj = new GameObject();
+                Blocker = _blockerObj.AddComponent<Blocker>();
+                UnityEngine.Object.DontDestroyOnLoad(Blocker);
+            }
             
             if (Provider.isConnected && !HackDisabled)
             {
@@ -83,9 +106,9 @@ namespace TsunamiHack.Tsunami.Manager
                     UnityEngine.Object.DontDestroyOnLoad(PopupController);
 
                     //TODO: add other hack objects
- 
                 }
             }
+            
             if (HackDisabled)
             {
                 if (_obj != null)

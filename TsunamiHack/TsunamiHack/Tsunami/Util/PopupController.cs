@@ -48,7 +48,7 @@ namespace TsunamiHack.Tsunami.Util
                 //TODO: add dynamic popup moving logic 
 //            }
 //            Logging.LogMsg("DEBUG", "About to check for first time");
-            if (WaveMaker.FirstTime)
+            if (WaveMaker.FirstTime && Provider.isConnected)
             {
 //                Logging.LogMsg("DEBUG", "About to get popup and set opened to true");
                 GetPopup(WaveMaker.FtPopupId).PopupOpened = true;

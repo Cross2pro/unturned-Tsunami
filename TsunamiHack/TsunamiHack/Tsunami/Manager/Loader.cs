@@ -7,6 +7,8 @@ namespace TsunamiHack.Tsunami.Manager
 {
     internal class Loader
     {
+        //TODO:Check what happens when offline
+        
         
         public static void LoadAll()
         {
@@ -109,6 +111,8 @@ namespace TsunamiHack.Tsunami.Manager
 
             WaveMaker.HackDisabled = WaveMaker.Controller.Disabled;
 
+            //TODO: Remove after testing
+            
             Logging.LogMsg("Disabled value", $"{WaveMaker.HackDisabled}");
         }
 
