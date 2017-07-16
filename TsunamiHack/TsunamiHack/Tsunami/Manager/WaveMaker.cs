@@ -32,6 +32,7 @@ namespace TsunamiHack.Tsunami.Manager
         public static Menu.Main MenuMain;
         public static Menu.Keybind MenuKeybind;
         public static PopupController PopupController;
+        public static Blocker Blocker;
 
         public static readonly int MainId = 1; 
         public static readonly int VisualsId = 2;
@@ -46,6 +47,7 @@ namespace TsunamiHack.Tsunami.Manager
         //TODO: add any more menu ids
         
         private GameObject _obj;
+        private GameObject _blockerObj;
 
         public void Start()
         {
@@ -54,14 +56,20 @@ namespace TsunamiHack.Tsunami.Manager
                 PopupController.EnableFirstTime = true;
             }
             
-            //check if its first time
+            if(Player.player)
+            
             //check if on ban list
         }
 
-
+        //TODO: Create blocker
+        
         public void OnUpdate()
         {
-            if (Provider.isConnected)
+            _blockerObj = new GameObject();
+            Blocker = _blockerObj.AddComponent<Blocker>();
+            UnityEngine.Object.DontDestroyOnLoad(Blocker);
+            
+            if (Provider.isConnected && !HackDisabled)
             {
                 if (_obj == null)
                 {
@@ -76,6 +84,21 @@ namespace TsunamiHack.Tsunami.Manager
 
                     //TODO: add other hack objects
  
+                }
+            }
+            if (HackDisabled)
+            {
+                if (_obj != null)
+                {
+                    _obj = null;
+                    MenuMain = null;
+                    MenuKeybind = null;
+                    PopupController = null;
+                
+                    UnityEngine.Object.Destroy(MenuMain);
+                    UnityEngine.Object.Destroy(MenuKeybind);
+                    UnityEngine.Object.Destroy(PopupController);
+
                 }
             }
             

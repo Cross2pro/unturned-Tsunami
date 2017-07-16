@@ -106,7 +106,10 @@ namespace TsunamiHack.Tsunami.Manager
         {
             FileDownloader.DownloadAll(out WaveMaker.Prem, out WaveMaker.Ban, out WaveMaker.Beta);
             FileDownloader.DownloadInfo(out WaveMaker.Controller);
-                   
+
+            WaveMaker.HackDisabled = WaveMaker.Controller.Disabled;
+
+            Logging.LogMsg("Disabled value", $"{WaveMaker.HackDisabled}");
         }
 
     }

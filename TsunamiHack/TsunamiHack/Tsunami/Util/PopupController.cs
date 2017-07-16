@@ -7,9 +7,7 @@ using TsunamiHack.Tsunami.Types;
 namespace TsunamiHack.Tsunami.Util
 {
     public class PopupController : MonoBehaviour
-    {
-        //TODO: Add first time popup window
-        
+    {        
         private  List<Popup> MenuList;
         private  List<Popup> DynamicList;
 
