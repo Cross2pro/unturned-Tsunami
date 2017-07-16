@@ -3,6 +3,7 @@ using UnityEngine;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
+using TsunamiHack.Tsunami.Manager;
 using TsunamiHack.Tsunami.Types.Lists;
 using TsunamiHack.Tsunami.Types.Configs;
 
@@ -27,8 +28,6 @@ namespace TsunamiHack.Tsunami.Util
                 System.IO.Directory.CreateDirectory(Directory);
             }
         }
-
-        //TODO: add signature to file to ensure that you are using legit .dats
 
         public static void CheckEmpty()
         {
@@ -176,9 +175,27 @@ namespace TsunamiHack.Tsunami.Util
         {
             var result = File.Exists(InfoPath);
 
+            if (result)
+            {
+                _reader = new StreamReader(InfoPath);
+                var ver = _reader.ReadLine();
+
+                if (ver != WaveMaker.Version)
+                {
+                    result = false;
+                    File.Delete(InfoPath);
+                    File.Delete(SettingsPath);
+                    File.Delete(FriendsPath);
+                    File.Delete(KeybindPath);
+                }
+                    
+            }
+            
             if (!result)
             {
                 File.Create(InfoPath);
+                _writer = new StreamWriter(InfoPath);
+                _writer.WriteLine(WaveMaker.Version);
             }
 
             return !result;

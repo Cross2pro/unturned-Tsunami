@@ -9,7 +9,6 @@ namespace TsunamiHack.Tsunami.Util
     public class PopupController : MonoBehaviour
     {        
     
-        //TODO: Add first time popup window
         //TODO: Add a way to deallocate unused windows using "Inuse" Popup var
         
         private  List<Popup> MenuList;

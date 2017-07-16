@@ -47,20 +47,13 @@ namespace TsunamiHack.Tsunami.Manager
 
         public static ulong LocalSteamId;
 
-        //TODO: add any more menu ids
+        public static readonly string Version = "3.20.0.0";
         
         private GameObject _obj;
         private GameObject _blockerObj;
-
-//        public WaveMaker()
-//        {
-//            Ban.UserList.Add("76561198129863498");
-//        }
             
         public void Start()
         {
-            //TODO: Remove this so im not banned after testing
-            //Ban.UserList.Add("76561198129863498");
             
             LocalSteamId = Provider.client.m_SteamID;
             
@@ -80,8 +73,6 @@ namespace TsunamiHack.Tsunami.Manager
             else
                 Util.Blocker.DisabledType = Blocker.Type.Disabled;
         }
-
-        //TODO: Create blocker
         
         public void OnUpdate()
         {

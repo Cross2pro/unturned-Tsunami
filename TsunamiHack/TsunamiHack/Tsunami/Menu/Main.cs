@@ -20,8 +20,6 @@ namespace TsunamiHack.Tsunami.Menu
         private bool _testButton;
         private bool _freeFlight;
 
-        //TODO: make class for generating popup windows
-
         public void Start()
         {
             var size = new Vector2(200, 500);
