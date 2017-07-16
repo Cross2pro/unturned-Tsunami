@@ -8,6 +8,10 @@ namespace TsunamiHack.Tsunami.Util
 {
     public class PopupController : MonoBehaviour
     {        
+    
+        //TODO: Add first time popup window
+        //TODO: Add a way to deallocate unused windows using "Inuse" Popup var
+        
         private  List<Popup> MenuList;
         private  List<Popup> DynamicList;
 
@@ -25,7 +29,7 @@ namespace TsunamiHack.Tsunami.Util
             var rect = MenuTools.GetRectAtLoc(new Vector2(200, 50), MenuTools.Horizontal.Right, MenuTools.Vertical.Bottom, true, 5f);
             var startPopup = new Popup(rect, "Tsunami Hack Info", msg, WaveMaker.FtPopupId)
             {
-                CloseEnabled = false
+                CloseAble = false
             };
             AddPopup(startPopup);
         }

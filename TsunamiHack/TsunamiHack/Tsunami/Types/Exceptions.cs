@@ -26,4 +26,26 @@ namespace TsunamiHack.Tsunami.Types
         {
         }
     }
+
+    [Serializable]
+    public class TypeNotInitalizedException : Exception
+    {
+        public TypeNotInitalizedException()
+        {
+        }
+
+        public TypeNotInitalizedException(string message) : base(message)
+        {
+        }
+
+        public TypeNotInitalizedException(string message, Exception inner) : base(message, inner)
+        {
+        }
+
+        protected TypeNotInitalizedException(
+            SerializationInfo info,
+            StreamingContext context) : base(info, context)
+        {
+        }
+    }
 }
