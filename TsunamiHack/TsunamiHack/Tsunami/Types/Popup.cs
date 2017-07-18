@@ -33,7 +33,7 @@ namespace TsunamiHack.Tsunami.Types
         public bool LimiterEnabled;
         public float Duration;
         public DateTime StartTime;
-        public DateTime Difference;
+        public TimeSpan Difference;
         public DateTime EndTime;
 
         public Popup(Rect windowRect, int id, string title, string message, bool closeable = true)
@@ -49,7 +49,7 @@ namespace TsunamiHack.Tsunami.Types
         }
 
 
-        //TODO: refactor this constructor
+        [Obsolete]
         public void EnableMoving(Vector2 starting, Vector2 ending, float speed = 1f)
         {
             if (PopupRect == null)
@@ -58,6 +58,32 @@ namespace TsunamiHack.Tsunami.Types
             StartingPosition = starting;
             EndingPosition = ending;
             MovingSpeed = speed;
+        }
+
+        public void EnableMoving(Vector2 start, Vector2 end, int duration)
+        {
+            if(PopupRect == null)
+                throw new TypeNotInitalizedException("Init popup before making dynamic");
+            
+            if (start == end) return;
+            
+            IsMoving = true;
+            StartingPosition = start;
+            EndingPosition = end;
+            MovingDuration = duration;
+
+            var dist = Vector2.Distance(start, end);
+            MovingSpeed = dist / duration;
+            MovingSpeed = MovingSpeed > 50 ? 50 : MovingSpeed;
+        }
+
+        public void EnableLimited(float duration)
+        {
+            LimiterEnabled = true;
+            Duration = duration;
+            StartTime = DateTime.Now;
+            EndTime = StartTime.AddSeconds(duration);
+            Difference = EndTime - StartTime; 
         }
         
         public void PopupFunct(int id)

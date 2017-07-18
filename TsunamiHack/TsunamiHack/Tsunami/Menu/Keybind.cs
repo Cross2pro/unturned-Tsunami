@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SDG.Unturned;
 using TsunamiHack.Tsunami.Manager;
+using TsunamiHack.Tsunami.Types;
 using TsunamiHack.Tsunami.Util;
 using UnityEngine;
 
@@ -14,7 +15,8 @@ namespace TsunamiHack.Tsunami.Menu
     {
         public bool MenuOpened { get; private set; }
         private Rect _windowRect;
-
+        public static bool Changing;
+        public static string focus;
         public static bool KeybindsChanged;
 
         //TODO:implement loaded keybind config
@@ -27,6 +29,32 @@ namespace TsunamiHack.Tsunami.Menu
 
         public void Update()
         {
+            if (Changing)
+            {
+                if (Event.current.type == EventType.KeyDown)
+                {
+                    var pressed = Event.current.keyCode;
+
+                    if (WaveMaker.Keybinds.BindExists(pressed))
+                    {
+                        Changing = false;
+                        
+                        WaveMaker.PopupController.AddPopup(new Popup(MenuTools.GetRectAtLoc(new Vector2(100,200), MenuTools.Horizontal.Right, MenuTools.Vertical.Bottom, true, 5f), 1000, "Keychange Error", "A bind with that key already exists"));
+
+                        WaveMaker.PopupController.GetPopup(1000).PopupOpened = true;
+
+                        
+                    }
+                    else
+                    {
+                        WaveMaker.Keybinds.ChangeBind(focus, pressed);
+                    }
+                    
+                    
+                     
+                }
+            }
+            
             Lib.Keybind.Check();
 
             if (Provider.isConnected)
@@ -46,8 +74,6 @@ namespace TsunamiHack.Tsunami.Menu
                 }
             }
 
-//            PlayerPauseUI.active = MenuOpened;
-//            PlayerUI.window.showCursor = MenuOpened;
         }
 
         public void OnGUI()
@@ -60,15 +86,51 @@ namespace TsunamiHack.Tsunami.Menu
                 }
             }
         }
+        
+        
 
         public void MenuFunct(int id)
         {
-            GUILayout.Label($"Main Menu : {WaveMaker.Keybinds.GetBind("main").ToString()}");
-            GUILayout.Space(2f);
-            GUILayout.Label($"Visuals Menu : {WaveMaker.Keybinds.GetBind("visuals").ToString()}");
-            GUILayout.Space(2f);
-            GUILayout.Label($"Keybind Menu : {WaveMaker.Keybinds.GetBind("keybinds").ToString()}");
-            GUILayout.Space(2f);
+            GUILayout.BeginVertical();
+            
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("Main Menu :");
+            GUILayout.Space(1f);
+            if (GUILayout.Button($"{WaveMaker.Keybinds.GetBind("main")}"))
+            {
+                Changing = true;
+                focus = "main";
+            }
+            GUILayout.EndHorizontal();
+            
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("Visuals Menu :");
+            GUILayout.Space(1f);
+            if (GUILayout.Button($"{WaveMaker.Keybinds.GetBind("visuals")}"))
+            {
+                Changing = true;
+                focus = "visuals";
+            }
+            GUILayout.EndHorizontal();
+            
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("Keybind Menu :");
+            GUILayout.Space(1f);
+            if (GUILayout.Button($"{WaveMaker.Keybinds.GetBind("keybinds")}"))
+            {
+                Changing = true;
+                focus = "keybinds";
+            }
+            GUILayout.EndHorizontal();
+                
+            GUILayout.EndVertical();
+            
+//            GUILayout.Label($"Main Menu : {WaveMaker.Keybinds.GetBind("main").ToString()}");
+//            GUILayout.Space(2f);
+//            GUILayout.Label($"Visuals Menu : {WaveMaker.Keybinds.GetBind("visuals").ToString()}");
+//            GUILayout.Space(2f);
+//            GUILayout.Label($"Keybind Menu : {WaveMaker.Keybinds.GetBind("keybinds").ToString()}");
+//            GUILayout.Space(2f);
             GUI.DragWindow();
         }
 

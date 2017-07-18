@@ -89,7 +89,13 @@ namespace TsunamiHack.Tsunami.Types.Configs
 
         public bool ChangeBind(string name, KeyCode key)
         {
-            return true;
+            if (KeyDict.ContainsKey(name))
+            {
+                KeyDict[name] = key;
+                return true;
+            }
+
+            return false;
         }
 
     #endregion

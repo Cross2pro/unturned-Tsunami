@@ -36,20 +36,11 @@ namespace TsunamiHack.Tsunami.Util
         private void Update()
         {
             //TODO: simplify dynamic popup checking
-//            foreach (var pop in MenuList)
-//            {
-//                if(pop.IsMoving)
-//                    DynamicList.Add(pop);
-//            }
-//
-//            if (DynamicList.Count > 0)
-//            {
+            
                 //TODO: add dynamic popup moving logic 
-//            }
-//            Logging.LogMsg("DEBUG", "About to check for first time");
+            
             if (WaveMaker.FirstTime && Provider.isConnected)
             {
-//                Logging.LogMsg("DEBUG", "About to get popup and set opened to true");
                 GetPopup(WaveMaker.FtPopupId).PopupOpened = true;
                 WaveMaker.FirstTime = false;
             }

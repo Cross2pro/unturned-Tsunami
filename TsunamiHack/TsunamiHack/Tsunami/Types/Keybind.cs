@@ -30,8 +30,8 @@ namespace TsunamiHack.Tsunami.Types
             if (dict.ContainsKey(Name) || dict.ContainsValue(key))
             {
                 return false;
-            }
             
+            }
             Key = key;
             return true;
            
