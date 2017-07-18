@@ -29,6 +29,8 @@ namespace TsunamiHack.Tsunami.Manager
         public static bool FirstTime;
         public static bool HackDisabled;
 
+        public static int MenuOpened;
+
         public static Menu.Main MenuMain;
         public static Menu.Keybind MenuKeybind;
         public static Menu.Visuals MenuVisuals;

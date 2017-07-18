@@ -29,7 +29,7 @@ namespace TsunamiHack.Tsunami.Menu
         public void Start()
         {
             var size = new Vector2(200,300);
-            _windowRect = MenuTools.GetRectAtLoc(size, MenuTools.Horizontal.RightMid,MenuTools.Vertical.Center, false);
+            _windowRect = MenuTools.GetRectAtLoc(size, MenuTools.Horizontal.Center, MenuTools.Vertical.Center, false);
 
             _MainKey = WaveMaker.Keybinds.GetBind("main");
             _VisualsKey = WaveMaker.Keybinds.GetBind("visuals");
@@ -69,7 +69,8 @@ namespace TsunamiHack.Tsunami.Menu
 
                     if (pressed == _MainKey)
                     {
-                        WaveMaker.MenuMain.ToggleMenuStatus();
+//                        WaveMaker.MenuMain.ToggleMenuStatus();
+                        UseMenu(WaveMaker.MainId);
 
                         if (WaveMaker.FirstTime && WaveMaker.PopupController.GetPopup(WaveMaker.FtPopupId).PopupOpened)
                         {
@@ -78,9 +79,11 @@ namespace TsunamiHack.Tsunami.Menu
                         }
                     }
                     else if (pressed == _VisualsKey)
-                        WaveMaker.MenuVisuals.ToggleMenuStatus();
+//                        WaveMaker.MenuVisuals.ToggleMenuStatus();
+                        UseMenu(WaveMaker.VisualsId);
                     else if (pressed == _KeybindKey)
-                        WaveMaker.MenuKeybind.ToggleMenuStatus();
+//                        WaveMaker.MenuKeybind.ToggleMenuStatus();
+                        UseMenu(WaveMaker.KeybindId);
                         
                     //TODO: add other menus
                 }
@@ -88,6 +91,23 @@ namespace TsunamiHack.Tsunami.Menu
             }
             
             CheckChange();
+        }
+
+        private void UseMenu(int id)
+        {
+            if (WaveMaker.MenuOpened == id)
+            {
+                WaveMaker.MenuOpened = 0;
+                PlayerPauseUI.active = false;
+                PlayerUI.window.showCursor = false;
+            }
+            else
+            {
+                WaveMaker.MenuOpened = id;
+                PlayerPauseUI.active = true;
+                PlayerUI.window.showCursor = false;
+            }
+            
         }
 
         private void CheckChange()
@@ -106,7 +126,7 @@ namespace TsunamiHack.Tsunami.Menu
         {
             if (Provider.isConnected)
             {
-                if (MenuOpened)
+                if (WaveMaker.MenuOpened == WaveMaker.KeybindId)
                 {
                     _windowRect = GUI.Window(2, _windowRect, MenuFunct, "Keybind Menu");
                 }

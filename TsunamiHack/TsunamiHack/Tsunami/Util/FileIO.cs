@@ -236,9 +236,14 @@ namespace TsunamiHack.Tsunami.Util
 //                _writer = new StreamWriter(InfoPath);
 //                _writer.WriteLine(WaveMaker.Version);
 //                _writer.Dispose();
-//            }
+//            } 
 
-            return res;
+            if (!res)
+            {
+                File.Create(InfoPath);
+            }
+            
+            return !res;
         }
 
         public static void DeleteAll()

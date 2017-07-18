@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using SDG.Unturned;
+using TsunamiHack.Tsunami.Manager;
 using TsunamiHack.Tsunami.Util;
 using UnityEngine;
 
@@ -13,9 +14,7 @@ namespace TsunamiHack.Tsunami.Menu
     internal class Main : MonoBehaviour, IMenuParent
     {
         public bool MenuOpened { get; private set; }
-        private bool miniOpened;
         private Rect _windowRect;
-        private Rect _miniRect;
 
         private bool _testButton;
         private bool _freeFlight;
@@ -24,8 +23,6 @@ namespace TsunamiHack.Tsunami.Menu
         {
             var size = new Vector2(200, 500);
             _windowRect = MenuTools.GetRectAtLoc(size, MenuTools.Horizontal.Center, MenuTools.Vertical.Center, false);
-            size = new Vector2(200, 100);
-            _miniRect = MenuTools.GetRectAtLoc(size, MenuTools.Horizontal.Right, MenuTools.Vertical.Bottom, true, 5f);
         }
 
         public void Update()
@@ -52,15 +49,11 @@ namespace TsunamiHack.Tsunami.Menu
         {
             if (Provider.isConnected)
             {
-                if (MenuOpened)
+                if (WaveMaker.MenuOpened ==  WaveMaker.MainId)
                 {
                     _windowRect = GUI.Window(1, _windowRect, MenuFunct, "Main Menu");
                 }
 
-                if (miniOpened)
-                {
-                    _miniRect = GUI.Window(4, _miniRect, MiniMenuFunct, "Popup");
-                }
                 
             }
             
@@ -71,22 +64,8 @@ namespace TsunamiHack.Tsunami.Menu
             _testButton = GUILayout.Toggle(_testButton, "Test button");
             _freeFlight = GUILayout.Toggle(_freeFlight, "Free Flight");
 
-            if (GUILayout.Button("Popup Window"))
-            {
-//                var pos = new Vector2((float)(Screen.width - 205), (float)(Screen.height - 105));
-//                var size = new Vector2(200,100);
-//                _miniRect = new Rect(pos, size);
-//                miniOpened = true;
-//                _miniRect = GUI.Window(4, _miniRect, MiniMenuFunct, "popup");
-                miniOpened = !miniOpened;
-            }
             
             GUI.DragWindow();
-        }
-
-        public void MiniMenuFunct(int id)
-        {
-            GUILayout.Label("Example Content");
         }
 
         
