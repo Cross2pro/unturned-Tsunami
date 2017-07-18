@@ -3,6 +3,7 @@ using UnityEngine;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
+using JetBrains.Annotations;
 using TsunamiHack.Tsunami.Manager;
 using TsunamiHack.Tsunami.Types.Lists;
 using TsunamiHack.Tsunami.Types.Configs;
@@ -171,7 +172,7 @@ namespace TsunamiHack.Tsunami.Util
 
     #region first time
 
-        public static bool CheckIfFirstTime()
+        /*public static bool CheckIfFirstTime()
         {
             var result = File.Exists(InfoPath);
 
@@ -180,6 +181,9 @@ namespace TsunamiHack.Tsunami.Util
                 _reader = new StreamReader(InfoPath);
                 var ver = _reader.ReadLine();
 
+                _reader.Close();
+                _reader.Dispose();
+                
                 if (ver != WaveMaker.Version)
                 {
                     result = false;
@@ -196,12 +200,58 @@ namespace TsunamiHack.Tsunami.Util
                 File.Create(InfoPath);
                 _writer = new StreamWriter(InfoPath);
                 _writer.WriteLine(WaveMaker.Version);
+                
+                _writer.Close();
+                _writer.Dispose();
             }
 
+
             return !result;
+        }*/
+
+        public static bool CheckIfFirstTime()
+        {
+            var res = File.Exists(InfoPath);
+
+//            if (res)
+//            {
+//                _reader = new StreamReader(InfoPath);
+//                var str = _reader.ReadLine();
+//                _reader.Dispose();
+//
+//                if (str != WaveMaker.Version)
+//                {
+//                    DeleteAll();
+//                    File.Create(InfoPath);
+//
+//                    _writer = new StreamWriter(InfoPath);
+//                    _writer.WriteLine(WaveMaker.Version);
+//                    _writer.Dispose();
+//                }
+//            }
+//            else
+//            {
+//                File.Create(InfoPath);
+//                
+//                _writer = new StreamWriter(InfoPath);
+//                _writer.WriteLine(WaveMaker.Version);
+//                _writer.Dispose();
+//            }
+
+            return res;
+        }
+
+        public static void DeleteAll()
+        {
+            File.Delete(InfoPath);
+            File.Delete(FriendsPath);
+            File.Delete(SettingsPath);
+            File.Delete(KeybindPath);
         }
 
     #endregion  
+        
+    
         
     #region  Stream
 

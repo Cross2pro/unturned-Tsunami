@@ -31,6 +31,7 @@ namespace TsunamiHack.Tsunami.Manager
 
         public static Menu.Main MenuMain;
         public static Menu.Keybind MenuKeybind;
+        public static Menu.Visuals MenuVisuals;
         public static PopupController PopupController;
         public static Blocker Blocker;
 
@@ -47,7 +48,7 @@ namespace TsunamiHack.Tsunami.Manager
 
         public static ulong LocalSteamId;
 
-        public static readonly string Version = "3.20.0.0";
+        public static readonly string Version = "3.20.1.0";
         
         private GameObject _obj;
         private GameObject _blockerObj;
@@ -90,11 +91,13 @@ namespace TsunamiHack.Tsunami.Manager
                     _obj = new GameObject();
                     MenuMain = _obj.AddComponent<Menu.Main>();
                     MenuKeybind = _obj.AddComponent<Menu.Keybind>();
+                    MenuVisuals = _obj.AddComponent<Menu.Visuals>();
                     PopupController = _obj.AddComponent<PopupController>();
 
                     UnityEngine.Object.DontDestroyOnLoad(MenuMain);
                     UnityEngine.Object.DontDestroyOnLoad(MenuKeybind);
                     UnityEngine.Object.DontDestroyOnLoad(PopupController);
+                    UnityEngine.Object.DontDestroyOnLoad(MenuVisuals);
 
                     //TODO: add other hack objects
                 }
@@ -108,10 +111,12 @@ namespace TsunamiHack.Tsunami.Manager
                     MenuMain = null;
                     MenuKeybind = null;
                     PopupController = null;
+                    MenuVisuals = null;
                 
                     UnityEngine.Object.Destroy(MenuMain);
                     UnityEngine.Object.Destroy(MenuKeybind);
                     UnityEngine.Object.Destroy(PopupController);
+                    UnityEngine.Object.Destroy(MenuVisuals);
 
                 }
             }

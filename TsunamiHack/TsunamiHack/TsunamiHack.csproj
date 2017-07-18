@@ -168,6 +168,7 @@
     <Compile Include="Tsunami\Manager\Quake.cs" />
     <Compile Include="Tsunami\Menu\Keybind.cs" />
     <Compile Include="Tsunami\Menu\Main.cs" />
+    <Compile Include="Tsunami\Menu\Visuals.cs" />
     <Compile Include="Tsunami\Types\Configs\Settings.cs" />
     <Compile Include="Tsunami\Types\Friend.cs" />
     <Compile Include="Tsunami\Types\Lists\BanList.cs" />

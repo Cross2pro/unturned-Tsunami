@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using SDG.Unturned;
 using TsunamiHack.Tsunami.Manager;
 using TsunamiHack.Tsunami.Types;
+using TsunamiHack.Tsunami.Types.Configs;
 using TsunamiHack.Tsunami.Util;
 using UnityEngine;
 
@@ -21,61 +22,86 @@ namespace TsunamiHack.Tsunami.Menu
 
         //TODO:implement loaded keybind config
 
+        private KeyCode _MainKey;
+        private KeyCode _VisualsKey;
+        private KeyCode _KeybindKey;
+        
         public void Start()
         {
             var size = new Vector2(200,300);
             _windowRect = MenuTools.GetRectAtLoc(size, MenuTools.Horizontal.RightMid,MenuTools.Vertical.Center, false);
+
+            _MainKey = WaveMaker.Keybinds.GetBind("main");
+            _VisualsKey = WaveMaker.Keybinds.GetBind("visuals");
+            _KeybindKey = WaveMaker.Keybinds.GetBind("keybinds");
+            
         }
 
         public void Update()
         {
-            if (Changing)
+            //creates popup rect
+            var rect = MenuTools.GetRectAtLoc(new Vector2(180, 75), MenuTools.Horizontal.Right,
+                MenuTools.Vertical.Bottom, true, 5f);
+            var popup = new Popup(rect, 1000, "Change Error", "Key is already in use");
+            WaveMaker.PopupController.AddPopup(popup);
+            // --------------------
+            
+            if (Event.current.type == EventType.KeyDown)
             {
-                if (Event.current.type == EventType.KeyDown)
+                if (Changing)
                 {
-                    var pressed = Event.current.keyCode;
-
-                    if (WaveMaker.Keybinds.BindExists(pressed))
+                    if (WaveMaker.Keybinds.BindExists(Event.current.keyCode))
                     {
                         Changing = false;
-                        
-                        WaveMaker.PopupController.AddPopup(new Popup(MenuTools.GetRectAtLoc(new Vector2(100,200), MenuTools.Horizontal.Right, MenuTools.Vertical.Bottom, true, 5f), 1000, "Keychange Error", "A bind with that key already exists"));
-
                         WaveMaker.PopupController.GetPopup(1000).PopupOpened = true;
-
-                        
                     }
                     else
                     {
-                        WaveMaker.Keybinds.ChangeBind(focus, pressed);
+                        WaveMaker.Keybinds.ChangeBind(focus, Event.current.keyCode);
+                        Changing = false;
+                        KeybindsChanged = true;
+                        WaveMaker.Keybinds.SaveBinds();
                     }
-                    
-                    
-                     
                 }
+                else
+                {
+                    var pressed = Event.current.keyCode;
+
+                    if (pressed == _MainKey)
+                    {
+                        WaveMaker.MenuMain.ToggleMenuStatus();
+
+                        if (WaveMaker.FirstTime && WaveMaker.PopupController.GetPopup(WaveMaker.FtPopupId).PopupOpened)
+                        {
+                            WaveMaker.PopupController.GetPopup(WaveMaker.FtPopupId).PopupOpened = false;
+                            WaveMaker.FirstTime = false;
+                        }
+                    }
+                    else if (pressed == _VisualsKey)
+                        WaveMaker.MenuVisuals.ToggleMenuStatus();
+                    else if (pressed == _KeybindKey)
+                        WaveMaker.MenuKeybind.ToggleMenuStatus();
+                        
+                    //TODO: add other menus
+                }
+                
             }
             
-            Lib.Keybind.Check();
-
-            if (Provider.isConnected)
-            {
-                if (Input.GetKeyUp(KeyCode.F1))
-                {
-                    WaveMaker.MenuMain.ToggleMenuStatus();
-
-                    if (WaveMaker.PopupController.GetPopup(WaveMaker.FtPopupId).PopupOpened)
-                    {
-                        WaveMaker.PopupController.GetPopup(WaveMaker.FtPopupId).PopupOpened = false;
-                    }
-                }
-                if (Input.GetKeyUp(KeyCode.F2))
-                {
-                    ToggleMenuStatus();
-                }
-            }
-
+            CheckChange();
         }
 
+        private void CheckChange()
+        {
+            if (KeybindsChanged)
+            {
+                _MainKey = WaveMaker.Keybinds.GetBind("main");
+                _VisualsKey = WaveMaker.Keybinds.GetBind("visuals");
+                _KeybindKey = WaveMaker.Keybinds.GetBind("keybinds");
+
+                KeybindsChanged = false;
+            }
+        }
+        
         public void OnGUI()
         {
             if (Provider.isConnected)
@@ -85,52 +111,35 @@ namespace TsunamiHack.Tsunami.Menu
                     _windowRect = GUI.Window(2, _windowRect, MenuFunct, "Keybind Menu");
                 }
             }
+
         }
         
         
 
         public void MenuFunct(int id)
         {
-            GUILayout.BeginVertical();
-            
-            GUILayout.BeginHorizontal();
-            GUILayout.Label("Main Menu :");
-            GUILayout.Space(1f);
-            if (GUILayout.Button($"{WaveMaker.Keybinds.GetBind("main")}"))
+
+            if (GUILayout.Button($"Main Menu : {WaveMaker.Keybinds.GetBind("main")}"))
             {
                 Changing = true;
                 focus = "main";
             }
-            GUILayout.EndHorizontal();
+            GUILayout.Space(2f);
             
-            GUILayout.BeginHorizontal();
-            GUILayout.Label("Visuals Menu :");
-            GUILayout.Space(1f);
-            if (GUILayout.Button($"{WaveMaker.Keybinds.GetBind("visuals")}"))
+            if (GUILayout.Button($"Visuals Menu : {WaveMaker.Keybinds.GetBind("visuals")}"))
             {
                 Changing = true;
                 focus = "visuals";
             }
-            GUILayout.EndHorizontal();
+            GUILayout.Space(2f);
             
-            GUILayout.BeginHorizontal();
-            GUILayout.Label("Keybind Menu :");
-            GUILayout.Space(1f);
-            if (GUILayout.Button($"{WaveMaker.Keybinds.GetBind("keybinds")}"))
+            if (GUILayout.Button($"Keybinds Menu : {WaveMaker.Keybinds.GetBind("keybinds")}"))
             {
                 Changing = true;
                 focus = "keybinds";
             }
-            GUILayout.EndHorizontal();
-                
-            GUILayout.EndVertical();
-            
-//            GUILayout.Label($"Main Menu : {WaveMaker.Keybinds.GetBind("main").ToString()}");
-//            GUILayout.Space(2f);
-//            GUILayout.Label($"Visuals Menu : {WaveMaker.Keybinds.GetBind("visuals").ToString()}");
-//            GUILayout.Space(2f);
-//            GUILayout.Label($"Keybind Menu : {WaveMaker.Keybinds.GetBind("keybinds").ToString()}");
-//            GUILayout.Space(2f);
+            GUILayout.Space(2f);
+
             GUI.DragWindow();
         }
 

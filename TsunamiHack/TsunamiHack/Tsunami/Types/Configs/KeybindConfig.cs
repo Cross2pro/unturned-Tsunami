@@ -98,6 +98,11 @@ namespace TsunamiHack.Tsunami.Types.Configs
             return false;
         }
 
+        public void SaveBinds()
+        {
+            Util.FileIo.StreamSaveKeybinds(this);
+        }
+
     #endregion
 
 
