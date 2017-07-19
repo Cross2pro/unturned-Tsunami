@@ -3,6 +3,7 @@ using UnityEngine;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.InteropServices;
 using JetBrains.Annotations;
 using TsunamiHack.Tsunami.Manager;
 using TsunamiHack.Tsunami.Types.Lists;
@@ -75,10 +76,10 @@ namespace TsunamiHack.Tsunami.Util
             
             keybinds = new KeybindConfig();
             keybinds.AddBind("main", KeyCode.F1);
-            keybinds.AddBind("visuals", KeyCode.F5);
-            keybinds.AddBind("keybinds", KeyCode.F6);
+            keybinds.AddBind("visuals", KeyCode.F2);
+            keybinds.AddBind("keybinds", KeyCode.F4);
 
-            StreamSaveKeybinds(keybinds);
+            SaveKeybinds(keybinds);// --------------------// --------------------
         }
 
         [Obsolete]
@@ -114,7 +115,7 @@ namespace TsunamiHack.Tsunami.Util
         public static void CreateFriends(out FriendsList fList)
         {
             fList = new FriendsList();
-            StreamSaveFriends(fList);
+            SaveFriends(fList);
         }
 
         [Obsolete]
@@ -152,7 +153,7 @@ namespace TsunamiHack.Tsunami.Util
 
             //TODO: Add default settings
 
-            StreamSaveSettings(settings);
+            SaveSettings(settings);
         }
 
         [Obsolete]
@@ -211,47 +212,68 @@ namespace TsunamiHack.Tsunami.Util
 
         public static bool CheckIfFirstTime()
         {
-            var res = File.Exists(InfoPath);
+            var result = File.Exists(InfoPath);
 
-//            if (res)
-//            {
-//                _reader = new StreamReader(InfoPath);
-//                var str = _reader.ReadLine();
-//                _reader.Dispose();
-//
-//                if (str != WaveMaker.Version)
-//                {
-//                    DeleteAll();
-//                    File.Create(InfoPath);
-//
-//                    _writer = new StreamWriter(InfoPath);
-//                    _writer.WriteLine(WaveMaker.Version);
-//                    _writer.Dispose();
-//                }
-//            }
-//            else
-//            {
-//                File.Create(InfoPath);
-//                
-//                _writer = new StreamWriter(InfoPath);
-//                _writer.WriteLine(WaveMaker.Version);
-//                _writer.Dispose();
-//            } 
-
-            if (!res)
+            if (result)
             {
-                File.Create(InfoPath);
-            }
-            
-            return !res;
-        }
+                var str = "";
+                
+                using (var reader = new StreamReader(InfoPath))
+                {
+                    str = reader.ReadToEnd();
+                    reader.Close();
+                }
 
-        public static void DeleteAll()
-        {
-            File.Delete(InfoPath);
-            File.Delete(FriendsPath);
-            File.Delete(SettingsPath);
-            File.Delete(KeybindPath);
+                if (str != WaveMaker.Version)
+                {
+                    
+                    using (var writer = new StreamWriter(KeybindPath))
+                    {
+                        //TODO: Add all the other keybinds
+                        var keybinds = new KeybindConfig();
+                        keybinds.AddBind("main", KeyCode.F1);
+                        keybinds.AddBind("visuals", KeyCode.F2);
+                        keybinds.AddBind("keybinds", KeyCode.F4);
+
+                        WaveMaker.Keybinds = keybinds;
+                        var json = JsonConvert.SerializeObject(keybinds);
+                        writer.WriteLine(json);
+                        writer.Flush();
+                        writer.Dispose();
+                    }
+
+                    using (var writer = new StreamWriter(SettingsPath))
+                    {
+                        //TODO: add all other settings
+                        var settings = new Settings();
+
+                        WaveMaker.Settings = settings;
+                        var json = JsonConvert.SerializeObject(settings);
+                        writer.WriteLine(json);
+                        writer.Flush();
+                        writer.Dispose();
+                    }
+
+                    using (var writer = new StreamWriter(FriendsPath))
+                    {
+                        var friends = new FriendsList();
+
+                        WaveMaker.Friends = friends;
+                        var json = JsonConvert.SerializeObject(friends);
+                        writer.WriteLine(json);
+                        writer.Flush();
+                        writer.Dispose();
+                    }
+                }
+
+            }
+            else
+            {
+                File.Create(InfoPath).Dispose();
+                File.WriteAllText(InfoPath, WaveMaker.Version);
+            }
+
+            return !result;
         }
 
     #endregion  

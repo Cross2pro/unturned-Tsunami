@@ -16,12 +16,13 @@ namespace TsunamiHack.Tsunami.Manager
             {
                 FileIo.CheckDirectory();
                 FileIo.CheckEmpty();
+                
+                LoadDownloads();
 
                 WaveMaker.FirstTime = FileIo.CheckIfFirstTime();
 
                 LoadConfigs();
                 LoadKeybinds();
-                LoadDownloads();
             }
             catch (UnableToLoadException e)
             {

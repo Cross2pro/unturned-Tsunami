@@ -69,7 +69,6 @@ namespace TsunamiHack.Tsunami.Menu
 
                     if (pressed == _MainKey)
                     {
-//                        WaveMaker.MenuMain.ToggleMenuStatus();
                         UseMenu(WaveMaker.MainId);
 
                         if (WaveMaker.FirstTime && WaveMaker.PopupController.GetPopup(WaveMaker.FtPopupId).PopupOpened)
@@ -79,13 +78,17 @@ namespace TsunamiHack.Tsunami.Menu
                         }
                     }
                     else if (pressed == _VisualsKey)
-//                        WaveMaker.MenuVisuals.ToggleMenuStatus();
                         UseMenu(WaveMaker.VisualsId);
                     else if (pressed == _KeybindKey)
-//                        WaveMaker.MenuKeybind.ToggleMenuStatus();
                         UseMenu(WaveMaker.KeybindId);
                         
                     //TODO: add other menus
+
+
+                    if (pressed == KeyCode.Escape && WaveMaker.MenuOpened != 0)
+                    {
+                        UseMenu(WaveMaker.MenuOpened);
+                    }
                 }
                 
             }

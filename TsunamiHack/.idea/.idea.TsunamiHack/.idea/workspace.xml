@@ -23,310 +23,124 @@
     <favorites_list name="TsunamiHack" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Keybind.cs" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/TsunamiHack/Tsunami/Menu/Keybind.cs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
-              <caret line="65" column="20" lean-forward="true" selection-start-line="65" selection-start-column="20" selection-end-line="65" selection-end-column="20" />
-              <folding>
-                <marker date="1500414205174" expanded="false" signature="6:295" ph="..." />
-                <marker date="1500414205174" expanded="true" signature="331:5723" ph="{...}" />
-                <marker date="1500414205174" expanded="true" signature="389:5721" ph="{...}" />
-                <marker date="1500414205174" expanded="true" signature="793:1181" ph="{...}" />
-                <marker date="1500414205174" expanded="true" signature="1211:3437" ph="{...}" />
-                <marker date="1500414205174" expanded="true" signature="1653:3387" ph="{...}" />
-                <marker date="1500414205174" expanded="true" signature="1697:2282" ph="{...}" />
-                <marker date="1500414205174" expanded="true" signature="1793:1964" ph="{...}" />
-                <marker date="1500414205174" expanded="true" signature="1989:2264" ph="{...}" />
-                <marker date="1500414205174" expanded="true" signature="2303:3356" ph="{...}" />
-                <marker date="1500414205174" expanded="true" signature="2424:2919" ph="{...}" />
-                <marker date="1500414205174" expanded="true" signature="2683:2897" ph="{...}" />
-                <marker date="1500414205174" expanded="true" signature="3475:3905" ph="{...}" />
-                <marker date="1500414205174" expanded="true" signature="3529:3697" ph="{...}" />
-                <marker date="1500414205174" expanded="true" signature="3714:3882" ph="{...}" />
-                <marker date="1500414205174" expanded="true" signature="3941:4266" ph="{...}" />
-                <marker date="1500414205174" expanded="true" signature="3984:4256" ph="{...}" />
-                <marker date="1500414205174" expanded="true" signature="4303:4580" ph="{...}" />
-                <marker date="1500414205174" expanded="true" signature="4351:4569" ph="{...}" />
-                <marker date="1500414205174" expanded="true" signature="4430:4555" ph="{...}" />
-                <marker date="1500414205174" expanded="true" signature="4637:5375" ph="{...}" />
-                <marker date="1500414205174" expanded="true" signature="4735:4828" ph="{...}" />
-                <marker date="1500414205174" expanded="true" signature="4967:5063" ph="{...}" />
-                <marker date="1500414205174" expanded="true" signature="5204:5301" ph="{...}" />
-                <marker date="1500414205174" expanded="true" signature="5385:5715" ph="Interface Members" />
-                <marker date="1500414205174" expanded="true" signature="5459:5513" ph="{...}" />
-                <marker date="1500414205174" expanded="true" signature="5553:5611" ph="{...}" />
-                <marker date="1500414205174" expanded="true" signature="5648:5699" ph="{...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Main.cs" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/TsunamiHack/Tsunami/Menu/Main.cs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
-              <caret line="31" column="48" lean-forward="false" selection-start-line="31" selection-start-column="48" selection-end-line="31" selection-end-column="48" />
-              <folding>
-                <marker date="1500413739975" expanded="false" signature="6:246" ph="..." />
-                <marker date="1500413739975" expanded="true" signature="282:2261" ph="{...}" />
-                <marker date="1500413739975" expanded="true" signature="337:2259" ph="{...}" />
-                <marker date="1500413739975" expanded="true" signature="528:713" ph="{...}" />
-                <marker date="1500413739975" expanded="true" signature="743:1322" ph="{...}" />
-                <marker date="1500413739975" expanded="true" signature="812:1312" ph="/* PlayerPauseUI.active = MenuOpened; ... */" />
-                <marker date="1500413739975" expanded="true" signature="1351:1653" ph="{...}" />
-                <marker date="1500413739975" expanded="true" signature="1399:1630" ph="{...}" />
-                <marker date="1500413739975" expanded="true" signature="1476:1598" ph="{...}" />
-                <marker date="1500413739975" expanded="true" signature="1692:1900" ph="{...}" />
-                <marker date="1500413739975" expanded="true" signature="1920:2253" ph="Interface Members" />
-                <marker date="1500413739975" expanded="true" signature="1994:2048" ph="{...}" />
-                <marker date="1500413739975" expanded="true" signature="2088:2146" ph="{...}" />
-                <marker date="1500413739975" expanded="true" signature="2183:2234" ph="{...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="WaveMaker.cs" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/TsunamiHack/Tsunami/Manager/WaveMaker.cs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="735">
-              <caret line="75" column="16" lean-forward="false" selection-start-line="75" selection-start-column="16" selection-end-line="75" selection-end-column="16" />
-              <folding>
-                <marker date="1500414204913" expanded="false" signature="6:332" ph="..." />
-                <marker date="1500414204913" expanded="true" signature="371:4466" ph="{...}" />
-                <marker date="1500414204913" expanded="true" signature="402:4464" ph="{...}" />
-                <marker date="1500414204913" expanded="true" signature="417:595" ph="/* TODO: Add way to check the integrity of local files if they are deleted during run ... */" />
-                <marker date="1500414204913" expanded="true" signature="1924:2722" ph="{...}" />
-                <marker date="1500414204913" expanded="true" signature="2041:2125" ph="{...}" />
-                <marker date="1500414204913" expanded="true" signature="2181:2628" ph="{...}" />
-                <marker date="1500414204913" expanded="true" signature="2762:4458" ph="{...}" />
-                <marker date="1500414204913" expanded="true" signature="2809:3011" ph="{...}" />
-                <marker date="1500414204913" expanded="true" signature="3079:3837" ph="{...}" />
-                <marker date="1500414204913" expanded="true" signature="3127:3823" ph="{...}" />
-                <marker date="1500414204913" expanded="true" signature="3880:4435" ph="{...}" />
-                <marker date="1500414204913" expanded="true" signature="3928:4421" ph="{...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Visuals.cs" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/TsunamiHack/Tsunami/Menu/Visuals.cs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="630">
-              <caret line="42" column="1" lean-forward="false" selection-start-line="42" selection-start-column="1" selection-end-line="42" selection-end-column="1" />
-              <folding>
-                <marker date="1500407666421" expanded="true" signature="54:708" ph="{...}" />
-                <marker date="1500407666421" expanded="true" signature="110:706" ph="{...}" />
-                <marker date="1500407666421" expanded="true" signature="206:226" ph="{...}" />
-                <marker date="1500407666421" expanded="true" signature="256:276" ph="{...}" />
-                <marker date="1500407666421" expanded="true" signature="305:325" ph="{...}" />
-                <marker date="1500407666421" expanded="true" signature="364:384" ph="{...}" />
-                <marker date="1500407666421" expanded="true" signature="460:514" ph="{...}" />
-                <marker date="1500407666421" expanded="true" signature="554:612" ph="{...}" />
-                <marker date="1500407666421" expanded="true" signature="649:700" ph="{...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PopupController.cs" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/TsunamiHack/Tsunami/Util/PopupController.cs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
-              <caret line="28" column="69" lean-forward="false" selection-start-line="28" selection-start-column="69" selection-end-line="28" selection-end-column="69" />
-              <folding>
-                <marker date="1500314559097" expanded="false" signature="6:140" ph="..." />
-                <marker date="1500314559097" expanded="true" signature="176:2837" ph="{...}" />
-                <marker date="1500314559097" expanded="true" signature="227:2835" ph="{...}" />
-                <marker date="1500314559097" expanded="true" signature="492:1115" ph="{...}" />
-                <marker date="1500314559097" expanded="true" signature="1021:1070" ph="{...}" />
-                <marker date="1500314559097" expanded="true" signature="1146:1500" ph="{...}" />
-                <marker date="1500314559097" expanded="true" signature="1169:1277" ph="/* TODO: simplify dynamic popup checking ... */" />
-                <marker date="1500314559097" expanded="true" signature="1351:1490" ph="{...}" />
-                <marker date="1500314559097" expanded="true" signature="1530:1904" ph="{...}" />
-                <marker date="1500314559097" expanded="true" signature="1578:1894" ph="{...}" />
-                <marker date="1500314559097" expanded="true" signature="1640:1880" ph="{...}" />
-                <marker date="1500314559097" expanded="true" signature="1701:1862" ph="{...}" />
-                <marker date="1500314559097" expanded="true" signature="1950:2141" ph="{...}" />
-                <marker date="1500314559097" expanded="true" signature="2180:2367" ph="{...}" />
-                <marker date="1500314559097" expanded="true" signature="2240:2331" ph="{...}" />
-                <marker date="1500314559097" expanded="true" signature="2412:2621" ph="{...}" />
-                <marker date="1500314559097" expanded="true" signature="2483:2585" ph="{...}" />
-                <marker date="1500314559097" expanded="true" signature="2666:2829" ph="{...}" />
-                <marker date="1500314559097" expanded="true" signature="2726:2819" ph="{...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Popup.cs" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/TsunamiHack/Tsunami/Types/Popup.cs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="489">
-              <caret line="43" column="35" lean-forward="false" selection-start-line="43" selection-start-column="35" selection-end-line="43" selection-end-column="35" />
-              <folding>
-                <marker date="1500252544718" expanded="false" signature="6:59" ph="..." />
-                <marker date="1500252544718" expanded="true" signature="96:3303" ph="{...}" />
-                <marker date="1500252544718" expanded="true" signature="126:3301" ph="{...}" />
-                <marker date="1500252544718" expanded="true" signature="141:209" ph="/* TODO: Add moving rects ... */" />
-                <marker date="1500252544718" expanded="true" signature="1049:1290" ph="{...}" />
-                <marker date="1500252544718" expanded="true" signature="1396:1658" ph="{...}" />
-                <marker date="1500252544718" expanded="true" signature="1734:2242" ph="{...}" />
-                <marker date="1500252544718" expanded="true" signature="2293:2520" ph="{...}" />
-                <marker date="1500252544718" expanded="true" signature="2568:2838" ph="{...}" />
-                <marker date="1500252544718" expanded="true" signature="2672:2828" ph="{...}" />
-                <marker date="1500252544718" expanded="true" signature="2737:2814" ph="{...}" />
-                <marker date="1500252544718" expanded="true" signature="2881:2959" ph="{...}" />
-                <marker date="1500252544718" expanded="true" signature="3079:3295" ph="{...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="KeybindConfig.cs" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/TsunamiHack/Tsunami/Types/Configs/KeybindConfig.cs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="705">
-              <caret line="102" column="27" lean-forward="false" selection-start-line="102" selection-start-column="27" selection-end-line="102" selection-end-column="27" />
-              <folding>
-                <marker date="1500408171982" expanded="false" signature="6:52" ph="..." />
-                <marker date="1500408171982" expanded="true" signature="97:2339" ph="{...}" />
-                <marker date="1500408171982" expanded="true" signature="130:2337" ph="{...}" />
-                <marker date="1500408171982" expanded="true" signature="220:297" ph="{...}" />
-                <marker date="1500408171982" expanded="false" signature="303:1525" ph="returns" />
-                <marker date="1500408171982" expanded="true" signature="363:691" ph="{...}" />
-                <marker date="1500408171982" expanded="true" signature="417:649" ph="{...}" />
-                <marker date="1500408171982" expanded="true" signature="526:599" ph="{...}" />
-                <marker date="1500408171982" expanded="true" signature="748:798" ph="{...}" />
-                <marker date="1500408171982" expanded="true" signature="841:1034" ph="{...}" />
-                <marker date="1500408171982" expanded="true" signature="940:999" ph="{...}" />
-                <marker date="1500408171982" expanded="true" signature="1078:1278" ph="{...}" />
-                <marker date="1500408171982" expanded="true" signature="1182:1243" ph="{...}" />
-                <marker date="1500408171982" expanded="true" signature="1323:1389" ph="{...}" />
-                <marker date="1500408171982" expanded="true" signature="1434:1501" ph="{...}" />
-                <marker date="1500408171982" expanded="true" signature="1539:2320" ph="manipulation" />
-                <marker date="1500408171982" expanded="true" signature="1622:1805" ph="{...}" />
-                <marker date="1500408171982" expanded="true" signature="1706:1758" ph="{...}" />
-                <marker date="1500408171982" expanded="true" signature="1858:1959" ph="{...}" />
-                <marker date="1500408171982" expanded="true" signature="2017:2201" ph="{...}" />
-                <marker date="1500408171982" expanded="true" signature="2070:2164" ph="{...}" />
-                <marker date="1500408171982" expanded="true" signature="2234:2304" ph="{...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="FileIo.cs" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/TsunamiHack/Tsunami/Util/FileIo.cs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="803">
-              <caret line="247" column="0" lean-forward="false" selection-start-line="247" selection-start-column="0" selection-end-line="247" selection-end-column="0" />
-              <folding>
-                <marker date="1500410883635" expanded="false" signature="6:250" ph="..." />
-                <marker date="1500410883635" expanded="true" signature="286:8735" ph="{...}" />
-                <marker date="1500410883635" expanded="true" signature="314:8733" ph="{...}" />
-                <marker date="1500410883635" expanded="true" signature="930:1098" ph="{...}" />
-                <marker date="1500410883635" expanded="true" signature="996:1088" ph="{...}" />
-                <marker date="1500410883635" expanded="true" signature="1139:1742" ph="{...}" />
-                <marker date="1500410883635" expanded="true" signature="1204:1306" ph="{...}" />
-                <marker date="1500410883635" expanded="true" signature="1347:1732" ph="{...}" />
-                <marker date="1500410883635" expanded="true" signature="1400:1700" ph="{...}" />
-                <marker date="1500410883635" expanded="true" signature="1595:1682" ph="{...}" />
-                <marker date="1500410883635" expanded="false" signature="1748:2801" ph="Keybinds" />
-                <marker date="1500410883635" expanded="true" signature="1808:1873" ph="{...}" />
-                <marker date="1500410883635" expanded="true" signature="1961:2108" ph="{...}" />
-                <marker date="1500410883635" expanded="true" signature="2179:2456" ph="{...}" />
-                <marker date="1500410883635" expanded="true" signature="2539:2785" ph="{...}" />
-                <marker date="1500410883635" expanded="true" signature="2644:2724" ph="{...}" />
-                <marker date="1500410883635" expanded="false" signature="2807:3660" ph="Friends" />
-                <marker date="1500410883635" expanded="true" signature="2865:2930" ph="{...}" />
-                <marker date="1500410883635" expanded="true" signature="3012:3155" ph="{...}" />
-                <marker date="1500410883635" expanded="true" signature="3220:3317" ph="{...}" />
-                <marker date="1500410883635" expanded="true" signature="3398:3644" ph="{...}" />
-                <marker date="1500410883635" expanded="true" signature="3503:3583" ph="{...}" />
-                <marker date="1500410883635" expanded="false" signature="3666:4573" ph="Settings" />
-                <marker date="1500410883635" expanded="true" signature="3726:3792" ph="{...}" />
-                <marker date="1500410883635" expanded="true" signature="3876:4019" ph="{...}" />
-                <marker date="1500410883635" expanded="true" signature="4085:4229" ph="{...}" />
-                <marker date="1500410883635" expanded="true" signature="4309:4557" ph="{...}" />
-                <marker date="1500410883635" expanded="true" signature="4415:4496" ph="{...}" />
-                <marker date="1500410883635" expanded="true" signature="4579:6863" ph="first time" />
-                <marker date="1500410883635" expanded="false" signature="4607:5604" ph="/* public static bool CheckIfFirstTime() ... */" />
-                <marker date="1500410883635" expanded="true" signature="5651:6637" ph="{...}" />
-                <marker date="1500410883635" expanded="true" signature="5708:6499" ph="/* if (res) ... */" />
-                <marker date="1500410883635" expanded="true" signature="6522:6589" ph="{...}" />
-                <marker date="1500410883635" expanded="true" signature="6677:6847" ph="{...}" />
-                <marker date="1500410883635" expanded="false" signature="6893:8722" ph="Stream" />
-                <marker date="1500410883635" expanded="true" signature="6983:7206" ph="{...}" />
-                <marker date="1500410883635" expanded="true" signature="7276:7601" ph="{...}" />
-                <marker date="1500410883635" expanded="true" signature="7434:7514" ph="{...}" />
-                <marker date="1500410883635" expanded="true" signature="7672:7892" ph="{...}" />
-                <marker date="1500410883635" expanded="true" signature="7956:8151" ph="{...}" />
-                <marker date="1500410883635" expanded="true" signature="8217:8432" ph="{...}" />
-                <marker date="1500410883635" expanded="true" signature="8498:8698" ph="{...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Loader.cs" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/TsunamiHack/Tsunami/Manager/Loader.cs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="630">
-              <caret line="48" column="28" lean-forward="false" selection-start-line="48" selection-start-column="28" selection-end-line="48" selection-end-column="28" />
-              <folding>
-                <marker date="1500240892094" expanded="false" signature="6:123" ph="..." />
-                <marker date="1500240892094" expanded="true" signature="162:3518" ph="{...}" />
-                <marker date="1500240892094" expanded="true" signature="190:3516" ph="{...}" />
-                <marker date="1500240892094" expanded="true" signature="298:760" ph="{...}" />
-                <marker date="1500240892094" expanded="true" signature="324:593" ph="{...}" />
-                <marker date="1500240892094" expanded="true" signature="637:750" ph="{...}" />
-                <marker date="1500240892094" expanded="true" signature="803:2386" ph="{...}" />
-                <marker date="1500240892094" expanded="true" signature="884:1230" ph="{...}" />
-                <marker date="1500240892094" expanded="true" signature="1011:1216" ph="{...}" />
-                <marker date="1500240892094" expanded="true" signature="1248:1600" ph="{...}" />
-                <marker date="1500240892094" expanded="true" signature="1373:1586" ph="{...}" />
-                <marker date="1500240892094" expanded="true" signature="1674:2025" ph="{...}" />
-                <marker date="1500240892094" expanded="true" signature="1804:2011" ph="{...}" />
-                <marker date="1500240892094" expanded="true" signature="2042:2374" ph="{...}" />
-                <marker date="1500240892094" expanded="true" signature="2430:3209" ph="{...}" />
-                <marker date="1500240892094" expanded="true" signature="2480:2831" ph="{...}" />
-                <marker date="1500240892094" expanded="true" signature="2610:2817" ph="{...}" />
-                <marker date="1500240892094" expanded="true" signature="2848:3199" ph="{...}" />
-                <marker date="1500240892094" expanded="true" signature="2974:3185" ph="{...}" />
-                <marker date="1500240892094" expanded="true" signature="3254:3509" ph="{...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Keybind.cs" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/TsunamiHack/Tsunami/Lib/Keybind.cs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="600">
-              <caret line="48" column="0" lean-forward="false" selection-start-line="48" selection-start-column="0" selection-end-line="48" selection-end-column="0" />
-              <folding>
-                <marker date="1498879178862" expanded="false" signature="6:239" ph="..." />
-                <marker date="1498879178862" expanded="true" signature="274:1106" ph="{...}" />
-                <marker date="1498879178862" expanded="true" signature="303:1104" ph="{...}" />
-                <marker date="1498879178862" expanded="true" signature="514:725" ph="{...}" />
-                <marker date="1498879178862" expanded="true" signature="775:899" ph="{...}" />
-                <marker date="1498879178862" expanded="true" signature="844:889" ph="{...}" />
-                <marker date="1498879178862" expanded="true" signature="935:994" ph="{...}" />
-                <marker date="1498879178862" expanded="true" signature="1065:1098" ph="{...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <splitter split-orientation="horizontal" split-proportion="0.5">
+      <split-first>
+        <leaf>
+          <file leaf-file-name="Loader.cs" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/TsunamiHack/Tsunami/Manager/Loader.cs">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="540">
+                  <caret line="93" column="0" lean-forward="false" selection-start-line="93" selection-start-column="0" selection-end-line="93" selection-end-column="0" />
+                  <folding>
+                    <marker date="1500426713960" expanded="false" signature="6:123" ph="..." />
+                    <marker date="1500426713960" expanded="true" signature="162:3535" ph="{...}" />
+                    <marker date="1500426713960" expanded="true" signature="190:3533" ph="{...}" />
+                    <marker date="1500426713960" expanded="true" signature="298:777" ph="{...}" />
+                    <marker date="1500426713960" expanded="true" signature="324:610" ph="{...}" />
+                    <marker date="1500426713960" expanded="true" signature="654:767" ph="{...}" />
+                    <marker date="1500426713960" expanded="true" signature="820:2403" ph="{...}" />
+                    <marker date="1500426713960" expanded="true" signature="901:1247" ph="{...}" />
+                    <marker date="1500426713960" expanded="true" signature="1028:1233" ph="{...}" />
+                    <marker date="1500426713960" expanded="true" signature="1265:1617" ph="{...}" />
+                    <marker date="1500426713960" expanded="true" signature="1390:1603" ph="{...}" />
+                    <marker date="1500426713960" expanded="true" signature="1691:2042" ph="{...}" />
+                    <marker date="1500426713960" expanded="true" signature="1821:2028" ph="{...}" />
+                    <marker date="1500426713960" expanded="true" signature="2059:2391" ph="{...}" />
+                    <marker date="1500426713960" expanded="true" signature="2447:3226" ph="{...}" />
+                    <marker date="1500426713960" expanded="true" signature="2497:2848" ph="{...}" />
+                    <marker date="1500426713960" expanded="true" signature="2627:2834" ph="{...}" />
+                    <marker date="1500426713960" expanded="true" signature="2865:3216" ph="{...}" />
+                    <marker date="1500426713960" expanded="true" signature="2991:3202" ph="{...}" />
+                    <marker date="1500426713960" expanded="true" signature="3271:3526" ph="{...}" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="HackController.cs" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/TsunamiHack/Tsunami/Types/HackController.cs">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="135">
+                  <caret line="10" column="31" lean-forward="false" selection-start-line="10" selection-start-column="31" selection-end-line="10" selection-end-column="31" />
+                  <folding>
+                    <marker date="1500426714219" expanded="false" signature="6:60" ph="..." />
+                    <marker date="1500426714219" expanded="true" signature="97:489" ph="{...}" />
+                    <marker date="1500426714219" expanded="true" signature="131:487" ph="{...}" />
+                    <marker date="1500426714219" expanded="true" signature="313:472" ph="{...}" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-first>
+      <split-second>
+        <leaf>
+          <file leaf-file-name="FileIo.cs" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/TsunamiHack/Tsunami/Util/FileIo.cs">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="0">
+                  <caret line="210" column="11" lean-forward="false" selection-start-line="210" selection-start-column="11" selection-end-line="210" selection-end-column="11" />
+                  <folding>
+                    <marker date="1500434104772" expanded="false" signature="6:288" ph="..." />
+                    <marker date="1500434104772" expanded="true" signature="324:9851" ph="{...}" />
+                    <marker date="1500434104772" expanded="true" signature="352:9849" ph="{...}" />
+                    <marker date="1500434104772" expanded="true" signature="968:1136" ph="{...}" />
+                    <marker date="1500434104772" expanded="true" signature="1034:1126" ph="{...}" />
+                    <marker date="1500434104772" expanded="true" signature="1177:1780" ph="{...}" />
+                    <marker date="1500434104772" expanded="true" signature="1242:1344" ph="{...}" />
+                    <marker date="1500434104772" expanded="true" signature="1385:1770" ph="{...}" />
+                    <marker date="1500434104772" expanded="true" signature="1438:1738" ph="{...}" />
+                    <marker date="1500434104772" expanded="true" signature="1633:1720" ph="{...}" />
+                    <marker date="1500434104772" expanded="true" signature="1786:2879" ph="Keybinds" />
+                    <marker date="1500434104772" expanded="true" signature="1846:1911" ph="{...}" />
+                    <marker date="1500434104772" expanded="true" signature="1999:2146" ph="{...}" />
+                    <marker date="1500434104772" expanded="true" signature="2217:2534" ph="{...}" />
+                    <marker date="1500434104772" expanded="true" signature="2617:2863" ph="{...}" />
+                    <marker date="1500434104772" expanded="true" signature="2722:2802" ph="{...}" />
+                    <marker date="1500434104772" expanded="true" signature="2885:3732" ph="Friends" />
+                    <marker date="1500434104772" expanded="true" signature="2943:3008" ph="{...}" />
+                    <marker date="1500434104772" expanded="true" signature="3090:3233" ph="{...}" />
+                    <marker date="1500434104772" expanded="true" signature="3298:3389" ph="{...}" />
+                    <marker date="1500434104772" expanded="true" signature="3470:3716" ph="{...}" />
+                    <marker date="1500434104772" expanded="true" signature="3575:3655" ph="{...}" />
+                    <marker date="1500434104772" expanded="true" signature="3738:4639" ph="Settings" />
+                    <marker date="1500434104772" expanded="true" signature="3798:3864" ph="{...}" />
+                    <marker date="1500434104772" expanded="true" signature="3948:4091" ph="{...}" />
+                    <marker date="1500434104772" expanded="true" signature="4157:4295" ph="{...}" />
+                    <marker date="1500434104772" expanded="true" signature="4375:4623" ph="{...}" />
+                    <marker date="1500434104772" expanded="true" signature="4481:4562" ph="{...}" />
+                    <marker date="1500434104772" expanded="true" signature="4645:7979" ph="first time" />
+                    <marker date="1500434104772" expanded="true" signature="4673:5670" ph="/* public static bool CheckIfFirstTime() ... */" />
+                    <marker date="1500434104772" expanded="true" signature="5717:7963" ph="{...}" />
+                    <marker date="1500434104772" expanded="true" signature="5800:7766" ph="{...}" />
+                    <marker date="1500434104772" expanded="true" signature="5925:6043" ph="{...}" />
+                    <marker date="1500434104772" expanded="true" signature="6090:7751" ph="{...}" />
+                    <marker date="1500434104772" expanded="true" signature="6200:6816" ph="{...}" />
+                    <marker date="1500434104772" expanded="true" signature="6889:7303" ph="{...}" />
+                    <marker date="1500434104772" expanded="true" signature="7375:7733" ph="{...}" />
+                    <marker date="1500434104772" expanded="true" signature="7783:7924" ph="{...}" />
+                    <marker date="1500434104772" expanded="true" signature="8009:9838" ph="Stream" />
+                    <marker date="1500434104772" expanded="true" signature="8099:8322" ph="{...}" />
+                    <marker date="1500434104772" expanded="true" signature="8392:8717" ph="{...}" />
+                    <marker date="1500434104772" expanded="true" signature="8550:8630" ph="{...}" />
+                    <marker date="1500434104772" expanded="true" signature="8788:9008" ph="{...}" />
+                    <marker date="1500434104772" expanded="true" signature="9072:9267" ph="{...}" />
+                    <marker date="1500434104772" expanded="true" signature="9333:9548" ph="{...}" />
+                    <marker date="1500434104772" expanded="true" signature="9614:9814" ph="{...}" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-second>
+    </splitter>
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/TsunamiHack/Tsunami/Manager/Loader.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/TsunamiHack/Tsunami/Manager/Quake.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/TsunamiHack/Tsunami/Util/FileDownloader.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/TsunamiHack/Tsunami/Util/PopupController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/4A51E044-E714-4D14-969B-3DDAD020BA96/97/a54e4ef7/KeyCode.cs" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/TsunamiHack/Tsunami/Types/HackController.cs" root0="FORCE_HIGHLIGHTING" />
@@ -375,20 +189,20 @@
         <option value="$PROJECT_DIR$/TsunamiHack/Tsunami/Lib/Keybind.cs" />
         <option value="$PROJECT_DIR$/TsunamiHack/Tsunami/Types/Lists/BanList.cs" />
         <option value="$PROJECT_DIR$/TsunamiHack/Tsunami/Util/PlayerTools.cs" />
-        <option value="$PROJECT_DIR$/TsunamiHack/Tsunami/Types/HackController.cs" />
         <option value="$PROJECT_DIR$/TsunamiHack/Tsunami/Util/Logging.cs" />
         <option value="$PROJECT_DIR$/TsunamiHack/Tsunami/Util/Blocker.cs" />
-        <option value="$PROJECT_DIR$/TsunamiHack/Tsunami/Manager/Loader.cs" />
         <option value="$PROJECT_DIR$/TsunamiHack/Tsunami/Types/Keybind.cs" />
         <option value="$PROJECT_DIR$/TsunamiHack/Tsunami/Util/PopupController.cs" />
         <option value="$PROJECT_DIR$/TsunamiHack/Tsunami/Types/Popup.cs" />
         <option value="$PROJECT_DIR$/TsunamiHack/Tsunami/Menu/Visuals.cs" />
         <option value="$PROJECT_DIR$/TsunamiHack/Tsunami/Types/Configs/KeybindConfig.cs" />
         <option value="$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/4A51E044-E714-4D14-969B-3DDAD020BA96/97/a54e4ef7/KeyCode.cs" />
-        <option value="$PROJECT_DIR$/TsunamiHack/Tsunami/Util/FileIo.cs" />
         <option value="$PROJECT_DIR$/TsunamiHack/Tsunami/Menu/Main.cs" />
         <option value="$PROJECT_DIR$/TsunamiHack/Tsunami/Manager/WaveMaker.cs" />
         <option value="$PROJECT_DIR$/TsunamiHack/Tsunami/Menu/Keybind.cs" />
+        <option value="$PROJECT_DIR$/TsunamiHack/Tsunami/Manager/Loader.cs" />
+        <option value="$PROJECT_DIR$/TsunamiHack/Tsunami/Types/HackController.cs" />
+        <option value="$PROJECT_DIR$/TsunamiHack/Tsunami/Util/FileIo.cs" />
       </list>
     </option>
   </component>
@@ -401,7 +215,7 @@
   <component name="ProjectFrameBounds">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
-    <option name="width" value="1684" />
+    <option name="width" value="1696" />
     <option name="height" value="1026" />
   </component>
   <component name="ProjectView">
@@ -419,202 +233,9 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scratches" />
       <pane id="SolutionExplorer">
         <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" />
-              <option name="myItemType" value="com.jetbrains.rider.projectView.solutionExplorer.SolutionExplorerViewPane$ProjectViewPaneTreeStructure$createRoot$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="TsunamiHack (2 projects)" />
-              <option name="myItemType" value="com.jetbrains.rider.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="TsunamiHack" />
-              <option name="myItemType" value="com.jetbrains.rider.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" />
-              <option name="myItemType" value="com.jetbrains.rider.projectView.solutionExplorer.SolutionExplorerViewPane$ProjectViewPaneTreeStructure$createRoot$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="TsunamiHack (2 projects)" />
-              <option name="myItemType" value="com.jetbrains.rider.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="TsunamiHack" />
-              <option name="myItemType" value="com.jetbrains.rider.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Tsunami" />
-              <option name="myItemType" value="com.jetbrains.rider.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" />
-              <option name="myItemType" value="com.jetbrains.rider.projectView.solutionExplorer.SolutionExplorerViewPane$ProjectViewPaneTreeStructure$createRoot$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="TsunamiHack (2 projects)" />
-              <option name="myItemType" value="com.jetbrains.rider.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="TsunamiHack" />
-              <option name="myItemType" value="com.jetbrains.rider.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Tsunami" />
-              <option name="myItemType" value="com.jetbrains.rider.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Util" />
-              <option name="myItemType" value="com.jetbrains.rider.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" />
-              <option name="myItemType" value="com.jetbrains.rider.projectView.solutionExplorer.SolutionExplorerViewPane$ProjectViewPaneTreeStructure$createRoot$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="TsunamiHack (2 projects)" />
-              <option name="myItemType" value="com.jetbrains.rider.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="TsunamiHack" />
-              <option name="myItemType" value="com.jetbrains.rider.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Tsunami" />
-              <option name="myItemType" value="com.jetbrains.rider.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Types" />
-              <option name="myItemType" value="com.jetbrains.rider.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" />
-              <option name="myItemType" value="com.jetbrains.rider.projectView.solutionExplorer.SolutionExplorerViewPane$ProjectViewPaneTreeStructure$createRoot$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="TsunamiHack (2 projects)" />
-              <option name="myItemType" value="com.jetbrains.rider.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="TsunamiHack" />
-              <option name="myItemType" value="com.jetbrains.rider.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Tsunami" />
-              <option name="myItemType" value="com.jetbrains.rider.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Types" />
-              <option name="myItemType" value="com.jetbrains.rider.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Lists" />
-              <option name="myItemType" value="com.jetbrains.rider.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" />
-              <option name="myItemType" value="com.jetbrains.rider.projectView.solutionExplorer.SolutionExplorerViewPane$ProjectViewPaneTreeStructure$createRoot$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="TsunamiHack (2 projects)" />
-              <option name="myItemType" value="com.jetbrains.rider.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="TsunamiHack" />
-              <option name="myItemType" value="com.jetbrains.rider.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Tsunami" />
-              <option name="myItemType" value="com.jetbrains.rider.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Types" />
-              <option name="myItemType" value="com.jetbrains.rider.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Configs" />
-              <option name="myItemType" value="com.jetbrains.rider.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" />
-              <option name="myItemType" value="com.jetbrains.rider.projectView.solutionExplorer.SolutionExplorerViewPane$ProjectViewPaneTreeStructure$createRoot$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="TsunamiHack (2 projects)" />
-              <option name="myItemType" value="com.jetbrains.rider.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="TsunamiHack" />
-              <option name="myItemType" value="com.jetbrains.rider.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Tsunami" />
-              <option name="myItemType" value="com.jetbrains.rider.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Menu" />
-              <option name="myItemType" value="com.jetbrains.rider.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" />
-              <option name="myItemType" value="com.jetbrains.rider.projectView.solutionExplorer.SolutionExplorerViewPane$ProjectViewPaneTreeStructure$createRoot$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="TsunamiHack (2 projects)" />
-              <option name="myItemType" value="com.jetbrains.rider.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="TsunamiHack" />
-              <option name="myItemType" value="com.jetbrains.rider.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Tsunami" />
-              <option name="myItemType" value="com.jetbrains.rider.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Manager" />
-              <option name="myItemType" value="com.jetbrains.rider.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" />
-              <option name="myItemType" value="com.jetbrains.rider.projectView.solutionExplorer.SolutionExplorerViewPane$ProjectViewPaneTreeStructure$createRoot$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="TsunamiHack (2 projects)" />
-              <option name="myItemType" value="com.jetbrains.rider.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="TsunamiHack" />
-              <option name="myItemType" value="com.jetbrains.rider.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Tsunami" />
-              <option name="myItemType" value="com.jetbrains.rider.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Lib" />
-              <option name="myItemType" value="com.jetbrains.rider.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-          </PATH>
           <PATH>
             <PATH_ELEMENT>
               <option name="myItemId" />
@@ -629,7 +250,6 @@
         <option name="show-file-system" value="false" />
         <option name="show-all-items" value="false" />
       </pane>
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -761,13 +381,15 @@
       <workItem from="1500311770892" duration="2365000" />
       <workItem from="1500350145688" duration="1563000" />
       <workItem from="1500396217798" duration="567000" />
-      <workItem from="1500402144037" duration="9289000" />
+      <workItem from="1500402144037" duration="9416000" />
+      <workItem from="1500417692700" duration="254000" />
+      <workItem from="1500417950110" duration="10631000" />
     </task>
     <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="108073000" />
+    <option name="totallyTimeSpent" value="119085000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -779,10 +401,10 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1684" height="1026" extended-state="0" />
+    <frame x="-8" y="-8" width="1696" height="1026" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="TODO" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33743843" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.10757946" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Errors In Solution" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3294621" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32752994" sideWeight="0.5" order="6" side_tool="true" content_ui="tabs" />
       <window_info id="Unit Tests" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32943678" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -790,7 +412,7 @@
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32861805" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="NuGet" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32943678" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22844827" sideWeight="0.5" order="5" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23899755" sideWeight="0.5" order="5" side_tool="false" content_ui="combo" />
       <window_info id="Build" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32861805" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.3294621" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3297062" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -836,7 +458,15 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="3" />
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/TsunamiHack/Tsunami/Manager/Loader.cs</url>
+          <line>93</line>
+          <properties startOffset="2833" endOffset="2834" documentPath="$PROJECT_DIR$/TsunamiHack/Tsunami/Manager/Loader.cs" />
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+      </breakpoints>
+      <option name="time" value="4" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -991,13 +621,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TsunamiHack/Tsunami/Util/FileDownloader.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="585">
-          <caret line="53" column="16" lean-forward="false" selection-start-line="53" selection-start-column="16" selection-end-line="53" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/JsonEditor/Program.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="465">
@@ -1056,13 +679,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TsunamiHack/Tsunami/Types/HackController.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="13" column="38" lean-forward="false" selection-start-line="13" selection-start-column="38" selection-end-line="13" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/TsunamiHack/Tsunami/Util/MenuTools.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="510">
@@ -1093,7 +709,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/TsunamiHack/Tsunami/Types/Popup.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="489">
+        <state relative-caret-position="615">
           <caret line="43" column="35" lean-forward="false" selection-start-line="43" selection-start-column="35" selection-end-line="43" selection-end-column="35" />
           <folding>
             <marker date="1500252544718" expanded="false" signature="6:59" ph="..." />
@@ -1130,45 +746,16 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TsunamiHack/Tsunami/Manager/Loader.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="630">
-          <caret line="48" column="28" lean-forward="false" selection-start-line="48" selection-start-column="28" selection-end-line="48" selection-end-column="28" />
-          <folding>
-            <marker date="1500240892094" expanded="false" signature="6:123" ph="..." />
-            <marker date="1500240892094" expanded="true" signature="162:3518" ph="{...}" />
-            <marker date="1500240892094" expanded="true" signature="190:3516" ph="{...}" />
-            <marker date="1500240892094" expanded="true" signature="298:760" ph="{...}" />
-            <marker date="1500240892094" expanded="true" signature="324:593" ph="{...}" />
-            <marker date="1500240892094" expanded="true" signature="637:750" ph="{...}" />
-            <marker date="1500240892094" expanded="true" signature="803:2386" ph="{...}" />
-            <marker date="1500240892094" expanded="true" signature="884:1230" ph="{...}" />
-            <marker date="1500240892094" expanded="true" signature="1011:1216" ph="{...}" />
-            <marker date="1500240892094" expanded="true" signature="1248:1600" ph="{...}" />
-            <marker date="1500240892094" expanded="true" signature="1373:1586" ph="{...}" />
-            <marker date="1500240892094" expanded="true" signature="1674:2025" ph="{...}" />
-            <marker date="1500240892094" expanded="true" signature="1804:2011" ph="{...}" />
-            <marker date="1500240892094" expanded="true" signature="2042:2374" ph="{...}" />
-            <marker date="1500240892094" expanded="true" signature="2430:3209" ph="{...}" />
-            <marker date="1500240892094" expanded="true" signature="2480:2831" ph="{...}" />
-            <marker date="1500240892094" expanded="true" signature="2610:2817" ph="{...}" />
-            <marker date="1500240892094" expanded="true" signature="2848:3199" ph="{...}" />
-            <marker date="1500240892094" expanded="true" signature="2974:3185" ph="{...}" />
-            <marker date="1500240892094" expanded="true" signature="3254:3509" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/TsunamiHack/Tsunami/Types/Configs/KeybindConfig.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="705">
+        <state relative-caret-position="1515">
           <caret line="102" column="27" lean-forward="false" selection-start-line="102" selection-start-column="27" selection-end-line="102" selection-end-column="27" />
           <folding>
             <marker date="1500408171982" expanded="false" signature="6:52" ph="..." />
             <marker date="1500408171982" expanded="true" signature="97:2339" ph="{...}" />
             <marker date="1500408171982" expanded="true" signature="130:2337" ph="{...}" />
             <marker date="1500408171982" expanded="true" signature="220:297" ph="{...}" />
-            <marker date="1500408171982" expanded="false" signature="303:1525" ph="returns" />
+            <marker date="1500408171982" expanded="true" signature="303:1525" ph="returns" />
             <marker date="1500408171982" expanded="true" signature="363:691" ph="{...}" />
             <marker date="1500408171982" expanded="true" signature="417:649" ph="{...}" />
             <marker date="1500408171982" expanded="true" signature="526:599" ph="{...}" />
@@ -1218,62 +805,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TsunamiHack/Tsunami/Util/FileIo.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="803">
-          <caret line="247" column="0" lean-forward="false" selection-start-line="247" selection-start-column="0" selection-end-line="247" selection-end-column="0" />
-          <folding>
-            <marker date="1500410883635" expanded="false" signature="6:250" ph="..." />
-            <marker date="1500410883635" expanded="true" signature="286:8735" ph="{...}" />
-            <marker date="1500410883635" expanded="true" signature="314:8733" ph="{...}" />
-            <marker date="1500410883635" expanded="true" signature="930:1098" ph="{...}" />
-            <marker date="1500410883635" expanded="true" signature="996:1088" ph="{...}" />
-            <marker date="1500410883635" expanded="true" signature="1139:1742" ph="{...}" />
-            <marker date="1500410883635" expanded="true" signature="1204:1306" ph="{...}" />
-            <marker date="1500410883635" expanded="true" signature="1347:1732" ph="{...}" />
-            <marker date="1500410883635" expanded="true" signature="1400:1700" ph="{...}" />
-            <marker date="1500410883635" expanded="true" signature="1595:1682" ph="{...}" />
-            <marker date="1500410883635" expanded="false" signature="1748:2801" ph="Keybinds" />
-            <marker date="1500410883635" expanded="true" signature="1808:1873" ph="{...}" />
-            <marker date="1500410883635" expanded="true" signature="1961:2108" ph="{...}" />
-            <marker date="1500410883635" expanded="true" signature="2179:2456" ph="{...}" />
-            <marker date="1500410883635" expanded="true" signature="2539:2785" ph="{...}" />
-            <marker date="1500410883635" expanded="true" signature="2644:2724" ph="{...}" />
-            <marker date="1500410883635" expanded="false" signature="2807:3660" ph="Friends" />
-            <marker date="1500410883635" expanded="true" signature="2865:2930" ph="{...}" />
-            <marker date="1500410883635" expanded="true" signature="3012:3155" ph="{...}" />
-            <marker date="1500410883635" expanded="true" signature="3220:3317" ph="{...}" />
-            <marker date="1500410883635" expanded="true" signature="3398:3644" ph="{...}" />
-            <marker date="1500410883635" expanded="true" signature="3503:3583" ph="{...}" />
-            <marker date="1500410883635" expanded="false" signature="3666:4573" ph="Settings" />
-            <marker date="1500410883635" expanded="true" signature="3726:3792" ph="{...}" />
-            <marker date="1500410883635" expanded="true" signature="3876:4019" ph="{...}" />
-            <marker date="1500410883635" expanded="true" signature="4085:4229" ph="{...}" />
-            <marker date="1500410883635" expanded="true" signature="4309:4557" ph="{...}" />
-            <marker date="1500410883635" expanded="true" signature="4415:4496" ph="{...}" />
-            <marker date="1500410883635" expanded="true" signature="4579:6863" ph="first time" />
-            <marker date="1500410883635" expanded="false" signature="4607:5604" ph="/* public static bool CheckIfFirstTime() ... */" />
-            <marker date="1500410883635" expanded="true" signature="5651:6637" ph="{...}" />
-            <marker date="1500410883635" expanded="true" signature="5708:6499" ph="/* if (res) ... */" />
-            <marker date="1500410883635" expanded="true" signature="6522:6589" ph="{...}" />
-            <marker date="1500410883635" expanded="true" signature="6677:6847" ph="{...}" />
-            <marker date="1500410883635" expanded="false" signature="6893:8722" ph="Stream" />
-            <marker date="1500410883635" expanded="true" signature="6983:7206" ph="{...}" />
-            <marker date="1500410883635" expanded="true" signature="7276:7601" ph="{...}" />
-            <marker date="1500410883635" expanded="true" signature="7434:7514" ph="{...}" />
-            <marker date="1500410883635" expanded="true" signature="7672:7892" ph="{...}" />
-            <marker date="1500410883635" expanded="true" signature="7956:8151" ph="{...}" />
-            <marker date="1500410883635" expanded="true" signature="8217:8432" ph="{...}" />
-            <marker date="1500410883635" expanded="true" signature="8498:8698" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/4A51E044-E714-4D14-969B-3DDAD020BA96/97/a54e4ef7/KeyCode.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="570">
           <caret line="128" column="23" lean-forward="true" selection-start-line="128" selection-start-column="23" selection-end-line="128" selection-end-column="23" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1305,7 +840,6 @@
         <state relative-caret-position="630">
           <caret line="42" column="1" lean-forward="false" selection-start-line="42" selection-start-column="1" selection-end-line="42" selection-end-column="1" />
           <folding>
-            <marker date="1500407666421" expanded="true" signature="54:708" ph="{...}" />
             <marker date="1500407666421" expanded="true" signature="110:706" ph="{...}" />
             <marker date="1500407666421" expanded="true" signature="206:226" ph="{...}" />
             <marker date="1500407666421" expanded="true" signature="256:276" ph="{...}" />
@@ -1318,61 +852,176 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/TsunamiHack/Tsunami/Util/FileDownloader.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="780">
+          <caret line="66" column="51" lean-forward="false" selection-start-line="66" selection-start-column="51" selection-end-line="66" selection-end-column="51" />
+          <folding>
+            <marker date="1498602293666" expanded="false" signature="6:337" ph="..." />
+            <marker date="1498602293666" expanded="true" signature="373:2686" ph="{...}" />
+            <marker date="1498602293666" expanded="true" signature="415:2684" ph="{...}" />
+            <marker date="1498602293666" expanded="true" signature="933:978" ph="{...}" />
+            <marker date="1498602293666" expanded="true" signature="1072:1671" ph="{...}" />
+            <marker date="1498602293666" expanded="true" signature="1200:1595" ph="{...}" />
+            <marker date="1498602293666" expanded="true" signature="1800:2340" ph="{...}" />
+            <marker date="1498602293666" expanded="true" signature="2406:2678" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/TsunamiHack/Tsunami/Manager/WaveMaker.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="735">
-          <caret line="75" column="16" lean-forward="false" selection-start-line="75" selection-start-column="16" selection-end-line="75" selection-end-column="16" />
+        <state relative-caret-position="0">
+          <caret line="20" column="39" lean-forward="false" selection-start-line="20" selection-start-column="39" selection-end-line="20" selection-end-column="39" />
           <folding>
-            <marker date="1500414204913" expanded="false" signature="6:332" ph="..." />
-            <marker date="1500414204913" expanded="true" signature="371:4466" ph="{...}" />
-            <marker date="1500414204913" expanded="true" signature="402:4464" ph="{...}" />
-            <marker date="1500414204913" expanded="true" signature="417:595" ph="/* TODO: Add way to check the integrity of local files if they are deleted during run ... */" />
-            <marker date="1500414204913" expanded="true" signature="1924:2722" ph="{...}" />
-            <marker date="1500414204913" expanded="true" signature="2041:2125" ph="{...}" />
-            <marker date="1500414204913" expanded="true" signature="2181:2628" ph="{...}" />
-            <marker date="1500414204913" expanded="true" signature="2762:4458" ph="{...}" />
-            <marker date="1500414204913" expanded="true" signature="2809:3011" ph="{...}" />
-            <marker date="1500414204913" expanded="true" signature="3079:3837" ph="{...}" />
-            <marker date="1500414204913" expanded="true" signature="3127:3823" ph="{...}" />
-            <marker date="1500414204913" expanded="true" signature="3880:4435" ph="{...}" />
-            <marker date="1500414204913" expanded="true" signature="3928:4421" ph="{...}" />
+            <marker date="1500417981820" expanded="false" signature="6:332" ph="..." />
+            <marker date="1500417981820" expanded="true" signature="371:4466" ph="{...}" />
+            <marker date="1500417981820" expanded="true" signature="402:4464" ph="{...}" />
+            <marker date="1500417981820" expanded="true" signature="417:595" ph="/* TODO: Add way to check the integrity of local files if they are deleted during run ... */" />
+            <marker date="1500417981820" expanded="true" signature="1924:2722" ph="{...}" />
+            <marker date="1500417981820" expanded="true" signature="2041:2125" ph="{...}" />
+            <marker date="1500417981820" expanded="true" signature="2181:2628" ph="{...}" />
+            <marker date="1500417981820" expanded="true" signature="2762:4458" ph="{...}" />
+            <marker date="1500417981820" expanded="true" signature="2809:3011" ph="{...}" />
+            <marker date="1500417981820" expanded="true" signature="3079:3837" ph="{...}" />
+            <marker date="1500417981820" expanded="true" signature="3127:3823" ph="{...}" />
+            <marker date="1500417981820" expanded="true" signature="3880:4435" ph="{...}" />
+            <marker date="1500417981820" expanded="true" signature="3928:4421" ph="{...}" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/TsunamiHack/Tsunami/Menu/Keybind.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="65" column="20" lean-forward="true" selection-start-line="65" selection-start-column="20" selection-end-line="65" selection-end-column="20" />
+        <state relative-caret-position="690">
+          <caret line="110" column="51" lean-forward="false" selection-start-line="110" selection-start-column="51" selection-end-line="110" selection-end-column="51" />
           <folding>
-            <marker date="1500414205174" expanded="false" signature="6:295" ph="..." />
-            <marker date="1500414205174" expanded="true" signature="331:5723" ph="{...}" />
-            <marker date="1500414205174" expanded="true" signature="389:5721" ph="{...}" />
-            <marker date="1500414205174" expanded="true" signature="793:1181" ph="{...}" />
-            <marker date="1500414205174" expanded="true" signature="1211:3437" ph="{...}" />
-            <marker date="1500414205174" expanded="true" signature="1653:3387" ph="{...}" />
-            <marker date="1500414205174" expanded="true" signature="1697:2282" ph="{...}" />
-            <marker date="1500414205174" expanded="true" signature="1793:1964" ph="{...}" />
-            <marker date="1500414205174" expanded="true" signature="1989:2264" ph="{...}" />
-            <marker date="1500414205174" expanded="true" signature="2303:3356" ph="{...}" />
-            <marker date="1500414205174" expanded="true" signature="2424:2919" ph="{...}" />
-            <marker date="1500414205174" expanded="true" signature="2683:2897" ph="{...}" />
-            <marker date="1500414205174" expanded="true" signature="3475:3905" ph="{...}" />
-            <marker date="1500414205174" expanded="true" signature="3529:3697" ph="{...}" />
-            <marker date="1500414205174" expanded="true" signature="3714:3882" ph="{...}" />
-            <marker date="1500414205174" expanded="true" signature="3941:4266" ph="{...}" />
-            <marker date="1500414205174" expanded="true" signature="3984:4256" ph="{...}" />
-            <marker date="1500414205174" expanded="true" signature="4303:4580" ph="{...}" />
-            <marker date="1500414205174" expanded="true" signature="4351:4569" ph="{...}" />
-            <marker date="1500414205174" expanded="true" signature="4430:4555" ph="{...}" />
-            <marker date="1500414205174" expanded="true" signature="4637:5375" ph="{...}" />
-            <marker date="1500414205174" expanded="true" signature="4735:4828" ph="{...}" />
-            <marker date="1500414205174" expanded="true" signature="4967:5063" ph="{...}" />
-            <marker date="1500414205174" expanded="true" signature="5204:5301" ph="{...}" />
-            <marker date="1500414205174" expanded="true" signature="5385:5715" ph="Interface Members" />
-            <marker date="1500414205174" expanded="true" signature="5459:5513" ph="{...}" />
-            <marker date="1500414205174" expanded="true" signature="5553:5611" ph="{...}" />
-            <marker date="1500414205174" expanded="true" signature="5648:5699" ph="{...}" />
+            <marker date="1500420416334" expanded="false" signature="6:295" ph="..." />
+            <marker date="1500420416334" expanded="true" signature="331:5703" ph="{...}" />
+            <marker date="1500420416334" expanded="true" signature="389:5701" ph="{...}" />
+            <marker date="1500420416334" expanded="true" signature="793:1181" ph="{...}" />
+            <marker date="1500420416334" expanded="true" signature="1211:3417" ph="{...}" />
+            <marker date="1500420416334" expanded="true" signature="1653:3367" ph="{...}" />
+            <marker date="1500420416334" expanded="true" signature="1697:2282" ph="{...}" />
+            <marker date="1500420416334" expanded="true" signature="1793:1964" ph="{...}" />
+            <marker date="1500420416334" expanded="true" signature="1989:2264" ph="{...}" />
+            <marker date="1500420416334" expanded="true" signature="2303:3336" ph="{...}" />
+            <marker date="1500420416334" expanded="true" signature="2424:2854" ph="{...}" />
+            <marker date="1500420416334" expanded="true" signature="2618:2832" ph="{...}" />
+            <marker date="1500420416334" expanded="true" signature="3219:3318" ph="{...}" />
+            <marker date="1500420416334" expanded="true" signature="3455:3885" ph="{...}" />
+            <marker date="1500420416334" expanded="true" signature="3509:3677" ph="{...}" />
+            <marker date="1500420416334" expanded="true" signature="3694:3862" ph="{...}" />
+            <marker date="1500420416334" expanded="true" signature="3921:4246" ph="{...}" />
+            <marker date="1500420416334" expanded="true" signature="3964:4236" ph="{...}" />
+            <marker date="1500420416334" expanded="true" signature="4283:4560" ph="{...}" />
+            <marker date="1500420416334" expanded="true" signature="4331:4549" ph="{...}" />
+            <marker date="1500420416334" expanded="true" signature="4410:4535" ph="{...}" />
+            <marker date="1500420416334" expanded="true" signature="4617:5355" ph="{...}" />
+            <marker date="1500420416334" expanded="true" signature="4715:4808" ph="{...}" />
+            <marker date="1500420416334" expanded="true" signature="4947:5043" ph="{...}" />
+            <marker date="1500420416334" expanded="true" signature="5184:5281" ph="{...}" />
+            <marker date="1500420416334" expanded="true" signature="5365:5695" ph="Interface Members" />
+            <marker date="1500420416334" expanded="true" signature="5439:5493" ph="{...}" />
+            <marker date="1500420416334" expanded="true" signature="5533:5591" ph="{...}" />
+            <marker date="1500420416334" expanded="true" signature="5628:5679" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TsunamiHack/Tsunami/Types/HackController.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="10" column="31" lean-forward="false" selection-start-line="10" selection-start-column="31" selection-end-line="10" selection-end-column="31" />
+          <folding>
+            <marker date="1500426714219" expanded="false" signature="6:60" ph="..." />
+            <marker date="1500426714219" expanded="true" signature="97:489" ph="{...}" />
+            <marker date="1500426714219" expanded="true" signature="131:487" ph="{...}" />
+            <marker date="1500426714219" expanded="true" signature="313:472" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TsunamiHack/Tsunami/Manager/Loader.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="540">
+          <caret line="93" column="0" lean-forward="false" selection-start-line="93" selection-start-column="0" selection-end-line="93" selection-end-column="0" />
+          <folding>
+            <marker date="1500426713960" expanded="false" signature="6:123" ph="..." />
+            <marker date="1500426713960" expanded="true" signature="162:3535" ph="{...}" />
+            <marker date="1500426713960" expanded="true" signature="190:3533" ph="{...}" />
+            <marker date="1500426713960" expanded="true" signature="298:777" ph="{...}" />
+            <marker date="1500426713960" expanded="true" signature="324:610" ph="{...}" />
+            <marker date="1500426713960" expanded="true" signature="654:767" ph="{...}" />
+            <marker date="1500426713960" expanded="true" signature="820:2403" ph="{...}" />
+            <marker date="1500426713960" expanded="true" signature="901:1247" ph="{...}" />
+            <marker date="1500426713960" expanded="true" signature="1028:1233" ph="{...}" />
+            <marker date="1500426713960" expanded="true" signature="1265:1617" ph="{...}" />
+            <marker date="1500426713960" expanded="true" signature="1390:1603" ph="{...}" />
+            <marker date="1500426713960" expanded="true" signature="1691:2042" ph="{...}" />
+            <marker date="1500426713960" expanded="true" signature="1821:2028" ph="{...}" />
+            <marker date="1500426713960" expanded="true" signature="2059:2391" ph="{...}" />
+            <marker date="1500426713960" expanded="true" signature="2447:3226" ph="{...}" />
+            <marker date="1500426713960" expanded="true" signature="2497:2848" ph="{...}" />
+            <marker date="1500426713960" expanded="true" signature="2627:2834" ph="{...}" />
+            <marker date="1500426713960" expanded="true" signature="2865:3216" ph="{...}" />
+            <marker date="1500426713960" expanded="true" signature="2991:3202" ph="{...}" />
+            <marker date="1500426713960" expanded="true" signature="3271:3526" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TsunamiHack/Tsunami/Util/FileIo.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="210" column="11" lean-forward="false" selection-start-line="210" selection-start-column="11" selection-end-line="210" selection-end-column="11" />
+          <folding>
+            <marker date="1500434104772" expanded="false" signature="6:288" ph="..." />
+            <marker date="1500434104772" expanded="true" signature="324:9851" ph="{...}" />
+            <marker date="1500434104772" expanded="true" signature="352:9849" ph="{...}" />
+            <marker date="1500434104772" expanded="true" signature="968:1136" ph="{...}" />
+            <marker date="1500434104772" expanded="true" signature="1034:1126" ph="{...}" />
+            <marker date="1500434104772" expanded="true" signature="1177:1780" ph="{...}" />
+            <marker date="1500434104772" expanded="true" signature="1242:1344" ph="{...}" />
+            <marker date="1500434104772" expanded="true" signature="1385:1770" ph="{...}" />
+            <marker date="1500434104772" expanded="true" signature="1438:1738" ph="{...}" />
+            <marker date="1500434104772" expanded="true" signature="1633:1720" ph="{...}" />
+            <marker date="1500434104772" expanded="true" signature="1786:2879" ph="Keybinds" />
+            <marker date="1500434104772" expanded="true" signature="1846:1911" ph="{...}" />
+            <marker date="1500434104772" expanded="true" signature="1999:2146" ph="{...}" />
+            <marker date="1500434104772" expanded="true" signature="2217:2534" ph="{...}" />
+            <marker date="1500434104772" expanded="true" signature="2617:2863" ph="{...}" />
+            <marker date="1500434104772" expanded="true" signature="2722:2802" ph="{...}" />
+            <marker date="1500434104772" expanded="true" signature="2885:3732" ph="Friends" />
+            <marker date="1500434104772" expanded="true" signature="2943:3008" ph="{...}" />
+            <marker date="1500434104772" expanded="true" signature="3090:3233" ph="{...}" />
+            <marker date="1500434104772" expanded="true" signature="3298:3389" ph="{...}" />
+            <marker date="1500434104772" expanded="true" signature="3470:3716" ph="{...}" />
+            <marker date="1500434104772" expanded="true" signature="3575:3655" ph="{...}" />
+            <marker date="1500434104772" expanded="true" signature="3738:4639" ph="Settings" />
+            <marker date="1500434104772" expanded="true" signature="3798:3864" ph="{...}" />
+            <marker date="1500434104772" expanded="true" signature="3948:4091" ph="{...}" />
+            <marker date="1500434104772" expanded="true" signature="4157:4295" ph="{...}" />
+            <marker date="1500434104772" expanded="true" signature="4375:4623" ph="{...}" />
+            <marker date="1500434104772" expanded="true" signature="4481:4562" ph="{...}" />
+            <marker date="1500434104772" expanded="true" signature="4645:7979" ph="first time" />
+            <marker date="1500434104772" expanded="true" signature="4673:5670" ph="/* public static bool CheckIfFirstTime() ... */" />
+            <marker date="1500434104772" expanded="true" signature="5717:7963" ph="{...}" />
+            <marker date="1500434104772" expanded="true" signature="5800:7766" ph="{...}" />
+            <marker date="1500434104772" expanded="true" signature="5925:6043" ph="{...}" />
+            <marker date="1500434104772" expanded="true" signature="6090:7751" ph="{...}" />
+            <marker date="1500434104772" expanded="true" signature="6200:6816" ph="{...}" />
+            <marker date="1500434104772" expanded="true" signature="6889:7303" ph="{...}" />
+            <marker date="1500434104772" expanded="true" signature="7375:7733" ph="{...}" />
+            <marker date="1500434104772" expanded="true" signature="7783:7924" ph="{...}" />
+            <marker date="1500434104772" expanded="true" signature="8009:9838" ph="Stream" />
+            <marker date="1500434104772" expanded="true" signature="8099:8322" ph="{...}" />
+            <marker date="1500434104772" expanded="true" signature="8392:8717" ph="{...}" />
+            <marker date="1500434104772" expanded="true" signature="8550:8630" ph="{...}" />
+            <marker date="1500434104772" expanded="true" signature="8788:9008" ph="{...}" />
+            <marker date="1500434104772" expanded="true" signature="9072:9267" ph="{...}" />
+            <marker date="1500434104772" expanded="true" signature="9333:9548" ph="{...}" />
+            <marker date="1500434104772" expanded="true" signature="9614:9814" ph="{...}" />
           </folding>
         </state>
       </provider>
