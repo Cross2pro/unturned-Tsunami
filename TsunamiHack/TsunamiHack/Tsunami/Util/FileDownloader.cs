@@ -13,7 +13,7 @@ using TsunamiHack.Tsunami.Types.Lists;
 
 namespace TsunamiHack.Tsunami.Util
 {
-    public static  class FileDownloader
+    internal static  class FileDownloader
     {
         private const string PremlistUrl = "https://pastebin.com/raw/KBRtvsdz";
         private const string BanListUrl = "https://pastebin.com/raw/AxXtzUVL";

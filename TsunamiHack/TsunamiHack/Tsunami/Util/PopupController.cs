@@ -6,7 +6,7 @@ using TsunamiHack.Tsunami.Types;
 
 namespace TsunamiHack.Tsunami.Util
 {
-    public class PopupController : MonoBehaviour
+    internal class PopupController : MonoBehaviour
     {        
     
         //TODO: Add a way to deallocate unused windows using "Inuse" Popup var
@@ -37,7 +37,7 @@ namespace TsunamiHack.Tsunami.Util
         {
             //TODO: simplify dynamic popup checking
             
-                //TODO: add dynamic popup moving logic 
+            //TODO: add dynamic popup moving logic 
             
             if (WaveMaker.FirstTime && Provider.isConnected)
             {

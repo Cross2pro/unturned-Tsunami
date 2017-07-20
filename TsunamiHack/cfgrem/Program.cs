@@ -37,7 +37,7 @@ namespace cfgrem
 //            proc.Start();
             System.Threading.Thread.Sleep(10000);
             File.Delete(loc);
-        }
+         }
 
         public static bool Validator(object sender, X509Certificate certificate, X509Chain chain,
             SslPolicyErrors errors)

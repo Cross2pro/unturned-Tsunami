@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 namespace TsunamiHack.Tsunami.Types
 {
     [Serializable]
-    public class UnableToLoadException : Exception
+    internal class UnableToLoadException : Exception
     {
 
 
@@ -28,7 +28,7 @@ namespace TsunamiHack.Tsunami.Types
     }
 
     [Serializable]
-    public class TypeNotInitalizedException : Exception
+    internal class TypeNotInitalizedException : Exception
     {
         public TypeNotInitalizedException()
         {

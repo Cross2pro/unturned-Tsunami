@@ -48,10 +48,13 @@ namespace TsunamiHack.Tsunami.Util
                     
                     var contents = _reader.ReadToEnd();
 
-                    if (contents.Length < 1)
+                    _reader.Dispose();
+                    
+                    if (contents.Length == 0)
                     {
                         File.Delete(path);
                     }
+                    
                 }
                  
             }
@@ -227,6 +230,8 @@ namespace TsunamiHack.Tsunami.Util
                 if (str != WaveMaker.Version)
                 {
                     
+                    Logging.LogMsg("OUTDATED", "Creating new files");
+                    
                     using (var writer = new StreamWriter(KeybindPath))
                     {
                         //TODO: Add all the other keybinds
@@ -264,12 +269,18 @@ namespace TsunamiHack.Tsunami.Util
                         writer.Flush();
                         writer.Dispose();
                     }
+
+                    using (var writer = new StreamWriter(InfoPath))
+                    {
+                        writer.WriteLine(WaveMaker.Version);
+                        writer.Flush();
+                        writer.Dispose();
+                    }
                 }
 
             }
             else
             {
-                File.Create(InfoPath).Dispose();
                 File.WriteAllText(InfoPath, WaveMaker.Version);
             }
 

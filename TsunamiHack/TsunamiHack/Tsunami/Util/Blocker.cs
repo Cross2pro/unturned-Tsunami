@@ -7,16 +7,16 @@ using UnityEngine;
 
 namespace TsunamiHack.Tsunami.Util
 {
-    public class Blocker : MonoBehaviour
+    internal class Blocker : MonoBehaviour
     {
-        public enum Type { Banned, Disabled}
+        internal enum Type { Banned, Disabled}
         
         private HackController ctrl;
 
         private static bool BlockerEnabled;
-        public Rect windowRect;
-        public bool Banned;
-        public static Type DisabledType;
+        internal Rect windowRect;
+        internal bool Banned;
+        internal static Type DisabledType;
         
         private void Start()
         {

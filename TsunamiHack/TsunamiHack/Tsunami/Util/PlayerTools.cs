@@ -1,6 +1,6 @@
 ﻿namespace TsunamiHack.Tsunami.Util
 {
-    public class PlayerTools
+    internal class PlayerTools
     {
     }
 }

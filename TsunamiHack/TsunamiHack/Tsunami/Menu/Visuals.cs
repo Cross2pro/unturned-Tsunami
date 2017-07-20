@@ -2,7 +2,7 @@
 
 namespace TsunamiHack.Tsunami.Menu
 {
-    public class Visuals : MonoBehaviour, IMenuParent
+    internal class Visuals : MonoBehaviour, IMenuParent
     {
         public bool MenuOpened { get; private set; }
         

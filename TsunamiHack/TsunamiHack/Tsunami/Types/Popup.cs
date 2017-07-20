@@ -5,7 +5,7 @@ using TsunamiHack.Tsunami;
 namespace TsunamiHack.Tsunami.Types
 {
     
-    public class Popup
+    internal class Popup
     {
         //TODO: Add moving rects
         //TODO: Add limited duration popups

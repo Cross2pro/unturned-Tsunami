@@ -69,6 +69,13 @@ namespace TsunamiHack.Tsunami.Menu
 
                     if (pressed == _MainKey)
                     {
+                        var ftpopup = WaveMaker.PopupController.GetPopup(WaveMaker.FtPopupId);
+                        
+                        if (ftpopup.PopupOpened)
+                        {
+                            ftpopup.PopupOpened = false;
+                        }
+                        
                         UseMenu(WaveMaker.MainId);
 
                         if (WaveMaker.FirstTime && WaveMaker.PopupController.GetPopup(WaveMaker.FtPopupId).PopupOpened)
