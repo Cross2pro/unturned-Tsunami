@@ -16,15 +16,16 @@ namespace TsunamiHack.Tsunami.Menu
     {
         public bool MenuOpened { get; private set; }
         private Rect _windowRect;
-        public static bool Changing;
-        public static string focus;
-        public static bool KeybindsChanged;
+        public bool Changing;
+        public string focus;
+        public bool KeybindsChanged;
 
-        //TODO:implement loaded keybind config
 
         private KeyCode _MainKey;
         private KeyCode _VisualsKey;
         private KeyCode _KeybindKey;
+        private KeyCode _AimKey;
+        private KeyCode _ChangeTargetKey;
         
         public void Start()
         {
@@ -34,7 +35,10 @@ namespace TsunamiHack.Tsunami.Menu
             _MainKey = WaveMaker.Keybinds.GetBind("main");
             _VisualsKey = WaveMaker.Keybinds.GetBind("visuals");
             _KeybindKey = WaveMaker.Keybinds.GetBind("keybinds");
-            
+            _AimKey = WaveMaker.Keybinds.GetBind("aim");
+            _ChangeTargetKey = WaveMaker.Keybinds.GetBind("changetarget");
+
+
         }
 
         public void Update()
@@ -88,9 +92,11 @@ namespace TsunamiHack.Tsunami.Menu
                         UseMenu(WaveMaker.VisualsId);
                     else if (pressed == _KeybindKey)
                         UseMenu(WaveMaker.KeybindId);
+                    else if (pressed == _AimKey)
+                        UseMenu(WaveMaker.AimId);
                         
                     //TODO: add other menus
-
+                    //TODO: add change key logic
 
                     if (pressed == KeyCode.Escape && WaveMaker.MenuOpened != 0)
                     {
@@ -127,7 +133,10 @@ namespace TsunamiHack.Tsunami.Menu
                 _MainKey = WaveMaker.Keybinds.GetBind("main");
                 _VisualsKey = WaveMaker.Keybinds.GetBind("visuals");
                 _KeybindKey = WaveMaker.Keybinds.GetBind("keybinds");
+                _AimKey = WaveMaker.Keybinds.GetBind("aim");
+                _ChangeTargetKey = WaveMaker.Keybinds.GetBind("changetarget");
 
+                
                 KeybindsChanged = false;
             }
         }
@@ -160,6 +169,13 @@ namespace TsunamiHack.Tsunami.Menu
             {
                 Changing = true;
                 focus = "visuals";
+            }
+            GUILayout.Space(2f);
+            
+            if (GUILayout.Button($"Aim Menu : {WaveMaker.Keybinds.GetBind("aim")}"))
+            {
+                Changing = true;
+                focus = "aim";
             }
             GUILayout.Space(2f);
             

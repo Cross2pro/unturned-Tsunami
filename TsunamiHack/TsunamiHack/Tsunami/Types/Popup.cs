@@ -11,25 +11,21 @@ namespace TsunamiHack.Tsunami.Types
         //TODO: Add limited duration popups
 
 
-        [Identifier ("Generic popup vars")]
         public Rect PopupRect;
         public int Id;
         public string PopupTitle;
         public string PopupMessage;
         public bool CloseAble;
 
-        [Identifier("Controller vars")]
         public bool PopupOpened;
         public bool InUse;
 
-        [Identifier ("Dynamic vars")]
         public bool IsMoving;
         public Vector2 StartingPosition;
         public Vector2 EndingPosition;
         public float MovingSpeed;
         public float MovingDuration;
 
-        [Identifier("Limited duration vars")]
         public bool LimiterEnabled;
         public float Duration;
         public DateTime StartTime;

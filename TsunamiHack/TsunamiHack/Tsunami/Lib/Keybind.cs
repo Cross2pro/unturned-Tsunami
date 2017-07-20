@@ -27,10 +27,10 @@ namespace TsunamiHack.Tsunami.Lib
         private static void UpdateVars()
         {
             
-            if (Menu.Keybind.KeybindsChanged)
-            {
-                
-            }
+//            if (Menu.Keybind.KeybindsChanged)
+//            {
+//                
+//            }
         }
 
         public static void Check()

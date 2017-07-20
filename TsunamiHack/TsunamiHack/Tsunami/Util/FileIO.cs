@@ -81,6 +81,8 @@ namespace TsunamiHack.Tsunami.Util
             keybinds.AddBind("main", KeyCode.F1);
             keybinds.AddBind("visuals", KeyCode.F2);
             keybinds.AddBind("keybinds", KeyCode.F4);
+            keybinds.AddBind("aim", KeyCode.F3);
+            keybinds.AddBind("changetarget", KeyCode.Backslash);
 
             SaveKeybinds(keybinds);// --------------------// --------------------
         }
@@ -201,7 +203,10 @@ namespace TsunamiHack.Tsunami.Util
                         var keybinds = new KeybindConfig();
                         keybinds.AddBind("main", KeyCode.F1);
                         keybinds.AddBind("visuals", KeyCode.F2);
+                        keybinds.AddBind("aim", KeyCode.F3);
                         keybinds.AddBind("keybinds", KeyCode.F4);
+                        keybinds.AddBind("changetarget", KeyCode.Backslash);
+
 
                         WaveMaker.Keybinds = keybinds;
                         var json = JsonConvert.SerializeObject(keybinds);

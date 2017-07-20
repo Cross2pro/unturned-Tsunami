@@ -34,6 +34,7 @@ namespace TsunamiHack.Tsunami.Manager
         public static Menu.Main MenuMain;
         public static Menu.Keybind MenuKeybind;
         public static Menu.Visuals MenuVisuals;
+        public static Menu.Aim MenuAim;
         public static PopupController PopupController;
         public static Blocker Blocker;
 
@@ -102,11 +103,13 @@ namespace TsunamiHack.Tsunami.Manager
                     MenuKeybind = _obj.AddComponent<Menu.Keybind>();
                     MenuVisuals = _obj.AddComponent<Menu.Visuals>();
                     PopupController = _obj.AddComponent<PopupController>();
+                    MenuAim = _obj.AddComponent<Menu.Aim>();
 
                     UnityEngine.Object.DontDestroyOnLoad(MenuMain);
                     UnityEngine.Object.DontDestroyOnLoad(MenuKeybind);
                     UnityEngine.Object.DontDestroyOnLoad(PopupController);
                     UnityEngine.Object.DontDestroyOnLoad(MenuVisuals);
+                    UnityEngine.Object.DontDestroyOnLoad(MenuAim);
 
                     //TODO: add other hack objects
                 }
@@ -121,12 +124,14 @@ namespace TsunamiHack.Tsunami.Manager
                     MenuKeybind = null;
                     PopupController = null;
                     MenuVisuals = null;
+                    MenuAim = null;
                 
                     UnityEngine.Object.Destroy(MenuMain);
                     UnityEngine.Object.Destroy(MenuKeybind);
                     UnityEngine.Object.Destroy(PopupController);
                     UnityEngine.Object.Destroy(MenuVisuals);
-
+                    UnityEngine.Object.Destroy(MenuAim);
+                    
                 }
             }
             
