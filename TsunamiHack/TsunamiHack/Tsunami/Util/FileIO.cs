@@ -176,43 +176,6 @@ namespace TsunamiHack.Tsunami.Util
 
     #region first time
 
-        /*public static bool CheckIfFirstTime()
-        {
-            var result = File.Exists(InfoPath);
-
-            if (result)
-            {
-                _reader = new StreamReader(InfoPath);
-                var ver = _reader.ReadLine();
-
-                _reader.Close();
-                _reader.Dispose();
-                
-                if (ver != WaveMaker.Version)
-                {
-                    result = false;
-                    File.Delete(InfoPath);
-                    File.Delete(SettingsPath);
-                    File.Delete(FriendsPath);
-                    File.Delete(KeybindPath);
-                }
-                    
-            }
-            
-            if (!result)
-            {
-                File.Create(InfoPath);
-                _writer = new StreamWriter(InfoPath);
-                _writer.WriteLine(WaveMaker.Version);
-                
-                _writer.Close();
-                _writer.Dispose();
-            }
-
-
-            return !result;
-        }*/
-
         public static bool CheckIfFirstTime()
         {
             var result = File.Exists(InfoPath);

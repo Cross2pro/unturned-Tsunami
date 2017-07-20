@@ -9,6 +9,7 @@ namespace TsunamiHack.Tsunami.Types
         public string Reason;
         public string AuthorizedBy;
         public bool NewVersion;
+        public string Version;
 
         public void BanOverride(string reason)
         {

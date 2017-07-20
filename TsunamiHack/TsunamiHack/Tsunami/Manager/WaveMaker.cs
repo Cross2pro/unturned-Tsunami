@@ -50,7 +50,7 @@ namespace TsunamiHack.Tsunami.Manager
 
         public static ulong LocalSteamId;
 
-        public static readonly string Version = "3.20.1.0";
+        public static readonly string Version = "0.0.1";
         
         private GameObject _obj;
         private GameObject _blockerObj;
@@ -72,6 +72,13 @@ namespace TsunamiHack.Tsunami.Manager
                 Controller.BanOverride(
                     "You have been globally banned from using TsunamiHack! Verify game files to uninstall");
                 Util.Blocker.DisabledType = Blocker.Type.Banned;
+            }
+            else if (Version != Controller.Version)
+            {
+                Util.Blocker.DisabledType = Blocker.Type.OutOfDate;
+                Blocker.BlockerEnabled = true;
+                WaveMaker.HackDisabled = true;
+                Controller.Disabled = true;
             }
             else
                 Util.Blocker.DisabledType = Blocker.Type.Disabled;

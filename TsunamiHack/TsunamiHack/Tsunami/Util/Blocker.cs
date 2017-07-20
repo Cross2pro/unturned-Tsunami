@@ -9,11 +9,11 @@ namespace TsunamiHack.Tsunami.Util
 {
     internal class Blocker : MonoBehaviour
     {
-        internal enum Type { Banned, Disabled}
+        internal enum Type { Banned, Disabled, OutOfDate}
         
         private HackController ctrl;
 
-        private static bool BlockerEnabled;
+        internal static bool BlockerEnabled;
         internal Rect windowRect;
         internal bool Banned;
         internal static Type DisabledType;
@@ -50,8 +50,9 @@ namespace TsunamiHack.Tsunami.Util
                         case Type.Disabled:
                             windowRect = GUI.Window(WaveMaker.BannedId, windowRect, DisabledMenuFunct, "HACK DISABLED");
                             break;
-
-                            
+                        case Type.OutOfDate:
+                            windowRect = GUI.Window(WaveMaker.BannedId, windowRect, OutOfDateMenuFunct, "OUT OF DATE");
+                            break;        
                 }
             }
         }
@@ -93,6 +94,32 @@ namespace TsunamiHack.Tsunami.Util
             {
                 Application.Quit();
             }
+        }
+
+        private void OutOfDateMenuFunct(int id)
+        {
+            PlayerPauseUI.active = true;
+            PlayerUI.window.showCursor = true;
+            
+            GUILayout.Space(50f);
+            GUILayout.Label($"Your hack is out of date!");
+            GUILayout.Space(8f);
+            GUILayout.Label($"You are running hack version {WaveMaker.Version} and there is a new version of {WaveMaker.Controller.Version}");
+            GUILayout.Label($"For concerns of bug fixes and/or new features we are restricting this version. Please download and install the latest version to continue using TsunamiHack");
+            GUILayout.Space(50f);
+            GUILayout.Label("To remove the hack and play normally, click \"EXIT GAME\" and \"Verify Game Files\" through steam");
+            GUILayout.Label("You can get the latest game version by visiting the link below");
+            if(GUILayout.Button("Join Discord and get latest version"))
+            {
+                System.Diagnostics.Process.Start("https://discord.gg/cW8Mjdf");
+            }
+            
+            GUILayout.Space(20f);
+            if(GUILayout.Button("EXIT GAME"))
+            {
+                Application.Quit();
+            }
+            
         }
     }
 }

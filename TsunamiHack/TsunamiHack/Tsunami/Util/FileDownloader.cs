@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using TsunamiHack.Tsunami.Types;
 using Newtonsoft.Json;
 using SDG.Provider.Services;
+using TsunamiHack.Tsunami.Manager;
 using TsunamiHack.Tsunami.Types.Lists;
 
 namespace TsunamiHack.Tsunami.Util
@@ -75,6 +76,7 @@ namespace TsunamiHack.Tsunami.Util
             var web = new WebClient();
             var raw = web.DownloadString(ControllerInfoUrl);
             ctrl = JsonConvert.DeserializeObject<HackController>(raw);
+           
         }
     }
 }
