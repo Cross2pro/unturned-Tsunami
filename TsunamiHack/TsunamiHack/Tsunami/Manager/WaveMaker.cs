@@ -93,7 +93,7 @@ namespace TsunamiHack.Tsunami.Manager
                 Blocker = _blockerObj.AddComponent<Blocker>();
                 UnityEngine.Object.DontDestroyOnLoad(Blocker);
             }
-            
+
             if (Provider.isConnected && !HackDisabled)
             {
                 if (_obj == null)
@@ -114,7 +114,7 @@ namespace TsunamiHack.Tsunami.Manager
                     //TODO: add other hack objects
                 }
             }
-            
+
             if (HackDisabled)
             {
                 if (_obj != null)
