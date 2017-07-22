@@ -162,6 +162,7 @@
     <Compile Include="Tsunami\ILibParent.cs" />
     <Compile Include="Tsunami\IMenuParent.cs" />
     <Compile Include="Tsunami\Lib\Keybind.cs" />
+    <Compile Include="Tsunami\Lib\Visuals.cs" />
     <Compile Include="Tsunami\Manager\Hook.cs" />
     <Compile Include="Tsunami\Manager\Loader.cs" />
     <Compile Include="Tsunami\Manager\WaveMaker.cs" />

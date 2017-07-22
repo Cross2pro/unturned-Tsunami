@@ -27,6 +27,8 @@ namespace TsunamiHack.Tsunami.Menu
         
         //Selections
 
+        internal bool Esp;
+        
         internal bool PlayerName;
         internal bool PlayerWeapon;//
         internal bool PlayerDistance;
@@ -34,7 +36,6 @@ namespace TsunamiHack.Tsunami.Menu
         internal bool ZombieName;
         internal bool ZombieDistance;//
         internal bool ZombieSpecialty;
-
 
         internal bool Items;
         internal bool ItemName;//
@@ -140,6 +141,8 @@ namespace TsunamiHack.Tsunami.Menu
         
         public void Start()
         {
+            Lib.Visuals.Start(this);
+            
             var size = new Vector2(203,815);
             SelectionRect =
                 MenuTools.GetRectAtLoc(size, MenuTools.Horizontal.Center, MenuTools.Vertical.Center, false);
@@ -179,6 +182,10 @@ namespace TsunamiHack.Tsunami.Menu
 
         public void Update()
         {
+            if (Esp)
+            {
+                Lib.Visuals.Update();
+            }
         }
 
         public void OnGUI()
@@ -299,6 +306,8 @@ namespace TsunamiHack.Tsunami.Menu
 
         public void TypeFunct(int id)
         {
+            GUILayout.Space(2f);
+            Esp = GUILayout.Toggle(Esp, "Toggle Esp");
             GUILayout.Space(2f);
             GUILayout.Label("Draw Boxes\n--------------------------------------");
             GUILayout.Space(2f);

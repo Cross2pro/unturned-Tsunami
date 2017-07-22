@@ -136,7 +136,7 @@ namespace TsunamiHack.Tsunami.Menu
             GUILayout.Space(2f);
             GUILayout.Label("Weapon\n--------------------------------------");
             GUILayout.Space(2f);
-            NoRecoil = GUILayout.Toggle(NoRecoil, " No Recoil");
+            NoRecoil = GUILayout.Toggle(NoRecoil, " No Recoil")
             NoShake = GUILayout.Toggle(NoShake, " No Shake");
             NoSpread = GUILayout.Toggle(NoSpread, " No Spread");
             NoSway = GUILayout.Toggle(NoSway, " No Sway");
