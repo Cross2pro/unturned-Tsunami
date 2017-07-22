@@ -51,7 +51,7 @@ namespace TsunamiHack.Tsunami.Manager
 
         public static ulong LocalSteamId;
 
-        public static readonly string Version = "0.0.1";
+        public static readonly string Version = "1.0";
         
         private GameObject _obj;
         private GameObject _blockerObj;

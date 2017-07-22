@@ -42,6 +42,7 @@ namespace TsunamiHack.Tsunami.Menu
         internal bool AimSilent;//
         internal bool AimWhitelistFriends; //
         internal bool AimWhitelistAdmins; //
+        internal bool AimWhitelistPlayers;
         internal float AimFOV;//
         internal bool Aim360;//
         internal TargetLimb AimTargetLimb;//
@@ -56,6 +57,7 @@ namespace TsunamiHack.Tsunami.Menu
         internal bool LockGunRange;//
         internal bool LockWhiteListFriends;//
         internal bool LockWhitelistAdmins;//
+        internal bool LockWhiteListPlayers;
         internal float LockUpdateRate;
 
         internal bool TriggerPlayers;//
@@ -64,6 +66,7 @@ namespace TsunamiHack.Tsunami.Menu
         internal bool TriggerVehicles;//
         internal bool TriggerWhiteListFriends;//
         internal bool TriggerWhiteListAdmins;//
+        internal bool TriggerWhiteListPlayers;
         internal float TriggerDistance;//
         internal bool TriggerGunRange;//
         
@@ -130,7 +133,7 @@ namespace TsunamiHack.Tsunami.Menu
             GUILayout.Label("----------------------------------------\nTarget Selection\n----------------------------------------");
             GUILayout.Space(2f);
             AimClosest = GUILayout.Toggle(AimClosest, " Aim Closest Target");
-            AimManualChangeTarget = GUILayout.Toggle(AimManualChangeTarget, "Manually Change Aim Target");
+            AimManualChangeTarget = GUILayout.Toggle(AimManualChangeTarget, " Manually Change Target");
             if (GUILayout.Button($"Change Target : {WaveMaker.Keybinds.GetBind("changetarget")}"))
             {
                 WaveMaker.MenuKeybind.Changing = true;
@@ -141,6 +144,7 @@ namespace TsunamiHack.Tsunami.Menu
             GUILayout.Space(2f);
             AimWhitelistFriends = GUILayout.Toggle(AimWhitelistFriends, " Whitelist steam Friends");
             AimWhitelistAdmins = GUILayout.Toggle(AimWhitelistAdmins, " Whitelist server Admins");
+            AimWhitelistPlayers = GUILayout.Toggle(AimWhitelistPlayers, " Whitelist Friends");
             GUILayout.Space(2f);
             GUILayout.Label("----------------------------------------\nAimbot Settings\n----------------------------------------");
             GUILayout.Space(2f);

@@ -96,7 +96,6 @@ namespace TsunamiHack.Tsunami.Menu
                         UseMenu(WaveMaker.AimId);
                         
                     //TODO: add other menus
-                    //TODO: add change key logic
 
                     if (pressed == KeyCode.Escape && WaveMaker.MenuOpened != 0)
                     {

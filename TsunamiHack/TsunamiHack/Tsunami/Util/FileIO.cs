@@ -124,7 +124,7 @@ namespace TsunamiHack.Tsunami.Util
         }
 
         [Obsolete]
-        private static void SaveFriends(FriendsList friends)
+        public static void SaveFriends(FriendsList friends)
         {
             var json = JsonConvert.SerializeObject(friends);
 
@@ -194,9 +194,7 @@ namespace TsunamiHack.Tsunami.Util
 
                 if (str != WaveMaker.Version)
                 {
-                    
-                    Logging.LogMsg("OUTDATED", "Creating new files");
-                    
+                                        
                     using (var writer = new StreamWriter(KeybindPath))
                     {
                         //TODO: Add all the other keybinds

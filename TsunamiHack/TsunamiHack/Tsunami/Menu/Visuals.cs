@@ -19,7 +19,7 @@ namespace TsunamiHack.Tsunami.Menu
 
         public enum ColorChangeType
         {
-            PlayerGlow = 1, ZombieGlow, ItemGlow, InteractableGlow, VehicleGlow, PlayerBox, ZombieBox
+            EnemyPlayer = 1, FriendlyPlayer, Zombie, Item, Interactable, Vehicle, PlayerBox, ZombieBox
         }
         
         //TODO:Create File Saving for colors
@@ -112,7 +112,8 @@ namespace TsunamiHack.Tsunami.Menu
         internal float Distance;
         internal float UpdateRate;
 
-        internal Color PlayerGlow;
+        internal Color EnemyPlayerGlow;
+        internal Color FriendlyPlayerGlow;
         internal Color ZombieGlow;
         internal Color ItemGlow;
         internal Color InteractableGlow;
@@ -173,7 +174,7 @@ namespace TsunamiHack.Tsunami.Menu
 
             CloseSize = 5f;
             FarSize = 3f;
-            Dropoff = 500f
+            Dropoff = 500f;
         }
 
         public void Update()
@@ -184,11 +185,11 @@ namespace TsunamiHack.Tsunami.Menu
         {
             if (WaveMaker.MenuOpened == WaveMaker.VisualsId)
             {
-                SelectionRect = GUI.Window(2004, SelectionRect, MenuFunct, "Selection");
-                Selection2Rect = GUI.Window(2008, Selection2Rect, Menu2Funct, "Selection");
-                TypeRect = GUI.Window(2005, TypeRect, TypeFunct, "ESP");
-                EnvRect = GUI.Window(2006, EnvRect, EnvFunct, "Environment");
-                SettingsRect = GUI.Window(2007, SettingsRect, SetFunct, "Visuals Settings");
+                SelectionRect = GUI.Window(2004, SelectionRect, MenuFunct, "");
+                Selection2Rect = GUI.Window(2008, Selection2Rect, Menu2Funct, "");
+                TypeRect = GUI.Window(2005, TypeRect, TypeFunct, "Visuals");
+                EnvRect = GUI.Window(2006, EnvRect, EnvFunct, "Environment Hacks");
+                SettingsRect = GUI.Window(2007, SettingsRect, SetFunct, "Settings");
             }
         }
 
@@ -232,19 +233,17 @@ namespace TsunamiHack.Tsunami.Menu
             AnimalDistance = GUILayout.Toggle(AnimalDistance, " Show Animal Distance");
             
             GUILayout.Space(2f);
-            GUILayout.Label("Storages\n--------------------------------------");
-            GUILayout.Space(2f);
-            Storages = GUILayout.Toggle(Storages, " Show Storages");
-            StorageType = GUILayout.Toggle(StorageType, " Show Storage Type");
-            StorageDistance = GUILayout.Toggle(StorageDistance, " Show Storage Distance");
-            
-            GUILayout.Space(2f);
             GUILayout.Label("Forages\n--------------------------------------");
             GUILayout.Space(2f);
             Forages = GUILayout.Toggle(Forages, " Show Forages");
             ForageType = GUILayout.Toggle(ForageType, " Show Forage Type");
             ForageDistance = GUILayout.Toggle(ForageDistance, " Show Forage Distance");
 
+            GUILayout.Space(2f);
+            GUILayout.Label("Airdrops\n--------------------------------------");
+            GUILayout.Space(2f);
+            Airdrop = GUILayout.Toggle(Airdrop, " Show Airdrops");
+            AirdropDistance = GUILayout.Toggle(AirdropDistance, " Show Airdrop Distance");
             
         }
 
@@ -284,12 +283,13 @@ namespace TsunamiHack.Tsunami.Menu
             SentryState = GUILayout.Toggle(SentryState, " Show Sentry State");
             SentryDistance = GUILayout.Toggle(SentryDistance, " Show Sentry Distance");
             
+            GUILayout.Space(2f);
+            GUILayout.Label("Storages\n--------------------------------------");
+            GUILayout.Space(2f);
+            Storages = GUILayout.Toggle(Storages, " Show Storages");
+            StorageType = GUILayout.Toggle(StorageType, " Show Storage Type");
+            StorageDistance = GUILayout.Toggle(StorageDistance, " Show Storage Distance");
             
-            GUILayout.Space(2f);
-            GUILayout.Label("Airdrops\n--------------------------------------");
-            GUILayout.Space(2f);
-            Airdrop = GUILayout.Toggle(Airdrop, " Show Airdrops");
-            AirdropDistance = GUILayout.Toggle(AirdropDistance, " Show Airdrop Distance");
             
             GUILayout.Space(2f);
             GUILayout.Label("Admins\n--------------------------------------");
@@ -336,7 +336,7 @@ namespace TsunamiHack.Tsunami.Menu
 
             PlayersOnMap = GUILayout.Toggle(PlayersOnMap, " Show Players On Map");
             
-            GUILayout.Space(2f);
+            GUILayout.Space(4f);
 
             
             if (GUILayout.Button($"Night Vision : {Nv}"))
@@ -365,8 +365,9 @@ namespace TsunamiHack.Tsunami.Menu
             GUILayout.Space(2f);
             GUILayout.Label("ESP Colors\n--------------------------------------");
             GUILayout.Space(2f);
-            GUILayout.Label($"Player : R {PlayerGlow.r} G {PlayerGlow.g} B {PlayerGlow.b}");
-           
+            GUILayout.Label($"Enemy Player : R {EnemyPlayerGlow.r} G {EnemyPlayerGlow.g} B {EnemyPlayerGlow.b}");
+            GUILayout.Space(3f);
+            GUILayout.Label($"Friendly Player : R {EnemyPlayerGlow.r} G {FriendlyPlayerGlow.g} B {FriendlyPlayerGlow.b}");
             GUILayout.Space(3f);
             GUILayout.Label($"Zombie : R {ZombieGlow.r} G {ZombieGlow.g} B {ZombieGlow.b}");
             GUILayout.Space(3f);
@@ -382,13 +383,13 @@ namespace TsunamiHack.Tsunami.Menu
             GUILayout.Space(3f);
             GUILayout.Label($"Zombie Box : R {BoxZombie.r} G {BoxZombie.g} B {BoxZombie.b}");
             
-            GUILayout.Space(2f);
+            GUILayout.Space(4f);
             GUILayout.Label("Edit Colors\n--------------------------------------");
             GUILayout.Space(2f);
             if(GUILayout.Button($"Editing : {Changing}"))
             {
                 ChangeInt++;
-                if (ChangeInt == 8)
+                if (ChangeInt == 9)
                     ChangeInt = 1;
                 Changing = (ColorChangeType) ChangeInt;
             }
@@ -396,42 +397,48 @@ namespace TsunamiHack.Tsunami.Menu
             switch (ChangeInt)
             {
                     case 1:
-                        GUILayout.Label($"R : {PlayerGlow.r} G : {PlayerGlow.g} B : {PlayerGlow.b}");
-                        PlayerGlow.r = GUILayout.HorizontalSlider((float) Math.Round(PlayerGlow.r, 0), 0f, 255f);
-                        PlayerGlow.g = GUILayout.HorizontalSlider((float) Math.Round(PlayerGlow.g, 0), 0f, 255f);
-                        PlayerGlow.b = GUILayout.HorizontalSlider((float) Math.Round(PlayerGlow.b, 0), 0f, 255f);
+                        GUILayout.Label($"R : {EnemyPlayerGlow.r} G : {EnemyPlayerGlow.g} B : {EnemyPlayerGlow.b}");
+                        EnemyPlayerGlow.r = GUILayout.HorizontalSlider((float) Math.Round(EnemyPlayerGlow.r, 0), 0f, 255f);
+                        EnemyPlayerGlow.g = GUILayout.HorizontalSlider((float) Math.Round(EnemyPlayerGlow.g, 0), 0f, 255f);
+                        EnemyPlayerGlow.b = GUILayout.HorizontalSlider((float) Math.Round(EnemyPlayerGlow.b, 0), 0f, 255f);
                         break;
                     case 2:
+                        GUILayout.Label($"R : {EnemyPlayerGlow.r} G : {EnemyPlayerGlow.g} B : {EnemyPlayerGlow.b}");
+                        EnemyPlayerGlow.r = GUILayout.HorizontalSlider((float) Math.Round(EnemyPlayerGlow.r, 0), 0f, 255f);
+                        EnemyPlayerGlow.g = GUILayout.HorizontalSlider((float) Math.Round(EnemyPlayerGlow.g, 0), 0f, 255f);
+                        EnemyPlayerGlow.b = GUILayout.HorizontalSlider((float) Math.Round(EnemyPlayerGlow.b, 0), 0f, 255f);
+                        break;
+                    case 3:
                         GUILayout.Label($"R : {ZombieGlow.r} G : {ZombieGlow.r} B : {ZombieGlow.b}");
                         ZombieGlow.r = GUILayout.HorizontalSlider((float) Math.Round(ZombieGlow.r, 0), 0f, 255f);
                         ZombieGlow.g = GUILayout.HorizontalSlider((float) Math.Round(ZombieGlow.g, 0), 0f, 255f);
                         ZombieGlow.b = GUILayout.HorizontalSlider((float) Math.Round(ZombieGlow.b, 0), 0f, 255f);
                         break;
-                    case 3:
+                    case 4:
                         GUILayout.Label($"R : {ItemGlow.r} G : {ItemGlow.r} B : {ItemGlow.b}");
                         ItemGlow.r = GUILayout.HorizontalSlider((float) Math.Round(ItemGlow.r, 0), 0f, 255f);
                         ItemGlow.g = GUILayout.HorizontalSlider((float) Math.Round(ItemGlow.g, 0), 0f, 255f);
                         ItemGlow.b = GUILayout.HorizontalSlider((float) Math.Round(ItemGlow.b, 0), 0f, 255f);
                         break;
-                    case 4:
+                    case 5:
                         GUILayout.Label($"R : {InteractableGlow.r} G : {InteractableGlow.r} B : {InteractableGlow.b}");
                         InteractableGlow.r = GUILayout.HorizontalSlider((float) Math.Round(InteractableGlow.r, 0), 0f, 255f);
                         InteractableGlow.g = GUILayout.HorizontalSlider((float) Math.Round(InteractableGlow.g, 0), 0f, 255f);
                         InteractableGlow.b = GUILayout.HorizontalSlider((float) Math.Round(InteractableGlow.b, 0), 0f, 255f);
                         break;
-                    case 5:
+                    case 6:
                         GUILayout.Label($"R : {VehicleGlow.r} G : {VehicleGlow.r} B : {VehicleGlow.b}");
                         VehicleGlow.r = GUILayout.HorizontalSlider((float) Math.Round(VehicleGlow.r, 0), 0f, 255f);
                         VehicleGlow.g = GUILayout.HorizontalSlider((float) Math.Round(VehicleGlow.g, 0), 0f, 255f);
                         VehicleGlow.b = GUILayout.HorizontalSlider((float) Math.Round(VehicleGlow.b, 0), 0f, 255f);
                         break;
-                    case 6:
+                    case 7:
                         GUILayout.Label($"R : {BoxPlayer.r} G : {BoxPlayer.r} B : {BoxPlayer.b}");
                         BoxPlayer.r = GUILayout.HorizontalSlider((float) Math.Round(BoxPlayer.r, 0), 0f, 255f);
                         BoxPlayer.g = GUILayout.HorizontalSlider((float) Math.Round(BoxPlayer.g, 0), 0f, 255f);
                         BoxPlayer.b = GUILayout.HorizontalSlider((float) Math.Round(BoxPlayer.b, 0), 0f, 255f);
                         break;
-                    case 7:
+                    case 8:
                         GUILayout.Label($"R : {BoxZombie.r} G : {BoxZombie.r} B : {BoxZombie.b}");
                         BoxZombie.r = GUILayout.HorizontalSlider((float) Math.Round(BoxZombie.r, 0), 0f, 255f);
                         BoxZombie.g = GUILayout.HorizontalSlider((float) Math.Round(BoxZombie.g, 0), 0f, 255f);
@@ -445,9 +452,9 @@ namespace TsunamiHack.Tsunami.Menu
             GUILayout.Label($"Close Text Size : {CloseSize}");
             CloseSize = GUILayout.HorizontalSlider((float) Math.Round(CloseSize, 0), 1f, 12f);
             GUILayout.Label($"Far Text Size : {FarSize}");
-            FarSize = GUILayout.HorizontalSlider((float) Math.Round(CloseSize, 0), 1f, 12f);
+            FarSize = GUILayout.HorizontalSlider((float) Math.Round(FarSize, 0), 1f, 12f);
             GUILayout.Label($"Text Size Dropoff : {Dropoff}");
-            Dropoff = GUILayout.HorizontalSlider((float) Math.Round(CloseSize, 0), 1f, 10000f);
+            Dropoff = GUILayout.HorizontalSlider((float) Math.Round(Dropoff, 0), 1f, 10000f);
 
 
         }
