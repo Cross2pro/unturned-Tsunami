@@ -4,5 +4,11 @@
     {
         public string Name;
         public object Value;
+
+        public Setting(string name, object value)
+        {
+            Name = name;
+            Value = value;
+        }
     }
 }

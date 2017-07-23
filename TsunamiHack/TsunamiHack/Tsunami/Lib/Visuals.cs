@@ -1,12 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using SDG.Unturned;
+using Object = UnityEngine.Object;
 
 namespace TsunamiHack.Tsunami.Lib
 {
     internal class Visuals 
     {
-        internal static Menu.Visuals Parent;
+        internal static Menu.Visuals menu;
 
         internal static Player[] Players;
         internal static Zombie[] Zombies;
@@ -22,18 +24,80 @@ namespace TsunamiHack.Tsunami.Lib
         internal static InteractableSentry[] Sentries;
         internal static Carepackage[] Airdrops;
         internal static InteractableObjectNPC[] Npcs;
+
+        internal static DateTime Last;
         
         
         internal static void Start(Menu.Visuals parent)
         {
             UpdateLists();
+            Last = DateTime.Now;
         }
 
         internal static void Update()
         {
             UpdateLists();
+
+            if ((DateTime.Now - Last).TotalMilliseconds >= menu.UpdateRate)
+            {
+                CheckGlows();
+
+                Last = DateTime.Now;
+            }
+            
+            
+            
         }
 
+        internal static void CheckGlows()
+        {
+            if(menu.GlowPlayers)
+                UpdatePlayerGlow();
+            else if(menu.GlowZombies)
+                UpdateZombieGlow();
+            else if(menu.GlowItems)
+                UpdateItemGlow();
+            else if(menu.GlowInteractables)
+                UpdateInteractableGlow();
+            else if (menu.GlowVehicles)
+                UpdateVehicleGlow();
+        }
+
+        internal static void UpdatePlayerGlow()
+        {
+            var Cam = Camera.main;
+            var MyPos = Player.player.transform.position;
+            
+            foreach (var user in Players)
+            {
+                var TargetPos = user.transform.position;
+                if (Vector3.Distance(MyPos, TargetPos) <= menu.Distance || menu.InfDistance)
+                {
+                    
+                }
+            }
+        }
+        
+        internal static void UpdateZombieGlow()
+        {
+            
+        }
+        
+        internal static void UpdateItemGlow()
+        {
+            
+        }
+        
+        internal static void UpdateInteractableGlow()
+        {
+            
+        }
+        
+        internal static void UpdateVehicleGlow()
+        {
+            
+        }
+        
         internal static void UpdateLists()
         {
             Players = Object.FindObjectsOfType<Player>();
@@ -51,5 +115,7 @@ namespace TsunamiHack.Tsunami.Lib
             Airdrops = Object.FindObjectsOfType<Carepackage>();
             Npcs = Object.FindObjectsOfType<InteractableObjectNPC>();
         }
+        
+        
     }
 }

@@ -4,6 +4,7 @@ using System.Data.SqlTypes;
 using System.Security.Cryptography.X509Certificates;
 using SDG.Unturned;
 using TsunamiHack.Tsunami.Manager;
+using TsunamiHack.Tsunami.Types.Configs;
 using TsunamiHack.Tsunami.Util;
 using UnityEngine;
 
@@ -120,7 +121,8 @@ namespace TsunamiHack.Tsunami.Menu
         internal Color InteractableGlow;
         internal Color VehicleGlow;
 
-        internal Color BoxPlayer;
+        internal Color BoxPlayerFriendly;
+        internal Color BoxPlayerEnemy;
         internal Color BoxZombie;
 
         internal ColorChangeType Changing;
@@ -178,6 +180,17 @@ namespace TsunamiHack.Tsunami.Menu
             CloseSize = 5f;
             FarSize = 3f;
             Dropoff = 500f;
+
+            EnemyPlayerGlow = WaveMaker.Settings.ColorList["enemyplayer"];
+            FriendlyPlayerGlow = WaveMaker.Settings.ColorList["friendlyplayer"];
+            ZombieGlow = WaveMaker.Settings.ColorList["zombie"];
+            ItemGlow = WaveMaker.Settings.ColorList["item"];
+            InteractableGlow = WaveMaker.Settings.ColorList["interactable"];
+            VehicleGlow = WaveMaker.Settings.ColorList["vehicle"];
+
+            BoxPlayerFriendly = WaveMaker.Settings.ColorList["friendlyplayerbox"];
+            BoxPlayerEnemy = WaveMaker.Settings.ColorList["enemyplayerbox"];
+            
         }
 
         public void Update()
@@ -376,7 +389,7 @@ namespace TsunamiHack.Tsunami.Menu
             GUILayout.Space(2f);
             GUILayout.Label($"Enemy Player : R {EnemyPlayerGlow.r} G {EnemyPlayerGlow.g} B {EnemyPlayerGlow.b}");
             GUILayout.Space(3f);
-            GUILayout.Label($"Friendly Player : R {EnemyPlayerGlow.r} G {FriendlyPlayerGlow.g} B {FriendlyPlayerGlow.b}");
+            GUILayout.Label($"Friendly Player : R {FriendlyPlayerGlow.r} G {FriendlyPlayerGlow.g} B {FriendlyPlayerGlow.b}");
             GUILayout.Space(3f);
             GUILayout.Label($"Zombie : R {ZombieGlow.r} G {ZombieGlow.g} B {ZombieGlow.b}");
             GUILayout.Space(3f);
@@ -388,7 +401,9 @@ namespace TsunamiHack.Tsunami.Menu
             
             GUILayout.Space(5f);
             
-            GUILayout.Label($"Player Box : R {BoxPlayer.r} G {BoxPlayer.g} B {BoxPlayer.b}");
+            GUILayout.Label($"Friendly Player Box : R {BoxPlayerFriendly.r} G {BoxPlayerFriendly.g} B {BoxPlayerFriendly.b}");
+            GUILayout.Space(3f);
+            GUILayout.Label($"Enemy Player Box : R {BoxPlayerEnemy.r} G {BoxPlayerEnemy.g} B {BoxPlayerEnemy.b}");
             GUILayout.Space(3f);
             GUILayout.Label($"Zombie Box : R {BoxZombie.r} G {BoxZombie.g} B {BoxZombie.b}");
             
@@ -398,7 +413,7 @@ namespace TsunamiHack.Tsunami.Menu
             if(GUILayout.Button($"Editing : {Changing}"))
             {
                 ChangeInt++;
-                if (ChangeInt == 9)
+                if (ChangeInt == 10)
                     ChangeInt = 1;
                 Changing = (ColorChangeType) ChangeInt;
             }
@@ -412,10 +427,10 @@ namespace TsunamiHack.Tsunami.Menu
                         EnemyPlayerGlow.b = GUILayout.HorizontalSlider((float) Math.Round(EnemyPlayerGlow.b, 0), 0f, 255f);
                         break;
                     case 2:
-                        GUILayout.Label($"R : {EnemyPlayerGlow.r} G : {EnemyPlayerGlow.g} B : {EnemyPlayerGlow.b}");
-                        EnemyPlayerGlow.r = GUILayout.HorizontalSlider((float) Math.Round(EnemyPlayerGlow.r, 0), 0f, 255f);
-                        EnemyPlayerGlow.g = GUILayout.HorizontalSlider((float) Math.Round(EnemyPlayerGlow.g, 0), 0f, 255f);
-                        EnemyPlayerGlow.b = GUILayout.HorizontalSlider((float) Math.Round(EnemyPlayerGlow.b, 0), 0f, 255f);
+                        GUILayout.Label($"R : {FriendlyPlayerGlow.r} G : {FriendlyPlayerGlow.g} B : {FriendlyPlayerGlow.b}");
+                        FriendlyPlayerGlow.r = GUILayout.HorizontalSlider((float) Math.Round(FriendlyPlayerGlow.r, 0), 0f, 255f);
+                        FriendlyPlayerGlow.g = GUILayout.HorizontalSlider((float) Math.Round(FriendlyPlayerGlow.g, 0), 0f, 255f);
+                        FriendlyPlayerGlow.b = GUILayout.HorizontalSlider((float) Math.Round(FriendlyPlayerGlow.b, 0), 0f, 255f);
                         break;
                     case 3:
                         GUILayout.Label($"R : {ZombieGlow.r} G : {ZombieGlow.r} B : {ZombieGlow.b}");
@@ -442,12 +457,18 @@ namespace TsunamiHack.Tsunami.Menu
                         VehicleGlow.b = GUILayout.HorizontalSlider((float) Math.Round(VehicleGlow.b, 0), 0f, 255f);
                         break;
                     case 7:
-                        GUILayout.Label($"R : {BoxPlayer.r} G : {BoxPlayer.r} B : {BoxPlayer.b}");
-                        BoxPlayer.r = GUILayout.HorizontalSlider((float) Math.Round(BoxPlayer.r, 0), 0f, 255f);
-                        BoxPlayer.g = GUILayout.HorizontalSlider((float) Math.Round(BoxPlayer.g, 0), 0f, 255f);
-                        BoxPlayer.b = GUILayout.HorizontalSlider((float) Math.Round(BoxPlayer.b, 0), 0f, 255f);
+                        GUILayout.Label($"R : {BoxPlayerFriendly.r} G : {BoxPlayerFriendly.r} B : {BoxPlayerFriendly.b}");
+                        BoxPlayerFriendly.r = GUILayout.HorizontalSlider((float) Math.Round(BoxPlayerFriendly.r, 0), 0f, 255f);
+                        BoxPlayerFriendly.g = GUILayout.HorizontalSlider((float) Math.Round(BoxPlayerFriendly.g, 0), 0f, 255f);
+                        BoxPlayerFriendly.b = GUILayout.HorizontalSlider((float) Math.Round(BoxPlayerFriendly.b, 0), 0f, 255f);
                         break;
                     case 8:
+                        GUILayout.Label($"R : {BoxPlayerEnemy.r} G : {BoxPlayerEnemy.r} B : {BoxPlayerEnemy.b}");
+                        BoxPlayerEnemy.r = GUILayout.HorizontalSlider((float) Math.Round(BoxPlayerEnemy.r, 0), 0f, 255f);
+                        BoxPlayerEnemy.g = GUILayout.HorizontalSlider((float) Math.Round(BoxPlayerEnemy.g, 0), 0f, 255f);
+                        BoxPlayerEnemy .b = GUILayout.HorizontalSlider((float) Math.Round(BoxPlayerEnemy.b, 0), 0f, 255f);
+                        break;
+                    case 9:
                         GUILayout.Label($"R : {BoxZombie.r} G : {BoxZombie.r} B : {BoxZombie.b}");
                         BoxZombie.r = GUILayout.HorizontalSlider((float) Math.Round(BoxZombie.r, 0), 0f, 255f);
                         BoxZombie.g = GUILayout.HorizontalSlider((float) Math.Round(BoxZombie.g, 0), 0f, 255f);
@@ -455,6 +476,11 @@ namespace TsunamiHack.Tsunami.Menu
                         break;
             }
 
+            if(GUILayout.Button("Save Colors"))
+            {
+                
+            }
+            
             GUILayout.Label("--------------------------------------");
             
             ScaleText = GUILayout.Toggle(ScaleText, " Scale ESP Text");

@@ -156,8 +156,16 @@ namespace TsunamiHack.Tsunami.Util
         {
             settings = new Settings();
 
-            //TODO: Add default settings
-
+//            settings.ColorList.Add("enemyplayer", new Color(255,45,45));
+//            settings.ColorList.Add("friendlyplayer", new Color(150,255,255));
+//            settings.ColorList.Add("zombie", new Color(50,150,0));
+//            settings.ColorList.Add("item", new Color(230,230,40));
+//            settings.ColorList.Add("interactable", new Color(255,180,0));
+//            settings.ColorList.Add("vehicle", new Color(255,0,230));
+//            settings.ColorList.Add("friendlyplayerbox", new Color(150,255,255));
+//            settings.ColorList.Add("enemyplayerbox", new Color(255,45,45));
+//            settings.ColorList.Add("zombiebox", new Color(50,150,0));
+//            
             SaveSettings(settings);
         }
 
@@ -217,7 +225,17 @@ namespace TsunamiHack.Tsunami.Util
                     {
                         //TODO: add all other settings
                         var settings = new Settings();
-
+//
+//                        settings.ColorList.Add("enemyplayer", new Color(255,45,45));
+//                        settings.ColorList.Add("friendlyplayer", new Color(150,255,255));
+//                        settings.ColorList.Add("zombie", new Color(50,150,0));
+//                        settings.ColorList.Add("item", new Color(230,230,40));
+//                        settings.ColorList.Add("interactable", new Color(255,180,0));
+//                        settings.ColorList.Add("vehicle", new Color(255,0,230));
+//                        settings.ColorList.Add("friendlyplayerbox", new Color(150,255,255));
+//                        settings.ColorList.Add("enemyplayerbox", new Color(255,45,45));
+//                        settings.ColorList.Add("zombiebox", new Color(50,150,0));
+//                        
                         WaveMaker.Settings = settings;
                         var json = JsonConvert.SerializeObject(settings);
                         writer.WriteLine(json);

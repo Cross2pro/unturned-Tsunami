@@ -55,7 +55,7 @@ namespace TsunamiHack.Tsunami.Manager
                     throw new UnableToLoadException( "Unable to create friends file" );
                 }
             }
-
+/**/
             // --- Settings ---
 
             if (FileIo.SettingsExist())
