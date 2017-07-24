@@ -181,16 +181,24 @@ namespace TsunamiHack.Tsunami.Menu
             FarSize = 3f;
             Dropoff = 500f;
 
-            EnemyPlayerGlow = WaveMaker.Settings.ColorList["enemyplayer"];
-            FriendlyPlayerGlow = WaveMaker.Settings.ColorList["friendlyplayer"];
-            ZombieGlow = WaveMaker.Settings.ColorList["zombie"];
-            ItemGlow = WaveMaker.Settings.ColorList["item"];
-            InteractableGlow = WaveMaker.Settings.ColorList["interactable"];
-            VehicleGlow = WaveMaker.Settings.ColorList["vehicle"];
+            EnemyPlayerGlow = WaveMaker.Settings.ColorList["enemyplayer"].Convert();
+            FriendlyPlayerGlow = WaveMaker.Settings.ColorList["friendlyplayer"].Convert();
+            ZombieGlow = WaveMaker.Settings.ColorList["zombie"].Convert();
+            ItemGlow = WaveMaker.Settings.ColorList["item"].Convert();
+            InteractableGlow = WaveMaker.Settings.ColorList["interactable"].Convert();
+            VehicleGlow = WaveMaker.Settings.ColorList["vehicle"].Convert(); 
 
-            BoxPlayerFriendly = WaveMaker.Settings.ColorList["friendlyplayerbox"];
-            BoxPlayerEnemy = WaveMaker.Settings.ColorList["enemyplayerbox"];
+            BoxPlayerFriendly = WaveMaker.Settings.ColorList["friendlyplayerbox"].Convert();
+            BoxPlayerEnemy = WaveMaker.Settings.ColorList["enemyplayerbox"].Convert();
             
+            Logging.LogMsg("DEBUG", $"{EnemyPlayerGlow.r}/{EnemyPlayerGlow.g}/{EnemyPlayerGlow.b}");
+            Logging.LogMsg("DEBUG", $"{FriendlyPlayerGlow.r}/{FriendlyPlayerGlow.g}/{FriendlyPlayerGlow.b}");
+            Logging.LogMsg("DEBUG", $"{ZombieGlow.r}/{ZombieGlow.g}/{ZombieGlow.b}");
+            Logging.LogMsg("DEBUG", $"{ItemGlow.r}/{ItemGlow.g}/{ItemGlow.b}");
+            Logging.LogMsg("DEBUG", $"{InteractableGlow.r}/{InteractableGlow.g}/{InteractableGlow.b}");
+            Logging.LogMsg("DEBUG", $"{EnemyPlayerGlow.r}/{EnemyPlayerGlow.g}/{EnemyPlayerGlow.b}");
+            Logging.LogMsg("DEBUG", $"{BoxPlayerFriendly.r}/{BoxPlayerFriendly.g}/{BoxPlayerFriendly.b}");
+            Logging.LogMsg("DEBUG", $"{BoxPlayerEnemy.r}/{BoxPlayerEnemy.g}/{BoxPlayerEnemy.b}");
         }
 
         public void Update()

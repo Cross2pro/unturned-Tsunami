@@ -6,6 +6,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using JetBrains.Annotations;
 using TsunamiHack.Tsunami.Manager;
+using TsunamiHack.Tsunami.Types;
 using TsunamiHack.Tsunami.Types.Lists;
 using TsunamiHack.Tsunami.Types.Configs;
 
@@ -29,6 +30,7 @@ namespace TsunamiHack.Tsunami.Util
             {
                 System.IO.Directory.CreateDirectory(Directory);
             }
+            
         }
 
         public static void CheckEmpty()
@@ -156,20 +158,26 @@ namespace TsunamiHack.Tsunami.Util
         {
             settings = new Settings();
 
-//            settings.ColorList.Add("enemyplayer", new Color(255,45,45));
-//            settings.ColorList.Add("friendlyplayer", new Color(150,255,255));
-//            settings.ColorList.Add("zombie", new Color(50,150,0));
-//            settings.ColorList.Add("item", new Color(230,230,40));
-//            settings.ColorList.Add("interactable", new Color(255,180,0));
-//            settings.ColorList.Add("vehicle", new Color(255,0,230));
-//            settings.ColorList.Add("friendlyplayerbox", new Color(150,255,255));
-//            settings.ColorList.Add("enemyplayerbox", new Color(255,45,45));
-//            settings.ColorList.Add("zombiebox", new Color(50,150,0));
-//            
-            SaveSettings(settings);
+            settings.ColorList.Add("enemyplayer", new TsuColor(new Color(255,45,45)));
+            settings.ColorList.Add("friendlyplayer", new TsuColor(new Color(150,255,255)));
+            settings.ColorList.Add("zombie",new TsuColor(new Color(50,150,0)));
+            settings.ColorList.Add("item", new TsuColor(new Color(230,230,40)));
+            settings.ColorList.Add("interactable", new TsuColor(new Color(255,180,0)));
+            settings.ColorList.Add("vehicle", new TsuColor(new Color(255,0,230)));
+            settings.ColorList.Add("friendlyplayerbox", new TsuColor(new Color(150,255,255)));
+            settings.ColorList.Add("enemyplayerbox", new TsuColor(new Color(255,45,45)));
+            settings.ColorList.Add("zombiebox", new TsuColor(new Color(50,150,0)));
+          
+            using (var writer = new StreamWriter(SettingsPath))
+            {   
+                var json = JsonConvert.SerializeObject(settings);
+                writer.WriteLine(json);
+                writer.Flush();
+                writer.Dispose();
+            }
         }
 
-        [Obsolete]
+        
         private static void SaveSettings(Settings settings)
         {
             var raw = JsonConvert.SerializeObject(settings);
@@ -182,6 +190,7 @@ namespace TsunamiHack.Tsunami.Util
             File.WriteAllText(SettingsPath, raw);
         }
 
+        
     #endregion
 
     #region first time
@@ -225,17 +234,17 @@ namespace TsunamiHack.Tsunami.Util
                     {
                         //TODO: add all other settings
                         var settings = new Settings();
-//
-//                        settings.ColorList.Add("enemyplayer", new Color(255,45,45));
-//                        settings.ColorList.Add("friendlyplayer", new Color(150,255,255));
-//                        settings.ColorList.Add("zombie", new Color(50,150,0));
-//                        settings.ColorList.Add("item", new Color(230,230,40));
-//                        settings.ColorList.Add("interactable", new Color(255,180,0));
-//                        settings.ColorList.Add("vehicle", new Color(255,0,230));
-//                        settings.ColorList.Add("friendlyplayerbox", new Color(150,255,255));
-//                        settings.ColorList.Add("enemyplayerbox", new Color(255,45,45));
-//                        settings.ColorList.Add("zombiebox", new Color(50,150,0));
-//                        
+
+                        settings.ColorList.Add("enemyplayer", new TsuColor(new Color(255,45,45)));
+                        settings.ColorList.Add("friendlyplayer", new TsuColor(new Color(150,255,255)));
+                        settings.ColorList.Add("zombie", new TsuColor(new Color(50,150,0)));
+                        settings.ColorList.Add("item", new TsuColor(new Color(230,230,40)));
+                        settings.ColorList.Add("interactable", new TsuColor(new Color(255,180,0)));
+                        settings.ColorList.Add("vehicle", new TsuColor(new Color(255,0,230)));
+                        settings.ColorList.Add("friendlyplayerbox", new TsuColor(new Color(150,255,255)));
+                        settings.ColorList.Add("enemyplayerbox", new TsuColor(new Color(255,45,45)));
+                        settings.ColorList.Add("zombiebox", new TsuColor(new Color(50,150,0)));
+                        
                         WaveMaker.Settings = settings;
                         var json = JsonConvert.SerializeObject(settings);
                         writer.WriteLine(json);
@@ -277,6 +286,7 @@ namespace TsunamiHack.Tsunami.Util
         
     #region  Stream
 
+        [Obsolete]
         public static void StreamLoadKeybinds(out KeybindConfig keybinds)
         {
             _reader = new StreamReader(KeybindPath);
@@ -285,6 +295,7 @@ namespace TsunamiHack.Tsunami.Util
             keybinds = JsonConvert.DeserializeObject<KeybindConfig>(json);
         }
 
+        [Obsolete]
         public static void StreamSaveKeybinds( KeybindConfig config)
         {
             var json = JsonConvert.SerializeObject(config);
@@ -299,6 +310,7 @@ namespace TsunamiHack.Tsunami.Util
             _writer.Dispose();
         }
 
+        [Obsolete]
         public static void StreamLoadFriends(out FriendsList friends)
         {
             _reader = new StreamReader(FriendsPath);
@@ -307,6 +319,7 @@ namespace TsunamiHack.Tsunami.Util
             friends = JsonConvert.DeserializeObject<FriendsList>(json);
         }
 
+        [Obsolete]
         public static void StreamSaveFriends(FriendsList list)
         {
             _writer = new StreamWriter(FriendsPath);
@@ -315,6 +328,7 @@ namespace TsunamiHack.Tsunami.Util
             _writer.Dispose();
         }
 
+        [Obsolete]
         public static void StreamLoadSettings(out Settings list)
         {
             _reader = new StreamReader(SettingsPath);
@@ -323,6 +337,7 @@ namespace TsunamiHack.Tsunami.Util
             list = JsonConvert.DeserializeObject<Settings>(json);
         }
 
+        [Obsolete]
         public static void StreamSaveSettings(Settings settings)
         {
             _writer = new StreamWriter(SettingsPath);

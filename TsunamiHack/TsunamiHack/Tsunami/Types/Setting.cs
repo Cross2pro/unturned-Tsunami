@@ -1,4 +1,7 @@
-﻿namespace TsunamiHack.Tsunami.Types
+﻿using SDG.Unturned;
+using UnityEngine;
+
+namespace TsunamiHack.Tsunami.Types
 {
     public class Setting
     {
@@ -10,5 +13,6 @@
             Name = name;
             Value = value;
         }
+
     }
 }

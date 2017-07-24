@@ -104,8 +104,8 @@ namespace TsunamiHack.Tsunami.Menu
                 WaveMaker.Friends.SaveFriends();
             }
 
-
-            Camera.main.fieldOfView = Fov;
+            if(Provider.isConnected)
+                Camera.main.fieldOfView = Fov;
             Player.player.look.isOrbiting = CameraFreeFlight;
         }
 
@@ -116,7 +116,7 @@ namespace TsunamiHack.Tsunami.Menu
                 if (WaveMaker.MenuOpened ==  WaveMaker.MainId)
                 {
                     PlayerRect = GUI.Window(2009, PlayerRect, PlayerFunct, "Player List");
-//                    FriendsRect = GUI.Window(2010, FriendsRect, FriendFucnt, "Friends List");
+                    FriendsRect = GUI.Window(2010, FriendsRect, FriendFucnt, "Friends List");
                     MainRect = GUI.Window(2011, MainRect, MenuFunct, "Main Menu");
                     TextRect = GUI.Window(2012, TextRect, TextFunct, "Instructions");
                 }
@@ -199,7 +199,6 @@ namespace TsunamiHack.Tsunami.Menu
         {
             Friendscroll = GUILayout.BeginScrollView(Friendscroll, false, true);
 
-            Logging.LogMsg("DEBUG", "Starting foreach");
             foreach (var friend in WaveMaker.Friends.Userlist)
             {
                 if (Provider.clients.Exists(player => player.playerID.steamID.m_SteamID == friend.SteamId))
@@ -214,7 +213,6 @@ namespace TsunamiHack.Tsunami.Menu
                             friendfocus = client.playerID.steamID.m_SteamID; 
                     }
                     
-                    Logging.LogMsg("DEBUG", "checking for friend focus");
                     if (friendfocus == client.playerID.steamID.m_SteamID)
                     {
                         Logging.LogMsg("DEBUG", "listing stats");
@@ -238,7 +236,6 @@ namespace TsunamiHack.Tsunami.Menu
                     
                 }
             }
-            Logging.LogMsg("DEBUG", "ending scroll view");
             GUILayout.EndScrollView();
         }
 
@@ -251,13 +248,10 @@ namespace TsunamiHack.Tsunami.Menu
 
             foreach (var client in Provider.clients)
             {
-                Logging.LogMsg("DEBUG", "checking friendslist for player");
                 if (!WaveMaker.Friends.Contains(client.playerID.steamID.m_SteamID) && client.player != Player.player)
                 {
-                    Logging.LogMsg("DEBUG", "checking for button press");
                     if(GUILayout.Button(client.playerID.nickName))
                     {
-                        Logging.LogMsg("DEBUG", "changing player focus");
                         if (playerfocus == client.playerID.steamID.m_SteamID)
                             playerfocus = 0;
                         else

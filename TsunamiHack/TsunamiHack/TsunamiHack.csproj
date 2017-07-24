@@ -184,6 +184,7 @@
     <Compile Include="Tsunami\Types\Lists\PremiumList.cs" />
     <Compile Include="Tsunami\Types\Popup.cs" />
     <Compile Include="Tsunami\Types\Setting.cs" />
+    <Compile Include="Tsunami\Types\TsuColor.cs" />
     <Compile Include="Tsunami\Util\Blocker.cs" />
     <Compile Include="Tsunami\Util\FileDownloader.cs" />
     <Compile Include="Tsunami\Util\FileIo.cs" />

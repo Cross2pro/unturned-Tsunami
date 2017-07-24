@@ -72,10 +72,11 @@ namespace TsunamiHack.Tsunami.Manager
             {
                 FileIo.CreateSettings(out WaveMaker.Settings);
 
-                if (WaveMaker.Settings != null) return;
-                
-                Logging.LogMsg("Internal Error", "Unable to create settings file");
-                throw new UnableToLoadException("Unable to create settings file");
+                if (WaveMaker.Settings == null)
+                {
+                    Logging.LogMsg("Internal Error", "Unable to create settings file");
+                    throw new UnableToLoadException("Unable to create settings file");
+                }
             }
 
 

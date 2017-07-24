@@ -9,12 +9,12 @@ namespace TsunamiHack.Tsunami.Types.Configs
         
         public List<Setting> SettingList;
 
-        public Dictionary<string,Color> ColorList;
+        public Dictionary<string,TsuColor> ColorList;
         
         public Settings()
         {
             SettingList = new List<Setting>();
-            ColorList = new Dictionary<string, Color>();
+            ColorList = new Dictionary<string, TsuColor>();
         }
 
         public void addSetting(string name, object value)
