@@ -1,4 +1,5 @@
 ﻿using System;
+using Newtonsoft.Json;
 using UnityEngine;
 
 namespace TsunamiHack.Tsunami.Types
@@ -19,6 +20,7 @@ namespace TsunamiHack.Tsunami.Types
             a = value.a;
         }
 
+        [JsonConstructor]
         public TsuColor(float R, float G, float B, float A)
         {
             r = R;

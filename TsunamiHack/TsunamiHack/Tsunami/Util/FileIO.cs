@@ -190,6 +190,16 @@ namespace TsunamiHack.Tsunami.Util
             File.WriteAllText(SettingsPath, raw);
         }
 
+        public static void SaveColors(Settings settings)
+        {
+            using (var writer = new StreamWriter(SettingsPath))
+            {   
+                var json = JsonConvert.SerializeObject(settings);
+                writer.WriteLine(json);
+                writer.Flush();
+                writer.Dispose();
+            }
+        }
         
     #endregion
 

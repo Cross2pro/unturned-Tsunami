@@ -4,6 +4,7 @@ using System.Data.SqlTypes;
 using System.Security.Cryptography.X509Certificates;
 using SDG.Unturned;
 using TsunamiHack.Tsunami.Manager;
+using TsunamiHack.Tsunami.Types;
 using TsunamiHack.Tsunami.Types.Configs;
 using TsunamiHack.Tsunami.Util;
 using UnityEngine;
@@ -140,6 +141,8 @@ namespace TsunamiHack.Tsunami.Menu
         internal Rect TypeRect;
         internal Rect EnvRect;
         internal Rect SettingsRect;
+
+        internal Vector2 ScrollPos;
         
         public void Start()
         {
@@ -181,6 +184,8 @@ namespace TsunamiHack.Tsunami.Menu
             FarSize = 3f;
             Dropoff = 500f;
 
+            ScrollPos = new Vector2();
+
             EnemyPlayerGlow = WaveMaker.Settings.ColorList["enemyplayer"].Convert();
             FriendlyPlayerGlow = WaveMaker.Settings.ColorList["friendlyplayer"].Convert();
             ZombieGlow = WaveMaker.Settings.ColorList["zombie"].Convert();
@@ -190,6 +195,7 @@ namespace TsunamiHack.Tsunami.Menu
 
             BoxPlayerFriendly = WaveMaker.Settings.ColorList["friendlyplayerbox"].Convert();
             BoxPlayerEnemy = WaveMaker.Settings.ColorList["enemyplayerbox"].Convert();
+            BoxZombie = WaveMaker.Settings.ColorList["zombiebox"].Convert();
             
             Logging.LogMsg("DEBUG", $"{EnemyPlayerGlow.r}/{EnemyPlayerGlow.g}/{EnemyPlayerGlow.b}");
             Logging.LogMsg("DEBUG", $"{FriendlyPlayerGlow.r}/{FriendlyPlayerGlow.g}/{FriendlyPlayerGlow.b}");
@@ -201,6 +207,20 @@ namespace TsunamiHack.Tsunami.Menu
             Logging.LogMsg("DEBUG", $"{BoxPlayerEnemy.r}/{BoxPlayerEnemy.g}/{BoxPlayerEnemy.b}");
         }
 
+        public void UpdateColors()
+        {
+            EnemyPlayerGlow = WaveMaker.Settings.ColorList["enemyplayer"].Convert();
+            FriendlyPlayerGlow = WaveMaker.Settings.ColorList["friendlyplayer"].Convert();
+            ZombieGlow = WaveMaker.Settings.ColorList["zombie"].Convert();
+            ItemGlow = WaveMaker.Settings.ColorList["item"].Convert();
+            InteractableGlow = WaveMaker.Settings.ColorList["interactable"].Convert();
+            VehicleGlow = WaveMaker.Settings.ColorList["vehicle"].Convert(); 
+
+            BoxPlayerFriendly = WaveMaker.Settings.ColorList["friendlyplayerbox"].Convert();
+            BoxPlayerEnemy = WaveMaker.Settings.ColorList["enemyplayerbox"].Convert();
+            BoxZombie = WaveMaker.Settings.ColorList["zombiebox"].Convert();
+        }
+        
         public void Update()
         {
             if (Esp)
@@ -381,6 +401,8 @@ namespace TsunamiHack.Tsunami.Menu
 
         public void SetFunct(int id)
         {
+            ScrollPos = GUILayout.BeginScrollView(ScrollPos, false, true);
+            
             GUILayout.Space(2f);
             GUILayout.Label("ESP Settings\n--------------------------------------");
             GUILayout.Space(2f);
@@ -483,12 +505,59 @@ namespace TsunamiHack.Tsunami.Menu
                         BoxZombie.b = GUILayout.HorizontalSlider((float) Math.Round(BoxZombie.b, 0), 0f, 255f);
                         break;
             }
-
+            
+            GUILayout.Space(2f);
             if(GUILayout.Button("Save Colors"))
             {
+                WaveMaker.Settings.ColorList["enemyplayer"] = new TsuColor(EnemyPlayerGlow);
+                WaveMaker.Settings.ColorList["friendlyplayer"] = new TsuColor(FriendlyPlayerGlow);
+                WaveMaker.Settings.ColorList["zombie"] = new TsuColor(ZombieGlow);
+                WaveMaker.Settings.ColorList["item"] = new TsuColor(ItemGlow);
+                WaveMaker.Settings.ColorList["interactable"] = new TsuColor(InteractableGlow);
+                WaveMaker.Settings.ColorList["vehicle"] = new TsuColor(VehicleGlow);
                 
+                WaveMaker.Settings.ColorList["friendlyplayerbox"] = new TsuColor(BoxPlayerFriendly);
+                WaveMaker.Settings.ColorList["enemyplayerbox"] = new TsuColor(BoxPlayerEnemy);
+
+
+                FileIo.SaveColors(WaveMaker.Settings);
             }
+            GUILayout.Space(2f);
             
+            if(GUILayout.Button("Save Colors"))
+            {
+                WaveMaker.Settings.ColorList["enemyplayer"] = new TsuColor(EnemyPlayerGlow);
+                WaveMaker.Settings.ColorList["friendlyplayer"] = new TsuColor(FriendlyPlayerGlow);
+                WaveMaker.Settings.ColorList["zombie"] = new TsuColor(ZombieGlow);
+                WaveMaker.Settings.ColorList["item"] = new TsuColor(ItemGlow);
+                WaveMaker.Settings.ColorList["interactable"] = new TsuColor(InteractableGlow);
+                WaveMaker.Settings.ColorList["vehicle"] = new TsuColor(VehicleGlow);
+                
+                WaveMaker.Settings.ColorList["friendlyplayerbox"] = new TsuColor(BoxPlayerFriendly);
+                WaveMaker.Settings.ColorList["enemyplayerbox"] = new TsuColor(BoxPlayerEnemy);
+                WaveMaker.Settings.ColorList["zombiebox"] = new TsuColor(BoxZombie);
+
+
+                FileIo.SaveColors(WaveMaker.Settings);
+            }
+            GUILayout.Space(2f);
+            if (GUILayout.Button("Reset Colors"))
+            {
+                WaveMaker.Settings.ColorList["enemyplayer"] = new TsuColor(new Color(255,45,45));
+                WaveMaker.Settings.ColorList["friendlyplayer"] = new TsuColor(new Color(150,255,255));
+                WaveMaker.Settings.ColorList["zombie"] = new TsuColor(new Color(50,150,0));
+                WaveMaker.Settings.ColorList["item"] = new TsuColor(new Color(230,230,40));
+                WaveMaker.Settings.ColorList["interactable"] = new TsuColor(new Color(255,180,0));
+                WaveMaker.Settings.ColorList["vehicle"] = new TsuColor(new Color(255,0,230));
+                
+                WaveMaker.Settings.ColorList["friendlyplayerbox"] = new TsuColor(new Color(150,255,255));
+                WaveMaker.Settings.ColorList["enemyplayerbox"] = new TsuColor(new Color(255,45,45));
+                WaveMaker.Settings.ColorList["zombiebox"] = new TsuColor(new Color(50, 150, 0));
+                
+                UpdateColors();
+                FileIo.SaveColors(WaveMaker.Settings);
+            }
+
             GUILayout.Label("--------------------------------------");
             
             ScaleText = GUILayout.Toggle(ScaleText, " Scale ESP Text");
@@ -498,10 +567,9 @@ namespace TsunamiHack.Tsunami.Menu
             FarSize = GUILayout.HorizontalSlider((float) Math.Round(FarSize, 0), 1f, 12f);
             GUILayout.Label($"Text Size Dropoff : {Dropoff}");
             Dropoff = GUILayout.HorizontalSlider((float) Math.Round(Dropoff, 0), 1f, 10000f);
-
-
+            
+            GUILayout.EndScrollView();
         }
-        
         
         public void SetMenuStatus(bool setting)
         {
