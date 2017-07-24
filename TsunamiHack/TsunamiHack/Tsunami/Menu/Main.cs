@@ -104,7 +104,7 @@ namespace TsunamiHack.Tsunami.Menu
                 WaveMaker.Friends.SaveFriends();
             }
 
-            if(Provider.isConnected)
+            if(Camera.main.fieldOfView != Fov)
                 Camera.main.fieldOfView = Fov;
             Player.player.look.isOrbiting = CameraFreeFlight;
         }
