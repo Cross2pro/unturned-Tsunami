@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
+using HighlightingSystem;
 using UnityEngine;
 using SDG.Unturned;
+using TsunamiHack.Tsunami.Manager;
+using TsunamiHack.Tsunami.Util;
 using Object = UnityEngine.Object;
 
 namespace TsunamiHack.Tsunami.Lib
@@ -10,7 +14,7 @@ namespace TsunamiHack.Tsunami.Lib
     {
         internal static Menu.Visuals menu;
 
-        internal static Player[] Players;
+        internal static SteamPlayer[] Players;
         internal static Zombie[] Zombies;
         internal static InteractableItem[] Items;
         internal static InteractableVehicle[] Vehicles;
@@ -30,13 +34,14 @@ namespace TsunamiHack.Tsunami.Lib
         
         internal static void Start(Menu.Visuals parent)
         {
+            menu = WaveMaker.MenuVisuals;
             UpdateLists();
             Last = DateTime.Now;
         }
 
         internal static void Update()
         {
-            UpdateLists();
+//            UpdateLists();
 
             if ((DateTime.Now - Last).TotalMilliseconds >= menu.UpdateRate)
             {
@@ -51,29 +56,61 @@ namespace TsunamiHack.Tsunami.Lib
 
         internal static void CheckGlows()
         {
-            if(menu.GlowPlayers)
-                UpdatePlayerGlow();
-            else if(menu.GlowZombies)
-                UpdateZombieGlow();
-            else if(menu.GlowItems)
-                UpdateItemGlow();
-            else if(menu.GlowInteractables)
-                UpdateInteractableGlow();
-            else if (menu.GlowVehicles)
-                UpdateVehicleGlow();
+            UpdatePlayerGlow();
+            UpdateZombieGlow();
+            UpdateItemGlow();
+            UpdateInteractableGlow();
+            UpdateVehicleGlow();
+                
         }
 
         internal static void UpdatePlayerGlow()
         {
-            var Cam = Camera.main;
-            var MyPos = Player.player.transform.position;
+            var myPos = Player.player.transform.position;
             
             foreach (var user in Players)
             {
-                var TargetPos = user.transform.position;
-                if (Vector3.Distance(MyPos, TargetPos) <= menu.Distance || menu.InfDistance)
+                if (user.player.transform != Player.player.transform)
                 {
-                    
+                
+                    var targetPos = user.player.transform.position;
+
+                    if (Vector3.Distance(myPos, targetPos) <= menu.Distance || menu.InfDistance)
+                    {
+
+                        var espColor = WaveMaker.Friends.Contains(user.playerID.steamID.m_SteamID)
+                            ? menu.FriendlyPlayerGlow
+                            : menu.EnemyPlayerGlow;
+
+                        var highl = user.player.gameObject.GetComponent<Highlighter>();
+
+                        if (!menu.GlowPlayers && highl != null)
+                        {
+                            highl.ConstantOffImmediate();
+                            return;
+                        }
+
+                        if (menu.GlowPlayers)
+                        {
+                            if (highl == null)
+                            {
+                                highl = user.player.gameObject.AddComponent<Highlighter>();
+                            }
+
+                            highl.ConstantParams(espColor);
+                            highl.OccluderOn();
+                            highl.SeeThroughOn();
+                            highl.ConstantOn();
+                        }
+
+                    }
+                    else
+                    {
+                        var highl = user.player.gameObject.GetComponent<Highlighter>();
+                        
+                        if(highl != null)
+                            highl.ConstantOffImmediate();
+                    }
                 }
             }
         }
@@ -81,7 +118,55 @@ namespace TsunamiHack.Tsunami.Lib
         internal static void UpdateZombieGlow()
         {
             
-        }
+            
+            var myPos = Player.player.transform.position;
+
+            foreach (var zombie in Zombies)
+            {
+                var targetPos = zombie.transform.position;
+                var dist = Vector3.Distance(myPos, targetPos);
+
+                Logging.LogMsg("Debug", $"{dist}/{menu.Distance}");
+
+                if (dist <= menu.Distance)
+                {
+
+
+                    var espColor = menu.ZombieGlow;
+
+                    var highl = zombie.gameObject.GetComponent<Highlighter>();
+
+                    if (!menu.GlowZombies && menu.Esp && highl != null)
+                    {
+                        highl.ConstantOffImmediate();
+                    }
+                    else if (menu.GlowZombies && menu.Esp)
+                    {
+                        if (highl == null)
+                        {
+                            highl = zombie.gameObject.AddComponent<Highlighter>();
+                        }
+
+                        highl.ConstantParams(espColor);
+                        highl.OccluderOn();
+                        highl.SeeThroughOn();
+                        highl.ConstantOn();
+                    }
+                }
+                else
+                {
+                    var highl = zombie.gameObject.GetComponent<Highlighter>();
+
+                    if (highl != null)
+                    {
+                        highl.ConstantOffImmediate();
+                    }
+                }
+                    
+                    
+                }
+                
+            }
         
         internal static void UpdateItemGlow()
         {
@@ -100,7 +185,7 @@ namespace TsunamiHack.Tsunami.Lib
         
         internal static void UpdateLists()
         {
-            Players = Object.FindObjectsOfType<Player>();
+            Players = Provider.clients.ToArray();
             Zombies = Object.FindObjectsOfType<Zombie>();
             Items = Object.FindObjectsOfType<InteractableItem>();
             Vehicles = Object.FindObjectsOfType<InteractableVehicle>();

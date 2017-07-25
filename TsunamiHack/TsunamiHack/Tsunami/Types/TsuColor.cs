@@ -33,5 +33,10 @@ namespace TsunamiHack.Tsunami.Types
         {
             return new Color(r,g,b,a);
         }
+
+        public string ToHex()
+        {
+            return r.ToString("X2") + g.ToString("X2") + b.ToString("X2");
+        }
     }
 }

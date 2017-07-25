@@ -197,14 +197,6 @@ namespace TsunamiHack.Tsunami.Menu
             BoxPlayerEnemy = WaveMaker.Settings.ColorList["enemyplayerbox"].Convert();
             BoxZombie = WaveMaker.Settings.ColorList["zombiebox"].Convert();
             
-            Logging.LogMsg("DEBUG", $"{EnemyPlayerGlow.r}/{EnemyPlayerGlow.g}/{EnemyPlayerGlow.b}");
-            Logging.LogMsg("DEBUG", $"{FriendlyPlayerGlow.r}/{FriendlyPlayerGlow.g}/{FriendlyPlayerGlow.b}");
-            Logging.LogMsg("DEBUG", $"{ZombieGlow.r}/{ZombieGlow.g}/{ZombieGlow.b}");
-            Logging.LogMsg("DEBUG", $"{ItemGlow.r}/{ItemGlow.g}/{ItemGlow.b}");
-            Logging.LogMsg("DEBUG", $"{InteractableGlow.r}/{InteractableGlow.g}/{InteractableGlow.b}");
-            Logging.LogMsg("DEBUG", $"{EnemyPlayerGlow.r}/{EnemyPlayerGlow.g}/{EnemyPlayerGlow.b}");
-            Logging.LogMsg("DEBUG", $"{BoxPlayerFriendly.r}/{BoxPlayerFriendly.g}/{BoxPlayerFriendly.b}");
-            Logging.LogMsg("DEBUG", $"{BoxPlayerEnemy.r}/{BoxPlayerEnemy.g}/{BoxPlayerEnemy.b}");
         }
 
         public void UpdateColors()
@@ -409,7 +401,7 @@ namespace TsunamiHack.Tsunami.Menu
             InfDistance = GUILayout.Toggle(InfDistance, " Infinite Distance");
             GUILayout.Space(1f);
             GUILayout.Label($"ESP Distance : {Distance}");
-            Distance = GUILayout.HorizontalSlider((float) Math.Round(Distance, 0), 0f, 10000f);
+            Distance = GUILayout.HorizontalSlider((float) Math.Round(Distance, 0), 0f, 1000f);
             GUILayout.Space(1f);
             GUILayout.Label($"Update Rate : {UpdateRate}");
             UpdateRate = GUILayout.HorizontalSlider((float) Math.Round(UpdateRate, 0), 1f, 100f);
@@ -555,6 +547,10 @@ namespace TsunamiHack.Tsunami.Menu
             GUILayout.EndScrollView();
         }
         
+        
+        
+        
+    
         public void SetMenuStatus(bool setting)
         {
             MenuOpened = setting;
