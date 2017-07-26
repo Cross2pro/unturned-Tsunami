@@ -30,6 +30,8 @@ namespace TsunamiHack.Tsunami.Menu
         //Selections
 
         internal bool Esp;
+
+        internal bool EnableEsp;
         
         internal bool PlayerName;
         internal bool PlayerWeapon;//
@@ -39,11 +41,9 @@ namespace TsunamiHack.Tsunami.Menu
         internal bool ZombieDistance;//
         internal bool ZombieSpecialty;
 
-        internal bool Items;
         internal bool ItemName;//
         internal bool ItemDistance;
         
-        internal bool Vehicles;
         internal bool VehicleName;//
         internal bool VehicleDistance;
 
@@ -143,6 +143,7 @@ namespace TsunamiHack.Tsunami.Menu
         internal Rect SettingsRect;
 
         internal Vector2 ScrollPos;
+        internal Vector2 ScrollPos2;
         
         public void Start()
         {
@@ -215,10 +216,7 @@ namespace TsunamiHack.Tsunami.Menu
         
         public void Update()
         {
-            if (Esp)
-            {
                 Lib.Visuals.Update();
-            }
         }
 
         public void OnGUI()
@@ -235,6 +233,7 @@ namespace TsunamiHack.Tsunami.Menu
 
         public void MenuFunct(int id)
         {
+            ScrollPos2 = GUILayout.BeginScrollView(ScrollPos2, false, true);
             
             GUILayout.Space(2f);
             GUILayout.Label("Player\n--------------------------------------");
@@ -249,21 +248,18 @@ namespace TsunamiHack.Tsunami.Menu
             ZombieName = GUILayout.Toggle(ZombieName, " Show Zombie Name");
             ZombieSpecialty = GUILayout.Toggle(ZombieSpecialty, " Show Zombie Specialty");
             ZombieDistance = GUILayout.Toggle(ZombieDistance, " Show Zombie Distance");
-
-            GUILayout.Space(2f);
-            GUILayout.Label("NPCs\n--------------------------------------");
-            GUILayout.Space(2f);
-            Npc = GUILayout.Toggle(Npc, " Show NPCs");
-            NpcName = GUILayout.Toggle(NpcName, " Show NPC Name");
-            NpcWeapon = GUILayout.Toggle(NpcWeapon, " Show NPC Weapon");
-            NpcDistance = GUILayout.Toggle(NpcDistance, "Show NPC Distance");
             
             GUILayout.Space(2f);
             GUILayout.Label("Item\n--------------------------------------");
             GUILayout.Space(2f);
-            Items = GUILayout.Toggle(Items, " Show Items");
             ItemName = GUILayout.Toggle(ItemName, " Show Item Name");
             ItemDistance = GUILayout.Toggle(ItemDistance, " Show Item Distance");
+            
+            GUILayout.Space(2f);
+            GUILayout.Label("Vehicles\n--------------------------------------");
+            GUILayout.Space(2f);
+            VehicleName = GUILayout.Toggle(NpcName, " Show Vehicle Name");
+            VehicleDistance = GUILayout.Toggle(NpcWeapon, " Show Vehicle Distance");
             
             GUILayout.Space(2f);
             GUILayout.Label("Animals\n--------------------------------------");
@@ -285,6 +281,15 @@ namespace TsunamiHack.Tsunami.Menu
             Airdrop = GUILayout.Toggle(Airdrop, " Show Airdrops");
             AirdropDistance = GUILayout.Toggle(AirdropDistance, " Show Airdrop Distance");
             
+            GUILayout.Space(2f);
+            GUILayout.Label("NPCs\n--------------------------------------");
+            GUILayout.Space(2f);
+            Npc = GUILayout.Toggle(Npc, " Show NPCs");
+            NpcName = GUILayout.Toggle(NpcName, " Show NPC Name");
+            NpcWeapon = GUILayout.Toggle(NpcWeapon, " Show NPC Weapon");
+            NpcDistance = GUILayout.Toggle(NpcDistance, "Show NPC Distance");
+            
+            GUILayout.EndScrollView();
         }
 
         public void Menu2Funct(int id)
@@ -340,7 +345,9 @@ namespace TsunamiHack.Tsunami.Menu
         public void TypeFunct(int id)
         {
             GUILayout.Space(2f);
-            Esp = GUILayout.Toggle(Esp, "Toggle Esp");
+
+            EnableEsp = GUILayout.Toggle(EnableEsp, " Enable Esp");
+            
             GUILayout.Space(2f);
             GUILayout.Label("Draw Boxes\n--------------------------------------");
             GUILayout.Space(2f);
@@ -389,6 +396,8 @@ namespace TsunamiHack.Tsunami.Menu
                 Nv = (NVType) NvInt;
             }
             
+            GUILayout.Space(10f);
+            GUILayout.Label("Having too many categories selected at once will cause you to lag. For the best experience only select \"Show\" for those items you are specifically looking for");
         }
 
         public void SetFunct(int id)
