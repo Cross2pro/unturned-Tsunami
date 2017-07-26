@@ -24,7 +24,6 @@ namespace TsunamiHack.Tsunami.Menu
             EnemyPlayer = 1, FriendlyPlayer, Zombie, Item, Interactable, Vehicle, FriendlyPlayerBox, EnemyPlayerBox, ZombieBox
         }
         
-        //TODO:Create File Saving for colors
         //TODO: Add item id selection
         
         //Selections
@@ -229,6 +228,8 @@ namespace TsunamiHack.Tsunami.Menu
                 EnvRect = GUI.Window(2006, EnvRect, EnvFunct, "Environment Hacks");
                 SettingsRect = GUI.Window(2007, SettingsRect, SetFunct, "Settings");
             }
+            
+            Lib.Visuals.OnGUI();
         }
 
         public void MenuFunct(int id)

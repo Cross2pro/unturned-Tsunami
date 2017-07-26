@@ -12,6 +12,10 @@ namespace TsunamiHack.Tsunami.Lib
 {
     internal class Visuals 
     {
+        //TODO: fix positioning of labels
+        //TODO: Finish all other labels
+        //TODO: maybe add other boxes
+        
         internal static Menu.Visuals menu;
 
         internal static SteamPlayer[] Players;
@@ -80,17 +84,15 @@ namespace TsunamiHack.Tsunami.Lib
         {
             if ((DateTime.Now - Last).TotalMilliseconds >= menu.UpdateRate)
             {
-                if (menu.EnableEsp)
-                {
-                    UpdateLists();
-                    UpdateColors();
-                    Last = DateTime.Now;
-                }
 
                 
+                UpdateLists();
                 
-                CheckGlows();
-                CheckLabels();
+                
+                UpdateColors();
+                CheckGlows();                
+                
+                Last = DateTime.Now;
 
             }
             
@@ -98,6 +100,11 @@ namespace TsunamiHack.Tsunami.Lib
             
         }
 
+        internal static void OnGUI()
+        {
+            CheckLabels();
+        }
+        
         internal static void CheckLabels()
         {
             var myPos = Player.player.transform.position;
@@ -134,11 +141,11 @@ namespace TsunamiHack.Tsunami.Lib
                             {
                                 if (text.Length > 0)
                                 {
-                                    text += $"\nDistance: {dist}";
+                                    text += $"\nDistance: {Math.Round(dist, 0)}";
                                 }
                                 else
                                 {
-                                    text += $"Distance: {dist}";
+                                    text += $"Distance: {Math.Round(dist, 0)}";
                                 }
                             }
 
@@ -197,8 +204,28 @@ namespace TsunamiHack.Tsunami.Lib
 
                                 text += str;
                             }
+
+                            var size = dist <= menu.Dropoff ? menu.CloseSize : menu.FarSize; 
+                            
+                            GUI.Label(new Rect(scrnPt, new Vector2(170,50)), $"<size={size}>{text}</size>" );
                         
                         }
+                    }
+
+                    if (menu.ZombieBox)
+                    {
+                        var pos = zombie.transform.position;
+
+                        pos = Camera.main.WorldToScreenPoint(pos);
+
+                        if (pos.z >= 0)
+                        {
+                            pos.y = Screen.height - pos.y;
+
+                            DrawBox(zombie.transform, pos, BoxZombie);
+                        }
+                        
+                        
                     }
                 }
             }
@@ -222,43 +249,46 @@ namespace TsunamiHack.Tsunami.Lib
 
             foreach (var player in Players)
             {
-                var targetPos = player.player.transform.position;
-
-                if (menu.EnableEsp && menu.GlowPlayers)
+                if (player.player != Player.player)
                 {
-                    var dist = Vector3.Distance(myPos, targetPos);
+                    var targetPos = player.player.transform.position;
 
-                    if (dist <= menu.Distance || menu.InfDistance)
+                    if (menu.EnableEsp && menu.GlowPlayers)
                     {
-                        var highlighter = player.player.gameObject.GetComponent<Highlighter>();
+                        var dist = Vector3.Distance(myPos, targetPos);
 
-                        if (highlighter == null)
-                            highlighter = player.player.gameObject.AddComponent<Highlighter>();
+                        if (dist <= menu.Distance || menu.InfDistance)
+                        {
+                            var highlighter = player.player.gameObject.GetComponent<Highlighter>();
 
-                        var color = WaveMaker.Friends.Contains(player.playerID.steamID.m_SteamID)
-                            ? menu.FriendlyPlayerGlow
-                            : menu.EnemyPlayerGlow;
+                            if (highlighter == null)
+                                highlighter = player.player.gameObject.AddComponent<Highlighter>();
+
+                            var color = WaveMaker.Friends.Contains(player.playerID.steamID.m_SteamID)
+                                ? menu.FriendlyPlayerGlow
+                                : menu.EnemyPlayerGlow;
                         
-                        highlighter.ConstantParams(color);
-                        highlighter.OccluderOn();
-                        highlighter.SeeThroughOn();
-                        highlighter.ConstantOn();
+                            highlighter.ConstantParams(color);
+                            highlighter.OccluderOn();
+                            highlighter.SeeThroughOn();
+                            highlighter.ConstantOn();
+                        }
+                        else
+                        {
+                            var highlighter = player.player.gameObject.GetComponent<Highlighter>();
+
+                            if (highlighter != null)
+                                highlighter.ConstantOffImmediate();
+                        }
                     }
                     else
                     {
                         var highlighter = player.player.gameObject.GetComponent<Highlighter>();
 
                         if (highlighter != null)
+                        {
                             highlighter.ConstantOffImmediate();
-                    }
-                }
-                else
-                {
-                    var highlighter = player.player.gameObject.GetComponent<Highlighter>();
-
-                    if (highlighter != null)
-                    {
-                        highlighter.ConstantOffImmediate();
+                        }
                     }
                 }
             }
@@ -266,23 +296,33 @@ namespace TsunamiHack.Tsunami.Lib
         
         internal static void UpdateZombieGlow()
         {
+            Logging.LogMsg("Debug", "Assigning mypos");
             var myPos = Player.player.transform.position;
+
+            Logging.LogMsg("Debug", "foreaching");
 
             foreach (var zombie in Zombies)
             {
+                Logging.LogMsg("Debug", "setting zombie pos");
                 var zomPos = zombie.transform.position;
 
+                Logging.LogMsg("Debug", "checking esp and zombie glow");
                 if (menu.EnableEsp && menu.GlowZombies)
                 {
+                    Logging.LogMsg("Debug", "setting distance");
                     var dist = Vector3.Distance(myPos, zomPos);
 
+                    Logging.LogMsg("Debug", "checking distance or inf distance");
                     if (dist <= menu.Distance || menu.InfDistance)
                     {
+                        Logging.LogMsg("Debug", "getting highlighter");
                         var highlighter = zombie.gameObject.GetComponent<Highlighter>();
 
+                        Logging.LogMsg("Debug", "checking if highlighter is null");
                         if (highlighter == null)
                             highlighter = zombie.gameObject.AddComponent<Highlighter>();
 
+                        Logging.LogMsg("Debug", "setting highlighter params");
                         highlighter.ConstantParams(menu.ZombieGlow);
                         highlighter.OccluderOn();
                         highlighter.SeeThroughOn();
@@ -290,16 +330,20 @@ namespace TsunamiHack.Tsunami.Lib
                     }
                     else
                     {
+                        Logging.LogMsg("Debug", "turning off highlighter due to distance");
                         var highlighter = zombie.gameObject.GetComponent<Highlighter>();
 
+                        Logging.LogMsg("Debug", "setting null");
                         if (highlighter != null)
                             highlighter.ConstantOffImmediate();
                     }
                 }
                 else
                 {
+                    Logging.LogMsg("Debug", "turning off highlighter due to esp disabled or no glow zombies");
                     var highlighter = zombie.gameObject.GetComponent<Highlighter>();
 
+                    Logging.LogMsg("Debug", "setting null");
                     if (highlighter != null)
                     {
                         highlighter.ConstantOffImmediate();
@@ -807,8 +851,7 @@ namespace TsunamiHack.Tsunami.Lib
         
         internal static void UpdateLists()
         {
-            if (menu.EnableEsp) //DONT FOGET THIS VAR
-            {
+
                 if (menu.GlowPlayers || menu.PlayerName || menu.PlayerWeapon || menu.PlayerDistance)
                     Players = Provider.clients.ToArray();
                 if (menu.GlowZombies || menu.ZombieName || menu.ZombieDistance || menu.ZombieSpecialty)
@@ -838,24 +881,6 @@ namespace TsunamiHack.Tsunami.Lib
                     Airdrops = Object.FindObjectsOfType<Carepackage>();
                 if (menu.GlowInteractables && menu.Npc || menu.NpcName || menu.NpcWeapon || menu.NpcDistance)
                     Npcs = Object.FindObjectsOfType<InteractableObjectNPC>();
-            }
-            else
-            {
-                Players = null;
-                Zombies = null;
-                Items = null;
-                Vehicles = null;
-                Animals = null;
-                Storages = null;
-                Forages = null;
-                Beds = null;
-                Doors = null;
-                Traps = null;
-                Flags = null;
-                Sentries = null;
-                Airdrops = null;
-                Npcs =  null;
-            }
             
         }
 
@@ -880,33 +905,38 @@ namespace TsunamiHack.Tsunami.Lib
             return result;
         }
         
-        internal void DrawBox(Transform target, Vector3 position, Color color)
+        internal static void DrawBox(Transform target, Vector3 position, Color color)
         {
-            Vector3 targetPos = GetTargetVector(target, "Skull");
-            Vector3 ScrnPt = Camera.main.WorldToScreenPoint(targetPos);
-            ScrnPt.y = (float)Screen.height - ScrnPt.y;
+            var  targetPos = GetTargetVector(target, "Skull");
+            var  scrnPt = Camera.main.WorldToScreenPoint(targetPos);
+            scrnPt.y = (float)Screen.height - scrnPt.y;
             
-            float dist = System.Math.Abs(position.y - ScrnPt.y);
-            float HlfDist = dist / 2f;
-            float XVal = position.x - HlfDist / 2f;
-            float YVal = position.y - dist;
+            var  dist = System.Math.Abs(position.y - scrnPt.y);
+            var  hlfDist = dist / 2f;
+            var  xVal = position.x - hlfDist / 2f;
+            var  yVal = position.y - dist;
             
             GL.PushMatrix();
             GL.Begin(1);
             boxMaterial.SetPass(0);
             GL.Color(color);
             
-            GL.Vertex3(XVal, YVal, 0f);
-            GL.Vertex3(XVal, YVal + dist, 0f);
-            GL.Vertex3(XVal, YVal, 0f);
-            GL.Vertex3(XVal + HlfDist, YVal, 0f);
-            GL.Vertex3(XVal + HlfDist, YVal, 0f);
-            GL.Vertex3(XVal + HlfDist, YVal + dist, 0f);
-            GL.Vertex3(XVal, YVal + dist, 0f);
-            GL.Vertex3(XVal + HlfDist, YVal + dist, 0f);
+            GL.Vertex3(xVal, yVal, 0f);
+            GL.Vertex3(xVal, yVal + dist, 0f);
+            GL.Vertex3(xVal, yVal, 0f);
+            GL.Vertex3(xVal + hlfDist, yVal, 0f);
+            GL.Vertex3(xVal + hlfDist, yVal, 0f);
+            GL.Vertex3(xVal + hlfDist, yVal + dist, 0f);
+            GL.Vertex3(xVal, yVal + dist, 0f);
+            GL.Vertex3(xVal + hlfDist, yVal + dist, 0f);
             
             GL.End();
             GL.PopMatrix();
+        }
+
+        internal static void DrawTracers()
+        {
+            
         }
     }
 }
