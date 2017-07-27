@@ -215,7 +215,9 @@ namespace TsunamiHack.Tsunami.Menu
         
         public void Update()
         {
+            if(Provider.isConnected)
                 Lib.Visuals.Update();
+                
         }
 
         public void OnGUI()
@@ -229,7 +231,9 @@ namespace TsunamiHack.Tsunami.Menu
                 SettingsRect = GUI.Window(2007, SettingsRect, SetFunct, "Settings");
             }
             
-            Lib.Visuals.OnGUI();
+            if(Provider.isConnected)
+                Lib.Visuals.OnGUI();
+
         }
 
         public void MenuFunct(int id)

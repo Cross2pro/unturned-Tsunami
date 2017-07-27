@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Security.Cryptography.Pkcs;
+using System.Security.Cryptography.X509Certificates;
 using HighlightingSystem;
+using SDG.Framework.UI.Sleek2;
 using UnityEngine;
 using SDG.Unturned;
+using Steamworks;
 using TsunamiHack.Tsunami.Manager;
 using TsunamiHack.Tsunami.Util;
 using Object = UnityEngine.Object;
@@ -82,14 +86,12 @@ namespace TsunamiHack.Tsunami.Lib
 
         internal static void Update()
         {
+            UpdateLists();  
+            UpdateColors();
+            
             if ((DateTime.Now - Last).TotalMilliseconds >= menu.UpdateRate)
             {
-
-                
-                UpdateLists();
-                
-                
-                UpdateColors();
+  
                 CheckGlows();                
                 
                 Last = DateTime.Now;
@@ -102,7 +104,7 @@ namespace TsunamiHack.Tsunami.Lib
 
         internal static void OnGUI()
         {
-            CheckLabels();
+                CheckLabels();
         }
         
         internal static void CheckLabels()
@@ -118,115 +120,129 @@ namespace TsunamiHack.Tsunami.Lib
             {
                 foreach (var zombie in Zombies)
                 {
-                    var targetPos = zombie.transform.position;
-                    var dist = Vector3.Distance(myPos, targetPos);
-
-                    if (dist <= menu.Distance || menu.InfDistance)
+                    if (zombie.isDead == false)
                     {
-                        var scrnPt = Camera.main.WorldToScreenPoint(targetPos);
-
-                        if (scrnPt.z >= 0)
+                        var targetPos = zombie.transform.position;
+                        var dist = Vector3.Distance(myPos, targetPos);
+    
+                        if (dist <= menu.Distance || menu.InfDistance)
                         {
-
-                            scrnPt.y = Screen.height - scrnPt.y;
-
-                            var text = "";
-
-                            if (menu.ZombieName)
+                            var scrnPt = Camera.main.WorldToScreenPoint(targetPos);
+    
+                            if (scrnPt.z >= 0)
                             {
-                                text += $"{zombie.gameObject.name}";
-                            }
-
-                            if (menu.ZombieDistance)
-                            {
-                                if (text.Length > 0)
+    
+                                scrnPt.y = Screen.height - scrnPt.y;
+    
+                                var text = "";
+    
+                                if (menu.ZombieName)
                                 {
-                                    text += $"\nDistance: {Math.Round(dist, 0)}";
+                                    text += $"{zombie.gameObject.name}";
+                                }
+    
+                                if (menu.ZombieDistance)
+                                {
+                                    if (text.Length > 0)
+                                    {
+                                        text += $"\nDistance: {Math.Round(dist, 0)}";
+                                    }
+                                    else
+                                    {
+                                        text += $"Distance: {Math.Round(dist, 0)}";
+                                    }
+                                }
+    
+                                if (menu.ZombieSpecialty)
+                                {
+                                    var str = "";
+    
+                                    if (text.Length > 0)
+                                        str += "\n";
+    
+                                    switch (zombie.speciality)
+                                    {
+                                            case EZombieSpeciality.NONE:
+                                                str += "Specialty: None";
+                                                break;
+                                            case EZombieSpeciality.NORMAL:
+                                                str += "Specialty: None";
+                                                break;
+                                            case EZombieSpeciality.MEGA:
+                                                str += "Specialty: Mega";
+                                                break;
+                                            case EZombieSpeciality.CRAWLER:
+                                                str += "Specialty: Crawler";
+                                                break;
+                                            case EZombieSpeciality.SPRINTER:
+                                                str += "Specialty: Sprinter";
+                                                break;
+                                            case EZombieSpeciality.FLANKER_FRIENDLY:
+                                                str += "Specialty: Friendly Flanker";
+                                                break;
+                                            case EZombieSpeciality.FLANKER_STALK:
+                                                str += "Specialty: Stalking Flanker";
+                                                break;
+                                            case EZombieSpeciality.BURNER:
+                                                str += "Specialty: Burner";
+                                                break;
+                                            case EZombieSpeciality.ACID:
+                                                str += "Specialty: Acid";
+                                                break;
+                                            case EZombieSpeciality.BOSS_ELECTRIC:
+                                                str += "Specialty: Electric (Boss)";
+                                                break;
+                                            case EZombieSpeciality.BOSS_WIND:
+                                                str += "Specialty: Wind (Boss)";
+                                                break;
+                                            case EZombieSpeciality.BOSS_FIRE:
+                                                str += "Specialty: Fire (Boss)";
+                                                break;
+                                            case EZombieSpeciality.BOSS_ALL:
+                                                str += "Specialty: All (Boss)";
+                                                break;
+                                            case EZombieSpeciality.BOSS_MAGMA:
+                                                str += "Specialty: Magma (Boss)";
+                                                break;
+                                    } 
+                                    text += str;
+                                }
+
+                                float Size;
+                                
+                                if (menu.ScaleText)
+                                {
+                                    Size = dist <= menu.Dropoff ? menu.CloseSize : menu.FarSize;
                                 }
                                 else
                                 {
-                                    text += $"Distance: {Math.Round(dist, 0)}";
+                                    Size = 10;
                                 }
-                            }
-
-                            if (menu.ZombieSpecialty)
-                            {
-                                var str = "";
-
-                                if (text.Length > 0)
-                                    str += "\n";
-
-                                switch (zombie.speciality)
-                                {
-                                        case EZombieSpeciality.NONE:
-                                            str += "Specialty: None";
-                                            break;
-                                        case EZombieSpeciality.NORMAL:
-                                            str += "Specialty: None";
-                                            break;
-                                        case EZombieSpeciality.MEGA:
-                                            str += "Specialty: Mega";
-                                            break;
-                                        case EZombieSpeciality.CRAWLER:
-                                            str += "Specialty: Crawler";
-                                            break;
-                                        case EZombieSpeciality.SPRINTER:
-                                            str += "Specialty: Sprinter";
-                                            break;
-                                        case EZombieSpeciality.FLANKER_FRIENDLY:
-                                            str += "Specialty: Friendly Flanker";
-                                            break;
-                                        case EZombieSpeciality.FLANKER_STALK:
-                                            str += "Specialty: Stalking Flanker";
-                                            break;
-                                        case EZombieSpeciality.BURNER:
-                                            str += "Specialty: Burner";
-                                            break;
-                                        case EZombieSpeciality.ACID:
-                                            str += "Specialty: Acid";
-                                            break;
-                                        case EZombieSpeciality.BOSS_ELECTRIC:
-                                            str += "Specialty: Electric (Boss)";
-                                            break;
-                                        case EZombieSpeciality.BOSS_WIND:
-                                            str += "Specialty: Wind (Boss)";
-                                            break;
-                                        case EZombieSpeciality.BOSS_FIRE:
-                                            str += "Specialty: Fire (Boss)";
-                                            break;
-                                        case EZombieSpeciality.BOSS_ALL:
-                                            str += "Specialty: All (Boss)";
-                                            break;
-                                        case EZombieSpeciality.BOSS_MAGMA:
-                                            str += "Specialty: Magma (Boss)";
-                                            break;
-                                }
-
-                                text += str;
-                            }
-
-                            var size = dist <= menu.Dropoff ? menu.CloseSize : menu.FarSize; 
+                                
+                                 
+                                
+                                GUI.Label(new Rect(scrnPt + new Vector3(0,4f,0), new Vector2(170,50)), $"<color={menu.BoxZombie}><size={Size}>{text}</size></color>" );
                             
-                            GUI.Label(new Rect(scrnPt, new Vector2(170,50)), $"<size={size}>{text}</size>" );
-                        
+                            }
+                            
+                            
+                            if (menu.ZombieBox)
+                            {
+                                var pos = zombie.transform.position;
+
+                                pos = Camera.main.WorldToScreenPoint(pos);
+
+                                if (pos.z >= 0)
+                                {
+                                    pos.y = Screen.height - pos.y;
+
+                                    DrawBox(zombie.transform, pos, BoxZombie);
+                                }
+
+                            }
                         }
                     }
-
-                    if (menu.ZombieBox)
-                    {
-                        var pos = zombie.transform.position;
-
-                        pos = Camera.main.WorldToScreenPoint(pos);
-
-                        if (pos.z >= 0)
-                        {
-                            pos.y = Screen.height - pos.y;
-
-                            DrawBox(zombie.transform, pos, BoxZombie);
-                        }
-                        
-                        
-                    }
+                      
                 }
             }
 
@@ -245,13 +261,24 @@ namespace TsunamiHack.Tsunami.Lib
 
         internal static void UpdatePlayerGlow()
         {
+            Logging.LogMsg("DEBUG", "setting mypos");
             var myPos = Player.player.transform.position;
 
-            foreach (var player in Players)
+            Logging.LogMsg("DEBUG", "foreaching");
+
+            if (Players.Length > 1)
             {
-                if (player.player != Player.player)
-                {
+                foreach (var player in Players)
+            {
+                
+                Logging.LogMsg("DEBUG", "checking if player is local player");
+
+
+                    Logging.LogMsg("DEBUG", "setting target pos");
+
                     var targetPos = player.player.transform.position;
+
+                    Logging.LogMsg("DEBUG", "if enabled");
 
                     if (menu.EnableEsp && menu.GlowPlayers)
                     {
@@ -290,8 +317,10 @@ namespace TsunamiHack.Tsunami.Lib
                             highlighter.ConstantOffImmediate();
                         }
                     }
-                }
+                
             }
+            }
+            
         }
         
         internal static void UpdateZombieGlow()
@@ -440,72 +469,82 @@ namespace TsunamiHack.Tsunami.Lib
             }
         }
         
+        
         internal static void UpdateInteractableGlow()
+        {
+            
+            UpdateAnimalGlow();
+            UpdateStorageGlow();
+            UpdateForageGlow();
+        }
+
+        internal static void UpdateAnimalGlow()
         {
             var myPos = Player.player.transform.position;
 
-            foreach (var interact in Animals) //---
+            foreach (var animal in Animals)
             {
-                var targetPos = interact.transform.position;
-
-                if (menu.EnableEsp && menu.GlowInteractables && menu.Animals) //--
+                if (menu.EnableEsp && menu.GlowInteractables && menu.Animals)
                 {
+                    var targetPos = animal.transform.position;
                     var dist = Vector3.Distance(myPos, targetPos);
 
                     if (dist <= menu.Distance || menu.InfDistance)
                     {
-                        var highlighter = interact.gameObject.GetComponent<Highlighter>();
+                        var highlighter = animal.gameObject.GetComponent<Highlighter>();
 
-                        if (highlighter == null)
-                            highlighter = interact.gameObject.AddComponent<Highlighter>();
-
-                        highlighter.ConstantParams(menu.InteractableGlow); 
+                        if (highlighter == null) 
+                            highlighter = animal.gameObject.AddComponent<Highlighter>();
+                        
+                        highlighter.ConstantParams(menu.InteractableGlow);
                         highlighter.OccluderOn();
                         highlighter.SeeThroughOn();
                         highlighter.ConstantOn();
                     }
                     else
                     {
-                        var highlighter = interact.gameObject.GetComponent<Highlighter>();
-
-                        if (highlighter != null)
+                        var highlighter = animal.gameObject.GetComponent<Highlighter>();
+                    
+                        if(highlighter != null)
                             highlighter.ConstantOffImmediate();
                     }
                 }
                 else
                 {
-                    var highlighter = interact.gameObject.GetComponent<Highlighter>();
-
-                    if (highlighter != null)
-                    {
+                    var highlighter = animal.gameObject.GetComponent<Highlighter>();
+                    
+                    if(highlighter != null)
                         highlighter.ConstantOffImmediate();
-                    }
                 }
             }
-            
-            foreach (var interact in Storages) //---
+        }
+
+        internal static void UpdateStorageGlow()
+        {
+            var myPos = Player.player.transform.position;
+
+            foreach (var storage in Storages)
             {
-                var targetPos = interact.transform.position;
+                var targetPos = storage.transform.position;
+                var dist = Vector3.Distance(myPos, targetPos);
 
-                if (menu.EnableEsp && menu.GlowInteractables && menu.Storages) //--
+                if (menu.EnableEsp && menu.GlowInteractables && menu.Storages)
                 {
-                    var dist = Vector3.Distance(myPos, targetPos);
-
                     if (dist <= menu.Distance || menu.InfDistance)
                     {
-                        var highlighter = interact.gameObject.GetComponent<Highlighter>();
+                        var highlighter = storage.gameObject.GetComponent<Highlighter>();
 
                         if (highlighter == null)
-                            highlighter = interact.gameObject.AddComponent<Highlighter>();
+                            highlighter = storage.gameObject.AddComponent<Highlighter>();
 
-                        highlighter.ConstantParams(menu.InteractableGlow); 
+                        highlighter.ConstantParams(menu.InteractableGlow);
                         highlighter.OccluderOn();
                         highlighter.SeeThroughOn();
                         highlighter.ConstantOn();
                     }
                     else
                     {
-                        var highlighter = interact.gameObject.GetComponent<Highlighter>();
+                        var highlighter = storage.gameObject.GetComponent<Highlighter>();
 
                         if (highlighter != null)
                             highlighter.ConstantOffImmediate();
@@ -513,325 +552,95 @@ namespace TsunamiHack.Tsunami.Lib
                 }
                 else
                 {
-                    var highlighter = interact.gameObject.GetComponent<Highlighter>();
-
-                    if (highlighter != null)
-                    {
+                    var highlighter = storage.gameObject.GetComponent<Highlighter>();
+                    
+                    if(highlighter != null)
                         highlighter.ConstantOffImmediate();
+                }
+
+            }
+        }
+
+        internal static void UpdateForageGlow()
+        {
+            var myPos = Player.player.transform.position;
+
+            foreach (var forage in Forages)
+            {
+                var targetpos = forage.transform.position;
+                var dist = Vector3.Distance(myPos, targetpos);
+
+                if (menu.EnableEsp && menu.GlowInteractables && menu.Forages)
+                {
+                    if (dist <= menu.Distance || menu.InfDistance)
+                    {
+                        var highlighter = forage.gameObject.GetComponent<Highlighter>();
+
+                        if (highlighter == null)
+                            highlighter = forage.gameObject.AddComponent<Highlighter>();
+                        
+                        highlighter.ConstantParams(menu.InteractableGlow);
+                        highlighter.OccluderOn();
+                        highlighter.SeeThroughOn();
+                        highlighter.ConstantOn();
                     }
+                    else
+                    {
+                        var highlighter = forage.gameObject.GetComponent<Highlighter>();
+                        
+                        if(highlighter != null)
+                            highlighter.ConstantOffImmediate();
+                    }
+                }
+                else
+                {
+                    var highlighter = forage.gameObject.GetComponent<Highlighter>();
+                    
+                    if(highlighter != null)
+                        highlighter.ConstantOffImmediate();
                 }
             }
-            
-            foreach (var interact in Forages) //---
+        }
+
+        internal static void UpdateBedGlow()
+        {
+            var myPos = Player.player.transform.position;
+
+            foreach (var bed in Beds)
             {
-                var targetPos = interact.transform.position;
+                var targetPos = bed.transform.position;
+                var dist = Vector3.Distance(myPos, targetPos);
 
-                if (menu.EnableEsp && menu.GlowInteractables && menu.Forages) //--
+                if (menu.EnableEsp && menu.GlowInteractables && menu.Bed)
                 {
-                    var dist = Vector3.Distance(myPos, targetPos);
-
                     if (dist <= menu.Distance || menu.InfDistance)
                     {
-                        var highlighter = interact.gameObject.GetComponent<Highlighter>();
+                        var highlighter = bed.gameObject.GetComponent<Highlighter>();
 
                         if (highlighter == null)
-                            highlighter = interact.gameObject.AddComponent<Highlighter>();
-
-                        highlighter.ConstantParams(menu.InteractableGlow); 
+                            highlighter = bed.gameObject.AddComponent<Highlighter>();
+                        
+                        highlighter.ConstantParams(menu.InteractableGlow);
                         highlighter.OccluderOn();
                         highlighter.SeeThroughOn();
                         highlighter.ConstantOn();
                     }
                     else
                     {
-                        var highlighter = interact.gameObject.GetComponent<Highlighter>();
-
-                        if (highlighter != null)
+                        var highlighter = bed.gameObject.GetComponent<Highlighter>();
+                        
+                        if(highlighter != null)
                             highlighter.ConstantOffImmediate();
                     }
                 }
                 else
                 {
-                    var highlighter = interact.gameObject.GetComponent<Highlighter>();
-
-                    if (highlighter != null)
-                    {
+                    var highlighter = bed.gameObject.GetComponent<Highlighter>();
+                    
+                    if(highlighter != null)
                         highlighter.ConstantOffImmediate();
-                    }
                 }
-            }
-            
-            foreach (var interact in Beds) //---
-            {
-                var targetPos = interact.transform.position;
 
-                if (menu.EnableEsp && menu.GlowInteractables && menu.Bed) //--
-                {
-                    var dist = Vector3.Distance(myPos, targetPos);
-
-                    if (dist <= menu.Distance || menu.InfDistance)
-                    {
-                        var highlighter = interact.gameObject.GetComponent<Highlighter>();
-
-                        if (highlighter == null)
-                            highlighter = interact.gameObject.AddComponent<Highlighter>();
-
-                        highlighter.ConstantParams(menu.InteractableGlow); 
-                        highlighter.OccluderOn();
-                        highlighter.SeeThroughOn();
-                        highlighter.ConstantOn();
-                    }
-                    else
-                    {
-                        var highlighter = interact.gameObject.GetComponent<Highlighter>();
-
-                        if (highlighter != null)
-                            highlighter.ConstantOffImmediate();
-                    }
-                }
-                else
-                {
-                    var highlighter = interact.gameObject.GetComponent<Highlighter>();
-
-                    if (highlighter != null)
-                    {
-                        highlighter.ConstantOffImmediate();
-                    }
-                }
-            }
-            
-            foreach (var interact in Doors) //---
-            {
-                var targetPos = interact.transform.position;
-
-                if (menu.EnableEsp && menu.GlowInteractables && menu.Doors) //--
-                {
-                    var dist = Vector3.Distance(myPos, targetPos);
-
-                    if (dist <= menu.Distance || menu.InfDistance)
-                    {
-                        var highlighter = interact.gameObject.GetComponent<Highlighter>();
-
-                        if (highlighter == null)
-                            highlighter = interact.gameObject.AddComponent<Highlighter>();
-
-                        highlighter.ConstantParams(menu.InteractableGlow); 
-                        highlighter.OccluderOn();
-                        highlighter.SeeThroughOn();
-                        highlighter.ConstantOn();
-                    }
-                    else
-                    {
-                        var highlighter = interact.gameObject.GetComponent<Highlighter>();
-
-                        if (highlighter != null)
-                            highlighter.ConstantOffImmediate();
-                    }
-                }
-                else
-                {
-                    var highlighter = interact.gameObject.GetComponent<Highlighter>();
-
-                    if (highlighter != null)
-                    {
-                        highlighter.ConstantOffImmediate();
-                    }
-                }
-            }
-            
-            foreach (var interact in Traps) //---
-            {
-                var targetPos = interact.transform.position;
-
-                if (menu.EnableEsp && menu.GlowInteractables && menu.Traps) //--
-                {
-                    var dist = Vector3.Distance(myPos, targetPos);
-
-                    if (dist <= menu.Distance || menu.InfDistance)
-                    {
-                        var highlighter = interact.gameObject.GetComponent<Highlighter>();
-
-                        if (highlighter == null)
-                            highlighter = interact.gameObject.AddComponent<Highlighter>();
-
-                        highlighter.ConstantParams(menu.InteractableGlow); 
-                        highlighter.OccluderOn();
-                        highlighter.SeeThroughOn();
-                        highlighter.ConstantOn();
-                    }
-                    else
-                    {
-                        var highlighter = interact.gameObject.GetComponent<Highlighter>();
-
-                        if (highlighter != null)
-                            highlighter.ConstantOffImmediate();
-                    }
-                }
-                else
-                {
-                    var highlighter = interact.gameObject.GetComponent<Highlighter>();
-
-                    if (highlighter != null)
-                    {
-                        highlighter.ConstantOffImmediate();
-                    }
-                }
-            }
-            
-            foreach (var interact in Flags) //---
-            {
-                var targetPos = interact.transform.position;
-
-                if (menu.EnableEsp && menu.GlowInteractables && menu.Flag) //--
-                {
-                    var dist = Vector3.Distance(myPos, targetPos);
-
-                    if (dist <= menu.Distance || menu.InfDistance)
-                    {
-                        var highlighter = interact.gameObject.GetComponent<Highlighter>();
-
-                        if (highlighter == null)
-                            highlighter = interact.gameObject.AddComponent<Highlighter>();
-
-                        highlighter.ConstantParams(menu.InteractableGlow); 
-                        highlighter.OccluderOn();
-                        highlighter.SeeThroughOn();
-                        highlighter.ConstantOn();
-                    }
-                    else
-                    {
-                        var highlighter = interact.gameObject.GetComponent<Highlighter>();
-
-                        if (highlighter != null)
-                            highlighter.ConstantOffImmediate();
-                    }
-                }
-                else
-                {
-                    var highlighter = interact.gameObject.GetComponent<Highlighter>();
-
-                    if (highlighter != null)
-                    {
-                        highlighter.ConstantOffImmediate();
-                    }
-                }
-            }
-            
-            foreach (var interact in Sentries) //---
-            {
-                var targetPos = interact.transform.position;
-
-                if (menu.EnableEsp && menu.GlowInteractables && menu.Sentries) //--
-                {
-                    var dist = Vector3.Distance(myPos, targetPos);
-
-                    if (dist <= menu.Distance || menu.InfDistance)
-                    {   
-                        var highlighter = interact.gameObject.GetComponent<Highlighter>();
-
-                        if (highlighter == null)
-                            highlighter = interact.gameObject.AddComponent<Highlighter>();
-
-                        highlighter.ConstantParams(menu.InteractableGlow); 
-                        highlighter.OccluderOn();
-                        highlighter.SeeThroughOn();
-                        highlighter.ConstantOn();
-                    }
-                    else
-                    {
-                        var highlighter = interact.gameObject.GetComponent<Highlighter>();
-
-                        if (highlighter != null)
-                            highlighter.ConstantOffImmediate();
-                    }
-                }
-                else
-                {
-                    var highlighter = interact.gameObject.GetComponent<Highlighter>();
-
-                    if (highlighter != null)
-                    {
-                        highlighter.ConstantOffImmediate();
-                    }
-                }
-            }
-            
-            foreach (var interact in Airdrops) //---
-            {
-                var targetPos = interact.transform.position;
-
-                if (menu.EnableEsp && menu.GlowInteractables && menu.Airdrop) //--
-                {
-                    var dist = Vector3.Distance(myPos, targetPos);
-
-                    if (dist <= menu.Distance || menu.InfDistance)
-                    {
-                        var highlighter = interact.gameObject.GetComponent<Highlighter>();
-
-                        if (highlighter == null)
-                            highlighter = interact.gameObject.AddComponent<Highlighter>();
-
-                        highlighter.ConstantParams(menu.InteractableGlow); 
-                        highlighter.OccluderOn();
-                        highlighter.SeeThroughOn();
-                        highlighter.ConstantOn();
-                    }
-                    else
-                    {
-                        var highlighter = interact.gameObject.GetComponent<Highlighter>();
-
-                        if (highlighter != null)
-                            highlighter.ConstantOffImmediate();
-                    }
-                }
-                else
-                {
-                    var highlighter = interact.gameObject.GetComponent<Highlighter>();
-
-                    if (highlighter != null)
-                    {
-                        highlighter.ConstantOffImmediate();
-                    }
-                }
-            }
-            
-            foreach (var interact in Npcs) //---
-            {
-                var targetPos = interact.transform.position;
-
-                if (menu.EnableEsp && menu.GlowInteractables && menu.Npc) //--
-                {
-                    var dist = Vector3.Distance(myPos, targetPos);
-
-                    if (dist <= menu.Distance || menu.InfDistance)
-                    {
-                        var highlighter = interact.gameObject.GetComponent<Highlighter>();
-
-                        if (highlighter == null)
-                            highlighter = interact.gameObject.AddComponent<Highlighter>();
-
-                        highlighter.ConstantParams(menu.InteractableGlow); 
-                        highlighter.OccluderOn();
-                        highlighter.SeeThroughOn();
-                        highlighter.ConstantOn();
-                    }
-                    else
-                    {
-                        var highlighter = interact.gameObject.GetComponent<Highlighter>();
-
-                        if (highlighter != null)
-                            highlighter.ConstantOffImmediate();
-                    }
-                }
-                else
-                {
-                    var highlighter = interact.gameObject.GetComponent<Highlighter>();
-
-                    if (highlighter != null)
-                    {
-                        highlighter.ConstantOffImmediate();
-                    }
-                }
             }
         }
         
@@ -897,7 +706,7 @@ namespace TsunamiHack.Tsunami.Lib
                     Transform transform = array[i];
                     if (transform.name.Trim() == objName)
                     {
-                        result = transform.position + new Vector3(0f, 0.4f, 0f);
+                        result = transform.position /*+ new Vector3(0f, 0.4f, 0f)*/;
                         break;
                     }
                 }
