@@ -19,6 +19,8 @@ namespace TsunamiHack.Tsunami.Manager
         //TODO: Change popup controller to be able to be instantiated outside of game runtime
         //TODO: change window sizes to more accurately change between devices
         //TODO: add shutoff for all hacks at once
+        //TODO: add game version string to check if you are using a current version of the hack compared to game ++ theft deterrent
+        
         
         public static PremiumList Prem;
         public static BanList Ban;

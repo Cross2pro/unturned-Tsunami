@@ -129,12 +129,13 @@ namespace TsunamiHack.Tsunami.Lib
     
                         if (dist <= menu.Distance || menu.InfDistance)
                         {
+                            targetPos += new Vector3(0f,2.5f, 0f);
                             var scrnPt = Camera.main.WorldToScreenPoint(targetPos);
     
                             if (scrnPt.z >= 0)
                             {
     
-                                scrnPt.y = Screen.height - scrnPt.y;
+                                scrnPt.y = (float)(Screen.height - scrnPt.y);
     
                                 var text = "";
     
@@ -458,7 +459,7 @@ namespace TsunamiHack.Tsunami.Lib
             UpdateDoorsGlow();
 //            UpdateTrapsGlow();
             UpdateFlagsGlow();
-            UpdateAirdropGlow();
+//            UpdateAirdropGlow();
         }
 
         internal static void UpdateAnimalGlow()
@@ -794,23 +795,69 @@ namespace TsunamiHack.Tsunami.Lib
             }
         }
 
+        //Fix Airdrops
         internal static void UpdateAirdropGlow()
-        {
+        {   
             var mypos = Player.player.transform.position;
 
-            foreach (var airdrop in Airdrops)
+            foreach (var airdrop in Storages)
             {
-                var targetpos = airdrop.transform.position;
+                if (airdrop.name == "1374")
+                {
+                    var targetpos = airdrop.transform.position;
+                    var dist = Vector3.Distance(mypos, targetpos);
+
+                    if (menu.EnableEsp && menu.GlowInteractables && menu.Airdrop)
+                    {
+                        if (dist <= menu.Distance || menu.InfDistance)
+                        {
+                            var highlighter = airdrop.gameObject.GetComponent<Highlighter>();
+
+                            if (highlighter == null)
+                                highlighter = airdrop.gameObject.AddComponent<Highlighter>();
+                        
+                            highlighter.ConstantParams(menu.InteractableGlow);
+                            highlighter.OccluderOn();
+                            highlighter.SeeThroughOn();
+                            highlighter.ConstantOn();
+                        }
+                        else
+                        {
+                            var highlighter = airdrop.gameObject.GetComponent<Highlighter>();
+
+                            if (highlighter != null)
+                                highlighter.ConstantOffImmediate();
+                        }
+                    }
+                    else
+                    {
+                        var highlighter = airdrop.gameObject.GetComponent<Highlighter>();
+                    
+                        if(highlighter != null)
+                            highlighter.ConstantOffImmediate();
+                    }
+                }
+                
+            }
+        }
+
+        internal static void UpdateNpcGlow()
+        {
+
+            foreach (var npc in Npcs)
+            {
+                var mypos = Player.player.transform.position;
+                var targetpos = npc.transform.position;
                 var dist = Vector3.Distance(mypos, targetpos);
 
-                if (menu.EnableEsp && menu.GlowInteractables && menu.Airdrop)
+                if (menu.EnableEsp && menu.GlowInteractables && menu.Npc)
                 {
                     if (dist <= menu.Distance || menu.InfDistance)
                     {
-                        var highlighter = airdrop.gameObject.GetComponent<Highlighter>();
+                        var highlighter = npc.gameObject.GetComponent<Highlighter>();
 
                         if (highlighter == null)
-                            highlighter = airdrop.gameObject.AddComponent<Highlighter>();
+                            highlighter = npc.gameObject.AddComponent<Highlighter>();
                         
                         highlighter.ConstantParams(menu.InteractableGlow);
                         highlighter.OccluderOn();
@@ -819,23 +866,21 @@ namespace TsunamiHack.Tsunami.Lib
                     }
                     else
                     {
-                        var highlighter = airdrop.gameObject.GetComponent<Highlighter>();
-                        
-                        if(highlighter != null)
+                        var highlighter = npc.gameObject.GetComponent<Highlighter>();
+
+                        if (highlighter != null)
                             highlighter.ConstantOffImmediate();
-                        
                     }
                 }
                 else
                 {
-                    var highlighter = airdrop.gameObject.GetComponent<Highlighter>();
+                    var highlighter = npc.gameObject.GetComponent<Highlighter>();
                     
                     if(highlighter != null)
                         highlighter.ConstantOffImmediate();
                 }
             }
         }
-        
         
         internal static void UpdateColors()
         {
@@ -899,7 +944,7 @@ namespace TsunamiHack.Tsunami.Lib
                     Transform transform = array[i];
                     if (transform.name.Trim() == objName)
                     {
-                        result = transform.position /*+ new Vector3(0f, 0.4f, 0f)*/;
+                        result = transform.position + new Vector3(0f, 0.4f, 0f);
                         break;
                     }
                 }
