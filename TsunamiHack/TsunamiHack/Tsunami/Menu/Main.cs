@@ -138,9 +138,9 @@ namespace TsunamiHack.Tsunami.Menu
             CameraFreeFlight = GUILayout.Toggle(CameraFreeFlight, " Camera Freeflight");
             Zoom20 = GUILayout.Toggle(Zoom20, " 20x Zoom");
             
-            GUILayout.Space(2f);
-            GUILayout.Label($"FOV : {Fov} ");
-            Fov = GUILayout.HorizontalSlider((float) Math.Round(Fov, 0), 60f, 180f);
+//            GUILayout.Space(2f);
+//            GUILayout.Label($"FOV : {Fov} ");
+//            Fov = GUILayout.HorizontalSlider((float) Math.Round(Fov, 0), 60f, 180f);
             
             GUILayout.Space(2f);
             GUILayout.Label("Weapon\n--------------------------------------");

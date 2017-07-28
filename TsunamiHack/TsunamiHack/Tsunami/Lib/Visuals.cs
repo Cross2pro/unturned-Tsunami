@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Deployment.Internal;
 using System.Globalization;
 using System.Security.Cryptography.Pkcs;
 using System.Security.Cryptography.X509Certificates;
@@ -19,6 +20,7 @@ namespace TsunamiHack.Tsunami.Lib
         //TODO: fix positioning of labels
         //TODO: Finish all other labels
         //TODO: maybe add other boxes
+        //TODO: create a maximum zombies to show value
         
         internal static Menu.Visuals menu;
 
@@ -261,24 +263,14 @@ namespace TsunamiHack.Tsunami.Lib
 
         internal static void UpdatePlayerGlow()
         {
-            Logging.LogMsg("DEBUG", "setting mypos");
             var myPos = Player.player.transform.position;
-
-            Logging.LogMsg("DEBUG", "foreaching");
 
             if (Players.Length > 1)
             {
                 foreach (var player in Players)
             {
                 
-                Logging.LogMsg("DEBUG", "checking if player is local player");
-
-
-                    Logging.LogMsg("DEBUG", "setting target pos");
-
                     var targetPos = player.player.transform.position;
-
-                    Logging.LogMsg("DEBUG", "if enabled");
 
                     if (menu.EnableEsp && menu.GlowPlayers)
                     {
@@ -325,33 +317,23 @@ namespace TsunamiHack.Tsunami.Lib
         
         internal static void UpdateZombieGlow()
         {
-            Logging.LogMsg("Debug", "Assigning mypos");
             var myPos = Player.player.transform.position;
-
-            Logging.LogMsg("Debug", "foreaching");
 
             foreach (var zombie in Zombies)
             {
-                Logging.LogMsg("Debug", "setting zombie pos");
                 var zomPos = zombie.transform.position;
 
-                Logging.LogMsg("Debug", "checking esp and zombie glow");
                 if (menu.EnableEsp && menu.GlowZombies)
                 {
-                    Logging.LogMsg("Debug", "setting distance");
                     var dist = Vector3.Distance(myPos, zomPos);
 
-                    Logging.LogMsg("Debug", "checking distance or inf distance");
                     if (dist <= menu.Distance || menu.InfDistance)
                     {
-                        Logging.LogMsg("Debug", "getting highlighter");
                         var highlighter = zombie.gameObject.GetComponent<Highlighter>();
 
-                        Logging.LogMsg("Debug", "checking if highlighter is null");
                         if (highlighter == null)
                             highlighter = zombie.gameObject.AddComponent<Highlighter>();
 
-                        Logging.LogMsg("Debug", "setting highlighter params");
                         highlighter.ConstantParams(menu.ZombieGlow);
                         highlighter.OccluderOn();
                         highlighter.SeeThroughOn();
@@ -359,20 +341,16 @@ namespace TsunamiHack.Tsunami.Lib
                     }
                     else
                     {
-                        Logging.LogMsg("Debug", "turning off highlighter due to distance");
                         var highlighter = zombie.gameObject.GetComponent<Highlighter>();
 
-                        Logging.LogMsg("Debug", "setting null");
                         if (highlighter != null)
                             highlighter.ConstantOffImmediate();
                     }
                 }
                 else
                 {
-                    Logging.LogMsg("Debug", "turning off highlighter due to esp disabled or no glow zombies");
                     var highlighter = zombie.gameObject.GetComponent<Highlighter>();
 
-                    Logging.LogMsg("Debug", "setting null");
                     if (highlighter != null)
                     {
                         highlighter.ConstantOffImmediate();
@@ -476,6 +454,11 @@ namespace TsunamiHack.Tsunami.Lib
             UpdateAnimalGlow();
             UpdateStorageGlow();
             UpdateForageGlow();
+            UpdateBedGlow();
+            UpdateDoorsGlow();
+//            UpdateTrapsGlow();
+            UpdateFlagsGlow();
+            UpdateAirdropGlow();
         }
 
         internal static void UpdateAnimalGlow()
@@ -643,6 +626,216 @@ namespace TsunamiHack.Tsunami.Lib
 
             }
         }
+
+        internal static void UpdateDoorsGlow()
+        {
+            var mypos = Player.player.transform.position;
+
+            foreach (var door in Doors)
+            {
+                var targetpos = door.transform.position;
+                var dist = Vector3.Distance(mypos, targetpos);
+
+                if (menu.EnableEsp && menu.GlowInteractables && menu.Doors)
+                {
+                    if (dist <= menu.Distance || menu.InfDistance)
+                    {
+                        var highlighter = door.gameObject.GetComponent<Highlighter>();
+                        
+                        if(highlighter == null)
+                            highlighter = door.gameObject.AddComponent<Highlighter>();
+                        
+                        highlighter.ConstantParams(menu.InteractableGlow);
+                        highlighter.OccluderOn();
+                        highlighter.SeeThroughOn();
+                        highlighter.ConstantOn();
+                    }
+                    else
+                    {
+                        var highlighter = door.gameObject.GetComponent<Highlighter>();
+                        
+                        if(highlighter != null)
+                            highlighter.ConstantOffImmediate();
+                            
+                    }
+                }
+                else
+                {
+                    var highlighter = door.gameObject.GetComponent<Highlighter>();
+                    
+                    if(highlighter != null)
+                        highlighter.ConstantOffImmediate();
+                }
+            }
+        }
+
+        //Fix traps
+        internal static void UpdateTrapsGlow()
+        {
+            var mypos = Player.player.transform.position;
+
+            foreach (var trap in Traps)
+            {
+                var targetpos = trap.transform.position;
+                var dist = Vector3.Distance(mypos, targetpos);
+
+                if (menu.EnableEsp && menu.GlowInteractables && menu.Traps)
+                {
+                    if (dist <= menu.Distance || menu.InfDistance)
+                    {
+                        var highligter = trap.gameObject.GetComponent<Highlighter>();
+
+                        if (highligter == null)
+                            highligter = trap.gameObject.AddComponent<Highlighter>();
+                        
+                        highligter.ConstantParams(menu.InteractableGlow);
+                        highligter.OccluderOn();
+                        highligter.SeeThroughOn();
+                        highligter.ConstantOn();
+                    }
+                    else
+                    {
+                        var highlighter = trap.gameObject.GetComponent<Highlighter>();
+                        
+                        if(highlighter != null)
+                            highlighter.ConstantOffImmediate();
+                    }
+                }
+                else
+                {
+                    var highlighter = trap.gameObject.GetComponent<Highlighter>();
+                    
+                    if(highlighter != null)
+                        highlighter.ConstantOffImmediate();
+                }
+            }
+        }
+
+        internal static void UpdateFlagsGlow()
+        {
+            var mypos = Player.player.transform.position;
+
+            foreach (var flag in Flags)
+            {
+                var targetpos = flag.transform.position;
+                var dist = Vector3.Distance(mypos, targetpos);
+
+                if (menu.EnableEsp && menu.GlowInteractables && menu.Flag)
+                {
+                    if (dist <= menu.Distance || menu.InfDistance)
+                    {
+                        var highlighter = flag.gameObject.GetComponent<Highlighter>();
+
+                        if (highlighter == null)
+                            highlighter = flag.gameObject.AddComponent<Highlighter>();
+                        
+                        highlighter.ConstantParams(menu.InteractableGlow);
+                        highlighter.OccluderOn();
+                        highlighter.SeeThroughOn();
+                        highlighter.ConstantOn();
+                    }
+                    else
+                    {
+                        var highlighter = flag.gameObject.GetComponent<Highlighter>();
+                        
+                        if(highlighter != null)
+                            highlighter.ConstantOffImmediate();
+                    }
+                }
+                else
+                {
+                    var highlighter = flag.gameObject.GetComponent<Highlighter>();
+                    
+                    if(highlighter != null)
+                        highlighter.ConstantOffImmediate();
+                }
+            }
+        }
+
+        internal static void UpdateSentryGlow()
+        {
+            var mypos = Player.player.transform.position;
+
+            foreach (var sentry in Sentries)
+            {
+                var targetpos = sentry.transform.position;
+                var dist = Vector3.Distance(mypos, targetpos);
+
+                if (menu.EnableEsp && menu.GlowInteractables && menu.Sentries)
+                {
+                    if (dist <= menu.Distance || menu.InfDistance)
+                    {
+                        var highlighter = sentry.gameObject.GetComponent<Highlighter>();
+
+                        if (highlighter == null)
+                            highlighter = sentry.gameObject.AddComponent<Highlighter>();
+                        
+                        highlighter.ConstantParams(menu.InteractableGlow);
+                        highlighter.OccluderOn();
+                        highlighter.SeeThroughOn();
+                        highlighter.ConstantOn();
+                    }
+                    else
+                    {
+                        var highlighter = sentry.gameObject.GetComponent<Highlighter>();
+                        
+                        if(highlighter != null)
+                            highlighter.ConstantOffImmediate();
+                        
+                    }
+                }
+                else
+                {
+                    var highlighter = sentry.gameObject.GetComponent<Highlighter>();
+                    
+                    if(highlighter != null)
+                        highlighter.ConstantOffImmediate();
+                }
+            }
+        }
+
+        internal static void UpdateAirdropGlow()
+        {
+            var mypos = Player.player.transform.position;
+
+            foreach (var airdrop in Airdrops)
+            {
+                var targetpos = airdrop.transform.position;
+                var dist = Vector3.Distance(mypos, targetpos);
+
+                if (menu.EnableEsp && menu.GlowInteractables && menu.Airdrop)
+                {
+                    if (dist <= menu.Distance || menu.InfDistance)
+                    {
+                        var highlighter = airdrop.gameObject.GetComponent<Highlighter>();
+
+                        if (highlighter == null)
+                            highlighter = airdrop.gameObject.AddComponent<Highlighter>();
+                        
+                        highlighter.ConstantParams(menu.InteractableGlow);
+                        highlighter.OccluderOn();
+                        highlighter.SeeThroughOn();
+                        highlighter.ConstantOn();
+                    }
+                    else
+                    {
+                        var highlighter = airdrop.gameObject.GetComponent<Highlighter>();
+                        
+                        if(highlighter != null)
+                            highlighter.ConstantOffImmediate();
+                        
+                    }
+                }
+                else
+                {
+                    var highlighter = airdrop.gameObject.GetComponent<Highlighter>();
+                    
+                    if(highlighter != null)
+                        highlighter.ConstantOffImmediate();
+                }
+            }
+        }
+        
         
         internal static void UpdateColors()
         {

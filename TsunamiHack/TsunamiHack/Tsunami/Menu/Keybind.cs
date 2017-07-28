@@ -27,6 +27,8 @@ namespace TsunamiHack.Tsunami.Menu
         private KeyCode _AimKey;
         private KeyCode _ChangeTargetKey;
         
+        //TODO: Change text when changing keybinds
+        
         public void Start()
         {
             var size = new Vector2(200,300);

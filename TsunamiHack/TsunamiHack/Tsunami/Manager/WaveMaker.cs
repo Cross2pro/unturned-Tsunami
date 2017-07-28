@@ -17,6 +17,8 @@ namespace TsunamiHack.Tsunami.Manager
     {
         //TODO: Add way to check the integrity of local files if they are deleted during run
         //TODO: Change popup controller to be able to be instantiated outside of game runtime
+        //TODO: change window sizes to more accurately change between devices
+        //TODO: add shutoff for all hacks at once
         
         public static PremiumList Prem;
         public static BanList Ban;
