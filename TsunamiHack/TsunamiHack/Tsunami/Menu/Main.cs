@@ -76,8 +76,7 @@ namespace TsunamiHack.Tsunami.Menu
 
             playerfocus = 0;
             friendfocus = 0;
-
-            Fov = 90;
+            
         }
 
         public void Update()
@@ -104,8 +103,6 @@ namespace TsunamiHack.Tsunami.Menu
                 WaveMaker.Friends.SaveFriends();
             }
 
-            if(Camera.main.fieldOfView != Fov)
-                Camera.main.fieldOfView = Fov;
             Player.player.look.isOrbiting = CameraFreeFlight;
         }
 

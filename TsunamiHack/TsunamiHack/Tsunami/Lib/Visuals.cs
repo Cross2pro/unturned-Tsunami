@@ -113,11 +113,82 @@ namespace TsunamiHack.Tsunami.Lib
         {
             var myPos = Player.player.transform.position;
             
-            if (menu.PlayerName || menu.PlayerWeapon || menu.PlayerDistance)
+            if (menu.PlayerName || menu.PlayerWeapon || menu.PlayerDistance || menu.PlayerBox)
             {
-                
-            }
+                foreach (var player in Players)
+                {
+                                        
+                    if (!player.player.life.isDead && player.player != Player.player)
+                    {
+                        var targetpos = player.player.transform.position;
+                        var dist = Vector3.Distance(myPos, targetpos);
 
+                        if (dist <= menu.Distance || menu.InfDistance)
+                        {
+                            targetpos += new Vector3(0f,2.5f,0f);
+                            var scrnpt = Camera.main.WorldToScreenPoint(targetpos);
+
+                            if (scrnpt.z >= 0)
+                            {
+                                scrnpt.y = Screen.height - scrnpt.y;
+                                var text = "";
+
+                                if (menu.PlayerName)
+                                {
+                                    text += $"{player.playerID.nickName}";
+                                }
+
+                                if (menu.PlayerWeapon)
+                                {
+                                    if (text.Length > 0)
+                                        text += $"\nWeapon: {player.player.equipment.asset.name}";
+                                    else
+                                        text += $"Weapon: {player.player.equipment.asset.name}";
+                                }
+
+                                if (menu.PlayerDistance)
+                                {
+                                    if (text.Length > 0)
+                                        text += $"\nDistance: {dist}";
+                                    else
+                                        text += $"Distance: {dist}";
+                                }
+                                
+                                
+                                float size;
+
+                                if (menu.ScaleText)
+                                    size = dist <= menu.Dropoff ? menu.CloseSize : menu.FarSize;
+                                else
+                                    size = 10f;
+                            
+                                GUI.Label(new Rect(scrnpt + new Vector3(0,4f,0), new Vector2(170,70)), $"<color={menu.PlayerBox}><size={size}>{text}</size></color>" );
+                            }
+
+                            
+                            if (menu.PlayerBox)
+                            {
+                                var pos = player.player.transform.position;
+
+                                pos = Camera.main.WorldToScreenPoint(pos);
+
+                                if (pos.z >= 0)
+                                {
+                                    pos.y = Screen.height - pos.y;
+
+                                    var color = WaveMaker.Friends.Contains(player.playerID.steamID.m_SteamID)
+                                        ? BoxPlayerFriendly
+                                        : BoxPlayerEnemy;
+                                    
+                                    DrawBox(player.player.transform, pos, color);
+                                }
+
+                            }
+                        }
+                    }
+                }
+            }
+                
             if (menu.ZombieName || menu.ZombieDistance || menu.ZombieSpecialty || menu.ZombieBox)
             {
                 foreach (var zombie in Zombies)
@@ -588,10 +659,11 @@ namespace TsunamiHack.Tsunami.Lib
 
         internal static void UpdateBedGlow()
         {
-            var myPos = Player.player.transform.position;
 
             foreach (var bed in Beds)
             {
+                var myPos = Player.player.transform.position;
+                
                 var targetPos = bed.transform.position;
                 var dist = Vector3.Distance(myPos, targetPos);
 
