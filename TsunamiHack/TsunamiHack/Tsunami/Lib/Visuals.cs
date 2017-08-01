@@ -51,6 +51,8 @@ namespace TsunamiHack.Tsunami.Lib
         internal static Color BoxPlayerFriendly;
         internal static Color BoxPlayerEnemy;
         internal static Color BoxZombie;
+
+        internal static Dictionary<int, string> StorageIds;
         
         internal static Material boxMaterial;
         
@@ -64,7 +66,7 @@ namespace TsunamiHack.Tsunami.Lib
             boxMaterial.SetInt("_Cull", 0);
             boxMaterial.SetInt("_ZWrite", 0);
 
-            
+            GenerateDicts();
             
             menu = WaveMaker.MenuVisuals;
             Last = DateTime.Now;
@@ -168,11 +170,32 @@ namespace TsunamiHack.Tsunami.Lib
         
         internal static void CheckLabels()
         {
-            
-            
+             
             if (menu.PlayerName || menu.PlayerWeapon || menu.PlayerDistance)
             {
-                foreach (var player in Players)
+                UpdatePlayerLabels();
+            }
+                
+            if (menu.ZombieName || menu.ZombieDistance || menu.ZombieSpecialty)
+            {
+                UpdateZombieLabels();
+            }
+
+            if (menu.AnimalName || menu.AnimalDistance)
+            {
+                UpdateAnimalLabels();
+            }
+
+            if (menu.StorageType || menu.StorageDistance)
+            {
+                UpdateStorageLabels();
+            }
+
+        }
+
+        internal static void UpdatePlayerLabels()
+        {
+            foreach (var player in Players)
                 {
                                         
                     if (!player.player.life.isDead && player.player != Player.player)
@@ -183,7 +206,7 @@ namespace TsunamiHack.Tsunami.Lib
 
                         if (dist <= menu.Distance || menu.InfDistance)
                         {
-                            targetpos += new Vector3(0f,2.5f,0f);
+                            targetpos += new Vector3(0f,3f,0f);
                             var scrnpt = Camera.main.WorldToScreenPoint(targetpos);
 
                             if (scrnpt.z >= 0)
@@ -230,11 +253,11 @@ namespace TsunamiHack.Tsunami.Lib
                         }
                     }
                 }
-            }
-                
-            if (menu.ZombieName || menu.ZombieDistance || menu.ZombieSpecialty)
-            {
-                foreach (var zombie in Zombies)
+        }
+
+        internal static void UpdateZombieLabels()
+        {
+            foreach (var zombie in Zombies)
                 {
                     if (zombie.isDead == false)
                     {
@@ -326,29 +349,115 @@ namespace TsunamiHack.Tsunami.Lib
                                     text += str;
                                 }
 
-                                float Size;
+                                float size;
                                 
                                 if (menu.ScaleText)
                                 {
-                                    Size = dist <= menu.Dropoff ? menu.CloseSize : menu.FarSize;
+                                    size = dist <= menu.Dropoff ? menu.CloseSize : menu.FarSize;
                                 }
                                 else
-                                {
-                                    Size = 10;
+                                {                                    
+                                    size = 10;
                                 }
                                 
                                  
                                 
-                                GUI.Label(new Rect(scrnPt + new Vector3(0,4f,0), new Vector2(170,50)), $"<color={menu.BoxZombie}><size={Size}>{text}</size></color>" );        
+                                GUI.Label(new Rect(scrnPt + new Vector3(0,4f,0), new Vector2(170,50)), $"<color={menu.BoxZombie}><size={size}>{text}</size></color>" );        
                             }
                         }
                     }
                       
                 }
-            }
-
-            
         }
+
+        internal static void UpdateAnimalLabels()
+        {
+            foreach (var animal in Animals)
+            {
+                if (!animal.isDead)
+                {
+                    var mypos = Player.player.transform.position;
+                    var targetpos = animal.transform.position;
+                    var dist = Vector3.Distance(mypos, targetpos);
+
+                    if (dist <= menu.Distance || menu.InfDistance)
+                    {
+                        targetpos += new Vector3(0f,3f,0f);
+                        var scrnpt = Camera.main.WorldToScreenPoint(targetpos);
+
+                        if (scrnpt.z >= 0f)
+                        {
+                            scrnpt.y = Screen.height - scrnpt.y;
+
+                            var text = "";
+
+                            if (menu.AnimalName)
+                            {
+                                text += $"{animal.asset.animalName}";
+                            }
+
+                            if (menu.AnimalDistance)
+                            {
+                                if (text.Length > 0)
+                                    text += $"\nDistance: {Math.Round(dist, 0)}";
+                                else
+                                    text += $"Distance: {Math.Round(dist, 0)}"; 
+                            }
+
+                            var size = menu.ScaleText ? dist <= menu.Dropoff ? menu.CloseSize : menu.FarSize : 10f;
+                            
+                            GUI.Label(new Rect(scrnpt + new Vector3(0,4f,0), new Vector2(170,50)), $"<color={menu.InteractableGlow}><size={size}>{text}</size></color>" );
+                        }
+                    }
+                }
+            }
+        }
+
+        internal static void UpdateStorageLabels()
+        {
+            foreach (var storage in Storages)
+            {
+                var mypos = Player.player.transform.position;
+                var targetpos = storage.transform.position;
+                var dist = Vector3.Distance(mypos, targetpos);
+
+                if (dist <= menu.Distance || menu.InfDistance)
+                {
+                    targetpos += new Vector3(0f,1.5f,0f);
+                    var scrnpt = Camera.main.WorldToScreenPoint(targetpos);
+
+                    if (scrnpt.z >= 0)
+                    {
+                        scrnpt.y = Screen.height - scrnpt.y;
+                        var text = "";
+
+                        if (menu.StorageType)
+                        {
+                            text += $"Storage: {StorageIds[int.Parse(storage.name)]}";
+                        }
+
+                        if (menu.StorageDistance)
+                        {
+                            text += text.Length > 0
+                                ? $"\nDistance: {Math.Round(dist, 0)}"
+                                : $"Distance: {Math.Round(dist, 0)}";
+                        }
+
+                        
+                        var size = menu.ScaleText ? dist <= menu.Dropoff ? menu.CloseSize : menu.FarSize : 10f;
+                            
+                        GUI.Label(new Rect(scrnpt + new Vector3(0,4f,0), new Vector2(170,50)), $"<color={menu.InteractableGlow}><size={size}>{text}</size></color>" );
+                        
+                    }
+
+                }
+                
+            }
+        }
+        
+        
+        
+        
         
         internal static void CheckGlows()
         {
@@ -1083,6 +1192,41 @@ namespace TsunamiHack.Tsunami.Lib
 
         internal static void DrawTracers()
         {
+            
+        }
+
+        internal static void GenerateDicts()
+        {
+            StorageIds = new Dictionary<int, string>();
+            
+            StorageIds.Add(367, "Birch Crate");
+            StorageIds.Add(366, "Maple Crate");
+            StorageIds.Add(368, "Pine Crate");
+            
+            StorageIds.Add(328, "Locker");
+            
+            StorageIds.Add(1246, "Birch Counter");
+            StorageIds.Add(1245, "Maple Counter");
+            StorageIds.Add(1247, "Pine Counter");
+            StorageIds.Add(1248, "Metal Counter");
+            
+            StorageIds.Add(1279, "Birch Wardrobe");
+            StorageIds.Add(1278, "Maple Wardrobe");
+            StorageIds.Add(1280, "Pine Wardrobe");
+            StorageIds.Add(1281, "Metal Wardrobe");
+            
+            StorageIds.Add(1206, "Birch Trophy Case");
+            StorageIds.Add(1205, "Maple Trophy Case");
+            StorageIds.Add(1207, "Pine Trophy Case");
+            StorageIds.Add(1221, "Metal Trophy Case");
+            
+            StorageIds.Add(1203, "Birch Rifle Rack");
+            StorageIds.Add(1202, "Maple Rifle Rack");
+            StorageIds.Add(1204, "Pine Rifle Rack");
+            StorageIds.Add(1220, "Metal Rifle Rack");
+            
+            StorageIds.Add(1283, "Cooler");
+            StorageIds.Add(1249, "Fridge");
             
         }
     }
