@@ -212,7 +212,6 @@ namespace TsunamiHack.Tsunami.Menu
                     
                     if (friendfocus == client.playerID.steamID.m_SteamID)
                     {
-                        Logging.LogMsg("DEBUG", "listing stats");
                         GUILayout.Label("--------------------------------------");
                         GUILayout.Label($"Steam Name: {client.playerID.playerName}");
                         GUILayout.Label($"IGN: {client.playerID.nickName}");

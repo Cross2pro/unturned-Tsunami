@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Data.SqlTypes;
+using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 using SDG.Unturned;
 using TsunamiHack.Tsunami.Manager;
@@ -59,6 +60,7 @@ namespace TsunamiHack.Tsunami.Menu
         internal bool ForageDistance;
 
         internal bool Bed;//
+        internal bool BedType;
         internal bool BedDistance;
 
         internal bool Doors;
@@ -70,9 +72,11 @@ namespace TsunamiHack.Tsunami.Menu
         internal bool TrapDistance;
 
         internal bool Flag;
+        internal bool FlagType;
         internal bool FlagDistance;//
 
         internal bool Sentries;
+        internal bool SentryType;
         internal bool SentryDistance;//
         internal bool SentryWeapon;
         internal bool SentryState;
@@ -108,6 +112,7 @@ namespace TsunamiHack.Tsunami.Menu
         internal bool NoWater;
         internal NVType Nv;
         internal int NvInt;
+        internal float Altitude;
         
         //settings
         internal bool InfDistance;
@@ -143,6 +148,7 @@ namespace TsunamiHack.Tsunami.Menu
 
         internal Vector2 ScrollPos;
         internal Vector2 ScrollPos2;
+        internal Vector2 ScrollPos3;
         
         public void Start()
         {
@@ -263,8 +269,8 @@ namespace TsunamiHack.Tsunami.Menu
             GUILayout.Space(2f);
             GUILayout.Label("Vehicles\n--------------------------------------");
             GUILayout.Space(2f);
-            VehicleName = GUILayout.Toggle(NpcName, " Show Vehicle Name");
-            VehicleDistance = GUILayout.Toggle(NpcWeapon, " Show Vehicle Distance");
+            VehicleName = GUILayout.Toggle(VehicleName, " Show Vehicle Name");
+            VehicleDistance = GUILayout.Toggle(VehicleDistance, " Show Vehicle Distance");
             
             GUILayout.Space(2f);
             GUILayout.Label("Animals\n--------------------------------------");
@@ -277,8 +283,8 @@ namespace TsunamiHack.Tsunami.Menu
             GUILayout.Label("Forages\n--------------------------------------");
             GUILayout.Space(2f);
             Forages = GUILayout.Toggle(Forages, " Show Forages");
-            ForageType = GUILayout.Toggle(ForageType, " Show Forage Type");
-            ForageDistance = GUILayout.Toggle(ForageDistance, " Show Forage Distance");
+//            ForageType = GUILayout.Toggle(ForageType, " Show Forage Type");                //FIX
+//            ForageDistance = GUILayout.Toggle(ForageDistance, " Show Forage Distance");    //FIX
 
             GUILayout.Space(2f);
             GUILayout.Label("Airdrops\n--------------------------------------");
@@ -291,7 +297,7 @@ namespace TsunamiHack.Tsunami.Menu
             GUILayout.Space(2f);
             Npc = GUILayout.Toggle(Npc, " Show NPCs");
             NpcName = GUILayout.Toggle(NpcName, " Show NPC Name");
-            NpcWeapon = GUILayout.Toggle(NpcWeapon, " Show NPC Weapon");
+//            NpcWeapon = GUILayout.Toggle(NpcWeapon, " Show NPC Weapon");     FIX
             NpcDistance = GUILayout.Toggle(NpcDistance, "Show NPC Distance");
             
             GUILayout.EndScrollView();
@@ -303,6 +309,7 @@ namespace TsunamiHack.Tsunami.Menu
             GUILayout.Label("Beds\n--------------------------------------");
             GUILayout.Space(2f);
             Bed = GUILayout.Toggle(Bed, " Show Beds");
+            BedType = GUILayout.Toggle(BedType, " Show Bed Name");
             BedDistance = GUILayout.Toggle(BedDistance, " Show Bed Distance");
             
             GUILayout.Space(2f);
@@ -323,13 +330,15 @@ namespace TsunamiHack.Tsunami.Menu
             GUILayout.Label("Claim Flags\n--------------------------------------");
             GUILayout.Space(2f);
             Flag = GUILayout.Toggle(Flag, " Show Flags");
+            FlagType = GUILayout.Toggle(FlagType, " Show Flag Type");
             FlagDistance = GUILayout.Toggle(FlagDistance, "Show Flag Distance");
             
             GUILayout.Space(2f);
             GUILayout.Label("Sentries\n--------------------------------------");
             GUILayout.Space(2f);
             Sentries = GUILayout.Toggle(Sentries, " Show Sentries");
-            SentryWeapon = GUILayout.Toggle(SentryWeapon, " Show Sentry Weapon");
+            SentryType = GUILayout.Toggle(SentryType, " Show Sentry Type");
+//            SentryWeapon = GUILayout.Toggle(SentryWeapon, " Show Sentry Weapon"); //FIX
             SentryState = GUILayout.Toggle(SentryState, " Show Sentry State");
             SentryDistance = GUILayout.Toggle(SentryDistance, " Show Sentry Distance");
             
@@ -371,38 +380,102 @@ namespace TsunamiHack.Tsunami.Menu
             GUILayout.Space(2f);
             GUILayout.Label("Other Visuals\n--------------------------------------");
             GUILayout.Space(2f);
-            Chams = GUILayout.Toggle(Chams, " Enable Chams");
-            Tracers = GUILayout.Toggle(Tracers, " Enable Tracers");
+            Chams = GUILayout.Toggle(Chams, " Chams (Coming soon)");
+            Tracers = GUILayout.Toggle(Tracers, " Tracers (Coming soon)");
         }
 
         public void EnvFunct(int id)
         {
+            
+            ScrollPos3 = GUILayout.BeginScrollView(ScrollPos3, false, true);
             GUILayout.Space(2f);
             GUILayout.Label("Weather\n--------------------------------------");
             GUILayout.Space(2f);
-            NoRain = GUILayout.Toggle(NoRain, " No Rain");
-            NoSnow = GUILayout.Toggle(NoSnow, " No Snow");
-            NoFog = GUILayout.Toggle(NoFog, " No Fog");
-            NoWater = GUILayout.Toggle(NoWater, " No Water");
+
+            if (GUILayout.Button("No Rain"))
+            {
+                LevelLighting.rainyness = ELightingRain.NONE;
+            }
+
+//            if (GUILayout.Button("No Snow"))
+//            {
+//                LevelLighting.snowLevel = 0f;
+//                RenderSettings.fogDensity = 0f;
+//                FieldInfo issnow = typeof(LevelLighting).GetField("isSnow", BindingFlags.Static | BindingFlags.NonPublic);
+//                if (issnow != null)
+//                {
+//                    issnow.SetValue(null, false);
+//                }
+//                FieldInfo snowy = typeof(LevelLighting).GetField("snownyess", BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
+//                if (snowy == null)
+//                {
+//                    return;
+//                }
+//                snowy.SetValue(null, 0f);
+//            }
+
+            if (GUILayout.Button("No Fog"))
+            {
+                RenderSettings.fog =(!RenderSettings.fog);
+            }
+
+            if (GUILayout.Button("No Water"))
+            {
+                if (Altitude == 0f)
+                    Altitude = LevelLighting.seaLevel;
+                
+                LevelLighting.seaLevel = LevelLighting.seaLevel == 0f ? Altitude : 0f;
+            }
+            
             GUILayout.Space(2f);
             GUILayout.Label("--------------------------------------");
             GUILayout.Space(2f);
 
-            PlayersOnMap = GUILayout.Toggle(PlayersOnMap, " Show Players On Map");
+//            PlayersOnMap = GUILayout.Toggle(PlayersOnMap, " Show Players On Map");
             
             GUILayout.Space(4f);
 
+            GUILayout.Label($"Night Vision: {Nv}");
             
-            if (GUILayout.Button($"Night Vision : {Nv}"))
+            GUILayout.Space(2f);
+
+
+            if (GUILayout.Button("Military"))
             {
-                NvInt++;
-                if (NvInt == 5)
-                    NvInt = 1;
-                Nv = (NVType) NvInt;
+                if(Nv != NVType.Military)
+                    Nv = (NVType) 1;
+                
+                LevelLighting.vision = ELightingVision.MILITARY;
+                LevelLighting.updateLighting();
+                LevelLighting.updateLocal();
+                PlayerLifeUI.updateGrayscale();
+            }
+
+            if (GUILayout.Button("Civilian"))
+            {
+                if(Nv != NVType.Civilian)
+                    Nv = (NVType) 2;
+                
+                LevelLighting.vision = ELightingVision.CIVILIAN;
+                LevelLighting.updateLighting();
+                LevelLighting.updateLocal();
+                PlayerLifeUI.updateGrayscale();
+            }
+            
+            if (GUILayout.Button("None"))
+            {
+                if(Nv != NVType.None)
+                    Nv = (NVType) 4;
+                
+                LevelLighting.vision = ELightingVision.NONE;
+                LevelLighting.updateLighting();
+                LevelLighting.updateLocal();
+                PlayerLifeUI.updateGrayscale();
             }
             
             GUILayout.Space(10f);
             GUILayout.Label("Having too many categories selected at once will cause you to lag. For the best experience only select \"Show\" for those items you are specifically looking for");
+            GUILayout.EndScrollView();
         }
 
         public void SetFunct(int id)
@@ -423,25 +496,25 @@ namespace TsunamiHack.Tsunami.Menu
             GUILayout.Space(2f);
             GUILayout.Label("ESP Colors\n--------------------------------------");
             GUILayout.Space(2f);
-            GUILayout.Label($"Enemy Player : R {EnemyPlayerGlow.r} G {EnemyPlayerGlow.g} B {EnemyPlayerGlow.b}");
+            GUILayout.Label($"Enemy Player :\n R {EnemyPlayerGlow.r} G {EnemyPlayerGlow.g} B {EnemyPlayerGlow.b}");
             GUILayout.Space(3f);
-            GUILayout.Label($"Friendly Player : R {FriendlyPlayerGlow.r} G {FriendlyPlayerGlow.g} B {FriendlyPlayerGlow.b}");
+            GUILayout.Label($"Friendly Player :\n R {FriendlyPlayerGlow.r} G {FriendlyPlayerGlow.g} B {FriendlyPlayerGlow.b}");
             GUILayout.Space(3f);
-            GUILayout.Label($"Zombie : R {ZombieGlow.r} G {ZombieGlow.g} B {ZombieGlow.b}");
+            GUILayout.Label($"Zombie :\n R {ZombieGlow.r} G {ZombieGlow.g} B {ZombieGlow.b}");
             GUILayout.Space(3f);
-            GUILayout.Label($"Item : R {ItemGlow.r} G {ItemGlow.g} B {ItemGlow.b}");
+            GUILayout.Label($"Item :\n R {ItemGlow.r} G {ItemGlow.g} B {ItemGlow.b}");
             GUILayout.Space(3f);
-            GUILayout.Label($"Interactable : R {InteractableGlow.r} G {InteractableGlow.g} B {InteractableGlow.b}");
+            GUILayout.Label($"Interactable :\n R {InteractableGlow.r} G {InteractableGlow.g} B {InteractableGlow.b}");
             GUILayout.Space(3f);
-            GUILayout.Label($"Vehicle : R {VehicleGlow.r} G {VehicleGlow.g} B {VehicleGlow.b}");
+            GUILayout.Label($"Vehicle :\n R {VehicleGlow.r} G {VehicleGlow.g} B {VehicleGlow.b}");
             
             GUILayout.Space(5f);
             
-            GUILayout.Label($"Friendly Player Box : R {BoxPlayerFriendly.r} G {BoxPlayerFriendly.g} B {BoxPlayerFriendly.b}");
+            GUILayout.Label($"Friendly Player Box :\n R {BoxPlayerFriendly.r} G {BoxPlayerFriendly.g} B {BoxPlayerFriendly.b}");
             GUILayout.Space(3f);
-            GUILayout.Label($"Enemy Player Box : R {BoxPlayerEnemy.r} G {BoxPlayerEnemy.g} B {BoxPlayerEnemy.b}");
+            GUILayout.Label($"Enemy Player Box :\n R {BoxPlayerEnemy.r} G {BoxPlayerEnemy.g} B {BoxPlayerEnemy.b}");
             GUILayout.Space(3f);
-            GUILayout.Label($"Zombie Box : R {BoxZombie.r} G {BoxZombie.g} B {BoxZombie.b}");
+            GUILayout.Label($"Zombie Box :\n R {BoxZombie.r} G {BoxZombie.g} B {BoxZombie.b}");
             
             GUILayout.Space(4f);
             GUILayout.Label("Edit Colors\n--------------------------------------");
