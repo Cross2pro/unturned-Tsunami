@@ -4,11 +4,7 @@
     <bookmark url="file://$PROJECT_DIR$/TsunamiHack/Tsunami/Lib/Visuals.cs" line="446" mnemonic="9" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="79d6ecbe-d677-4423-8cd9-3aaca4df3f23" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TsunamiHack/Tsunami/Lib/Visuals.cs" afterPath="$PROJECT_DIR$/TsunamiHack/Tsunami/Lib/Visuals.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TsunamiHack/Tsunami/Menu/Main.cs" afterPath="$PROJECT_DIR$/TsunamiHack/Tsunami/Menu/Main.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TsunamiHack/Tsunami/Util/DataCollector.cs" afterPath="$PROJECT_DIR$/TsunamiHack/Tsunami/Util/DataCollector.cs" />
-    </list>
+    <list default="true" id="79d6ecbe-d677-4423-8cd9-3aaca4df3f23" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -854,13 +850,13 @@
       <workItem from="1501629819385" duration="17885000" />
       <workItem from="1501699098160" duration="4082000" />
       <workItem from="1501793057609" duration="3341000" />
-      <workItem from="1501807987260" duration="12090000" />
+      <workItem from="1501807987260" duration="12203000" />
     </task>
     <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="361258000" />
+    <option name="totallyTimeSpent" value="361371000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -872,7 +868,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1696" height="1026" extended-state="7" />
+    <frame x="-8" y="-8" width="1696" height="1026" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33801955" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
