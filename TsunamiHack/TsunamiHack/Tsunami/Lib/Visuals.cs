@@ -896,7 +896,7 @@ namespace TsunamiHack.Tsunami.Lib
                             var size = Menu.ScaleText ? dist <= Menu.Dropoff ? Menu.CloseSize : Menu.FarSize : 10f;
 
                             if(text.Length > 0)
-                                GUI.Label(new Rect(scrnpt - new Vector3(0, 5, 0), new Vector2(170, 50)),
+                                GUI.Label(new Rect(scrnpt - new Vector3(0, 5.3f, 0), new Vector2(170, 50)),
                                 $"<color=#FF0000><size={size}>{text}</size></color>");
                         }
                     }

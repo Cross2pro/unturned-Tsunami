@@ -23,6 +23,7 @@ namespace TsunamiHack.Tsunami.Menu
         internal Rect TextRect;
         internal Rect FriendsRect;
         internal Rect PlayerRect;
+        internal Rect InfoRect;
         
         //Main
         internal bool NoRecoil;//
@@ -37,6 +38,8 @@ namespace TsunamiHack.Tsunami.Menu
         internal bool Zoom20;//
         internal bool QuickSalvage;//
         internal bool CameraFreeFlight;//
+
+        internal bool InfoWin;
 
         internal List<Friend> addlist;
         internal List<Friend> remlist;
@@ -64,6 +67,10 @@ namespace TsunamiHack.Tsunami.Menu
             TextRect = MenuTools.GetRectAtLoc(size, MenuTools.Horizontal.Center, MenuTools.Vertical.Center, false);
             TextRect.x = PlayerRect.x;
             TextRect.y = PlayerRect.y + 600;
+            
+            size = new Vector2(200,500);
+            InfoRect = MenuTools.GetRectAtLoc(size, MenuTools.Horizontal.Left, MenuTools.Vertical.Top, true, 5f);
+            
             
             addlist = new List<Friend>();
             remlist = new List<Friend>();
@@ -117,6 +124,9 @@ namespace TsunamiHack.Tsunami.Menu
                     MainRect = GUI.Window(2011, MainRect, MenuFunct, "Main Menu");
                     TextRect = GUI.Window(2012, TextRect, TextFunct, "Instructions");
                 }
+
+                if (InfoWin)
+                    InfoRect = GUI.Window(2013, InfoRect, InfoFunct, "Info");
 
                 var size = new Vector2(200,30);
                 var rect = MenuTools.GetRectAtLoc(size, MenuTools.Horizontal.Right, MenuTools.Vertical.Top, true, 5f);
@@ -187,6 +197,11 @@ namespace TsunamiHack.Tsunami.Menu
             }
             GUILayout.Space(2f);
             GUILayout.Label("INFO\n--------------------------------------");
+            GUILayout.Space(2f);
+            if (GUILayout.Button("Dev Info"))
+            {
+                InfoWin = !InfoWin;
+            }
             GUILayout.Space(2f);
             GUILayout.Label("We are looking for beta testers to try out the latest features and report bugs, contact Tidal on Discord to apply");
             
@@ -286,6 +301,29 @@ namespace TsunamiHack.Tsunami.Menu
         {
             GUILayout.Label("Click a name in the 'Friends' or 'Player' lists to view their info, and to add or remove them from your friends list");
             
+        }
+
+        public void InfoFunct(int id)
+        {
+            GUILayout.Label("Developed By Tidal");
+            GUILayout.Space(2f);
+            GUILayout.Label("A completely custom framework and cheat");
+            GUILayout.Label("Special thanks to c0nd for testing");
+            GUILayout.Space(2f);
+            GUILayout.Label("Credit where credit is due:");
+            GUILayout.Space(1f);
+            GUILayout.Label("-Some util classes provided by Pf");
+            GUILayout.Label("-Some emotional support provided by Pf");
+            GUILayout.Label("-Inspired by MSZ Reborn & Pirate Perfection");
+            GUILayout.Label("-Thanks to stack overflow and the unity scripting api, obv");
+            GUILayout.Label("-And thank god for Rider IDE");
+            GUILayout.Space(5f);
+            GUILayout.Label("Interested in working with me? Contact on discord");
+            GUILayout.Space(5f);
+            if (GUILayout.Button("Close"))
+            {
+                InfoWin = false;
+            }
         }
 
         #region Interface Members
