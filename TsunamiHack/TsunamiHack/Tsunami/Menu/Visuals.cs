@@ -12,18 +12,15 @@ using UnityEngine;
 
 namespace TsunamiHack.Tsunami.Menu
 {
-    internal class Visuals : MonoBehaviour, IMenuParent
+    internal class Visuals : MonoBehaviour
     {
-        public bool MenuOpened { get; private set; }
-        public enum NVType
+        internal bool MenuOpened { get; private set; }
+        internal enum NVType
         {
             Military = 1, Civilian, HeadLamp, None
         }
-
-        public enum ColorChangeType
-        {
-            EnemyPlayer = 1, FriendlyPlayer, Zombie, Item, Interactable, Vehicle, FriendlyPlayerBox, EnemyPlayerBox, ZombieBox
-        }
+        
+        
         
         //TODO: Add item id selection
         

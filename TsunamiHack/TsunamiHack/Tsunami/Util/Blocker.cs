@@ -9,7 +9,7 @@ namespace TsunamiHack.Tsunami.Util
 {
     internal class Blocker : MonoBehaviour
     {
-        internal enum Type { Banned, Disabled, OutOfDate}
+        internal enum Type { Banned, Disabled, OutOfDate, GameOutOfDate}
         
         private HackController ctrl;
 
@@ -52,7 +52,10 @@ namespace TsunamiHack.Tsunami.Util
                             break;
                         case Type.OutOfDate:
                             windowRect = GUI.Window(WaveMaker.BannedId, windowRect, OutOfDateMenuFunct, "OUT OF DATE");
-                            break;        
+                            break;
+                        case Type.GameOutOfDate:
+                            windowRect = GUI.Window(WaveMaker.BannedId, windowRect, GameOutOfDateMenuFunct, "YOU ARE USING A REPOSTED VERSION");
+                            break;
                 }
             }
         }
@@ -121,5 +124,32 @@ namespace TsunamiHack.Tsunami.Util
             }
             
         }
+
+        private void GameOutOfDateMenuFunct(int id)
+        {
+            PlayerPauseUI.active = true;
+            PlayerUI.window.showCursor = true;
+            
+            GUILayout.Space(50f);
+            GUILayout.Label($"You got this DLL from someone posing as its creator!");
+            GUILayout.Space(8f);
+            GUILayout.Label($"You are running hack for game version {WaveMaker.GameVersion} and there is a new version for {Provider.APP_VERSION}");
+            GUILayout.Label($"Download the latest version directly from Tidal");
+            GUILayout.Space(50f);
+            GUILayout.Label("To remove the hack and play normally, click \"EXIT GAME\" and \"Verify Game Files\" through steam");
+            GUILayout.Label("You can get the latest game version by visiting the link below");
+            if(GUILayout.Button("Join Discord and get latest version"))
+            {
+                System.Diagnostics.Process.Start("https://discord.gg/cW8Mjdf");
+            }
+            
+            GUILayout.Space(20f);
+            if(GUILayout.Button("EXIT GAME"))
+            {
+                Application.Quit();
+            }
+        }
+        
+        
     }
 }

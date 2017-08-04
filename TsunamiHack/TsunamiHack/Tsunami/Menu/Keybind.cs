@@ -26,9 +26,7 @@ namespace TsunamiHack.Tsunami.Menu
         private KeyCode _KeybindKey;
         private KeyCode _AimKey;
         private KeyCode _ChangeTargetKey;
-        
-        //TODO: Change text when changing keybinds
-        
+                
         public void Start()
         {
             var size = new Vector2(200,300);
@@ -159,28 +157,32 @@ namespace TsunamiHack.Tsunami.Menu
         public void MenuFunct(int id)
         {
 
-            if (GUILayout.Button($"Main Menu : {WaveMaker.Keybinds.GetBind("main")}"))
+            var maintext = Changing && focus == "main" ? "??" : WaveMaker.Keybinds.GetBind("main").ToString();
+            if (GUILayout.Button($"Main Menu : {maintext}"))
             {
                 Changing = true;
                 focus = "main";
             }
             GUILayout.Space(2f);
-            
-            if (GUILayout.Button($"Visuals Menu : {WaveMaker.Keybinds.GetBind("visuals")}"))
+
+            var visualstext = Changing && focus == "visuals" ? "??" : WaveMaker.Keybinds.GetBind("visuals").ToString();
+            if (GUILayout.Button($"Visuals Menu : {visualstext}"))
             {
                 Changing = true;
                 focus = "visuals";
             }
             GUILayout.Space(2f);
-            
-            if (GUILayout.Button($"Aim Menu : {WaveMaker.Keybinds.GetBind("aim")}"))
+
+            var aimtext = Changing && focus == "aim" ? "??" : WaveMaker.Keybinds.GetBind("aim").ToString();
+            if (GUILayout.Button($"Aim Menu : {aimtext}"))
             {
                 Changing = true;
                 focus = "aim";
             }
             GUILayout.Space(2f);
-            
-            if (GUILayout.Button($"Keybinds Menu : {WaveMaker.Keybinds.GetBind("keybinds")}"))
+
+            var keybindtext = Changing && focus == "keybinds" ? "??" : WaveMaker.Keybinds.GetBind("keybinds").ToString();
+            if (GUILayout.Button($"Keybinds Menu : {keybindtext}"))
             {
                 Changing = true;
                 focus = "keybinds";

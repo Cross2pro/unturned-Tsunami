@@ -10,16 +10,15 @@ using TsunamiHack.Tsunami.Types.Lists;
 using TsunamiHack.Tsunami.Types.Configs;
 using TsunamiHack.Tsunami.Util;
 using UnityEngine;
+using UnityEngine.Networking;
 
 namespace TsunamiHack.Tsunami.Manager
 {
     internal class WaveMaker
     {
         //TODO: Add way to check the integrity of local files if they are deleted during run
-        //TODO: Change popup controller to be able to be instantiated outside of game runtime
         //TODO: change window sizes to more accurately change between devices
         //TODO: add shutoff for all hacks at once
-        //TODO: add game version string to check if you are using a current version of the hack compared to game ++ theft deterrent
         
         
         public static PremiumList Prem;
@@ -56,13 +55,14 @@ namespace TsunamiHack.Tsunami.Manager
         public static ulong LocalSteamId;
 
         public static readonly string Version = "1.0";
+        public static readonly string GameVersion = "3.20.3.0";
         
         private GameObject _obj;
         private GameObject _blockerObj;
             
         public void Start()
         {
-            
+                        
             LocalSteamId = Provider.client.m_SteamID;
             
             if (FirstTime)
@@ -81,6 +81,13 @@ namespace TsunamiHack.Tsunami.Manager
             else if (Version != Controller.Version)
             {
                 Util.Blocker.DisabledType = Blocker.Type.OutOfDate;
+                Blocker.BlockerEnabled = true;
+                WaveMaker.HackDisabled = true;
+                Controller.Disabled = true;
+            }
+            else if (GameVersion != Provider.APP_VERSION)
+            {
+                Util.Blocker.DisabledType = Blocker.Type.GameOutOfDate;
                 Blocker.BlockerEnabled = true;
                 WaveMaker.HackDisabled = true;
                 Controller.Disabled = true;

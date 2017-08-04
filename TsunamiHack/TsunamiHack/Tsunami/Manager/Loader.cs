@@ -108,8 +108,8 @@ namespace TsunamiHack.Tsunami.Manager
 
         private static void LoadDownloads()
         {
-            FileDownloader.DownloadAll(out WaveMaker.Prem, out WaveMaker.Ban, out WaveMaker.Beta);
-            FileDownloader.DownloadInfo(out WaveMaker.Controller);
+            WebAccess.DownloadAll(out WaveMaker.Prem, out WaveMaker.Ban, out WaveMaker.Beta);
+            WebAccess.DownloadInfo(out WaveMaker.Controller);
 
             WaveMaker.HackDisabled = WaveMaker.Controller.Disabled;
         }

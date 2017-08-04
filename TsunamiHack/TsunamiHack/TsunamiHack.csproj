@@ -171,6 +171,7 @@
     <Compile Include="Tsunami\Menu\Keybind.cs" />
     <Compile Include="Tsunami\Menu\Main.cs" />
     <Compile Include="Tsunami\Menu\Visuals.cs" />
+    <Compile Include="Tsunami\Types\ColorChangeType.cs" />
     <Compile Include="Tsunami\Types\Configs\Settings.cs" />
     <Compile Include="Tsunami\Types\Friend.cs" />
     <Compile Include="Tsunami\Types\Lists\BanList.cs" />
@@ -186,7 +187,7 @@
     <Compile Include="Tsunami\Types\Setting.cs" />
     <Compile Include="Tsunami\Types\TsuColor.cs" />
     <Compile Include="Tsunami\Util\Blocker.cs" />
-    <Compile Include="Tsunami\Util\FileDownloader.cs" />
+    <Compile Include="Tsunami\Util\WebAccess.cs" />
     <Compile Include="Tsunami\Util\FileIo.cs" />
     <Compile Include="Tsunami\Util\Logging.cs" />
     <Compile Include="Tsunami\Util\MenuTools.cs" />

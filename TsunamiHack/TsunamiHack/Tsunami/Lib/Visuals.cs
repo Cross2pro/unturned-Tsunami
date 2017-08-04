@@ -19,10 +19,8 @@ namespace TsunamiHack.Tsunami.Lib
     internal class Visuals 
     {
         //TODO: fix positioning of labels
-        //TODO: Finish all other labels
         //TODO: maybe add other boxes
         //TODO: create a maximum zombies to show value
-        //TODO: change mypos to camera pos
         //TODO: change menu sizes to a proportion and add scrollbars into all menus
         
         internal static Menu.Visuals menu;
@@ -101,16 +99,9 @@ namespace TsunamiHack.Tsunami.Lib
             
             if ((DateTime.Now - Last).TotalMilliseconds >= menu.UpdateRate)
             {
-  
-                CheckGlows();     
-//                UpdateWeather();
-                
+                CheckGlows();                     
                 Last = DateTime.Now;
-
-            }
-            
-            
-            
+            }      
         }
 
         internal static void OnGUI()
@@ -129,7 +120,7 @@ namespace TsunamiHack.Tsunami.Lib
                 {
                     if (!player.player.life.isDead && player.player != Player.player)
                     {
-                        var mypos = Player.player.transform.position;
+                        var mypos = Camera.main.transform.position;
                         var targetpos = player.player.transform.position;
                         var dist = Vector3.Distance(mypos, targetpos);
 
@@ -156,7 +147,7 @@ namespace TsunamiHack.Tsunami.Lib
                 {
                     if (!zombie.isDead)
                     {
-                        var mypos = Player.player.transform.position;
+                        var mypos = Camera.main.transform.position;
                         var targetpos = zombie.transform.position;
                         var dist = Vector3.Distance(mypos, targetpos);
 
@@ -176,7 +167,7 @@ namespace TsunamiHack.Tsunami.Lib
                 }
             }
         }
-        
+
         internal static void CheckLabels()
         {
              
@@ -244,65 +235,65 @@ namespace TsunamiHack.Tsunami.Lib
         }
 
         internal static void UpdatePlayerLabels()
-        {
+        {   
             foreach (var player in Players)
+            {
+                                   
+                if (!player.player.life.isDead && player.player != Player.player)
                 {
-                                        
-                    if (!player.player.life.isDead && player.player != Player.player)
+                    var myPos = Camera.main.transform.position;
+                    var targetpos = player.player.transform.position;
+                    var dist = Vector3.Distance(myPos, targetpos);
+
+                    if (dist <= menu.Distance || menu.InfDistance)
                     {
-                        var myPos = Player.player.transform.position;
-                        var targetpos = player.player.transform.position;
-                        var dist = Vector3.Distance(myPos, targetpos);
+                        targetpos += new Vector3(0f,3f,0f);
+                        var scrnpt = Camera.main.WorldToScreenPoint(targetpos);
 
-                        if (dist <= menu.Distance || menu.InfDistance)
+                        if (scrnpt.z >= 0)
                         {
-                            targetpos += new Vector3(0f,3f,0f);
-                            var scrnpt = Camera.main.WorldToScreenPoint(targetpos);
+                            scrnpt.y = Screen.height - scrnpt.y;
+                            var text = "";
 
-                            if (scrnpt.z >= 0)
+                            if (menu.PlayerName)
                             {
-                                scrnpt.y = Screen.height - scrnpt.y;
-                                var text = "";
-
-                                if (menu.PlayerName)
-                                {
-                                    text += $"{player.playerID.nickName}";
-                                }
-
-                                if (menu.PlayerWeapon)
-                                {
-                                    if (text.Length > 0)
-                                        text += $"\nWeapon: {player.player.equipment.asset.name}";
-                                    else
-                                        text += $"Weapon: {player.player.equipment.asset.name}";
-                                }
-
-                                if (menu.PlayerDistance)
-                                {
-                                    if (text.Length > 0)
-                                        text += $"\nDistance: {Math.Round(dist, 0)}";
-                                    else
-                                        text += $"Distance: {Math.Round(dist, 0)}";
-                                }
-                                
-                                
-                                float size;
-
-                                if (menu.ScaleText)
-                                    size = dist <= menu.Dropoff ? menu.CloseSize : menu.FarSize;
-                                else
-                                    size = 10f;
-
-                                var color = WaveMaker.Friends.Contains(player.playerID.steamID.m_SteamID)
-                                    ? menu.FriendlyPlayerGlow
-                                    : menu.EnemyPlayerGlow;
-                            
-                                GUI.Label(new Rect(scrnpt + new Vector3(0,6f,0), new Vector2(170,70)), $"<color={color}><size={size}>{text}</size></color>" );
+                                text += $"{player.playerID.nickName}";
                             }
-      
+
+                            if (menu.PlayerWeapon)
+                            {
+                                if (text.Length > 0)
+                                    text += $"\nWeapon: {player.player.equipment.asset.name}";
+                                else
+                                    text += $"Weapon: {player.player.equipment.asset.name}";
+                            }
+
+                            if (menu.PlayerDistance)
+                            {
+                                if (text.Length > 0)
+                                    text += $"\nDistance: {Math.Round(dist, 0)}";
+                                else
+                                    text += $"Distance: {Math.Round(dist, 0)}";
+                            }
+                            
+                            
+                            float size;
+
+                            if (menu.ScaleText)
+                                size = dist <= menu.Dropoff ? menu.CloseSize : menu.FarSize;
+                            else
+                                size = 10f;
+
+                            var color = WaveMaker.Friends.Contains(player.playerID.steamID.m_SteamID)
+                                ? menu.FriendlyPlayerGlow
+                                : menu.EnemyPlayerGlow;
+                        
+                            GUI.Label(new Rect(scrnpt + new Vector3(0,6f,0), new Vector2(170,70)), $"<color={color}><size={size}>{text}</size></color>" );
                         }
+      
                     }
                 }
+            }
         }
 
         internal static void UpdateZombieLabels()
@@ -311,7 +302,7 @@ namespace TsunamiHack.Tsunami.Lib
                 {
                     if (zombie.isDead == false)
                     {
-                        var myPos = Player.player.transform.position;
+                        var myPos = Camera.main.transform.position;
                         var targetPos = zombie.transform.position;
                         var dist = Vector3.Distance(myPos, targetPos);
     
@@ -426,7 +417,7 @@ namespace TsunamiHack.Tsunami.Lib
             {
                 if (!animal.isDead)
                 {
-                    var mypos = Player.player.transform.position;
+                    var mypos = Camera.main.transform.position;
                     var targetpos = animal.transform.position;
                     var dist = Vector3.Distance(mypos, targetpos);
 
@@ -467,7 +458,7 @@ namespace TsunamiHack.Tsunami.Lib
         {
             foreach (var storage in Storages)
             {
-                var mypos = Player.player.transform.position;
+                var mypos = Camera.main.transform.position;
                 var targetpos = storage.transform.position;
                 var dist = Vector3.Distance(mypos, targetpos);
 
@@ -509,7 +500,7 @@ namespace TsunamiHack.Tsunami.Lib
         {
             foreach (var vehicle in Vehicles)
             {
-                var mypos = Player.player.transform.position;
+                var mypos = Camera.main.transform.position;
                 var targetpos = vehicle.transform.position;
                 var dist = Vector3.Distance(mypos, targetpos);
 
@@ -556,7 +547,7 @@ namespace TsunamiHack.Tsunami.Lib
         {
             foreach (var item in Items)
             {
-                var mypos = Player.player.transform.position;
+                var mypos = Camera.main.transform.position;
                 var targetpos = item.transform.position;
                 var dist = Vector3.Distance(mypos, targetpos);
 
@@ -602,11 +593,12 @@ namespace TsunamiHack.Tsunami.Lib
             
         }
 
+        //TODO: finish size/color/display logic for npc
         internal static void UpdateNpcLabels()
         {
             foreach (var npc in Npcs)
             {
-                var mypos = Player.player.transform.position;
+                var mypos = Camera.main.transform.position;
                 var targetpos = npc.transform.position;
                 var dist = Vector3.Distance(mypos, targetpos);
 
@@ -650,7 +642,7 @@ namespace TsunamiHack.Tsunami.Lib
         {
             foreach (var forage in Forages)
             {
-                var mypos = Player.player.transform.position;
+                var mypos = Camera.main.transform.position;
                 var targetpos = forage.transform.position;
                 var dist = Vector3.Distance(mypos, targetpos);
 
@@ -679,7 +671,8 @@ namespace TsunamiHack.Tsunami.Lib
                         
                         var size = menu.ScaleText ? dist <= menu.Dropoff ? menu.CloseSize : menu.FarSize : 10f;
                         
-                        GUI.Label(new Rect(scrnpt + new Vector3(0,4f,0), new Vector2(170,50)), $"<color={ColorUtility.ToHtmlStringRGBA(menu.InteractableGlow)}><size={size}>{text}</size></color>" );
+                        if(text.Length > 0)
+                            GUI.Label(new Rect(scrnpt + new Vector3(0,4f,0), new Vector2(170,50)), $"<color={ColorUtility.ToHtmlStringRGBA(menu.InteractableGlow)}><size={size}>{text}</size></color>" );
                     }
                 }
 
@@ -691,7 +684,7 @@ namespace TsunamiHack.Tsunami.Lib
         {
             foreach (var bed in Beds)
             {
-                var mypos = Player.player.transform.position;
+                var mypos = Camera.main.transform.position;
                 var targetpos = bed.transform.position;
                 var dist = Vector3.Distance(mypos, targetpos);
 
@@ -720,7 +713,8 @@ namespace TsunamiHack.Tsunami.Lib
                         
                         var size = menu.ScaleText ? dist <= menu.Dropoff ? menu.CloseSize : menu.FarSize : 10f;
                         
-                        GUI.Label(new Rect(scrnpt + new Vector3(0,4f,0), new Vector2(170,50)), $"<color={ColorUtility.ToHtmlStringRGBA(menu.InteractableGlow)}><size={size}>{text}</size></color>" );
+                        if(text.Length > 0)
+                            GUI.Label(new Rect(scrnpt + new Vector3(0,4f,0), new Vector2(170,50)), $"<color={ColorUtility.ToHtmlStringRGBA(menu.InteractableGlow)}><size={size}>{text}</size></color>" );
                     }
                 }
 
@@ -731,7 +725,7 @@ namespace TsunamiHack.Tsunami.Lib
         {
             foreach (var door in Doors)
             {
-                var mypos = Player.player.transform.position;
+                var mypos = Camera.main.transform.position;
                 var targetpos = door.transform.position;
                 var dist = Vector3.Distance(mypos, targetpos);
 
@@ -760,7 +754,8 @@ namespace TsunamiHack.Tsunami.Lib
 
                         var size = menu.ScaleText ? dist <= menu.Dropoff ? menu.CloseSize : menu.FarSize : 10f;
 
-                        GUI.Label(new Rect(scrnpt + new Vector3(0, 4f, 0), new Vector2(170, 50)),
+                        if(text.Length > 0)
+                            GUI.Label(new Rect(scrnpt + new Vector3(0, 4f, 0), new Vector2(170, 50)),
                             $"<color={ColorUtility.ToHtmlStringRGBA(menu.InteractableGlow)}><size={size}>{text}</size></color>");
                     }
                 }
@@ -771,7 +766,7 @@ namespace TsunamiHack.Tsunami.Lib
         {
             foreach (var flag in Flags)
             {
-                var mypos = Player.player.transform.position;
+                var mypos = Camera.main.transform.position;
                 var targetpos = flag.transform.position;
                 var dist = Vector3.Distance(mypos, targetpos);
 
@@ -800,7 +795,8 @@ namespace TsunamiHack.Tsunami.Lib
 
                         var size = menu.ScaleText ? dist <= menu.Dropoff ? menu.CloseSize : menu.FarSize : 10f;
 
-                        GUI.Label(new Rect(scrnpt + new Vector3(0, 4f, 0), new Vector2(170, 50)),
+                        if(text.Length > 0)
+                            GUI.Label(new Rect(scrnpt + new Vector3(0, 4f, 0), new Vector2(170, 50)),
                             $"<color={ColorUtility.ToHtmlStringRGBA(menu.InteractableGlow)}><size={size}>{text}</size></color>");
                     }
                 }
@@ -811,7 +807,7 @@ namespace TsunamiHack.Tsunami.Lib
         {
             foreach (var sentry in Sentries)
             {
-                var mypos = Player.player.transform.position;
+                var mypos = Camera.main.transform.position;
                 var targetpos = sentry.transform.position;
                 var dist = Vector3.Distance(mypos, targetpos);
 
@@ -858,7 +854,8 @@ namespace TsunamiHack.Tsunami.Lib
 
                         var size = menu.ScaleText ? dist <= menu.Dropoff ? menu.CloseSize : menu.FarSize : 10f;
 
-                        GUI.Label(new Rect(scrnpt + new Vector3(0, 4f, 0), new Vector2(170, 70)),
+                        if(text.Length > 0)
+                            GUI.Label(new Rect(scrnpt + new Vector3(0, 4f, 0), new Vector2(170, 70)),
                             $"<color={ColorUtility.ToHtmlStringRGBA(menu.InteractableGlow)}><size={size}>{text}</size></color>");
                     }
                 }
@@ -871,7 +868,7 @@ namespace TsunamiHack.Tsunami.Lib
             {
                 if (player.isAdmin)
                 {
-                    var mypos = Player.player.transform.position;
+                    var mypos = Camera.main.transform.position;
                     var targetpos = player.player.transform.position;
                     var dist = Vector3.Distance(mypos, targetpos);
 
@@ -892,7 +889,8 @@ namespace TsunamiHack.Tsunami.Lib
 
                             var size = menu.ScaleText ? dist <= menu.Dropoff ? menu.CloseSize : menu.FarSize : 10f;
 
-                            GUI.Label(new Rect(scrnpt + new Vector3(0, 4f, 0), new Vector2(170, 50)),
+                            if(text.Length > 0)
+                                GUI.Label(new Rect(scrnpt + new Vector3(0, 4f, 0), new Vector2(170, 50)),
                                 $"<color=#FF0000><size={size}>{text}</size></color>");
                         }
                     }
@@ -919,8 +917,8 @@ namespace TsunamiHack.Tsunami.Lib
                 
                 foreach (var player in Players)
                 {
-                
-                    var myPos = Player.player.transform.position;
+
+                    var myPos = Camera.main.transform.position;
                     var targetPos = player.player.transform.position;
 
                     if (menu.EnableEsp && menu.GlowPlayers)
@@ -971,7 +969,7 @@ namespace TsunamiHack.Tsunami.Lib
             
             foreach (var zombie in Zombies)
             {
-                var myPos = Player.player.transform.position;
+                var myPos = Camera.main.transform.position;
                 var zomPos = zombie.transform.position;
 
                 if (menu.EnableEsp && menu.GlowZombies)
@@ -1015,9 +1013,7 @@ namespace TsunamiHack.Tsunami.Lib
 
             foreach (var vehicle in Vehicles)
             {
-                Logging.LogMsg("DEBUG", "My Pos");
-                var myPos = Player.player.transform.position;
-                Logging.LogMsg("DEBUG", "Target Pos");
+                var myPos = Camera.main.transform.position;
                 var zomPos = vehicle.transform.position;
 
                 if (menu.EnableEsp && menu.GlowVehicles)
@@ -1123,7 +1119,7 @@ namespace TsunamiHack.Tsunami.Lib
                 
                 if (menu.EnableEsp && menu.GlowInteractables && menu.Animals)
                 {
-                    var myPos = Player.player.transform.position;
+                    var myPos = Camera.main.transform.position;
                     var targetPos = animal.transform.position;
                     var dist = Vector3.Distance(myPos, targetPos);
 
@@ -1162,7 +1158,7 @@ namespace TsunamiHack.Tsunami.Lib
 
             foreach (var storage in Storages)
             {
-                var myPos = Player.player.transform.position;
+                var myPos = Camera.main.transform.position;
                 var targetPos = storage.transform.position;
                 var dist = Vector3.Distance(myPos, targetPos);
 
@@ -1204,7 +1200,7 @@ namespace TsunamiHack.Tsunami.Lib
 
             foreach (var forage in Forages)
             {
-                var myPos = Player.player.transform.position;
+                var myPos = Camera.main.transform.position;
                 var targetpos = forage.transform.position;
                 var dist = Vector3.Distance(myPos, targetpos);
 
@@ -1245,7 +1241,7 @@ namespace TsunamiHack.Tsunami.Lib
 
             foreach (var bed in Beds)
             {
-                var myPos = Player.player.transform.position;
+                var myPos = Camera.main.transform.position;
                 
                 var targetPos = bed.transform.position;
                 var dist = Vector3.Distance(myPos, targetPos);
@@ -1288,7 +1284,7 @@ namespace TsunamiHack.Tsunami.Lib
 
             foreach (var door in Doors)
             {
-                var mypos = Player.player.transform.position;
+                var mypos = Camera.main.transform.position;
                 var targetpos = door.transform.position;
                 var dist = Vector3.Distance(mypos, targetpos);
 
@@ -1331,7 +1327,7 @@ namespace TsunamiHack.Tsunami.Lib
 
             foreach (var trap in Traps)
             {
-                var mypos = Player.player.transform.position;
+                var mypos = Camera.main.transform.position;
                 var targetpos = trap.transform.position;
                 var dist = Vector3.Distance(mypos, targetpos);
 
@@ -1372,7 +1368,7 @@ namespace TsunamiHack.Tsunami.Lib
 
             foreach (var flag in Flags)
             {
-                var mypos = Player.player.transform.position;
+                var mypos = Camera.main.transform.position;
                 var targetpos = flag.transform.position;
                 var dist = Vector3.Distance(mypos, targetpos);
 
@@ -1413,7 +1409,7 @@ namespace TsunamiHack.Tsunami.Lib
 
             foreach (var sentry in Sentries)
             {
-                var mypos = Player.player.transform.position;
+                var mypos = Camera.main.transform.position;
                 var targetpos = sentry.transform.position;
                 var dist = Vector3.Distance(mypos, targetpos);
 
@@ -1458,7 +1454,7 @@ namespace TsunamiHack.Tsunami.Lib
             {
                 if (airdrop.name == "1374")
                 {
-                    var mypos = Player.player.transform.position;
+                    var mypos = Camera.main.transform.position;
                     var targetpos = airdrop.transform.position;
                     var dist = Vector3.Distance(mypos, targetpos);
 
@@ -1501,7 +1497,7 @@ namespace TsunamiHack.Tsunami.Lib
 
             foreach (var npc in Npcs)
             {
-                var mypos = Player.player.transform.position;
+                var mypos = Camera.main.transform.position;
                 var targetpos = npc.transform.position;
                 var dist = Vector3.Distance(mypos, targetpos);
 
