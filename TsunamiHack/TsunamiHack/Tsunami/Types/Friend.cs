@@ -1,5 +1,8 @@
-﻿namespace TsunamiHack.Tsunami.Types
+﻿using System;
+
+namespace TsunamiHack.Tsunami.Types
 {
+    [Serializable]
     public class Friend
     {
         public string Name;

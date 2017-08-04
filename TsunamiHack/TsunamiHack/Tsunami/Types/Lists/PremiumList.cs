@@ -2,7 +2,7 @@
 
 namespace TsunamiHack.Tsunami.Types.Lists
 {
-    public class PremiumList
+    internal class PremiumList
     {
         public List<string> UserList;
         

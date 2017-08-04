@@ -2,7 +2,7 @@
 
 namespace TsunamiHack.Tsunami.Types.Lists
 {
-    public class BanList
+    internal class BanList
     {
         public List<string> UserList;
 

@@ -1,8 +1,10 @@
-﻿using SDG.Unturned;
+﻿using System;
+using SDG.Unturned;
 using UnityEngine;
 
 namespace TsunamiHack.Tsunami.Types
 {
+    [Serializable]
     public class Setting
     {
         public string Name;

@@ -20,7 +20,7 @@ namespace TsunamiHack.Tsunami.Manager
                 LoadDownloads();
 
                 WaveMaker.FirstTime = FileIo.CheckIfFirstTime();
-
+                
                 LoadConfigs();
                 LoadKeybinds();
             }

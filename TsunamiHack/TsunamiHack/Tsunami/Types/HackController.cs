@@ -3,7 +3,7 @@ using TsunamiHack.Tsunami.Manager;
 
 namespace TsunamiHack.Tsunami.Types
 {
-    public class HackController
+    internal class HackController
     {
         public bool Disabled;
         public string Reason;

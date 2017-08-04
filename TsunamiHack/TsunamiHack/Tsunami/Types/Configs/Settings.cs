@@ -1,12 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace TsunamiHack.Tsunami.Types.Configs
 {
+    [Serializable]
     public class Settings
-    {
-        //TODO: add way to check the type of a setting, or restrict thereof
-        
+    {        
         public List<Setting> SettingList;
 
         public Dictionary<string,TsuColor> ColorList;

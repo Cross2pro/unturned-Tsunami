@@ -5,7 +5,7 @@ using TsunamiHack.Tsunami.Util;
 
 namespace TsunamiHack.Tsunami.Types.Lists
 {
-    public class FriendsList
+    internal class FriendsList
     {
         public List<Friend> Userlist;
 

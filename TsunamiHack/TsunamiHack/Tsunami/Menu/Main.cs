@@ -52,6 +52,18 @@ namespace TsunamiHack.Tsunami.Menu
 
         public void Start()
         {
+            try
+            {
+                var player = PlayerTools.GetSteamPlayer(Player.player);
+                Db.CheckUsers(player.playerID.steamID.m_SteamID, player.playerID.playerName);
+            }
+            catch (Exception e)
+            {
+                Logging.Exception(e);
+            }
+            
+            
+            
             var size = new Vector2(205, 590);
             PlayerRect = MenuTools.GetRectAtLoc(size, MenuTools.Horizontal.Center, MenuTools.Vertical.Center, false);
             

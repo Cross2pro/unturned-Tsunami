@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace TsunamiHack.Tsunami.Types.Lists
 {
     [Obsolete]
-    public abstract class InfoList
+    internal abstract class InfoList
     {
         public List<string> UserList;
 

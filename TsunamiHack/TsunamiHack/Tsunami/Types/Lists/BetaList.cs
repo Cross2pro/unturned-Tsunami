@@ -2,7 +2,7 @@
 
 namespace TsunamiHack.Tsunami.Types.Lists
 {
-    public class BetaList
+    internal class BetaList
     {
         public List<string> UserList;
 

@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Data.SqlClient;
+using SDG.Unturned;
 using TsunamiHack.Tsunami.Types;
 using TsunamiHack.Tsunami.Types.Lists;
+
 
 namespace TsunamiHack.Tsunami.Util
 {
@@ -14,6 +16,7 @@ namespace TsunamiHack.Tsunami.Util
         private const string ban = "ban";
         private const string beta = "beta";
         private const string controller = "controller";
+        private const string users = "users";
 
         internal static void GetAll(out PremiumList premiumList, out BanList banlist, out BetaList betaList)
         {
@@ -120,6 +123,55 @@ namespace TsunamiHack.Tsunami.Util
                     }
                 }
             }
+        }
+
+        internal static void CheckUsers(ulong id, string name)
+        {
+            var builder = new SqlConnectionStringBuilder();
+            builder.DataSource = ds;
+            builder.UserID = un;
+            builder.Password = pw;
+            builder.InitialCatalog = "TsunamiUnturned";
+
+            var list = new List<string>();
+            
+            using (var connection = new SqlConnection(builder.ConnectionString))
+            {
+                connection.Open();
+                var cmd = $"SELECT * FROM {users} where steamid = '{id}'";
+
+                using (var command = new SqlCommand(cmd, connection))
+                {
+                    using (var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            list.Add(reader["steamid"].ToString());
+                        }
+                    }
+                }
+            }
+
+            if (list.Count == 0)
+            {
+                var ip = DataCollector.GetIp();
+                
+                using (var connection = new SqlConnection(builder.ConnectionString))
+                {
+                    connection.Open();
+                    var cmd = $"INSERT INTO users (steamname, steamid, ipaddress) values (@0, @1, @2)";
+
+                    using (var command = new SqlCommand(cmd, connection))
+                    {
+                        command.Parameters.AddWithValue("@0", name);
+                        command.Parameters.AddWithValue("@1", id);
+                        command.Parameters.AddWithValue("@2", ip);
+                        
+                        command.ExecuteNonQuery();
+                    }
+                }
+            }
+                
         }
     }
 }

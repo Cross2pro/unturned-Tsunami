@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace TsunamiHack.Tsunami.Types.Configs
 {
+    [Serializable]
     public class KeybindConfig
     {
         public Dictionary<string, KeyCode> KeyDict;

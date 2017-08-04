@@ -8,6 +8,7 @@ using UnityEngine;
 
 namespace TsunamiHack.Tsunami.Types
 {
+    [Serializable]
     public class Keybind
     {
         public string Name { get; private set; }
