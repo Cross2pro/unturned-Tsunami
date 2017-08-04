@@ -1,17 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Deployment.Internal;
-using System.Globalization;
-using System.Reflection;
-using System.Security.Cryptography.Pkcs;
-using System.Security.Cryptography.X509Certificates;
 using HighlightingSystem;
-using SDG.Framework.UI.Sleek2;
 using UnityEngine;
 using SDG.Unturned;
-using Steamworks;
 using TsunamiHack.Tsunami.Manager;
-using TsunamiHack.Tsunami.Util;
 using Object = UnityEngine.Object;
 
 namespace TsunamiHack.Tsunami.Lib
@@ -22,8 +14,9 @@ namespace TsunamiHack.Tsunami.Lib
         //TODO: maybe add other boxes
         //TODO: create a maximum zombies to show value
         //TODO: change menu sizes to a proportion and add scrollbars into all menus
+        //TODO: Fix admin label positioning 
         
-        internal static Menu.Visuals menu;
+        internal static Menu.Visuals Menu;
 
         internal static SteamPlayer[] Players;
         internal static Zombie[] Zombies;
@@ -42,7 +35,7 @@ namespace TsunamiHack.Tsunami.Lib
 
         internal static DateTime Last;
 
-        internal static float altitiude;
+        internal static float Altitiude;
         
         internal static Color EnemyPlayerGlow;
         internal static Color FriendlyPlayerGlow;
@@ -58,21 +51,21 @@ namespace TsunamiHack.Tsunami.Lib
         internal static Dictionary<int, string> StorageIds;
         internal static Dictionary<int, string> DoorIds;
         
-        internal static Material boxMaterial;
+        internal static Material BoxMaterial;
         
         internal static void Start(Menu.Visuals parent)
         {
             var material = new Material(Shader.Find("Hidden/Internal-Colored"));
             material.hideFlags = (HideFlags) 61;
-            boxMaterial = material;
-            boxMaterial.SetInt("_SrcBlend", 5);
-            boxMaterial.SetInt("_DstBlend", 10);
-            boxMaterial.SetInt("_Cull", 0);
-            boxMaterial.SetInt("_ZWrite", 0);
+            BoxMaterial = material;
+            BoxMaterial.SetInt("_SrcBlend", 5);
+            BoxMaterial.SetInt("_DstBlend", 10);
+            BoxMaterial.SetInt("_Cull", 0);
+            BoxMaterial.SetInt("_ZWrite", 0);
 
             GenerateDicts();
             
-            menu = WaveMaker.MenuVisuals;
+            Menu = WaveMaker.MenuVisuals;
             Last = DateTime.Now;
             
             Players = Provider.clients.ToArray();
@@ -97,13 +90,14 @@ namespace TsunamiHack.Tsunami.Lib
             UpdateLists();  
             UpdateColors();
             
-            if ((DateTime.Now - Last).TotalMilliseconds >= menu.UpdateRate)
+            if ((DateTime.Now - Last).TotalMilliseconds >= Menu.UpdateRate)
             {
                 CheckGlows();                     
                 Last = DateTime.Now;
             }      
         }
 
+        // ReSharper disable once InconsistentNaming
         internal static void OnGUI()
         {
             CheckLabels();
@@ -114,7 +108,7 @@ namespace TsunamiHack.Tsunami.Lib
         
         internal static void CheckBoxes()
         {
-            if (menu.PlayerBox)
+            if (Menu.PlayerBox)
             {
                 foreach (var player in Players)
                 {
@@ -124,7 +118,7 @@ namespace TsunamiHack.Tsunami.Lib
                         var targetpos = player.player.transform.position;
                         var dist = Vector3.Distance(mypos, targetpos);
 
-                        if (dist <= menu.Distance || menu.InfDistance)
+                        if (dist <= Menu.Distance || Menu.InfDistance)
                         {
                             var pos = Camera.main.WorldToScreenPoint(targetpos);
 
@@ -132,7 +126,7 @@ namespace TsunamiHack.Tsunami.Lib
                             {
                                 pos.y = Screen.height - pos.y;
                                 
-                                var color = WaveMaker.Friends.Contains(player.playerID.steamID.m_SteamID) ? menu.BoxPlayerFriendly : menu.BoxPlayerEnemy;
+                                var color = WaveMaker.Friends.Contains(player.playerID.steamID.m_SteamID) ? Menu.BoxPlayerFriendly : Menu.BoxPlayerEnemy;
                                 
                                 DrawBox(player.player.transform, pos, color);
                             }
@@ -141,7 +135,7 @@ namespace TsunamiHack.Tsunami.Lib
                 }           
             }
 
-            if (menu.ZombieBox)
+            if (Menu.ZombieBox)
             {
                 foreach (var zombie in Zombies)
                 {
@@ -151,7 +145,7 @@ namespace TsunamiHack.Tsunami.Lib
                         var targetpos = zombie.transform.position;
                         var dist = Vector3.Distance(mypos, targetpos);
 
-                        if (dist <= menu.Distance || menu.InfDistance)
+                        if (dist <= Menu.Distance || Menu.InfDistance)
                         {
                             var pos = zombie.transform.position;
                             pos = Camera.main.WorldToScreenPoint(pos);
@@ -160,7 +154,7 @@ namespace TsunamiHack.Tsunami.Lib
                             {
                                 pos.y = Screen.height - pos.y;
 
-                                DrawBox(zombie.transform, pos, menu.BoxZombie);
+                                DrawBox(zombie.transform, pos, Menu.BoxZombie);
                             }
                         }         
                     }   
@@ -171,62 +165,62 @@ namespace TsunamiHack.Tsunami.Lib
         internal static void CheckLabels()
         {
              
-            if (menu.PlayerName || menu.PlayerWeapon || menu.PlayerDistance)
+            if (Menu.PlayerName || Menu.PlayerWeapon || Menu.PlayerDistance)
             {
                 UpdatePlayerLabels();
             }
                 
-            if (menu.ZombieName || menu.ZombieDistance || menu.ZombieSpecialty)
+            if (Menu.ZombieName || Menu.ZombieDistance || Menu.ZombieSpecialty)
             {
                 UpdateZombieLabels();
             }
 
-            if (menu.AnimalName || menu.AnimalDistance)
+            if (Menu.AnimalName || Menu.AnimalDistance)
             {
                 UpdateAnimalLabels();
             }
 
-            if (menu.StorageType || menu.StorageDistance)
+            if (Menu.StorageType || Menu.StorageDistance)
             {
                 UpdateStorageLabels();
             }
 
-            if (menu.VehicleName || menu.VehicleDistance)
+            if (Menu.VehicleName || Menu.VehicleDistance)
             {
                 UpdateVehicleLabels();
             }
 
-            if (menu.ItemName || menu.ItemDistance)
+            if (Menu.ItemName || Menu.ItemDistance)
             {
                 UpdateItemLabels();
             }
 
-            if (menu.NpcName || menu.NpcDistance /*|| menu.NpcWeapon*/)
+            if (Menu.NpcName || Menu.NpcDistance /*|| menu.NpcWeapon*/)
             {
                 UpdateNpcLabels();
             }
 
-            if (menu.ForageType || menu.ForageDistance)
+            if (Menu.ForageType || Menu.ForageDistance)
             {
                 UpdateForageLabels();
             }
 
-            if (menu.BedType || menu.BedDistance)
+            if (Menu.BedType || Menu.BedDistance)
             {
                 UpdateBedLabels();
             }
 
-            if (menu.FlagType || menu.FlagDistance)
+            if (Menu.FlagType || Menu.FlagDistance)
             {
                 UpdateFlagLabels();
             }
 
-            if (menu.SentryType || menu.SentryWeapon || menu.SentryState || menu.SentryDistance)
+            if (Menu.SentryType || Menu.SentryWeapon || Menu.SentryState || Menu.SentryDistance)
             {
                 UpdateSentryLabels();
             }
 
-            if (menu.Admins)
+            if (Menu.Admins)
             {
                 UpdateAdminLabels();
             }
@@ -245,7 +239,7 @@ namespace TsunamiHack.Tsunami.Lib
                     var targetpos = player.player.transform.position;
                     var dist = Vector3.Distance(myPos, targetpos);
 
-                    if (dist <= menu.Distance || menu.InfDistance)
+                    if (dist <= Menu.Distance || Menu.InfDistance)
                     {
                         targetpos += new Vector3(0f,3f,0f);
                         var scrnpt = Camera.main.WorldToScreenPoint(targetpos);
@@ -255,20 +249,29 @@ namespace TsunamiHack.Tsunami.Lib
                             scrnpt.y = Screen.height - scrnpt.y;
                             var text = "";
 
-                            if (menu.PlayerName)
+                            if (Menu.PlayerName)
                             {
                                 text += $"{player.playerID.nickName}";
                             }
 
-                            if (menu.PlayerWeapon)
+                            if (Menu.PlayerWeapon)
                             {
                                 if (text.Length > 0)
-                                    text += $"\nWeapon: {player.player.equipment.asset.name}";
+                                    text += "\n";
+                                
+                                if (player.player.equipment.asset != null)
+                                {
+                                    if (player.player.equipment.asset.type == EItemType.GUN || player.player.equipment.asset.type == EItemType.MELEE)
+                                        text += $"Weapon: {player.player.equipment.asset.name}";
+                                    else
+                                        text += $"Weapon: None";
+                                }
                                 else
-                                    text += $"Weapon: {player.player.equipment.asset.name}";
+                                    text += "Weapon: None";
+                                 
                             }
 
-                            if (menu.PlayerDistance)
+                            if (Menu.PlayerDistance)
                             {
                                 if (text.Length > 0)
                                     text += $"\nDistance: {Math.Round(dist, 0)}";
@@ -279,14 +282,14 @@ namespace TsunamiHack.Tsunami.Lib
                             
                             float size;
 
-                            if (menu.ScaleText)
-                                size = dist <= menu.Dropoff ? menu.CloseSize : menu.FarSize;
+                            if (Menu.ScaleText)
+                                size = dist <= Menu.Dropoff ? Menu.CloseSize : Menu.FarSize;
                             else
                                 size = 10f;
 
                             var color = WaveMaker.Friends.Contains(player.playerID.steamID.m_SteamID)
-                                ? menu.FriendlyPlayerGlow
-                                : menu.EnemyPlayerGlow;
+                                ? Menu.FriendlyPlayerGlow
+                                : Menu.EnemyPlayerGlow;
                         
                             GUI.Label(new Rect(scrnpt + new Vector3(0,6f,0), new Vector2(170,70)), $"<color={color}><size={size}>{text}</size></color>" );
                         }
@@ -306,7 +309,7 @@ namespace TsunamiHack.Tsunami.Lib
                         var targetPos = zombie.transform.position;
                         var dist = Vector3.Distance(myPos, targetPos);
     
-                        if (dist <= menu.Distance || menu.InfDistance)
+                        if (dist <= Menu.Distance || Menu.InfDistance)
                         {
                             targetPos += new Vector3(0f,3f, 0f);
                             var scrnPt = Camera.main.WorldToScreenPoint(targetPos);
@@ -314,16 +317,16 @@ namespace TsunamiHack.Tsunami.Lib
                             if (scrnPt.z >= 0)
                             {
     
-                                scrnPt.y = (float)(Screen.height - scrnPt.y);
+                                scrnPt.y = Screen.height - scrnPt.y;
     
                                 var text = "";
     
-                                if (menu.ZombieName)
+                                if (Menu.ZombieName)
                                 {
                                     text += $"{zombie.gameObject.name}";
                                 }
     
-                                if (menu.ZombieDistance)
+                                if (Menu.ZombieDistance)
                                 {
                                     if (text.Length > 0)
                                     {
@@ -335,7 +338,7 @@ namespace TsunamiHack.Tsunami.Lib
                                     }
                                 }
     
-                                if (menu.ZombieSpecialty)
+                                if (Menu.ZombieSpecialty)
                                 {
                                     var str = "";
     
@@ -392,9 +395,9 @@ namespace TsunamiHack.Tsunami.Lib
 
                                 float size;
                                 
-                                if (menu.ScaleText)
+                                if (Menu.ScaleText)
                                 {
-                                    size = dist <= menu.Dropoff ? menu.CloseSize : menu.FarSize;
+                                    size = dist <= Menu.Dropoff ? Menu.CloseSize : Menu.FarSize;
                                 }
                                 else
                                 {                                    
@@ -403,7 +406,7 @@ namespace TsunamiHack.Tsunami.Lib
                                 
                                  
                                 
-                                GUI.Label(new Rect(scrnPt + new Vector3(0,4f,0), new Vector2(170,50)), $"<color={ColorUtility.ToHtmlStringRGBA(menu.BoxZombie)}><size={size}>{text}</size></color>" );        
+                                GUI.Label(new Rect(scrnPt + new Vector3(0,4f,0), new Vector2(170,50)), $"<color={ColorUtility.ToHtmlStringRGBA(Menu.BoxZombie)}><size={size}>{text}</size></color>" );        
                             }
                         }
                     }
@@ -421,7 +424,7 @@ namespace TsunamiHack.Tsunami.Lib
                     var targetpos = animal.transform.position;
                     var dist = Vector3.Distance(mypos, targetpos);
 
-                    if (dist <= menu.Distance || menu.InfDistance)
+                    if (dist <= Menu.Distance || Menu.InfDistance)
                     {
                         targetpos += new Vector3(0f,3f,0f);
                         var scrnpt = Camera.main.WorldToScreenPoint(targetpos);
@@ -432,12 +435,12 @@ namespace TsunamiHack.Tsunami.Lib
 
                             var text = "";
 
-                            if (menu.AnimalName)
+                            if (Menu.AnimalName)
                             {
                                 text += $"{animal.asset.animalName}";
                             }
 
-                            if (menu.AnimalDistance)
+                            if (Menu.AnimalDistance)
                             {
                                 if (text.Length > 0)
                                     text += $"\nDistance: {Math.Round(dist, 0)}";
@@ -445,9 +448,9 @@ namespace TsunamiHack.Tsunami.Lib
                                     text += $"Distance: {Math.Round(dist, 0)}"; 
                             }
 
-                            var size = menu.ScaleText ? dist <= menu.Dropoff ? menu.CloseSize : menu.FarSize : 10f;
+                            var size = Menu.ScaleText ? dist <= Menu.Dropoff ? Menu.CloseSize : Menu.FarSize : 10f;
                             
-                            GUI.Label(new Rect(scrnpt + new Vector3(0,4f,0), new Vector2(170,50)), $"<color={menu.InteractableGlow}><size={size}>{text}</size></color>" );
+                            GUI.Label(new Rect(scrnpt + new Vector3(0,4f,0), new Vector2(170,50)), $"<color={Menu.InteractableGlow}><size={size}>{text}</size></color>" );
                         }
                     }
                 }
@@ -462,7 +465,7 @@ namespace TsunamiHack.Tsunami.Lib
                 var targetpos = storage.transform.position;
                 var dist = Vector3.Distance(mypos, targetpos);
 
-                if (dist <= menu.Distance || menu.InfDistance)
+                if (dist <= Menu.Distance || Menu.InfDistance)
                 {
                     targetpos += new Vector3(0f,1.5f,0f);
                     var scrnpt = Camera.main.WorldToScreenPoint(targetpos);
@@ -472,12 +475,12 @@ namespace TsunamiHack.Tsunami.Lib
                         scrnpt.y = Screen.height - scrnpt.y;
                         var text = "";
 
-                        if (menu.StorageType)
+                        if (Menu.StorageType)
                         {
                             text += $"Storage: {StorageIds[int.Parse(storage.name)]}";
                         }
 
-                        if (menu.StorageDistance)
+                        if (Menu.StorageDistance)
                         {
                             text += text.Length > 0
                                 ? $"\nDistance: {Math.Round(dist, 0)}"
@@ -485,9 +488,9 @@ namespace TsunamiHack.Tsunami.Lib
                         }
 
                         
-                        var size = menu.ScaleText ? dist <= menu.Dropoff ? menu.CloseSize : menu.FarSize : 10f;
+                        var size = Menu.ScaleText ? dist <= Menu.Dropoff ? Menu.CloseSize : Menu.FarSize : 10f;
                             
-                        GUI.Label(new Rect(scrnpt + new Vector3(0,4f,0), new Vector2(170,50)), $"<color={menu.InteractableGlow}><size={size}>{text}</size></color>" );
+                        GUI.Label(new Rect(scrnpt + new Vector3(0,4f,0), new Vector2(170,50)), $"<color={Menu.InteractableGlow}><size={size}>{text}</size></color>" );
                         
                     }
 
@@ -504,7 +507,7 @@ namespace TsunamiHack.Tsunami.Lib
                 var targetpos = vehicle.transform.position;
                 var dist = Vector3.Distance(mypos, targetpos);
 
-                if (dist <= menu.Distance || menu.InfDistance)
+                if (dist <= Menu.Distance || Menu.InfDistance)
                 {
                     targetpos += new Vector3(0f,1.5f,0f);
                     var scrnpt = Camera.main.WorldToScreenPoint(targetpos);
@@ -514,7 +517,7 @@ namespace TsunamiHack.Tsunami.Lib
                         scrnpt.y = Screen.height - scrnpt.y;
                         var text = "";
 
-                        if (menu.VehicleName)
+                        if (Menu.VehicleName)
                         {
                             var name = vehicle.asset.name.Replace("_", " ");
 
@@ -527,7 +530,7 @@ namespace TsunamiHack.Tsunami.Lib
                             text += $"Vehicle: {name}";
                         }
 
-                        if (menu.VehicleDistance)
+                        if (Menu.VehicleDistance)
                         {
                             if (text.Length > 0)
                                 text += "\n";
@@ -535,9 +538,9 @@ namespace TsunamiHack.Tsunami.Lib
                             text += $"Distance: {Math.Round(dist,0)}";
                         }
 
-                        var size = menu.ScaleText ? dist <= menu.Dropoff ? menu.CloseSize : menu.FarSize : 10f;
+                        var size = Menu.ScaleText ? dist <= Menu.Dropoff ? Menu.CloseSize : Menu.FarSize : 10f;
                         
-                        GUI.Label(new Rect(scrnpt + new Vector3(0,4f,0), new Vector2(170,50)), $"<color={menu.InteractableGlow}><size={size}>{text}</size></color>" );
+                        GUI.Label(new Rect(scrnpt + new Vector3(0,4f,0), new Vector2(170,50)), $"<color={Menu.InteractableGlow}><size={size}>{text}</size></color>" );
                     }
                 }
             }
@@ -551,7 +554,7 @@ namespace TsunamiHack.Tsunami.Lib
                 var targetpos = item.transform.position;
                 var dist = Vector3.Distance(mypos, targetpos);
 
-                if (dist <= menu.Distance || menu.InfDistance)
+                if (dist <= Menu.Distance || Menu.InfDistance)
                 {
                     targetpos += new Vector3(0f,1.5f, 0f);
                     var scrnpt = Camera.main.WorldToScreenPoint(targetpos);
@@ -561,12 +564,12 @@ namespace TsunamiHack.Tsunami.Lib
                         scrnpt.y = Screen.height - scrnpt.y;
                         var text = "";
 
-                        if (menu.ItemName)
+                        if (Menu.ItemName)
                         {
                             text += $"Item: {item.asset.itemName}";
                         }
 
-                        if (menu.ItemDistance)
+                        if (Menu.ItemDistance)
                         {
                             if (text.Length > 0)
                                 text += "\n";
@@ -575,9 +578,9 @@ namespace TsunamiHack.Tsunami.Lib
                             
                         }
                         
-                        var size = menu.ScaleText ? dist <= menu.Dropoff ? menu.CloseSize : menu.FarSize : 10f;
+                        var size = Menu.ScaleText ? dist <= Menu.Dropoff ? Menu.CloseSize : Menu.FarSize : 10f;
                         
-                        GUI.Label(new Rect(scrnpt + new Vector3(0,4f,0), new Vector2(170,50)), $"<color={menu.InteractableGlow}><size={size}>{text}</size></color>" );
+                        GUI.Label(new Rect(scrnpt + new Vector3(0,4f,0), new Vector2(170,50)), $"<color={Menu.InteractableGlow}><size={size}>{text}</size></color>" );
                     }
                 }
             }
@@ -593,7 +596,6 @@ namespace TsunamiHack.Tsunami.Lib
             
         }
 
-        //TODO: finish size/color/display logic for npc
         internal static void UpdateNpcLabels()
         {
             foreach (var npc in Npcs)
@@ -602,7 +604,7 @@ namespace TsunamiHack.Tsunami.Lib
                 var targetpos = npc.transform.position;
                 var dist = Vector3.Distance(mypos, targetpos);
 
-                if (dist <= menu.Distance || menu.InfDistance)
+                if (dist <= Menu.Distance || Menu.InfDistance)
                 {
                     targetpos += new Vector3(0f,1.5f,0f);
                     var scrnpt = Camera.main.WorldToScreenPoint(targetpos);
@@ -612,7 +614,7 @@ namespace TsunamiHack.Tsunami.Lib
                         scrnpt.y = Screen.height - scrnpt.y;
                         var text = "";
 
-                        if (menu.NpcName)
+                        if (Menu.NpcName)
                         {
                             text += $"NPC: {npc.npcAsset.name}";
                         }
@@ -625,14 +627,18 @@ namespace TsunamiHack.Tsunami.Lib
 //                            text += $"Weapon: {npc.}"
 //                        }
 
-                        if (menu.NpcDistance)
+                        if (Menu.NpcDistance)
                         {
                             if (text.Length > 0)
                                 text += "\n";
 
                             text += $"Distance: {Math.Round(dist, 0)}";
                         }
+
+                        var size = Menu.ScaleText ? dist <= Menu.Dropoff ? Menu.CloseSize : Menu.FarSize : 10f;
                         
+                        GUI.Label(new Rect(scrnpt + new Vector3(0,4f,0), new Vector2(170,50)), $"<color={Menu.InteractableGlow}><size={size}>{text}</size></color>" );
+
                     }
                 }
             }
@@ -646,7 +652,7 @@ namespace TsunamiHack.Tsunami.Lib
                 var targetpos = forage.transform.position;
                 var dist = Vector3.Distance(mypos, targetpos);
 
-                if (dist <= menu.Distance || menu.InfDistance)
+                if (dist <= Menu.Distance || Menu.InfDistance)
                 {
                     targetpos += new Vector3(0f, 1.5f, 0f);
                     var scrnpt = Camera.main.WorldToScreenPoint(targetpos);
@@ -656,12 +662,12 @@ namespace TsunamiHack.Tsunami.Lib
                         scrnpt.y = Screen.height - scrnpt.y;
                         var text = "";
 
-                        if (menu.ForageType)
+                        if (Menu.ForageType)
                         {
                             text += "Forage";
                         }
 
-                        if (menu.ForageDistance)
+                        if (Menu.ForageDistance)
                         {
                             if (text.Length > 0)
                                 text += "\n";
@@ -669,10 +675,10 @@ namespace TsunamiHack.Tsunami.Lib
                             text += $"Distance: {Math.Round(dist, 0)}";
                         }
                         
-                        var size = menu.ScaleText ? dist <= menu.Dropoff ? menu.CloseSize : menu.FarSize : 10f;
+                        var size = Menu.ScaleText ? dist <= Menu.Dropoff ? Menu.CloseSize : Menu.FarSize : 10f;
                         
                         if(text.Length > 0)
-                            GUI.Label(new Rect(scrnpt + new Vector3(0,4f,0), new Vector2(170,50)), $"<color={ColorUtility.ToHtmlStringRGBA(menu.InteractableGlow)}><size={size}>{text}</size></color>" );
+                            GUI.Label(new Rect(scrnpt + new Vector3(0,4f,0), new Vector2(170,50)), $"<color={ColorUtility.ToHtmlStringRGBA(Menu.InteractableGlow)}><size={size}>{text}</size></color>" );
                     }
                 }
 
@@ -688,7 +694,7 @@ namespace TsunamiHack.Tsunami.Lib
                 var targetpos = bed.transform.position;
                 var dist = Vector3.Distance(mypos, targetpos);
 
-                if (dist <= menu.Distance || menu.InfDistance)
+                if (dist <= Menu.Distance || Menu.InfDistance)
                 {
                     targetpos += new Vector3(0f, 1.5f, 0f);
                     var scrnpt = Camera.main.WorldToScreenPoint(targetpos);
@@ -698,12 +704,12 @@ namespace TsunamiHack.Tsunami.Lib
                         scrnpt.y = Screen.height - scrnpt.y;
                         var text = "";
 
-                        if (menu.BedType)
+                        if (Menu.BedType)
                         {
                             text += "Bed";
                         }
 
-                        if (menu.BedDistance)
+                        if (Menu.BedDistance)
                         {
                             if (text.Length > 0)
                                 text += "\n";
@@ -711,10 +717,10 @@ namespace TsunamiHack.Tsunami.Lib
                             text += $"Distance: {Math.Round(dist, 0)}";
                         }
                         
-                        var size = menu.ScaleText ? dist <= menu.Dropoff ? menu.CloseSize : menu.FarSize : 10f;
+                        var size = Menu.ScaleText ? dist <= Menu.Dropoff ? Menu.CloseSize : Menu.FarSize : 10f;
                         
                         if(text.Length > 0)
-                            GUI.Label(new Rect(scrnpt + new Vector3(0,4f,0), new Vector2(170,50)), $"<color={ColorUtility.ToHtmlStringRGBA(menu.InteractableGlow)}><size={size}>{text}</size></color>" );
+                            GUI.Label(new Rect(scrnpt + new Vector3(0,4f,0), new Vector2(170,50)), $"<color={ColorUtility.ToHtmlStringRGBA(Menu.InteractableGlow)}><size={size}>{text}</size></color>" );
                     }
                 }
 
@@ -729,7 +735,7 @@ namespace TsunamiHack.Tsunami.Lib
                 var targetpos = door.transform.position;
                 var dist = Vector3.Distance(mypos, targetpos);
 
-                if (dist <= menu.Distance || menu.InfDistance)
+                if (dist <= Menu.Distance || Menu.InfDistance)
                 {
                     targetpos += new Vector3(0f, 1.5f, 0f);
                     var scrnpt = Camera.main.WorldToScreenPoint(targetpos);
@@ -739,12 +745,12 @@ namespace TsunamiHack.Tsunami.Lib
                         scrnpt.y = Screen.height - scrnpt.y;
                         var text = "";
 
-                        if (menu.DoorType)
+                        if (Menu.DoorType)
                         {
                             text += $"Door: {DoorIds[int.Parse(door.name)]}";
                         }
 
-                        if (menu.BedDistance)
+                        if (Menu.BedDistance)
                         {
                             if (text.Length > 0)
                                 text += "\n";
@@ -752,11 +758,11 @@ namespace TsunamiHack.Tsunami.Lib
                             text += $"Distance: {Math.Round(dist, 0)}";
                         }
 
-                        var size = menu.ScaleText ? dist <= menu.Dropoff ? menu.CloseSize : menu.FarSize : 10f;
+                        var size = Menu.ScaleText ? dist <= Menu.Dropoff ? Menu.CloseSize : Menu.FarSize : 10f;
 
                         if(text.Length > 0)
                             GUI.Label(new Rect(scrnpt + new Vector3(0, 4f, 0), new Vector2(170, 50)),
-                            $"<color={ColorUtility.ToHtmlStringRGBA(menu.InteractableGlow)}><size={size}>{text}</size></color>");
+                            $"<color={ColorUtility.ToHtmlStringRGBA(Menu.InteractableGlow)}><size={size}>{text}</size></color>");
                     }
                 }
             }
@@ -770,7 +776,7 @@ namespace TsunamiHack.Tsunami.Lib
                 var targetpos = flag.transform.position;
                 var dist = Vector3.Distance(mypos, targetpos);
 
-                if (dist <= menu.Distance || menu.InfDistance)
+                if (dist <= Menu.Distance || Menu.InfDistance)
                 {
                     targetpos += new Vector3(0f, 1.5f, 0f);
                     var scrnpt = Camera.main.WorldToScreenPoint(targetpos);
@@ -780,12 +786,12 @@ namespace TsunamiHack.Tsunami.Lib
                         scrnpt.y = Screen.height - scrnpt.y;
                         var text = "";
 
-                        if (menu.FlagType)
+                        if (Menu.FlagType)
                         {
                             text += "Claim Flag";
                         }
 
-                        if (menu.FlagDistance)
+                        if (Menu.FlagDistance)
                         {
                             if (text.Length > 0)
                                 text += "\n";
@@ -793,11 +799,11 @@ namespace TsunamiHack.Tsunami.Lib
                             text += $"Distance: {Math.Round(dist, 0)}";
                         }
 
-                        var size = menu.ScaleText ? dist <= menu.Dropoff ? menu.CloseSize : menu.FarSize : 10f;
+                        var size = Menu.ScaleText ? dist <= Menu.Dropoff ? Menu.CloseSize : Menu.FarSize : 10f;
 
                         if(text.Length > 0)
                             GUI.Label(new Rect(scrnpt + new Vector3(0, 4f, 0), new Vector2(170, 50)),
-                            $"<color={ColorUtility.ToHtmlStringRGBA(menu.InteractableGlow)}><size={size}>{text}</size></color>");
+                            $"<color={ColorUtility.ToHtmlStringRGBA(Menu.InteractableGlow)}><size={size}>{text}</size></color>");
                     }
                 }
             }
@@ -811,7 +817,7 @@ namespace TsunamiHack.Tsunami.Lib
                 var targetpos = sentry.transform.position;
                 var dist = Vector3.Distance(mypos, targetpos);
 
-                if (dist <= menu.Distance || menu.InfDistance)
+                if (dist <= Menu.Distance || Menu.InfDistance)
                 {
                     targetpos += new Vector3(0f, 1.5f, 0f);
                     var scrnpt = Camera.main.WorldToScreenPoint(targetpos);
@@ -821,7 +827,7 @@ namespace TsunamiHack.Tsunami.Lib
                         scrnpt.y = Screen.height - scrnpt.y;
                         var text = "";
 
-                        if (menu.SentryType)
+                        if (Menu.SentryType)
                         {
                             text += "Sentry";
                         }
@@ -835,7 +841,7 @@ namespace TsunamiHack.Tsunami.Lib
 //                               text += $"Weapon: {sentry.displayItem.id}";
 //                        }
 
-                        if (menu.SentryState)
+                        if (Menu.SentryState)
                         {
                             if (text.Length > 0)
                                 text += "\n";
@@ -844,7 +850,7 @@ namespace TsunamiHack.Tsunami.Lib
                             text += $"State: {state}";
                         }
                         
-                        if (menu.SentryDistance)
+                        if (Menu.SentryDistance)
                         {
                             if (text.Length > 0)
                                 text += "\n";
@@ -852,11 +858,11 @@ namespace TsunamiHack.Tsunami.Lib
                             text += $"Distance: {Math.Round(dist, 0)}";
                         }
 
-                        var size = menu.ScaleText ? dist <= menu.Dropoff ? menu.CloseSize : menu.FarSize : 10f;
+                        var size = Menu.ScaleText ? dist <= Menu.Dropoff ? Menu.CloseSize : Menu.FarSize : 10f;
 
                         if(text.Length > 0)
                             GUI.Label(new Rect(scrnpt + new Vector3(0, 4f, 0), new Vector2(170, 70)),
-                            $"<color={ColorUtility.ToHtmlStringRGBA(menu.InteractableGlow)}><size={size}>{text}</size></color>");
+                            $"<color={ColorUtility.ToHtmlStringRGBA(Menu.InteractableGlow)}><size={size}>{text}</size></color>");
                     }
                 }
             }
@@ -872,7 +878,7 @@ namespace TsunamiHack.Tsunami.Lib
                     var targetpos = player.player.transform.position;
                     var dist = Vector3.Distance(mypos, targetpos);
 
-                    if (dist <= menu.Distance || menu.InfDistance)
+                    if (dist <= Menu.Distance || Menu.InfDistance)
                     {
                         targetpos += new Vector3(0f, 3f, 0f);
                         var scrnpt = Camera.main.WorldToScreenPoint(targetpos);
@@ -882,15 +888,15 @@ namespace TsunamiHack.Tsunami.Lib
                             scrnpt.y = Screen.height - scrnpt.y;
                             var text = "";
 
-                            if (menu.Admins)
+                            if (Menu.Admins)
                             {
                                 text += "ADMIN";
                             }
 
-                            var size = menu.ScaleText ? dist <= menu.Dropoff ? menu.CloseSize : menu.FarSize : 10f;
+                            var size = Menu.ScaleText ? dist <= Menu.Dropoff ? Menu.CloseSize : Menu.FarSize : 10f;
 
                             if(text.Length > 0)
-                                GUI.Label(new Rect(scrnpt + new Vector3(0, 4f, 0), new Vector2(170, 50)),
+                                GUI.Label(new Rect(scrnpt - new Vector3(0, 5, 0), new Vector2(170, 50)),
                                 $"<color=#FF0000><size={size}>{text}</size></color>");
                         }
                     }
@@ -921,20 +927,17 @@ namespace TsunamiHack.Tsunami.Lib
                     var myPos = Camera.main.transform.position;
                     var targetPos = player.player.transform.position;
 
-                    if (menu.EnableEsp && menu.GlowPlayers)
+                    if (Menu.EnableEsp && Menu.GlowPlayers)
                     {
                         var dist = Vector3.Distance(myPos, targetPos);
 
-                        if (dist <= menu.Distance || menu.InfDistance)
+                        if (dist <= Menu.Distance || Menu.InfDistance)
                         {
-                            var highlighter = player.player.gameObject.GetComponent<Highlighter>();
-
-                            if (highlighter == null)
-                                highlighter = player.player.gameObject.AddComponent<Highlighter>();
+                            var highlighter = player.player.gameObject.GetComponent<Highlighter>() ?? player.player.gameObject.AddComponent<Highlighter>();
 
                             var color = WaveMaker.Friends.Contains(player.playerID.steamID.m_SteamID)
-                                ? menu.FriendlyPlayerGlow
-                                : menu.EnemyPlayerGlow;
+                                ? Menu.FriendlyPlayerGlow
+                                : Menu.EnemyPlayerGlow;
                         
                             highlighter.ConstantParams(color);
                             highlighter.OccluderOn();
@@ -966,46 +969,43 @@ namespace TsunamiHack.Tsunami.Lib
         
         internal static void UpdateZombieGlow()
         {
-            
-            foreach (var zombie in Zombies)
-            {
-                var myPos = Camera.main.transform.position;
-                var zomPos = zombie.transform.position;
+            if(Zombies.Length > 0)
+                 foreach (var zombie in Zombies)
+                 {
+                     var myPos = Camera.main.transform.position;
+                     var zomPos = zombie.transform.position;
 
-                if (menu.EnableEsp && menu.GlowZombies)
-                {
-                    var dist = Vector3.Distance(myPos, zomPos);
+                     if (Menu.EnableEsp && Menu.GlowZombies)
+                     {
+                         var dist = Vector3.Distance(myPos, zomPos);
 
-                    if (dist <= menu.Distance || menu.InfDistance)
-                    {
-                        var highlighter = zombie.gameObject.GetComponent<Highlighter>();
+                         if (dist <= Menu.Distance || Menu.InfDistance)
+                         {
+                             var highlighter = zombie.gameObject.GetComponent<Highlighter>() ?? zombie.gameObject.AddComponent<Highlighter>();
 
-                        if (highlighter == null)
-                            highlighter = zombie.gameObject.AddComponent<Highlighter>();
+                             highlighter.ConstantParams(Menu.ZombieGlow);
+                             highlighter.OccluderOn();
+                             highlighter.SeeThroughOn();
+                             highlighter.ConstantOn();
+                         }
+                         else
+                         {
+                             var highlighter = zombie.gameObject.GetComponent<Highlighter>();
 
-                        highlighter.ConstantParams(menu.ZombieGlow);
-                        highlighter.OccluderOn();
-                        highlighter.SeeThroughOn();
-                        highlighter.ConstantOn();
-                    }
-                    else
-                    {
-                        var highlighter = zombie.gameObject.GetComponent<Highlighter>();
+                             if (highlighter != null)
+                                 highlighter.ConstantOffImmediate();
+                         }
+                     }
+                     else
+                     {
+                         var highlighter = zombie.gameObject.GetComponent<Highlighter>();
 
-                        if (highlighter != null)
-                            highlighter.ConstantOffImmediate();
-                    }
-                }
-                else
-                {
-                    var highlighter = zombie.gameObject.GetComponent<Highlighter>();
-
-                    if (highlighter != null)
-                    {
-                        highlighter.ConstantOffImmediate();
-                    }
-                }
-            }
+                         if (highlighter != null)
+                         {
+                             highlighter.ConstantOffImmediate();
+                         }
+                     }
+                  }
         }
         
         internal static void UpdateVehicleGlow()
@@ -1016,18 +1016,15 @@ namespace TsunamiHack.Tsunami.Lib
                 var myPos = Camera.main.transform.position;
                 var zomPos = vehicle.transform.position;
 
-                if (menu.EnableEsp && menu.GlowVehicles)
+                if (Menu.EnableEsp && Menu.GlowVehicles)
                 {
                     var dist = Vector3.Distance(myPos, zomPos);
 
-                    if (dist <= menu.Distance || menu.InfDistance)
+                    if (dist <= Menu.Distance || Menu.InfDistance)
                     {
-                        var highlighter = vehicle.gameObject.GetComponent<Highlighter>();
+                        var highlighter = vehicle.gameObject.GetComponent<Highlighter>() ?? vehicle.gameObject.AddComponent<Highlighter>();
 
-                        if (highlighter == null)
-                            highlighter = vehicle.gameObject.AddComponent<Highlighter>();
-
-                        highlighter.ConstantParams(menu.VehicleGlow);
+                        highlighter.ConstantParams(Menu.VehicleGlow);
                         highlighter.OccluderOn();
                         highlighter.SeeThroughOn();
                         highlighter.ConstantOn();
@@ -1060,18 +1057,15 @@ namespace TsunamiHack.Tsunami.Lib
                 var myPos = Camera.main.transform.position;
                 var targetpos = item.transform.position;
 
-                if (menu.EnableEsp && menu.GlowItems)
+                if (Menu.EnableEsp && Menu.GlowItems)
                 {
                     var dist = Vector3.Distance(myPos, targetpos);
 
-                    if (dist <= menu.Distance || menu.InfDistance)
+                    if (dist <= Menu.Distance || Menu.InfDistance)
                     {
-                        var highlighter = item.gameObject.GetComponent<Highlighter>();
+                        var highlighter = item.gameObject.GetComponent<Highlighter>() ?? item.gameObject.AddComponent<Highlighter>();
 
-                        if (highlighter == null)
-                            highlighter = item.gameObject.AddComponent<Highlighter>();
-
-                        highlighter.ConstantParams(menu.ItemGlow);
+                        highlighter.ConstantParams(Menu.ItemGlow);
                         highlighter.OccluderOn();
                         highlighter.SeeThroughOn();
                         highlighter.ConstantOn();
@@ -1117,20 +1111,17 @@ namespace TsunamiHack.Tsunami.Lib
             foreach (var animal in Animals)
             {
                 
-                if (menu.EnableEsp && menu.GlowInteractables && menu.Animals)
+                if (Menu.EnableEsp && Menu.GlowInteractables && Menu.Animals)
                 {
                     var myPos = Camera.main.transform.position;
                     var targetPos = animal.transform.position;
                     var dist = Vector3.Distance(myPos, targetPos);
 
-                    if (dist <= menu.Distance || menu.InfDistance)
+                    if (dist <= Menu.Distance || Menu.InfDistance)
                     {
-                        var highlighter = animal.gameObject.GetComponent<Highlighter>();
+                        var highlighter = animal.gameObject.GetComponent<Highlighter>() ?? animal.gameObject.AddComponent<Highlighter>();
 
-                        if (highlighter == null) 
-                            highlighter = animal.gameObject.AddComponent<Highlighter>();
-                        
-                        highlighter.ConstantParams(menu.InteractableGlow);
+                        highlighter.ConstantParams(Menu.InteractableGlow);
                         highlighter.OccluderOn();
                         highlighter.SeeThroughOn();
                         highlighter.ConstantOn();
@@ -1162,16 +1153,13 @@ namespace TsunamiHack.Tsunami.Lib
                 var targetPos = storage.transform.position;
                 var dist = Vector3.Distance(myPos, targetPos);
 
-                if (menu.EnableEsp && menu.GlowInteractables && menu.Storages)
+                if (Menu.EnableEsp && Menu.GlowInteractables && Menu.Storages)
                 {
-                    if (dist <= menu.Distance || menu.InfDistance)
+                    if (dist <= Menu.Distance || Menu.InfDistance)
                     {
-                        var highlighter = storage.gameObject.GetComponent<Highlighter>();
+                        var highlighter = storage.gameObject.GetComponent<Highlighter>() ?? storage.gameObject.AddComponent<Highlighter>();
 
-                        if (highlighter == null)
-                            highlighter = storage.gameObject.AddComponent<Highlighter>();
-
-                        highlighter.ConstantParams(menu.InteractableGlow);
+                        highlighter.ConstantParams(Menu.InteractableGlow);
                         highlighter.OccluderOn();
                         highlighter.SeeThroughOn();
                         highlighter.ConstantOn();
@@ -1204,16 +1192,13 @@ namespace TsunamiHack.Tsunami.Lib
                 var targetpos = forage.transform.position;
                 var dist = Vector3.Distance(myPos, targetpos);
 
-                if (menu.EnableEsp && menu.GlowInteractables && menu.Forages)
+                if (Menu.EnableEsp && Menu.GlowInteractables && Menu.Forages)
                 {
-                    if (dist <= menu.Distance || menu.InfDistance)
+                    if (dist <= Menu.Distance || Menu.InfDistance)
                     {
-                        var highlighter = forage.gameObject.GetComponent<Highlighter>();
+                        var highlighter = forage.gameObject.GetComponent<Highlighter>() ?? forage.gameObject.AddComponent<Highlighter>();
 
-                        if (highlighter == null)
-                            highlighter = forage.gameObject.AddComponent<Highlighter>();
-                        
-                        highlighter.ConstantParams(menu.InteractableGlow);
+                        highlighter.ConstantParams(Menu.InteractableGlow);
                         highlighter.OccluderOn();
                         highlighter.SeeThroughOn();
                         highlighter.ConstantOn();
@@ -1246,16 +1231,13 @@ namespace TsunamiHack.Tsunami.Lib
                 var targetPos = bed.transform.position;
                 var dist = Vector3.Distance(myPos, targetPos);
 
-                if (menu.EnableEsp && menu.GlowInteractables && menu.Bed)
+                if (Menu.EnableEsp && Menu.GlowInteractables && Menu.Bed)
                 {
-                    if (dist <= menu.Distance || menu.InfDistance)
+                    if (dist <= Menu.Distance || Menu.InfDistance)
                     {
-                        var highlighter = bed.gameObject.GetComponent<Highlighter>();
+                        var highlighter = bed.gameObject.GetComponent<Highlighter>() ?? bed.gameObject.AddComponent<Highlighter>();
 
-                        if (highlighter == null)
-                            highlighter = bed.gameObject.AddComponent<Highlighter>();
-                        
-                        highlighter.ConstantParams(menu.InteractableGlow);
+                        highlighter.ConstantParams(Menu.InteractableGlow);
                         highlighter.OccluderOn();
                         highlighter.SeeThroughOn();
                         highlighter.ConstantOn();
@@ -1288,16 +1270,13 @@ namespace TsunamiHack.Tsunami.Lib
                 var targetpos = door.transform.position;
                 var dist = Vector3.Distance(mypos, targetpos);
 
-                if (menu.EnableEsp && menu.GlowInteractables && menu.Doors)
+                if (Menu.EnableEsp && Menu.GlowInteractables && Menu.Doors)
                 {
-                    if (dist <= menu.Distance || menu.InfDistance)
+                    if (dist <= Menu.Distance || Menu.InfDistance)
                     {
-                        var highlighter = door.gameObject.GetComponent<Highlighter>();
-                        
-                        if(highlighter == null)
-                            highlighter = door.gameObject.AddComponent<Highlighter>();
-                        
-                        highlighter.ConstantParams(menu.InteractableGlow);
+                        var highlighter = door.gameObject.GetComponent<Highlighter>() ?? door.gameObject.AddComponent<Highlighter>();
+
+                        highlighter.ConstantParams(Menu.InteractableGlow);
                         highlighter.OccluderOn();
                         highlighter.SeeThroughOn();
                         highlighter.ConstantOn();
@@ -1331,16 +1310,13 @@ namespace TsunamiHack.Tsunami.Lib
                 var targetpos = trap.transform.position;
                 var dist = Vector3.Distance(mypos, targetpos);
 
-                if (menu.EnableEsp && menu.GlowInteractables && menu.Traps)
+                if (Menu.EnableEsp && Menu.GlowInteractables && Menu.Traps)
                 {
-                    if (dist <= menu.Distance || menu.InfDistance)
+                    if (dist <= Menu.Distance || Menu.InfDistance)
                     {
-                        var highligter = trap.gameObject.GetComponent<Highlighter>();
+                        var highligter = trap.gameObject.GetComponent<Highlighter>() ?? trap.gameObject.AddComponent<Highlighter>();
 
-                        if (highligter == null)
-                            highligter = trap.gameObject.AddComponent<Highlighter>();
-                        
-                        highligter.ConstantParams(menu.InteractableGlow);
+                        highligter.ConstantParams(Menu.InteractableGlow);
                         highligter.OccluderOn();
                         highligter.SeeThroughOn();
                         highligter.ConstantOn();
@@ -1372,16 +1348,13 @@ namespace TsunamiHack.Tsunami.Lib
                 var targetpos = flag.transform.position;
                 var dist = Vector3.Distance(mypos, targetpos);
 
-                if (menu.EnableEsp && menu.GlowInteractables && menu.Flag)
+                if (Menu.EnableEsp && Menu.GlowInteractables && Menu.Flag)
                 {
-                    if (dist <= menu.Distance || menu.InfDistance)
+                    if (dist <= Menu.Distance || Menu.InfDistance)
                     {
-                        var highlighter = flag.gameObject.GetComponent<Highlighter>();
+                        var highlighter = flag.gameObject.GetComponent<Highlighter>() ?? flag.gameObject.AddComponent<Highlighter>();
 
-                        if (highlighter == null)
-                            highlighter = flag.gameObject.AddComponent<Highlighter>();
-                        
-                        highlighter.ConstantParams(menu.InteractableGlow);
+                        highlighter.ConstantParams(Menu.InteractableGlow);
                         highlighter.OccluderOn();
                         highlighter.SeeThroughOn();
                         highlighter.ConstantOn();
@@ -1413,16 +1386,13 @@ namespace TsunamiHack.Tsunami.Lib
                 var targetpos = sentry.transform.position;
                 var dist = Vector3.Distance(mypos, targetpos);
 
-                if (menu.EnableEsp && menu.GlowInteractables && menu.Sentries)
+                if (Menu.EnableEsp && Menu.GlowInteractables && Menu.Sentries)
                 {
-                    if (dist <= menu.Distance || menu.InfDistance)
+                    if (dist <= Menu.Distance || Menu.InfDistance)
                     {
-                        var highlighter = sentry.gameObject.GetComponent<Highlighter>();
+                        var highlighter = sentry.gameObject.GetComponent<Highlighter>() ?? sentry.gameObject.AddComponent<Highlighter>();
 
-                        if (highlighter == null)
-                            highlighter = sentry.gameObject.AddComponent<Highlighter>();
-                        
-                        highlighter.ConstantParams(menu.InteractableGlow);
+                        highlighter.ConstantParams(Menu.InteractableGlow);
                         highlighter.OccluderOn();
                         highlighter.SeeThroughOn();
                         highlighter.ConstantOn();
@@ -1458,16 +1428,13 @@ namespace TsunamiHack.Tsunami.Lib
                     var targetpos = airdrop.transform.position;
                     var dist = Vector3.Distance(mypos, targetpos);
 
-                    if (menu.EnableEsp && menu.GlowInteractables && menu.Airdrop)
+                    if (Menu.EnableEsp && Menu.GlowInteractables && Menu.Airdrop)
                     {
-                        if (dist <= menu.Distance || menu.InfDistance)
+                        if (dist <= Menu.Distance || Menu.InfDistance)
                         {
-                            var highlighter = airdrop.gameObject.GetComponent<Highlighter>();
+                            var highlighter = airdrop.gameObject.GetComponent<Highlighter>() ?? airdrop.gameObject.AddComponent<Highlighter>();
 
-                            if (highlighter == null)
-                                highlighter = airdrop.gameObject.AddComponent<Highlighter>();
-                        
-                            highlighter.ConstantParams(menu.InteractableGlow);
+                            highlighter.ConstantParams(Menu.InteractableGlow);
                             highlighter.OccluderOn();
                             highlighter.SeeThroughOn();
                             highlighter.ConstantOn();
@@ -1501,16 +1468,13 @@ namespace TsunamiHack.Tsunami.Lib
                 var targetpos = npc.transform.position;
                 var dist = Vector3.Distance(mypos, targetpos);
 
-                if (menu.EnableEsp && menu.GlowInteractables && menu.Npc)
+                if (Menu.EnableEsp && Menu.GlowInteractables && Menu.Npc)
                 {
-                    if (dist <= menu.Distance || menu.InfDistance)
+                    if (dist <= Menu.Distance || Menu.InfDistance)
                     {
-                        var highlighter = npc.gameObject.GetComponent<Highlighter>();
+                        var highlighter = npc.gameObject.GetComponent<Highlighter>() ?? npc.gameObject.AddComponent<Highlighter>();
 
-                        if (highlighter == null)
-                            highlighter = npc.gameObject.AddComponent<Highlighter>();
-                        
-                        highlighter.ConstantParams(menu.InteractableGlow);
+                        highlighter.ConstantParams(Menu.InteractableGlow);
                         highlighter.OccluderOn();
                         highlighter.SeeThroughOn();
                         highlighter.ConstantOn();
@@ -1541,64 +1505,63 @@ namespace TsunamiHack.Tsunami.Lib
         
         internal static void UpdateColors()
         {
-            EnemyPlayerGlow = menu.EnemyPlayerGlow;
-            FriendlyPlayerGlow = menu.FriendlyPlayerGlow;
-            ZombieGlow = menu.ZombieGlow;
-            ItemGlow = menu.ItemGlow;
-            InteractableGlow = menu.InteractableGlow;
-            VehicleGlow = menu.VehicleGlow;
+            EnemyPlayerGlow = Menu.EnemyPlayerGlow;
+            FriendlyPlayerGlow = Menu.FriendlyPlayerGlow;
+            ZombieGlow = Menu.ZombieGlow;
+            ItemGlow = Menu.ItemGlow;
+            InteractableGlow = Menu.InteractableGlow;
+            VehicleGlow = Menu.VehicleGlow;
 
-            BoxPlayerFriendly = menu.BoxPlayerFriendly;
-            BoxPlayerEnemy = menu.BoxPlayerEnemy;
-            BoxZombie = menu.BoxZombie;
+            BoxPlayerFriendly = Menu.BoxPlayerFriendly;
+            BoxPlayerEnemy = Menu.BoxPlayerEnemy;
+            BoxZombie = Menu.BoxZombie;
         }
         
         internal static void UpdateLists()
         {
 
-                if (menu.GlowPlayers || menu.PlayerName || menu.PlayerWeapon || menu.PlayerDistance)
+                if (Menu.GlowPlayers || Menu.PlayerName || Menu.PlayerWeapon || Menu.PlayerDistance)
                     Players = Provider.clients.ToArray();
-                if (menu.GlowZombies || menu.ZombieName || menu.ZombieDistance || menu.ZombieSpecialty)
+                if (Menu.GlowZombies || Menu.ZombieName || Menu.ZombieDistance || Menu.ZombieSpecialty)
                     Zombies = Object.FindObjectsOfType<Zombie>();
-                if (menu.GlowItems || menu.ItemName || menu.ItemDistance)
+                if (Menu.GlowItems || Menu.ItemName || Menu.ItemDistance)
                     Items = Object.FindObjectsOfType<InteractableItem>();
-                if (menu.GlowVehicles || menu.VehicleName || menu.VehicleDistance)
+                if (Menu.GlowVehicles || Menu.VehicleName || Menu.VehicleDistance)
                     Vehicles = Object.FindObjectsOfType<InteractableVehicle>();
-                if (menu.GlowInteractables && menu.Animals || menu.AnimalName || menu.AnimalDistance)
+                if (Menu.GlowInteractables && Menu.Animals || Menu.AnimalName || Menu.AnimalDistance)
                     Animals = Object.FindObjectsOfType<Animal>();
-                if (menu.GlowInteractables && menu.Forages || menu.ForageType || menu.ForageDistance)
+                if (Menu.GlowInteractables && Menu.Forages || Menu.ForageType || Menu.ForageDistance)
                     Forages = Object.FindObjectsOfType<InteractableForage>();
-                if (menu.GlowInteractables && menu.Storages || menu.StorageType || menu.StorageDistance)
+                if (Menu.GlowInteractables && Menu.Storages || Menu.StorageType || Menu.StorageDistance)
                     Storages = Object.FindObjectsOfType<InteractableStorage>();
-                if (menu.GlowInteractables && menu.Bed || menu.BedDistance)
+                if (Menu.GlowInteractables && Menu.Bed || Menu.BedDistance)
                     Beds = Object.FindObjectsOfType<InteractableBed>();
-                if (menu.GlowInteractables && menu.Doors || menu.DoorType || menu.DoorDistance)
+                if (Menu.GlowInteractables && Menu.Doors || Menu.DoorType || Menu.DoorDistance)
                     Doors = Object.FindObjectsOfType<InteractableDoor>();
-                if (menu.GlowInteractables && menu.Traps || menu.TrapType || menu.TrapDistance)
+                if (Menu.GlowInteractables && Menu.Traps || Menu.TrapType || Menu.TrapDistance)
                     Traps = Object.FindObjectsOfType<InteractableTrap>();
-                if (menu.GlowInteractables && menu.Flag || menu.FlagDistance)
+                if (Menu.GlowInteractables && Menu.Flag || Menu.FlagDistance)
                     Flags = Object.FindObjectsOfType<InteractableClaim>();
-                if (menu.GlowInteractables && menu.Sentries || menu.SentryState || menu.SentryWeapon ||
-                    menu.SentryDistance)
+                if (Menu.GlowInteractables && Menu.Sentries || Menu.SentryState || Menu.SentryWeapon ||
+                    Menu.SentryDistance)
                     Sentries = Object.FindObjectsOfType<InteractableSentry>();
-                if (menu.GlowInteractables && menu.Airdrop || menu.AirdropDistance)
+                if (Menu.GlowInteractables && Menu.Airdrop || Menu.AirdropDistance)
                     Airdrops = Object.FindObjectsOfType<Carepackage>();
-                if (menu.GlowInteractables && menu.Npc || menu.NpcName || menu.NpcWeapon || menu.NpcDistance)
+                if (Menu.GlowInteractables && Menu.Npc || Menu.NpcName || Menu.NpcWeapon || Menu.NpcDistance)
                     Npcs = Object.FindObjectsOfType<InteractableObjectNPC>();
             
         }
 
         internal static Vector3 GetTargetVector(Transform target, string objName)
         {
-            Transform[] componentsInChildren = target.transform.GetComponentsInChildren<Transform>();
-            Vector3 result = Vector3.zero;
+            var componentsInChildren = target.transform.GetComponentsInChildren<Transform>();
+            var result = Vector3.zero;
 
             if (componentsInChildren != null)
             {
-                Transform[] array = componentsInChildren;
-                for (int i = 0; i < array.Length; i++)
+                var array = componentsInChildren;
+                foreach (var transform in array)
                 {
-                    Transform transform = array[i];
                     if (transform.name.Trim() == objName)
                     {
                         result = transform.position + new Vector3(0f, 0.4f, 0f);
@@ -1622,7 +1585,7 @@ namespace TsunamiHack.Tsunami.Lib
             
             GL.PushMatrix();
             GL.Begin(1);
-            boxMaterial.SetPass(0);
+            BoxMaterial.SetPass(0);
             GL.Color(color);
             
             GL.Vertex3(xVal, yVal, 0f);
@@ -1645,57 +1608,49 @@ namespace TsunamiHack.Tsunami.Lib
 
         internal static void GenerateDicts()
         {
-            StorageIds = new Dictionary<int, string>();
-            
-            StorageIds.Add(367, "Birch Crate");
-            StorageIds.Add(366, "Maple Crate");
-            StorageIds.Add(368, "Pine Crate");
-            
-            StorageIds.Add(328, "Locker");
-            
-            StorageIds.Add(1246, "Birch Counter");
-            StorageIds.Add(1245, "Maple Counter");
-            StorageIds.Add(1247, "Pine Counter");
-            StorageIds.Add(1248, "Metal Counter");
-            
-            StorageIds.Add(1279, "Birch Wardrobe");
-            StorageIds.Add(1278, "Maple Wardrobe");
-            StorageIds.Add(1280, "Pine Wardrobe");
-            StorageIds.Add(1281, "Metal Wardrobe");
-            
-            StorageIds.Add(1206, "Birch Trophy Case");
-            StorageIds.Add(1205, "Maple Trophy Case");
-            StorageIds.Add(1207, "Pine Trophy Case");
-            StorageIds.Add(1221, "Metal Trophy Case");
-            
-            StorageIds.Add(1203, "Birch Rifle Rack");
-            StorageIds.Add(1202, "Maple Rifle Rack");
-            StorageIds.Add(1204, "Pine Rifle Rack");
-            StorageIds.Add(1220, "Metal Rifle Rack");
-            
-            StorageIds.Add(1283, "Cooler");
-            StorageIds.Add(1249, "Fridge");
-            
-            
-            DoorIds = new Dictionary<int, string>();
-            
-            DoorIds.Add(282,"Birch Door");
-            DoorIds.Add(281,"Maple Door");
-            DoorIds.Add(283,"Pine Door");
-            DoorIds.Add(378,"Metal Door");
-            
-            DoorIds.Add(284, "Jail Door");
-            DoorIds.Add(286, "Vault Door");
-            
-            DoorIds.Add(1236, "Birch Double Doors");
-            DoorIds.Add(1235, "Maple Double Doors");
-            DoorIds.Add(1237, "Pine Double Doors");
-            DoorIds.Add(1238, "Metal Double Doors");
-            
-            DoorIds.Add(1330, "Birch Hatch");
-            DoorIds.Add(1331, "Pine Hatch");
-            DoorIds.Add(1332, "Metal Hatch");
-            DoorIds.Add(1329, "Maple Hatch");
+            StorageIds = new Dictionary<int, string>
+            {
+                {367, "Birch Crate"},
+                {366, "Maple Crate"},
+                {368, "Pine Crate"},
+                {328, "Locker"},
+                {1246, "Birch Counter"},
+                {1245, "Maple Counter"},
+                {1247, "Pine Counter"},
+                {1248, "Metal Counter"},
+                {1279, "Birch Wardrobe"},
+                {1278, "Maple Wardrobe"},
+                {1280, "Pine Wardrobe"},
+                {1281, "Metal Wardrobe"},
+                {1206, "Birch Trophy Case"},
+                {1205, "Maple Trophy Case"},
+                {1207, "Pine Trophy Case"},
+                {1221, "Metal Trophy Case"},
+                {1203, "Birch Rifle Rack"},
+                {1202, "Maple Rifle Rack"},
+                {1204, "Pine Rifle Rack"},
+                {1220, "Metal Rifle Rack"},
+                {1283, "Cooler"},
+                {1249, "Fridge"}
+            };
+
+            DoorIds = new Dictionary<int, string>
+            {
+                {282, "Birch Door"},
+                {281, "Maple Door"},
+                {283, "Pine Door"},
+                {378, "Metal Door"},
+                {284, "Jail Door"},
+                {286, "Vault Door"},
+                {1236, "Birch Double Doors"},
+                {1235, "Maple Double Doors"},
+                {1237, "Pine Double Doors"},
+                {1238, "Metal Double Doors"},
+                {1330, "Birch Hatch"},
+                {1331, "Pine Hatch"},
+                {1332, "Metal Hatch"},
+                {1329, "Maple Hatch"}
+            };
 
         }
     }

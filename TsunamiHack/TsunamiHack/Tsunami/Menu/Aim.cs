@@ -102,7 +102,6 @@ namespace TsunamiHack.Tsunami.Menu
         }
 
         
-        //TODO:flesh out update logic
         public void Update()
         {
             

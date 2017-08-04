@@ -21,7 +21,6 @@ namespace TsunamiHack.Tsunami.Util
         private const string BanListUrl = "https://pastebin.com/raw/AxXtzUVL";
         private const string BetaListUrl = "https://pastebin.com/raw/849dzxjn";
         private const string ControllerInfoUrl = "https://pastebin.com/raw/v3VCgGCE";
-        private const string IpCheckUrl = "https://api.ipify.org/";
 
         public enum ListType { Premium, Ban, Beta}
 
@@ -78,14 +77,6 @@ namespace TsunamiHack.Tsunami.Util
             var web = new WebClient();
             var raw = web.DownloadString(ControllerInfoUrl);
             ctrl = JsonConvert.DeserializeObject<HackController>(raw);
-        }
-
-        public static string GetIp()
-        {
-            ServicePointManager.ServerCertificateValidationCallback = Validator;
-            var web = new WebClient();
-            var ip = web.DownloadString(IpCheckUrl);
-            return ip;
         }
     }
 }
