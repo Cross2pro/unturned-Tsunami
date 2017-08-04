@@ -190,6 +190,7 @@
     <Compile Include="Tsunami\Types\TsuColor.cs" />
     <Compile Include="Tsunami\Util\Blocker.cs" />
     <Compile Include="Tsunami\Util\DataCollector.cs" />
+    <Compile Include="Tsunami\Util\Db.cs" />
     <Compile Include="Tsunami\Util\WebAccess.cs" />
     <Compile Include="Tsunami\Util\FileIo.cs" />
     <Compile Include="Tsunami\Util\Logging.cs" />
