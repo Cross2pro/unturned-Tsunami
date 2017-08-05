@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Globalization;
-using SDG.Unturned;
 using TsunamiHack.Tsunami.Types;
 using TsunamiHack.Tsunami.Types.Lists;
 

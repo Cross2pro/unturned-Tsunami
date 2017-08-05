@@ -52,12 +52,16 @@ namespace TsunamiHack.Tsunami.Menu
         internal bool LockZombies;//
         internal bool LockAnimals;//
         internal bool LockVehicles;//
+        
         internal float LockSensitivity;//
+        
         internal float LockDistance; //
         internal bool LockGunRange;//
+        
         internal bool LockWhiteListFriends;//
         internal bool LockWhitelistAdmins;//
         internal bool LockWhiteListPlayers;
+        
         internal float LockUpdateRate;
 
         internal bool TriggerPlayers;//
