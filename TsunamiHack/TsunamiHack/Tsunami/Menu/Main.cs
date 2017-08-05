@@ -52,6 +52,8 @@ namespace TsunamiHack.Tsunami.Menu
 
         public void Start()
         {
+            Lib.Main.Start();
+            
             try
             {
                 var player = PlayerTools.GetSteamPlayer(Player.player);
@@ -96,6 +98,8 @@ namespace TsunamiHack.Tsunami.Menu
             playerfocus = 0;
             friendfocus = 0;
             
+            
+            
         }
 
         public void Update()
@@ -123,6 +127,10 @@ namespace TsunamiHack.Tsunami.Menu
             }
 
             Player.player.look.isOrbiting = CameraFreeFlight;
+            
+            
+            Lib.Main.Update();
+            
         }
 
         public void OnGUI()

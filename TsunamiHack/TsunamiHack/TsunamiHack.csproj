@@ -164,6 +164,7 @@
     <Compile Include="Tsunami\IMenuParent.cs" />
     <Compile Include="Tsunami\Lib\Aim.cs" />
     <Compile Include="Tsunami\Lib\Keybind.cs" />
+    <Compile Include="Tsunami\Lib\Main.cs" />
     <Compile Include="Tsunami\Lib\Visuals.cs" />
     <Compile Include="Tsunami\Manager\Hook.cs" />
     <Compile Include="Tsunami\Manager\Loader.cs" />

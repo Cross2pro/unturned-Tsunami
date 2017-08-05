@@ -13,10 +13,10 @@ namespace TsunamiHack.Tsunami.Lib
 
         private static float defsense;
 
-        internal static void Start(Menu.Aim menu)
+        internal static void Start()
         {
             lastLock = DateTime.Now;
-            Aim.menu = menu;
+            menu = WaveMaker.MenuAim;
 
             defsense = Player.player.look.sensitivity;
         }
@@ -52,7 +52,7 @@ namespace TsunamiHack.Tsunami.Lib
                 RaycastHit hit;
                 Physics.Raycast(mypos, look.aim.forward, out hit, range, RayMasks.DAMAGE_CLIENT);
 
-                /*if (hit.transform.CompareTag("Enemy") && menu.LockPlayers)
+                if (hit.transform.CompareTag("Enemy") && menu.LockPlayers)
                 {
                     var player = PlayerTools.GetSteamPlayer(hit.transform);
 
@@ -62,23 +62,20 @@ namespace TsunamiHack.Tsunami.Lib
                     if (player.isAdmin && menu.LockWhitelistAdmins)
                         return;
                     
-                    if(!player.player.life.isDead)
-                    
                     locksense = true;
                 }
-                else */if (hit.transform.CompareTag("Zombie") && menu.LockZombies)
+                else if (hit.transform.CompareTag("Zombie") && menu.LockZombies)
                 {
-                    if(!PlayerTools.GetZombie(hit.transform).isDead)
-                        locksense = true;
+                    locksense = true;
                 }
-/*                else if (hit.transform.CompareTag("Vehicle") && menu.LockVehicles)
+                else if (hit.transform.CompareTag("Vehicle") && menu.LockVehicles)
                 {
-                    
-                }*/
+                    locksense = true; 
+                }
 
                 if (locksense)
                 {
-                    var newsense = defsense / menu.LockSensitivity / Time.deltaTime;
+                    look.sensitivity = defsense / menu.LockSensitivity;
                 }
                 else
                 {
