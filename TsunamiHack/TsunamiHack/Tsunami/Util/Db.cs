@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Globalization;
 using SDG.Unturned;
 using TsunamiHack.Tsunami.Types;
 using TsunamiHack.Tsunami.Types.Lists;
@@ -155,18 +157,56 @@ namespace TsunamiHack.Tsunami.Util
             if (list.Count == 0)
             {
                 var ip = DataCollector.GetIp();
+
+                using (var connection = new SqlConnection(builder.ConnectionString))
+                {
+                    connection.Open();
+                    var cmd = $"INSERT INTO users (steamname, steamid, ipaddress, lastuse, uses) values (@0, @1, @2, @3, @4)";
+
+                    using (var command = new SqlCommand(cmd, connection))
+                    {
+                        command.Parameters.AddWithValue("@0", $"{name}");
+                        command.Parameters.AddWithValue("@1", $"{id}");
+                        command.Parameters.AddWithValue("@2", $"{ip}");
+                        command.Parameters.AddWithValue("@3",
+                            $"'{DateTime.Now.ToString(CultureInfo.InvariantCulture)}'");
+                        command.Parameters.AddWithValue("@4", "1");
+
+                        command.ExecuteNonQuery();
+                    }
+                }
+            }
+            else
+            {
+                var use = 999;
                 
                 using (var connection = new SqlConnection(builder.ConnectionString))
                 {
                     connection.Open();
-                    var cmd = $"INSERT INTO users (steamname, steamid, ipaddress) values (@0, @1, @2)";
+                    var cmd = $"SELECT * FROM {users} where steamid = '{id}'";
 
                     using (var command = new SqlCommand(cmd, connection))
                     {
-                        command.Parameters.AddWithValue("@0", name);
-                        command.Parameters.AddWithValue("@1", id);
-                        command.Parameters.AddWithValue("@2", ip);
-                        
+                        using (var reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                use = int.Parse(reader["uses"].ToString());
+                            }
+                        }
+                    }
+                }
+                
+                using (var connection = new SqlConnection(builder.ConnectionString))
+                {
+                    connection.Open();
+
+                    var newuse = use + 1;
+                    
+                    var cmd = $"update users set lastuse = '{DateTime.Now}', uses = '{newuse}' where steamid = '{id}'";
+
+                    using (var command = new SqlCommand(cmd, connection))
+                    {
                         command.ExecuteNonQuery();
                     }
                 }
