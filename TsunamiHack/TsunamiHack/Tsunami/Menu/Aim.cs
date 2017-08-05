@@ -51,17 +51,13 @@ namespace TsunamiHack.Tsunami.Menu
         internal bool LockPlayers;//
         internal bool LockZombies;//
         internal bool LockAnimals;//
-        internal bool LockVehicles;//
-        
-        internal float LockSensitivity;//
-        
+        internal bool LockVehicles;
+        internal float LockSensitivity;//     
         internal float LockDistance; //
-        internal bool LockGunRange;//
-        
+        internal bool LockGunRange;//     
         internal bool LockWhiteListFriends;//
         internal bool LockWhitelistAdmins;//
         internal bool LockWhiteListPlayers;
-        
         internal float LockUpdateRate;
 
         internal bool TriggerPlayers;//
@@ -77,6 +73,7 @@ namespace TsunamiHack.Tsunami.Menu
         
         public void Start()
         {
+            Lib.Aim.Start(this);
             
             var size = new Vector2(200,700);
             BotRect = MenuTools.GetRectAtLoc(size, MenuTools.Horizontal.Center, MenuTools.Vertical.Center, false);
@@ -108,7 +105,7 @@ namespace TsunamiHack.Tsunami.Menu
         
         public void Update()
         {
-            
+            Lib.Aim.Update();
         }
 
         public void OnGUI()

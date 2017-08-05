@@ -1,6 +1,7 @@
 ﻿using System;
 using SDG.Unturned;
 using TsunamiHack.Tsunami.Manager;
+using TsunamiHack.Tsunami.Util;
 using UnityEngine;
 
 namespace TsunamiHack.Tsunami.Lib
@@ -10,10 +11,14 @@ namespace TsunamiHack.Tsunami.Lib
         private static DateTime lastLock;
         private static Menu.Aim menu;
 
+        private static float defsense;
+
         internal static void Start(Menu.Aim menu)
         {
             lastLock = DateTime.Now;
             Aim.menu = menu;
+
+            defsense = Player.player.look.sensitivity;
         }
         
         internal static void Update()
@@ -33,47 +38,53 @@ namespace TsunamiHack.Tsunami.Lib
         {
             if (menu.EnableAimlock)
             {
-                if (menu.LockPlayers)
+                var look = Player.player.look;
+                var mypos = Camera.main.transform.position;
+                var range = menu.LockDistance;
+                
+                var locksense = false;
+
+                if (menu.LockGunRange && Player.player.equipment.asset is ItemWeaponAsset)
                 {
-                    foreach (var client in Provider.clients)
-                    {
-                        var mypos = Camera.main.transform.position;
-                        var targetpos = client.player.transform.position;
-                        var dist = Vector3.Distance(mypos, targetpos);
-                        var range = menu.LockDistance;
-                        
-                        if (menu.LockGunRange && client.player.equipment.asset is ItemWeaponAsset)
-                        {
-                            range = ((ItemWeaponAsset) client.player.equipment.asset).range;
-                        }
-
-                        if (dist <= range)
-                        {
-                            if (WaveMaker.Friends.Contains(client.playerID.steamID.m_SteamID) &&  menu.LockWhiteListFriends)
-                                return;
-
-                            if (client.isAdmin && menu.LockWhitelistAdmins)
-                                return;
-
-                            
-                        }
-                    }
+                    range = ((ItemWeaponAsset) Player.player.equipment.asset).range;
                 }
+                
+                RaycastHit hit;
+                Physics.Raycast(mypos, look.aim.forward, out hit, range, RayMasks.DAMAGE_CLIENT);
 
-                if (menu.LockZombies)
+                /*if (hit.transform.CompareTag("Enemy") && menu.LockPlayers)
+                {
+                    var player = PlayerTools.GetSteamPlayer(hit.transform);
+
+                    if (WaveMaker.Friends.Contains(player.playerID.steamID.m_SteamID) && menu.LockWhiteListFriends)
+                        return;
+                    
+                    if (player.isAdmin && menu.LockWhitelistAdmins)
+                        return;
+                    
+                    if(!player.player.life.isDead)
+                    
+                    locksense = true;
+                }
+                else */if (hit.transform.CompareTag("Zombie") && menu.LockZombies)
+                {
+                    if(!PlayerTools.GetZombie(hit.transform).isDead)
+                        locksense = true;
+                }
+/*                else if (hit.transform.CompareTag("Vehicle") && menu.LockVehicles)
                 {
                     
-                }
+                }*/
 
-                if (menu.LockAnimals)
+                if (locksense)
                 {
-                    
+                    var newsense = defsense / menu.LockSensitivity / Time.deltaTime;
                 }
-
-                if (menu.LockVehicles)
+                else
                 {
-                    
+                    look.sensitivity = defsense;
                 }
+                
             }
         }
     }

@@ -16,5 +16,29 @@ namespace TsunamiHack.Tsunami.Util
 
             return null;
         }
+
+        public static SteamPlayer GetSteamPlayer(Transform trans)
+        {
+            foreach (var user in Provider.clients)
+            {
+                if (user.player.transform == trans)
+                    return user;
+            }
+
+            return null;
+        }
+
+        public static Zombie GetZombie(Transform trans)
+        {
+            var zoms = Object.FindObjectsOfType<Zombie>();
+            
+            foreach (var zombie in zoms )
+            {
+                if (zombie.transform == trans)
+                    return zombie;
+            }
+
+            return null;
+        }
     }
 }

@@ -91,7 +91,7 @@ namespace TsunamiHack.Tsunami.Manager
                 Blocker.BlockerEnabled = true;
                 WaveMaker.HackDisabled = true;
                 Controller.Disabled = true;
-            }
+            } 
             else
                 Util.Blocker.DisabledType = Blocker.Type.Disabled;
         }
