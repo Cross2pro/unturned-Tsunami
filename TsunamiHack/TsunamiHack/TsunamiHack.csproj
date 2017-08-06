@@ -177,6 +177,7 @@
     <Compile Include="Tsunami\Types\ColorChangeType.cs" />
     <Compile Include="Tsunami\Types\Configs\Settings.cs" />
     <Compile Include="Tsunami\Types\Friend.cs" />
+    <Compile Include="Tsunami\Types\GunAsset.cs" />
     <Compile Include="Tsunami\Types\Lists\BanList.cs" />
     <Compile Include="Tsunami\Types\Lists\BetaList.cs" />
     <Compile Include="Tsunami\Types\Exceptions.cs" />
