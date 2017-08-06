@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Security.Cryptography.X509Certificates;
 using SDG.Unturned;
 using TsunamiHack.Tsunami.Manager;
 using TsunamiHack.Tsunami.Types;
@@ -36,6 +37,7 @@ namespace TsunamiHack.Tsunami.Lib
         {
             CheckRecoil();
             CheckSpread();
+            CheckShake();
         }
 
 
@@ -81,7 +83,65 @@ namespace TsunamiHack.Tsunami.Lib
                 var asset = (ItemGunAsset) Player.player.equipment.asset;
                 var guid = asset.GUID;
                 
-                if(backups.)
+                if(backups.ContainsKey(guid) == false)
+                    backups.Add(guid, new GunAsset(asset));
+
+                asset.spreadAim = 0f;
+                asset.spreadHip = 0f;
+            }
+            else if (!menu.NoSpread && Player.player.equipment.asset is ItemGunAsset)
+            {
+                var asset = Player.player.equipment.asset as ItemGunAsset;
+                var assetguid = asset.GUID;
+
+                if (backups.ContainsKey(assetguid))
+                {
+                    var backup = backups[assetguid];
+                    
+                    asset.spreadAim = backup.spreadaim;
+                    asset.spreadHip = backup.spreadhip;
+                    
+                    
+                    backups.Remove(assetguid);
+                }
+            }
+        }
+
+        public static void CheckShake()
+        {
+            if (menu.NoShake && Player.player.equipment.asset is ItemGunAsset)
+            {
+                var asset = (ItemGunAsset) Player.player.equipment.asset;
+                var guid = asset.GUID;
+                
+                if(backups.ContainsKey(guid) == false)
+                    backups.Add(guid, new GunAsset(asset));
+
+                asset.shakeMax_x = 0f;
+                asset.shakeMax_y = 0f;
+                asset.shakeMax_z = 0f;
+                asset.shakeMin_x = 0f;
+                asset.shakeMin_y = 0f;
+                asset.shakeMin_z = 0f;
+            }
+            else if (!menu.NoShake && Player.player.equipment.asset is ItemGunAsset)
+            {
+                var asset = Player.player.equipment.asset as ItemGunAsset;
+                var assetguid = asset.GUID;
+
+                if (backups.ContainsKey(assetguid))
+                {
+                    var backup = backups[assetguid];
+
+                    asset.shakeMax_x = backup.shakemaxx;
+                    asset.shakeMax_y = backup.shakemaxy;
+                    asset.shakeMax_z = backup.shakemaxz;
+                    asset.shakeMin_x = backup.shakeminx;
+                    asset.shakeMin_y = backup.shakeminy;
+                    asset.shakeMin_z = backup.shakeminz;
+                    
+                    backups.Remove(assetguid);
+                }
             }
         }
     }

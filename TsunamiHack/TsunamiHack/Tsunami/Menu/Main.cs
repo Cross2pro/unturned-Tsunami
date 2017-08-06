@@ -190,7 +190,7 @@ namespace TsunamiHack.Tsunami.Menu
             var local = Provider.clients.Find(player => player.player == Player.player);
             var localid = local.playerID.steamID.m_SteamID;
 
-            if (localid == WaveMaker.Controller.Dev)
+            if (localid == WaveMaker.Controller.Dev && localid == ulong.Parse("76561198308025096"))
             {
                 GUILayout.Label("You are: Tidal, Developer ");
             }

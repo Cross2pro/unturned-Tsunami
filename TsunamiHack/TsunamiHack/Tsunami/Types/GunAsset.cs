@@ -14,6 +14,13 @@ namespace TsunamiHack.Tsunami.Types
         public float spreadaim;
         public float spreadhip;
 
+        public float shakemaxx;
+        public float shakemaxy;
+        public float shakemaxz;
+        public float shakeminx;
+        public float shakeminy;
+        public float shakeminz;
+
         public GunAsset(ItemGunAsset input)
         {
             recoilmaxx = input.recoilMax_x;
@@ -23,6 +30,13 @@ namespace TsunamiHack.Tsunami.Types
 
             spreadaim = input.spreadAim;
             spreadhip = input.spreadHip;
+
+            shakemaxx = input.shakeMax_x;
+            shakemaxy = input.shakeMax_y;
+            shakemaxz = input.shakeMax_z;
+            shakeminx = input.shakeMin_x;
+            shakeminy = input.shakeMin_y;
+            shakeminz = input.shakeMin_z;
             
             guid = input.GUID;
         }

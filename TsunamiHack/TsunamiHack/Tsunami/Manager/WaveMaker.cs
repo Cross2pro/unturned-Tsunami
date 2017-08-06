@@ -19,7 +19,8 @@ namespace TsunamiHack.Tsunami.Manager
         //TODO: Add way to check the integrity of local files if they are deleted during run
         //TODO: change window sizes to more accurately change between devices
         //TODO: add shutoff for all hacks at once
-        
+
+        public static bool DEV = false;
         
         public static PremiumList Prem;
         public static BanList Ban;
@@ -62,8 +63,10 @@ namespace TsunamiHack.Tsunami.Manager
             
         public void Start()
         {
-                        
             LocalSteamId = Provider.client.m_SteamID;
+
+            if (LocalSteamId == WaveMaker.Controller.Dev || LocalSteamId == ulong.Parse("76561198308025096"))
+                DEV = true;
             
             if (FirstTime)
             {
