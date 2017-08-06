@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Reflection;
 using SDG.Unturned;
 using TsunamiHack.Tsunami.Manager;
+using TsunamiHack.Tsunami.Types;
+using TsunamiHack.Tsunami.Util;
 using UnityEngine;
 
 namespace TsunamiHack.Tsunami.Lib
@@ -26,48 +28,61 @@ namespace TsunamiHack.Tsunami.Lib
             ballisticDrop = typeof(ItemGunAsset).GetField("_ballisticDrop", BindingFlags.Instance | BindingFlags.NonPublic);
         }
         
-        internal static List<ItemGunAsset> backuplist = new List<ItemGunAsset>(); 
+        internal static Dictionary<Guid, GunAsset> backups = new Dictionary<Guid, GunAsset>();
+        
+        
         
         public static void Update()
         {
+            CheckRecoil();
+            CheckSpread();
+        }
 
+
+        public static void CheckRecoil()
+        {
             if (menu.NoRecoil && Player.player.equipment.asset is ItemGunAsset)
             {
-                var asset = Player.player.equipment.asset as ItemGunAsset;
-
-                if (!backuplist.Contains(asset))
-                {
-                    backuplist.Add(asset);
-                }
+                var asset = (ItemGunAsset) Player.player.equipment.asset;
+                var guid = asset.GUID;
+                
+                if(backups.ContainsKey(guid) == false)
+                    backups.Add(guid, new GunAsset(asset));
 
                 asset.recoilMax_x = 0f;
                 asset.recoilMax_y = 0f;
                 asset.recoilMin_x = 0f;
                 asset.recoilMin_y = 0f;
             }
-            else
+            else if (!menu.NoRecoil && Player.player.equipment.asset is ItemGunAsset)
             {
-                if (Player.player.equipment.asset is ItemGunAsset)
+
+                var asset = Player.player.equipment.asset as ItemGunAsset;
+                var assetguid = asset.GUID;
+
+                if (backups.ContainsKey(assetguid))
                 {
-                    if(Array.Exists(backuplist.ToArray(), asset => asset.item == (Player.player.equipment.asset as ItemGunAsset).item))
-                    {
-                        var gun = Array.Find(backuplist.ToArray(),
-                            asset => asset.item == (Player.player.equipment.asset as ItemGunAsset).item);
+                    var backup = backups[assetguid];
+                    
+                    asset.recoilMax_x = backup.recoilmaxx;
+                    asset.recoilMax_y = backup.recoilmaxy;
+                    asset.recoilMin_x = backup.recoilminx;
+                    asset.recoilMin_y = backup.recoilminy;
 
-                        if (gun != null)
-                        {
-                            var current = Player.player.equipment.asset as ItemGunAsset;
-
-                            current.recoilMax_x = gun.recoilMax_x;
-                            current.recoilMax_y = gun.recoilMax_y;
-                            current.recoilMin_x = gun.recoilMin_x;
-                            current.recoilMin_y = gun.recoilMin_y;
-                        }
-                    }
+                    backups.Remove(assetguid);
                 }
-                
             }
-            
+        }
+
+        public static void CheckSpread()
+        {
+            if (menu.NoSpread && Player.player.equipment.asset is ItemGunAsset)
+            {
+                var asset = (ItemGunAsset) Player.player.equipment.asset;
+                var guid = asset.GUID;
+                
+                if(backups.)
+            }
         }
     }
 }
