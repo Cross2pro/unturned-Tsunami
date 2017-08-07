@@ -21,6 +21,9 @@ namespace TsunamiHack.Tsunami.Types
         public float shakeminy;
         public float shakeminz;
 
+        public float ballisticforce;
+        public float ballisticdrop;
+        
         public GunAsset(ItemGunAsset input)
         {
             recoilmaxx = input.recoilMax_x;
@@ -37,6 +40,9 @@ namespace TsunamiHack.Tsunami.Types
             shakeminx = input.shakeMin_x;
             shakeminy = input.shakeMin_y;
             shakeminz = input.shakeMin_z;
+
+            ballisticforce = input.ballisticForce;
+            ballisticdrop = input.ballisticDrop;
             
             guid = input.GUID;
         }

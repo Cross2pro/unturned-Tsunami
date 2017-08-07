@@ -5,7 +5,6 @@ using System.Security.Cryptography.X509Certificates;
 using SDG.Unturned;
 using TsunamiHack.Tsunami.Manager;
 using TsunamiHack.Tsunami.Types;
-using TsunamiHack.Tsunami.Util;
 using UnityEngine;
 
 namespace TsunamiHack.Tsunami.Lib
@@ -16,7 +15,13 @@ namespace TsunamiHack.Tsunami.Lib
         internal static FieldInfo spreadHip;
         internal static FieldInfo ballisticForce;
         internal static FieldInfo ballisticDrop;
+        internal static Dictionary<Guid, GunAsset> backupsrecoil = new Dictionary<Guid, GunAsset>();
+        internal static Dictionary<Guid, GunAsset> backupsspread = new Dictionary<Guid, GunAsset>();
+        internal static Dictionary<Guid, GunAsset> backupsshake = new Dictionary<Guid, GunAsset>();
+        internal static Dictionary<Guid, GunAsset> backupsdrop = new Dictionary<Guid, GunAsset>();
 
+
+        
         internal static Menu.Main menu;
         
         public static void Start()
@@ -29,17 +34,12 @@ namespace TsunamiHack.Tsunami.Lib
             ballisticDrop = typeof(ItemGunAsset).GetField("_ballisticDrop", BindingFlags.Instance | BindingFlags.NonPublic);
         }
         
-        internal static Dictionary<Guid, GunAsset> backups = new Dictionary<Guid, GunAsset>();
-        
-        
-        
         public static void Update()
         {
             CheckRecoil();
             CheckSpread();
             CheckShake();
         }
-
 
         public static void CheckRecoil()
         {
@@ -48,8 +48,8 @@ namespace TsunamiHack.Tsunami.Lib
                 var asset = (ItemGunAsset) Player.player.equipment.asset;
                 var guid = asset.GUID;
                 
-                if(backups.ContainsKey(guid) == false)
-                    backups.Add(guid, new GunAsset(asset));
+                if(backupsrecoil.ContainsKey(guid) == false)
+                    backupsrecoil.Add(guid, new GunAsset(asset));
 
                 asset.recoilMax_x = 0f;
                 asset.recoilMax_y = 0f;
@@ -62,16 +62,16 @@ namespace TsunamiHack.Tsunami.Lib
                 var asset = Player.player.equipment.asset as ItemGunAsset;
                 var assetguid = asset.GUID;
 
-                if (backups.ContainsKey(assetguid))
+                if (backupsrecoil.ContainsKey(assetguid))
                 {
-                    var backup = backups[assetguid];
+                    var backup = backupsrecoil[assetguid];
                     
                     asset.recoilMax_x = backup.recoilmaxx;
                     asset.recoilMax_y = backup.recoilmaxy;
                     asset.recoilMin_x = backup.recoilminx;
                     asset.recoilMin_y = backup.recoilminy;
 
-                    backups.Remove(assetguid);
+                    backupsrecoil.Remove(assetguid);
                 }
             }
         }
@@ -83,8 +83,8 @@ namespace TsunamiHack.Tsunami.Lib
                 var asset = (ItemGunAsset) Player.player.equipment.asset;
                 var guid = asset.GUID;
                 
-                if(backups.ContainsKey(guid) == false)
-                    backups.Add(guid, new GunAsset(asset));
+                if(backupsspread.ContainsKey(guid) == false)
+                    backupsspread.Add(guid, new GunAsset(asset));
 
                 asset.spreadAim = 0f;
                 asset.spreadHip = 0f;
@@ -94,15 +94,15 @@ namespace TsunamiHack.Tsunami.Lib
                 var asset = Player.player.equipment.asset as ItemGunAsset;
                 var assetguid = asset.GUID;
 
-                if (backups.ContainsKey(assetguid))
+                if (backupsspread.ContainsKey(assetguid))
                 {
-                    var backup = backups[assetguid];
+                    var backup = backupsspread[assetguid];
                     
                     asset.spreadAim = backup.spreadaim;
                     asset.spreadHip = backup.spreadhip;
                     
                     
-                    backups.Remove(assetguid);
+                    backupsspread.Remove(assetguid);
                 }
             }
         }
@@ -114,8 +114,8 @@ namespace TsunamiHack.Tsunami.Lib
                 var asset = (ItemGunAsset) Player.player.equipment.asset;
                 var guid = asset.GUID;
                 
-                if(backups.ContainsKey(guid) == false)
-                    backups.Add(guid, new GunAsset(asset));
+                if(backupsshake.ContainsKey(guid) == false)
+                    backupsshake.Add(guid, new GunAsset(asset));
 
                 asset.shakeMax_x = 0f;
                 asset.shakeMax_y = 0f;
@@ -129,9 +129,9 @@ namespace TsunamiHack.Tsunami.Lib
                 var asset = Player.player.equipment.asset as ItemGunAsset;
                 var assetguid = asset.GUID;
 
-                if (backups.ContainsKey(assetguid))
+                if (backupsshake.ContainsKey(assetguid))
                 {
-                    var backup = backups[assetguid];
+                    var backup = backupsshake[assetguid];
 
                     asset.shakeMax_x = backup.shakemaxx;
                     asset.shakeMax_y = backup.shakemaxy;
@@ -140,9 +140,41 @@ namespace TsunamiHack.Tsunami.Lib
                     asset.shakeMin_y = backup.shakeminy;
                     asset.shakeMin_z = backup.shakeminz;
                     
-                    backups.Remove(assetguid);
+                    backupsshake.Remove(assetguid);
                 }
             }
         }
+
+        public static void CheckBallistics()
+        {
+            if (menu.NoDrop && Player.player.equipment.asset is ItemGunAsset)
+            {
+                var asset = (ItemGunAsset) Player.player.equipment.asset;
+                var guid = asset.GUID;
+                
+                if(backupsdrop.ContainsKey(guid) == false)
+                    backupsdrop.Add(guid, new GunAsset(asset));
+
+                asset.ballisticForce = 999f;
+                asset.ballisticDrop = 1E-05f;
+            }
+            else if (!menu.NoDrop && Player.player.equipment.asset is ItemGunAsset)
+            {
+                var asset = Player.player.equipment.asset as ItemGunAsset;
+                var assetguid = asset.GUID;
+
+                if (backupsdrop.ContainsKey(assetguid))
+                {
+                    var backup = backupsdrop[assetguid];
+                    
+                    asset.ballisticForce = backup.ballisticforce;
+                    asset.ballisticDrop = backup.ballisticdrop;
+ 
+                    backupsdrop.Remove(assetguid);
+                }
+            }
+        }
+        
+        
     }
 }

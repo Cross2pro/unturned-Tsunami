@@ -30,7 +30,7 @@ namespace TsunamiHack.Tsunami.Menu
         internal bool NoShake;//
         internal bool NoSpread;//
         internal bool NoSway;//
-        internal bool NoFlash;//
+        internal bool NoDrop;//
         internal bool ShootThroughWalls;//
         internal float Fov;//
         internal bool RangeFinder;//
@@ -176,7 +176,7 @@ namespace TsunamiHack.Tsunami.Menu
             NoShake = GUILayout.Toggle(NoShake, " No Shake");
             NoSpread = GUILayout.Toggle(NoSpread, " No Spread");
             NoSway = GUILayout.Toggle(NoSway, " No Sway");
-            NoFlash = GUILayout.Toggle(NoFlash, " No Flash");
+            NoDrop = GUILayout.Toggle(NoDrop, " No Drop");
             GUILayout.Space(2f);
             GUILayout.Label("Hack Info\n--------------------------------------");
             GUILayout.Space(2f);
