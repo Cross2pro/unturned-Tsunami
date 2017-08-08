@@ -92,6 +92,7 @@ namespace TsunamiHack.Tsunami.Lib
             
             if ((DateTime.Now - Last).TotalMilliseconds >= Menu.UpdateRate)
             {
+
                 CheckGlows();                     
                 Last = DateTime.Now;
             }      
@@ -908,6 +909,8 @@ namespace TsunamiHack.Tsunami.Lib
         
         internal static void CheckGlows()
         {
+            UpdateLists();
+            
             UpdatePlayerGlow();
             UpdateZombieGlow();
             UpdateItemGlow();

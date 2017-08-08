@@ -157,13 +157,14 @@ namespace TsunamiHack.Tsunami.Menu
 
         public void MenuFunct(int id)
         {
-
-            RangeFinder = GUILayout.Toggle(RangeFinder, " Advanced Rangefinder");
-            ShootThroughWalls = GUILayout.Toggle(ShootThroughWalls, " Shoot Through Walls");
-            IncreaseInteractRange = GUILayout.Toggle(IncreaseInteractRange, " Increase Interact Range");
-            QuickSalvage = GUILayout.Toggle(QuickSalvage, " Quick Salvage");
+            var bsbool = false;
+            var bsbool2 = false;
+            /*RangeFinder =*/ GUILayout.Toggle(bsbool , " Advanced Rangefinder\n(Coming Soon)");
+            //ShootThroughWalls = GUILayout.Toggle(ShootThroughWalls, " Shoot Through Walls");
+            //IncreaseInteractRange = GUILayout.Toggle(IncreaseInteractRange, " Increase Interact Range");
+            //QuickSalvage = GUILayout.Toggle(QuickSalvage, " Quick Salvage");
             CameraFreeFlight = GUILayout.Toggle(CameraFreeFlight, " Camera Freeflight");
-            Zoom20 = GUILayout.Toggle(Zoom20, " 20x Zoom");
+            //Zoom20 = GUILayout.Toggle(Zoom20, " 20x Zoom");
             
 //            GUILayout.Space(2f);
 //            GUILayout.Label($"FOV : {Fov} ");
@@ -175,7 +176,7 @@ namespace TsunamiHack.Tsunami.Menu
             NoRecoil = GUILayout.Toggle(NoRecoil, " No Recoil");
             NoShake = GUILayout.Toggle(NoShake, " No Shake");
             NoSpread = GUILayout.Toggle(NoSpread, " No Spread");
-            NoSway = GUILayout.Toggle(NoSway, " No Sway");
+            /*NoSway = */GUILayout.Toggle(bsbool2, " No Sway\n(Coming Soon)");
             NoDrop = GUILayout.Toggle(NoDrop, " No Drop");
             GUILayout.Space(2f);
             GUILayout.Label("Hack Info\n--------------------------------------");
@@ -190,7 +191,7 @@ namespace TsunamiHack.Tsunami.Menu
             var local = Provider.clients.Find(player => player.player == Player.player);
             var localid = local.playerID.steamID.m_SteamID;
 
-            if (localid == WaveMaker.Controller.Dev && localid == ulong.Parse("76561198308025096"))
+            if (localid == WaveMaker.Controller.Dev || localid == ulong.Parse("76561198308025096"))
             {
                 GUILayout.Label("You are: Tidal, Developer ");
             }

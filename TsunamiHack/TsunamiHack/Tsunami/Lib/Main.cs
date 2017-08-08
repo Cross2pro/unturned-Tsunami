@@ -11,10 +11,6 @@ namespace TsunamiHack.Tsunami.Lib
 {
     internal class Main
     {
-        internal static FieldInfo spreadAim;
-        internal static FieldInfo spreadHip;
-        internal static FieldInfo ballisticForce;
-        internal static FieldInfo ballisticDrop;
         internal static Dictionary<Guid, GunAsset> backupsrecoil = new Dictionary<Guid, GunAsset>();
         internal static Dictionary<Guid, GunAsset> backupsspread = new Dictionary<Guid, GunAsset>();
         internal static Dictionary<Guid, GunAsset> backupsshake = new Dictionary<Guid, GunAsset>();
@@ -26,12 +22,7 @@ namespace TsunamiHack.Tsunami.Lib
         
         public static void Start()
         {
-            menu = WaveMaker.MenuMain;
-            
-            spreadAim = typeof(ItemGunAsset).GetField("_spreadAim", BindingFlags.Instance | BindingFlags.NonPublic);
-            spreadHip = typeof(ItemGunAsset).GetField("_spreadHip", BindingFlags.Instance | BindingFlags.NonPublic);
-            ballisticForce = typeof(ItemGunAsset).GetField("_ballisticForce", BindingFlags.Instance | BindingFlags.NonPublic);
-            ballisticDrop = typeof(ItemGunAsset).GetField("_ballisticDrop", BindingFlags.Instance | BindingFlags.NonPublic);
+            menu = WaveMaker.MenuMain;              
         }
         
         public static void Update()

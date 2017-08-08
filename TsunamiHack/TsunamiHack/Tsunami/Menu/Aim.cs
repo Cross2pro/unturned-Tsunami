@@ -2,6 +2,7 @@
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using TsunamiHack.Tsunami.Manager;
+using TsunamiHack.Tsunami.Types;
 using TsunamiHack.Tsunami.Util;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,12 +11,7 @@ namespace TsunamiHack.Tsunami.Menu
 {
      internal class Aim : MonoBehaviour, IMenuParent
     {
-        internal enum TargetLimb
-        {
-            Head = 1,
-            Chest = 2,
-            Legs = 3
-        };
+        
         
         internal Rect BotRect;
         internal Rect LockRect;
@@ -78,12 +74,10 @@ namespace TsunamiHack.Tsunami.Menu
             var size = new Vector2(200,700);
             BotRect = MenuTools.GetRectAtLoc(size, MenuTools.Horizontal.Center, MenuTools.Vertical.Center, false);
             
-            size = new Vector2(200,700);
             LockRect = MenuTools.GetRectAtLoc(size, MenuTools.Horizontal.LeftMid, MenuTools.Vertical.Center, false);
             LockRect.y = BotRect.y;
             LockRect.x += size.x;
-            
-            size = new Vector2(200,700);
+
             TriggerRect = MenuTools.GetRectAtLoc(size, MenuTools.Horizontal.RightMid, MenuTools.Vertical.Center, false);
             TriggerRect.y = BotRect.y;
             TriggerRect.x -= size.x;
