@@ -129,7 +129,7 @@ namespace TsunamiHack.Tsunami.Manager
                 }
             }
 
-            if (HackDisabled)
+            if (HackDisabled || Provider.isConnected == false )
             {
                 if (_obj != null)
                 {

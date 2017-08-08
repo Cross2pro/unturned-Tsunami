@@ -921,17 +921,17 @@ namespace TsunamiHack.Tsunami.Lib
 
         internal static void UpdatePlayerGlow()
         {
-            if (Players.Length > 1)
+            if (Players != null)
             {
                 
                 foreach (var player in Players)
                 {
 
-                    var myPos = Camera.main.transform.position;
-                    var targetPos = player.player.transform.position;
-
                     if (Menu.EnableEsp && Menu.GlowPlayers)
                     {
+                        var myPos = Camera.main.transform.position;
+                        var targetPos = player.player.transform.position;
+                        
                         var dist = Vector3.Distance(myPos, targetPos);
 
                         if (dist <= Menu.Distance || Menu.InfDistance)
@@ -972,7 +972,7 @@ namespace TsunamiHack.Tsunami.Lib
         
         internal static void UpdateZombieGlow()
         {
-            if(Zombies.Length > 0)
+            if(Zombies != null)
                  foreach (var zombie in Zombies)
                  {
                      var myPos = Camera.main.transform.position;
@@ -1013,121 +1013,136 @@ namespace TsunamiHack.Tsunami.Lib
         
         internal static void UpdateVehicleGlow()
         {
-
-            foreach (var vehicle in Vehicles)
+            if (Vehicles != null)
             {
-                var myPos = Camera.main.transform.position;
-                var zomPos = vehicle.transform.position;
-
-                if (Menu.EnableEsp && Menu.GlowVehicles)
+                foreach (var vehicle in Vehicles)
                 {
-                    var dist = Vector3.Distance(myPos, zomPos);
+                    var myPos = Camera.main.transform.position;
+                    var zomPos = vehicle.transform.position;
 
-                    if (dist <= Menu.Distance || Menu.InfDistance)
+                    if (Menu.EnableEsp && Menu.GlowVehicles)
                     {
-                        var highlighter = vehicle.gameObject.GetComponent<Highlighter>() ?? vehicle.gameObject.AddComponent<Highlighter>();
+                        var dist = Vector3.Distance(myPos, zomPos);
 
-                        highlighter.ConstantParams(Menu.VehicleGlow);
-                        highlighter.OccluderOn();
-                        highlighter.SeeThroughOn();
-                        highlighter.ConstantOn();
+                        if (dist <= Menu.Distance || Menu.InfDistance)
+                        {
+                            var highlighter = vehicle.gameObject.GetComponent<Highlighter>() ?? vehicle.gameObject.AddComponent<Highlighter>();
+
+                            highlighter.ConstantParams(Menu.VehicleGlow);
+                            highlighter.OccluderOn();
+                            highlighter.SeeThroughOn();
+                            highlighter.ConstantOn();
+                        }
+                        else
+                        {
+                            var highlighter = vehicle.gameObject.GetComponent<Highlighter>();
+
+                            if (highlighter != null)
+                                highlighter.ConstantOffImmediate();
+                        }
                     }
                     else
                     {
                         var highlighter = vehicle.gameObject.GetComponent<Highlighter>();
 
                         if (highlighter != null)
+                        {
                             highlighter.ConstantOffImmediate();
-                    }
-                }
-                else
-                {
-                    var highlighter = vehicle.gameObject.GetComponent<Highlighter>();
-
-                    if (highlighter != null)
-                    {
-                        highlighter.ConstantOffImmediate();
+                        }
                     }
                 }
             }
+            
         }
         
         internal static void UpdateItemGlow()
         {
-
-            foreach (var item in Items)
+            if (Items != null)
             {
-                var myPos = Camera.main.transform.position;
-                var targetpos = item.transform.position;
-
-                if (Menu.EnableEsp && Menu.GlowItems)
+                foreach (var item in Items)
                 {
-                    var dist = Vector3.Distance(myPos, targetpos);
-
-                    if (dist <= Menu.Distance || Menu.InfDistance)
+                    
+                    if (Menu.EnableEsp && Menu.GlowItems)
                     {
-                        var highlighter = item.gameObject.GetComponent<Highlighter>() ?? item.gameObject.AddComponent<Highlighter>();
+                        var myPos = Camera.main.transform.position;
+                        var targetpos = item.transform.position;
+                        
+                        var dist = Vector3.Distance(myPos, targetpos);
 
-                        highlighter.ConstantParams(Menu.ItemGlow);
-                        highlighter.OccluderOn();
-                        highlighter.SeeThroughOn();
-                        highlighter.ConstantOn();
+                        if (dist <= Menu.Distance || Menu.InfDistance)
+                        {
+                            var highlighter = item.gameObject.GetComponent<Highlighter>() ?? item.gameObject.AddComponent<Highlighter>();
+
+                            highlighter.ConstantParams(Menu.ItemGlow);
+                            highlighter.OccluderOn();
+                            highlighter.SeeThroughOn();
+                            highlighter.ConstantOn();
+                        }
+                        else
+                        {
+                            var highlighter = item.gameObject.GetComponent<Highlighter>();
+
+                            if (highlighter != null)
+                                highlighter.ConstantOffImmediate();
+                        }
                     }
                     else
                     {
                         var highlighter = item.gameObject.GetComponent<Highlighter>();
 
                         if (highlighter != null)
+                        {
                             highlighter.ConstantOffImmediate();
+                        }
                     }
                 }
-                else
-                {
-                    var highlighter = item.gameObject.GetComponent<Highlighter>();
-
-                    if (highlighter != null)
-                    {
-                        highlighter.ConstantOffImmediate();
-                    }
-                }
-            }
+            }   
         }
         
         
         internal static void UpdateInteractableGlow()
         {
             
-            UpdateAnimalGlow();
-            UpdateStorageGlow();
-            UpdateForageGlow();
-            UpdateBedGlow();
-            UpdateDoorsGlow();
-//            UpdateTrapsGlow();
-            UpdateFlagsGlow();
-//            UpdateAirdropGlow();
-            UpdateSentryGlow();
+//            UpdateAnimalGlow();
+//            UpdateStorageGlow();
+//            UpdateForageGlow();
+//            UpdateBedGlow();
+//            UpdateDoorsGlow();
+////            UpdateTrapsGlow();
+//            UpdateFlagsGlow();
+////            UpdateAirdropGlow();
+//            UpdateSentryGlow();
         }
 
         internal static void UpdateAnimalGlow()
         {
-
-            foreach (var animal in Animals)
+            if (Animals.Length > 0)
             {
-                
-                if (Menu.EnableEsp && Menu.GlowInteractables && Menu.Animals)
+                foreach (var animal in Animals)
                 {
-                    var myPos = Camera.main.transform.position;
-                    var targetPos = animal.transform.position;
-                    var dist = Vector3.Distance(myPos, targetPos);
-
-                    if (dist <= Menu.Distance || Menu.InfDistance)
+                
+                    if (Menu.EnableEsp && Menu.GlowInteractables && Menu.Animals)
                     {
-                        var highlighter = animal.gameObject.GetComponent<Highlighter>() ?? animal.gameObject.AddComponent<Highlighter>();
+                        var myPos = Camera.main.transform.position;
+                        var targetPos = animal.transform.position;
+                        var dist = Vector3.Distance(myPos, targetPos);
 
-                        highlighter.ConstantParams(Menu.InteractableGlow);
-                        highlighter.OccluderOn();
-                        highlighter.SeeThroughOn();
-                        highlighter.ConstantOn();
+                        if (dist <= Menu.Distance || Menu.InfDistance)
+                        {
+                            var highlighter = animal.gameObject.GetComponent<Highlighter>() ?? animal.gameObject.AddComponent<Highlighter>();
+
+                            highlighter.ConstantParams(Menu.InteractableGlow);
+                            highlighter.OccluderOn();
+                            highlighter.SeeThroughOn();
+                            highlighter.ConstantOn();
+                        }
+                        else
+                        {
+                            var highlighter = animal.gameObject.GetComponent<Highlighter>();
+                    
+                            if(highlighter != null)
+                                highlighter.ConstantOffImmediate();
+                        }
                     }
                     else
                     {
@@ -1137,305 +1152,25 @@ namespace TsunamiHack.Tsunami.Lib
                             highlighter.ConstantOffImmediate();
                     }
                 }
-                else
-                {
-                    var highlighter = animal.gameObject.GetComponent<Highlighter>();
-                    
-                    if(highlighter != null)
-                        highlighter.ConstantOffImmediate();
-                }
             }
+            
         }
 
         internal static void UpdateStorageGlow()
         {
-
-            foreach (var storage in Storages)
+            if (Storages.Length > 0)
             {
-                var myPos = Camera.main.transform.position;
-                var targetPos = storage.transform.position;
-                var dist = Vector3.Distance(myPos, targetPos);
-
-                if (Menu.EnableEsp && Menu.GlowInteractables && Menu.Storages)
+                foreach (var storage in Storages)
                 {
-                    if (dist <= Menu.Distance || Menu.InfDistance)
-                    {
-                        var highlighter = storage.gameObject.GetComponent<Highlighter>() ?? storage.gameObject.AddComponent<Highlighter>();
+                    var myPos = Camera.main.transform.position;
+                    var targetPos = storage.transform.position;
+                    var dist = Vector3.Distance(myPos, targetPos);
 
-                        highlighter.ConstantParams(Menu.InteractableGlow);
-                        highlighter.OccluderOn();
-                        highlighter.SeeThroughOn();
-                        highlighter.ConstantOn();
-                    }
-                    else
-                    {
-                        var highlighter = storage.gameObject.GetComponent<Highlighter>();
-
-                        if (highlighter != null)
-                            highlighter.ConstantOffImmediate();
-                    }
-                }
-                else
-                {
-                    var highlighter = storage.gameObject.GetComponent<Highlighter>();
-                    
-                    if(highlighter != null)
-                        highlighter.ConstantOffImmediate();
-                }
-
-            }
-        }
-
-        internal static void UpdateForageGlow()
-        {
-
-            foreach (var forage in Forages)
-            {
-                var myPos = Camera.main.transform.position;
-                var targetpos = forage.transform.position;
-                var dist = Vector3.Distance(myPos, targetpos);
-
-                if (Menu.EnableEsp && Menu.GlowInteractables && Menu.Forages)
-                {
-                    if (dist <= Menu.Distance || Menu.InfDistance)
-                    {
-                        var highlighter = forage.gameObject.GetComponent<Highlighter>() ?? forage.gameObject.AddComponent<Highlighter>();
-
-                        highlighter.ConstantParams(Menu.InteractableGlow);
-                        highlighter.OccluderOn();
-                        highlighter.SeeThroughOn();
-                        highlighter.ConstantOn();
-                    }
-                    else
-                    {
-                        var highlighter = forage.gameObject.GetComponent<Highlighter>();
-                        
-                        if(highlighter != null)
-                            highlighter.ConstantOffImmediate();
-                    }
-                }
-                else
-                {
-                    var highlighter = forage.gameObject.GetComponent<Highlighter>();
-                    
-                    if(highlighter != null)
-                        highlighter.ConstantOffImmediate();
-                }
-            }
-        }
-
-        internal static void UpdateBedGlow()
-        {
-
-            foreach (var bed in Beds)
-            {
-                var myPos = Camera.main.transform.position;
-                
-                var targetPos = bed.transform.position;
-                var dist = Vector3.Distance(myPos, targetPos);
-
-                if (Menu.EnableEsp && Menu.GlowInteractables && Menu.Bed)
-                {
-                    if (dist <= Menu.Distance || Menu.InfDistance)
-                    {
-                        var highlighter = bed.gameObject.GetComponent<Highlighter>() ?? bed.gameObject.AddComponent<Highlighter>();
-
-                        highlighter.ConstantParams(Menu.InteractableGlow);
-                        highlighter.OccluderOn();
-                        highlighter.SeeThroughOn();
-                        highlighter.ConstantOn();
-                    }
-                    else
-                    {
-                        var highlighter = bed.gameObject.GetComponent<Highlighter>();
-                        
-                        if(highlighter != null)
-                            highlighter.ConstantOffImmediate();
-                    }
-                }
-                else
-                {
-                    var highlighter = bed.gameObject.GetComponent<Highlighter>();
-                    
-                    if(highlighter != null)
-                        highlighter.ConstantOffImmediate();
-                }
-
-            }
-        }
-
-        internal static void UpdateDoorsGlow()
-        {
-
-            foreach (var door in Doors)
-            {
-                var mypos = Camera.main.transform.position;
-                var targetpos = door.transform.position;
-                var dist = Vector3.Distance(mypos, targetpos);
-
-                if (Menu.EnableEsp && Menu.GlowInteractables && Menu.Doors)
-                {
-                    if (dist <= Menu.Distance || Menu.InfDistance)
-                    {
-                        var highlighter = door.gameObject.GetComponent<Highlighter>() ?? door.gameObject.AddComponent<Highlighter>();
-
-                        highlighter.ConstantParams(Menu.InteractableGlow);
-                        highlighter.OccluderOn();
-                        highlighter.SeeThroughOn();
-                        highlighter.ConstantOn();
-                    }
-                    else
-                    {
-                        var highlighter = door.gameObject.GetComponent<Highlighter>();
-                        
-                        if(highlighter != null)
-                            highlighter.ConstantOffImmediate();
-                            
-                    }
-                }
-                else
-                {
-                    var highlighter = door.gameObject.GetComponent<Highlighter>();
-                    
-                    if(highlighter != null)
-                        highlighter.ConstantOffImmediate();
-                }
-            }
-        }
-
-        //Fix traps
-        internal static void UpdateTrapsGlow()
-        {
-
-            foreach (var trap in Traps)
-            {
-                var mypos = Camera.main.transform.position;
-                var targetpos = trap.transform.position;
-                var dist = Vector3.Distance(mypos, targetpos);
-
-                if (Menu.EnableEsp && Menu.GlowInteractables && Menu.Traps)
-                {
-                    if (dist <= Menu.Distance || Menu.InfDistance)
-                    {
-                        var highligter = trap.gameObject.GetComponent<Highlighter>() ?? trap.gameObject.AddComponent<Highlighter>();
-
-                        highligter.ConstantParams(Menu.InteractableGlow);
-                        highligter.OccluderOn();
-                        highligter.SeeThroughOn();
-                        highligter.ConstantOn();
-                    }
-                    else
-                    {
-                        var highlighter = trap.gameObject.GetComponent<Highlighter>();
-                        
-                        if(highlighter != null)
-                            highlighter.ConstantOffImmediate();
-                    }
-                }
-                else
-                {
-                    var highlighter = trap.gameObject.GetComponent<Highlighter>();
-                    
-                    if(highlighter != null)
-                        highlighter.ConstantOffImmediate();
-                }
-            }
-        }
-
-        internal static void UpdateFlagsGlow()
-        {
-
-            foreach (var flag in Flags)
-            {
-                var mypos = Camera.main.transform.position;
-                var targetpos = flag.transform.position;
-                var dist = Vector3.Distance(mypos, targetpos);
-
-                if (Menu.EnableEsp && Menu.GlowInteractables && Menu.Flag)
-                {
-                    if (dist <= Menu.Distance || Menu.InfDistance)
-                    {
-                        var highlighter = flag.gameObject.GetComponent<Highlighter>() ?? flag.gameObject.AddComponent<Highlighter>();
-
-                        highlighter.ConstantParams(Menu.InteractableGlow);
-                        highlighter.OccluderOn();
-                        highlighter.SeeThroughOn();
-                        highlighter.ConstantOn();
-                    }
-                    else
-                    {
-                        var highlighter = flag.gameObject.GetComponent<Highlighter>();
-                        
-                        if(highlighter != null)
-                            highlighter.ConstantOffImmediate();
-                    }
-                }
-                else
-                {
-                    var highlighter = flag.gameObject.GetComponent<Highlighter>();
-                    
-                    if(highlighter != null)
-                        highlighter.ConstantOffImmediate();
-                }
-            }
-        }
-
-        internal static void UpdateSentryGlow()
-        {
-
-            foreach (var sentry in Sentries)
-            {
-                var mypos = Camera.main.transform.position;
-                var targetpos = sentry.transform.position;
-                var dist = Vector3.Distance(mypos, targetpos);
-
-                if (Menu.EnableEsp && Menu.GlowInteractables && Menu.Sentries)
-                {
-                    if (dist <= Menu.Distance || Menu.InfDistance)
-                    {
-                        var highlighter = sentry.gameObject.GetComponent<Highlighter>() ?? sentry.gameObject.AddComponent<Highlighter>();
-
-                        highlighter.ConstantParams(Menu.InteractableGlow);
-                        highlighter.OccluderOn();
-                        highlighter.SeeThroughOn();
-                        highlighter.ConstantOn();
-                    }
-                    else
-                    {
-                        var highlighter = sentry.gameObject.GetComponent<Highlighter>();
-                        
-                        if(highlighter != null)
-                            highlighter.ConstantOffImmediate();
-                        
-                    }
-                }
-                else
-                {
-                    var highlighter = sentry.gameObject.GetComponent<Highlighter>();
-                    
-                    if(highlighter != null)
-                        highlighter.ConstantOffImmediate();
-                }
-            }
-        }
-
-        //Fix Airdrops
-        internal static void UpdateAirdropGlow()
-        {   
-
-            foreach (var airdrop in Storages)
-            {
-                if (airdrop.name == "1374")
-                {
-                    var mypos = Camera.main.transform.position;
-                    var targetpos = airdrop.transform.position;
-                    var dist = Vector3.Distance(mypos, targetpos);
-
-                    if (Menu.EnableEsp && Menu.GlowInteractables && Menu.Airdrop)
+                    if (Menu.EnableEsp && Menu.GlowInteractables && Menu.Storages)
                     {
                         if (dist <= Menu.Distance || Menu.InfDistance)
                         {
-                            var highlighter = airdrop.gameObject.GetComponent<Highlighter>() ?? airdrop.gameObject.AddComponent<Highlighter>();
+                            var highlighter = storage.gameObject.GetComponent<Highlighter>() ?? storage.gameObject.AddComponent<Highlighter>();
 
                             highlighter.ConstantParams(Menu.InteractableGlow);
                             highlighter.OccluderOn();
@@ -1444,7 +1179,7 @@ namespace TsunamiHack.Tsunami.Lib
                         }
                         else
                         {
-                            var highlighter = airdrop.gameObject.GetComponent<Highlighter>();
+                            var highlighter = storage.gameObject.GetComponent<Highlighter>();
 
                             if (highlighter != null)
                                 highlighter.ConstantOffImmediate();
@@ -1452,52 +1187,353 @@ namespace TsunamiHack.Tsunami.Lib
                     }
                     else
                     {
-                        var highlighter = airdrop.gameObject.GetComponent<Highlighter>();
+                        var highlighter = storage.gameObject.GetComponent<Highlighter>();
+                    
+                        if(highlighter != null)
+                            highlighter.ConstantOffImmediate();
+                    }
+
+                }
+            }
+            
+        }
+
+        internal static void UpdateForageGlow()
+        {
+            if (Forages.Length > 0)
+            {
+                foreach (var forage in Forages)
+                {
+                    var myPos = Camera.main.transform.position;
+                    var targetpos = forage.transform.position;
+                    var dist = Vector3.Distance(myPos, targetpos);
+
+                    if (Menu.EnableEsp && Menu.GlowInteractables && Menu.Forages)
+                    {
+                        if (dist <= Menu.Distance || Menu.InfDistance)
+                        {
+                            var highlighter = forage.gameObject.GetComponent<Highlighter>() ?? forage.gameObject.AddComponent<Highlighter>();
+
+                            highlighter.ConstantParams(Menu.InteractableGlow);
+                            highlighter.OccluderOn();
+                            highlighter.SeeThroughOn();
+                            highlighter.ConstantOn();
+                        }
+                        else
+                        {
+                            var highlighter = forage.gameObject.GetComponent<Highlighter>();
+                        
+                            if(highlighter != null)
+                                highlighter.ConstantOffImmediate();
+                        }
+                    }
+                    else
+                    {
+                        var highlighter = forage.gameObject.GetComponent<Highlighter>();
                     
                         if(highlighter != null)
                             highlighter.ConstantOffImmediate();
                     }
                 }
-                
             }
+            
+        }
+
+        internal static void UpdateBedGlow()
+        {
+            if (Beds.Length > 0)
+            {
+                foreach (var bed in Beds)
+                {
+                    var myPos = Camera.main.transform.position;
+                
+                    var targetPos = bed.transform.position;
+                    var dist = Vector3.Distance(myPos, targetPos);
+
+                    if (Menu.EnableEsp && Menu.GlowInteractables && Menu.Bed)
+                    {
+                        if (dist <= Menu.Distance || Menu.InfDistance)
+                        {
+                            var highlighter = bed.gameObject.GetComponent<Highlighter>() ?? bed.gameObject.AddComponent<Highlighter>();
+
+                            highlighter.ConstantParams(Menu.InteractableGlow);
+                            highlighter.OccluderOn();
+                            highlighter.SeeThroughOn();
+                            highlighter.ConstantOn();
+                        }
+                        else
+                        {
+                            var highlighter = bed.gameObject.GetComponent<Highlighter>();
+                        
+                            if(highlighter != null)
+                                highlighter.ConstantOffImmediate();
+                        }
+                    }
+                    else
+                    {
+                        var highlighter = bed.gameObject.GetComponent<Highlighter>();
+                    
+                        if(highlighter != null)
+                            highlighter.ConstantOffImmediate();
+                    }
+
+                }
+            }
+            
+        }
+
+        internal static void UpdateDoorsGlow()
+        {
+            if (Doors.Length > 0)
+            {
+                foreach (var door in Doors)
+                {
+                    var mypos = Camera.main.transform.position;
+                    var targetpos = door.transform.position;
+                    var dist = Vector3.Distance(mypos, targetpos);
+
+                    if (Menu.EnableEsp && Menu.GlowInteractables && Menu.Doors)
+                    {
+                        if (dist <= Menu.Distance || Menu.InfDistance)
+                        {
+                            var highlighter = door.gameObject.GetComponent<Highlighter>() ?? door.gameObject.AddComponent<Highlighter>();
+
+                            highlighter.ConstantParams(Menu.InteractableGlow);
+                            highlighter.OccluderOn();
+                            highlighter.SeeThroughOn();
+                            highlighter.ConstantOn();
+                        }
+                        else
+                        {
+                            var highlighter = door.gameObject.GetComponent<Highlighter>();
+                        
+                            if(highlighter != null)
+                                highlighter.ConstantOffImmediate();
+                            
+                        }
+                    }
+                    else
+                    {
+                        var highlighter = door.gameObject.GetComponent<Highlighter>();
+                    
+                        if(highlighter != null)
+                            highlighter.ConstantOffImmediate();
+                    }
+                }
+            }
+           
+        }
+
+        //Fix traps
+        internal static void UpdateTrapsGlow()
+        {
+            if (Traps.Length > 0)
+            {
+                foreach (var trap in Traps)
+                {
+                    var mypos = Camera.main.transform.position;
+                    var targetpos = trap.transform.position;
+                    var dist = Vector3.Distance(mypos, targetpos);
+
+                    if (Menu.EnableEsp && Menu.GlowInteractables && Menu.Traps)
+                    {
+                        if (dist <= Menu.Distance || Menu.InfDistance)
+                        {
+                            var highligter = trap.gameObject.GetComponent<Highlighter>() ?? trap.gameObject.AddComponent<Highlighter>();
+
+                            highligter.ConstantParams(Menu.InteractableGlow);
+                            highligter.OccluderOn();
+                            highligter.SeeThroughOn();
+                            highligter.ConstantOn();
+                        }
+                        else
+                        {
+                            var highlighter = trap.gameObject.GetComponent<Highlighter>();
+                        
+                            if(highlighter != null)
+                                highlighter.ConstantOffImmediate();
+                        }
+                    }
+                    else
+                    {
+                        var highlighter = trap.gameObject.GetComponent<Highlighter>();
+                    
+                        if(highlighter != null)
+                            highlighter.ConstantOffImmediate();
+                    }
+                }
+            }
+            
+        }
+
+        internal static void UpdateFlagsGlow()
+        {
+            if (Flags.Length > 0)
+            {
+                foreach (var flag in Flags)
+                {
+                    var mypos = Camera.main.transform.position;
+                    var targetpos = flag.transform.position;
+                    var dist = Vector3.Distance(mypos, targetpos);
+
+                    if (Menu.EnableEsp && Menu.GlowInteractables && Menu.Flag)
+                    {
+                        if (dist <= Menu.Distance || Menu.InfDistance)
+                        {
+                            var highlighter = flag.gameObject.GetComponent<Highlighter>() ?? flag.gameObject.AddComponent<Highlighter>();
+
+                            highlighter.ConstantParams(Menu.InteractableGlow);
+                            highlighter.OccluderOn();
+                            highlighter.SeeThroughOn();
+                            highlighter.ConstantOn();
+                        }
+                        else
+                        {
+                            var highlighter = flag.gameObject.GetComponent<Highlighter>();
+                        
+                            if(highlighter != null)
+                                highlighter.ConstantOffImmediate();
+                        }
+                    }
+                    else
+                    {
+                        var highlighter = flag.gameObject.GetComponent<Highlighter>();
+                    
+                        if(highlighter != null)
+                            highlighter.ConstantOffImmediate();
+                    }
+                }
+            }
+            
+        }
+
+        internal static void UpdateSentryGlow()
+        {
+            if (Sentries.Length > 0)
+            {
+                foreach (var sentry in Sentries)
+                {
+                    var mypos = Camera.main.transform.position;
+                    var targetpos = sentry.transform.position;
+                    var dist = Vector3.Distance(mypos, targetpos);
+
+                    if (Menu.EnableEsp && Menu.GlowInteractables && Menu.Sentries)
+                    {
+                        if (dist <= Menu.Distance || Menu.InfDistance)
+                        {
+                            var highlighter = sentry.gameObject.GetComponent<Highlighter>() ?? sentry.gameObject.AddComponent<Highlighter>();
+
+                            highlighter.ConstantParams(Menu.InteractableGlow);
+                            highlighter.OccluderOn();
+                            highlighter.SeeThroughOn();
+                            highlighter.ConstantOn();
+                        }
+                        else
+                        {
+                            var highlighter = sentry.gameObject.GetComponent<Highlighter>();
+                        
+                            if(highlighter != null)
+                                highlighter.ConstantOffImmediate();
+                        
+                        }
+                    }
+                    else
+                    {
+                        var highlighter = sentry.gameObject.GetComponent<Highlighter>();
+                    
+                        if(highlighter != null)
+                            highlighter.ConstantOffImmediate();
+                    }
+                }
+            }
+            
+        }
+
+        //Fix Airdrops
+        internal static void UpdateAirdropGlow()
+        {
+            if (Storages.Length > 0)
+            {
+                foreach (var airdrop in Storages)
+                {
+                    if (airdrop.name == "1374")
+                    {
+                        var mypos = Camera.main.transform.position;
+                        var targetpos = airdrop.transform.position;
+                        var dist = Vector3.Distance(mypos, targetpos);
+
+                        if (Menu.EnableEsp && Menu.GlowInteractables && Menu.Airdrop)
+                        {
+                            if (dist <= Menu.Distance || Menu.InfDistance)
+                            {
+                                var highlighter = airdrop.gameObject.GetComponent<Highlighter>() ?? airdrop.gameObject.AddComponent<Highlighter>();
+
+                                highlighter.ConstantParams(Menu.InteractableGlow);
+                                highlighter.OccluderOn();
+                                highlighter.SeeThroughOn();
+                                highlighter.ConstantOn();
+                            }
+                            else
+                            {
+                                var highlighter = airdrop.gameObject.GetComponent<Highlighter>();
+
+                                if (highlighter != null)
+                                    highlighter.ConstantOffImmediate();
+                            }
+                        }
+                        else
+                        {
+                            var highlighter = airdrop.gameObject.GetComponent<Highlighter>();
+                    
+                            if(highlighter != null)
+                                highlighter.ConstantOffImmediate();
+                        }
+                    }
+                
+                }
+            }
+            
         }
 
         internal static void UpdateNpcGlow()
         {
-
-            foreach (var npc in Npcs)
+            if (Npcs.Length > 0)
             {
-                var mypos = Camera.main.transform.position;
-                var targetpos = npc.transform.position;
-                var dist = Vector3.Distance(mypos, targetpos);
-
-                if (Menu.EnableEsp && Menu.GlowInteractables && Menu.Npc)
+                foreach (var npc in Npcs)
                 {
-                    if (dist <= Menu.Distance || Menu.InfDistance)
-                    {
-                        var highlighter = npc.gameObject.GetComponent<Highlighter>() ?? npc.gameObject.AddComponent<Highlighter>();
+                    var mypos = Camera.main.transform.position;
+                    var targetpos = npc.transform.position;
+                    var dist = Vector3.Distance(mypos, targetpos);
 
-                        highlighter.ConstantParams(Menu.InteractableGlow);
-                        highlighter.OccluderOn();
-                        highlighter.SeeThroughOn();
-                        highlighter.ConstantOn();
+                    if (Menu.EnableEsp && Menu.GlowInteractables && Menu.Npc)
+                    {
+                        if (dist <= Menu.Distance || Menu.InfDistance)
+                        {
+                            var highlighter = npc.gameObject.GetComponent<Highlighter>() ?? npc.gameObject.AddComponent<Highlighter>();
+
+                            highlighter.ConstantParams(Menu.InteractableGlow);
+                            highlighter.OccluderOn();
+                            highlighter.SeeThroughOn();
+                            highlighter.ConstantOn();
+                        }
+                        else
+                        {
+                            var highlighter = npc.gameObject.GetComponent<Highlighter>();
+
+                            if (highlighter != null)
+                                highlighter.ConstantOffImmediate();
+                        }
                     }
                     else
                     {
                         var highlighter = npc.gameObject.GetComponent<Highlighter>();
-
-                        if (highlighter != null)
+                    
+                        if(highlighter != null)
                             highlighter.ConstantOffImmediate();
                     }
                 }
-                else
-                {
-                    var highlighter = npc.gameObject.GetComponent<Highlighter>();
-                    
-                    if(highlighter != null)
-                        highlighter.ConstantOffImmediate();
-                }
             }
+            
         }
         
         //------------------Env-------------------------------------------------------------------------------

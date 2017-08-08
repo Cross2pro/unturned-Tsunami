@@ -108,7 +108,7 @@ namespace TsunamiHack.Tsunami.Menu
             CheckChange();
         }
 
-        private void UseMenu(int id)
+        internal void UseMenu(int id)
         {
             if (WaveMaker.MenuOpened == id)
             {

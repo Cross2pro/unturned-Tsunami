@@ -23,6 +23,9 @@ namespace TsunamiHack.Tsunami.Lib
         
         internal static void Update()
         {
+//           Test();
+            
+            
             if ((DateTime.Now - lastLock).TotalMilliseconds >= menu.LockUpdateRate)
             {
                 UpdateLock();
@@ -36,7 +39,7 @@ namespace TsunamiHack.Tsunami.Lib
 
         internal static void UpdateLock()
         {
-            if (menu.EnableAimlock)
+            if (menu.EnableAimlock && Provider.isConnected)
             {
                 var look = Player.player.look;
                 var mypos = Camera.main.transform.position;
@@ -52,17 +55,22 @@ namespace TsunamiHack.Tsunami.Lib
                 RaycastHit hit;
                 Physics.Raycast(mypos, look.aim.forward, out hit, range, RayMasks.DAMAGE_CLIENT);
 
-                if (hit.transform.CompareTag("Enemy") && menu.LockPlayers)
+                if (/*hit.transform.CompareTag("Enemy") && menu.LockPlayers*/  hit.transform.tag == "Enemy" && menu.LockPlayers)
                 {
-                    var player = PlayerTools.GetSteamPlayer(hit.transform);
 
-                    if (WaveMaker.Friends.Contains(player.playerID.steamID.m_SteamID) && menu.LockWhiteListFriends)
-                        return;
-                    
-                    if (player.isAdmin && menu.LockWhitelistAdmins)
-                        return;
-                    
                     locksense = true;
+                    
+                    Logging.LogMsg("AIMLOCK", "DETECTED PLAYER");
+                    
+//                    var player = PlayerTools.GetSteamPlayer(hit.transform);
+//
+//                    if (WaveMaker.Friends.Contains(player.playerID.steamID.m_SteamID) && menu.LockWhiteListFriends)
+//                        return;
+//                    
+//                    if (player.isAdmin && menu.LockWhitelistAdmins)
+//                        return;
+//                    
+//                    locksense = true;
                 }
                 else if (hit.transform.CompareTag("Zombie") && menu.LockZombies)
                 {
@@ -82,6 +90,30 @@ namespace TsunamiHack.Tsunami.Lib
                     look.sensitivity = defsense;
                 }
                 
+            }
+        }
+
+        internal static void Test()
+        {
+            if (menu.EnableAimlock)
+            {
+                var look  = Player.player.look;
+                var mypos = Camera.main.transform.position;
+                var range = menu.LockDistance;
+                
+                var locksense = false;
+
+                if (menu.LockGunRange && Player.player.equipment.asset is ItemWeaponAsset)
+                {
+                    range = ((ItemWeaponAsset) Player.player.equipment.asset).range;
+                }
+                
+                RaycastHit hit;
+                Physics.Raycast(mypos, look.aim.forward, out hit, range, RayMasks.DAMAGE_CLIENT);
+
+                var asdf = hit.transform.tag;
+
+                Logging.LogMsg("AIMLOCK TEST", asdf);
             }
         }
     }
