@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 using SDG.Unturned;
 using TsunamiHack.Tsunami.Manager;
 using TsunamiHack.Tsunami.Util;
@@ -55,12 +56,31 @@ namespace TsunamiHack.Tsunami.Lib
                 RaycastHit hit;
                 Physics.Raycast(mypos, look.aim.forward, out hit, range, RayMasks.DAMAGE_CLIENT);
 
-                if (/*hit.transform.CompareTag("Enemy") && menu.LockPlayers*/  hit.transform.tag == "Enemy" && menu.LockPlayers)
+                if (hit.transform.tag == "Enemy" && menu.LockPlayers)
                 {
 
-                    locksense = true;
+                    var player = PlayerTools.GetSteamPlayer(hit.transform);
+
+                    if (player != null)
+                    {
+                        if (WaveMaker.Friends.Contains(player.playerID.steamID.m_SteamID) && menu.LockWhiteListFriends)
+                            return;
+
+                        if (player.isAdmin && menu.LockWhitelistAdmins)
+                            return;
+
+                        locksense = true;
+                    }
+                    else
+                    {
+                        return;
+                    }
+                    
+//                    locksense = true;
                     
                     Logging.LogMsg("AIMLOCK", "DETECTED PLAYER");
+                    
+                    
                     
 //                    var player = PlayerTools.GetSteamPlayer(hit.transform);
 //

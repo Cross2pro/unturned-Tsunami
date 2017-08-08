@@ -1,6 +1,8 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using SDG.Unturned;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace TsunamiHack.Tsunami.Util
 {
@@ -19,12 +21,15 @@ namespace TsunamiHack.Tsunami.Util
 
         public static SteamPlayer GetSteamPlayer(Transform trans)
         {
+            Logging.LogMsg("DEBUG", "Foreaching");
             foreach (var user in Provider.clients)
             {
+                Logging.LogMsg("DEBUG", "checking if client transform is paramaters");
                 if (user.player.transform == trans)
                     return user;
             }
 
+            Logging.LogMsg("DEBUG", "returning null");
             return null;
         }
 
@@ -38,6 +43,23 @@ namespace TsunamiHack.Tsunami.Util
                     return zombie;
             }
 
+            return null;
+        }
+
+
+        public static SteamPlayer GetPlayer(RaycastHit hit)
+        {
+            var list = Object.FindObjectsOfType<Player>();
+
+            foreach (var ply in list)
+            {
+                if (ply.transform.gameObject == hit.transform.gameObject)
+                {
+                    return Array.Find(Provider.clients.ToArray(),
+                        client => client.player.transform.gameObject == ply.transform.gameObject);
+                }        
+            }
+            
             return null;
         }
     }

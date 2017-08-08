@@ -60,14 +60,14 @@ namespace TsunamiHack.Tsunami.Manager
         
         private GameObject _obj;
         private GameObject _blockerObj;
-            
+
         public void Start()
         {
             LocalSteamId = Provider.client.m_SteamID;
 
             if (LocalSteamId == WaveMaker.Controller.Dev || LocalSteamId == ulong.Parse("76561198308025096"))
                 DEV = true;
-            
+
             if (FirstTime)
             {
                 PopupController.EnableFirstTime = true;
@@ -98,7 +98,7 @@ namespace TsunamiHack.Tsunami.Manager
             else
                 Util.Blocker.DisabledType = Blocker.Type.Disabled;
         }
-        
+
         public void OnUpdate()
         {
             if (_blockerObj == null)
@@ -133,6 +133,12 @@ namespace TsunamiHack.Tsunami.Manager
             {
                 if (_obj != null)
                 {
+                    UnityEngine.Object.Destroy(MenuMain);
+                    UnityEngine.Object.Destroy(MenuKeybind);
+                    UnityEngine.Object.Destroy(PopupController);
+                    UnityEngine.Object.Destroy(MenuVisuals);
+                    UnityEngine.Object.Destroy(MenuAim);
+                    
                     _obj = null;
                     MenuMain = null;
                     MenuKeybind = null;
@@ -140,12 +146,6 @@ namespace TsunamiHack.Tsunami.Manager
                     MenuVisuals = null;
                     MenuAim = null;
                 
-                    UnityEngine.Object.Destroy(MenuMain);
-                    UnityEngine.Object.Destroy(MenuKeybind);
-                    UnityEngine.Object.Destroy(PopupController);
-                    UnityEngine.Object.Destroy(MenuVisuals);
-                    UnityEngine.Object.Destroy(MenuAim);
-                    
                 }
             }
             
