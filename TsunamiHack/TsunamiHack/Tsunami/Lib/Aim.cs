@@ -23,9 +23,7 @@ namespace TsunamiHack.Tsunami.Lib
         }
         
         internal static void Update()
-        {
-//           Test();
-            
+        {            
             
             if ((DateTime.Now - lastLock).TotalMilliseconds >= menu.LockUpdateRate)
             {
@@ -42,55 +40,64 @@ namespace TsunamiHack.Tsunami.Lib
         {
             if (menu.EnableAimlock && Provider.isConnected)
             {
+
                 var look = Player.player.look;
+                
                 var mypos = Camera.main.transform.position;
                 var range = menu.LockDistance;
                 
+
                 var locksense = false;
+
 
                 if (menu.LockGunRange && Player.player.equipment.asset is ItemWeaponAsset)
                 {
                     range = ((ItemWeaponAsset) Player.player.equipment.asset).range;
                 }
                 
+
                 RaycastHit hit;
+
                 Physics.Raycast(mypos, look.aim.forward, out hit, range, RayMasks.DAMAGE_CLIENT);
 
-                if (hit.transform.tag == "Enemy" && menu.LockPlayers)
+//                Logging.LogMsg("DEBUG", "checking tag");
+
+                if (hit.transform != null && menu.LockPlayers && hit.transform.tag == "Enemy")
                 {
 
-                    var player = PlayerTools.GetSteamPlayer(hit.transform);
+                    var player = PlayerTools.GetSteamPlayer(hit.transform.gameObject);
 
-                    if (player != null)
-                    {
-                        if (WaveMaker.Friends.Contains(player.playerID.steamID.m_SteamID) && menu.LockWhiteListFriends)
-                            return;
-
-                        if (player.isAdmin && menu.LockWhitelistAdmins)
-                            return;
-
-                        locksense = true;
-                    }
-                    else
-                    {
-                        return;
-                    }
+                    if(player != null)
+                        Logging.LogMsg("FOUND", "FOUND PLAYER ");
                     
-//                    locksense = true;
+                    Logging.LogMsg("DEBUG", "checking if player != null");
+
+//                    if (player != null)
+//                    {
+//                        Logging.LogMsg("DEBUG", "checking if player is in friends");
+//
+//                        if (WaveMaker.Friends.Contains(player.playerID.steamID.m_SteamID) && menu.LockWhiteListFriends)
+//                            return;
+//
+//                        Logging.LogMsg("DEBUG", "checking if player is admin");
+//
+//                        if (player.isAdmin && menu.LockWhitelistAdmins)
+//                            return;
+//                        
+//                    }
+//                    else
+//                    {
+//                        Logging.LogMsg("DEBUG", "returning");
+//
+//                        return;
+//                    }
+//                    
+//                    Logging.LogMsg("DEBUG", "locksense is true");
+
+                    locksense = true;
                     
                     Logging.LogMsg("AIMLOCK", "DETECTED PLAYER");
                     
-                    
-                    
-//                    var player = PlayerTools.GetSteamPlayer(hit.transform);
-//
-//                    if (WaveMaker.Friends.Contains(player.playerID.steamID.m_SteamID) && menu.LockWhiteListFriends)
-//                        return;
-//                    
-//                    if (player.isAdmin && menu.LockWhitelistAdmins)
-//                        return;
-//                    
-//                    locksense = true;
                 }
                 else if (hit.transform.CompareTag("Zombie") && menu.LockZombies)
                 {
@@ -99,6 +106,10 @@ namespace TsunamiHack.Tsunami.Lib
                 else if (hit.transform.CompareTag("Vehicle") && menu.LockVehicles)
                 {
                     locksense = true; 
+                }
+                else
+                {
+                    locksense = false;
                 }
 
                 if (locksense)
@@ -113,28 +124,6 @@ namespace TsunamiHack.Tsunami.Lib
             }
         }
 
-        internal static void Test()
-        {
-            if (menu.EnableAimlock)
-            {
-                var look  = Player.player.look;
-                var mypos = Camera.main.transform.position;
-                var range = menu.LockDistance;
-                
-                var locksense = false;
-
-                if (menu.LockGunRange && Player.player.equipment.asset is ItemWeaponAsset)
-                {
-                    range = ((ItemWeaponAsset) Player.player.equipment.asset).range;
-                }
-                
-                RaycastHit hit;
-                Physics.Raycast(mypos, look.aim.forward, out hit, range, RayMasks.DAMAGE_CLIENT);
-
-                var asdf = hit.transform.tag;
-
-                Logging.LogMsg("AIMLOCK TEST", asdf);
-            }
-        }
+        
     }
 }

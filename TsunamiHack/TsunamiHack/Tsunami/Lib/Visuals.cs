@@ -4,6 +4,7 @@ using HighlightingSystem;
 using UnityEngine;
 using SDG.Unturned;
 using TsunamiHack.Tsunami.Manager;
+using TsunamiHack.Tsunami.Util;
 using Object = UnityEngine.Object;
 
 namespace TsunamiHack.Tsunami.Lib
@@ -873,7 +874,7 @@ namespace TsunamiHack.Tsunami.Lib
         {
             foreach (var player in Players)
             {
-                if (player.isAdmin)
+                if (player.isAdmin && player.player != Player.player)
                 {
                     var mypos = Camera.main.transform.position;
                     var targetpos = player.player.transform.position;
@@ -975,39 +976,42 @@ namespace TsunamiHack.Tsunami.Lib
             if(Zombies != null)
                  foreach (var zombie in Zombies)
                  {
-                     var myPos = Camera.main.transform.position;
-                     var zomPos = zombie.transform.position;
-
-                     if (Menu.EnableEsp && Menu.GlowZombies)
+                     if (Camera.main != null && zombie != null)
                      {
-                         var dist = Vector3.Distance(myPos, zomPos);
+                         var myPos = Camera.main.transform.position;
+                         var zomPos = zombie.gameObject.transform.position;
 
-                         if (dist <= Menu.Distance || Menu.InfDistance)
+                         if (Menu.EnableEsp && Menu.GlowZombies)
                          {
-                             var highlighter = zombie.gameObject.GetComponent<Highlighter>() ?? zombie.gameObject.AddComponent<Highlighter>();
+                             var dist = Vector3.Distance(myPos, zomPos);
 
-                             highlighter.ConstantParams(Menu.ZombieGlow);
-                             highlighter.OccluderOn();
-                             highlighter.SeeThroughOn();
-                             highlighter.ConstantOn();
+                             if (dist <= Menu.Distance || Menu.InfDistance)
+                             {
+                                 var highlighter = zombie.gameObject.GetComponent<Highlighter>() ?? zombie.gameObject.AddComponent<Highlighter>();
+
+                                 highlighter.ConstantParams(Menu.ZombieGlow);
+                                 highlighter.OccluderOn();
+                                 highlighter.SeeThroughOn();
+                                 highlighter.ConstantOn();
+                             }
+                             else
+                             {
+                                 var highlighter = zombie.gameObject.GetComponent<Highlighter>();
+
+                                 if (highlighter != null)
+                                     highlighter.ConstantOffImmediate();
+                             }
                          }
                          else
                          {
                              var highlighter = zombie.gameObject.GetComponent<Highlighter>();
 
                              if (highlighter != null)
+                             {
                                  highlighter.ConstantOffImmediate();
+                             }
                          }
-                     }
-                     else
-                     {
-                         var highlighter = zombie.gameObject.GetComponent<Highlighter>();
-
-                         if (highlighter != null)
-                         {
-                             highlighter.ConstantOffImmediate();
-                         }
-                     }
+                     } 
                   }
         }
         
@@ -1015,41 +1019,54 @@ namespace TsunamiHack.Tsunami.Lib
         {
             if (Vehicles != null)
             {
+
                 foreach (var vehicle in Vehicles)
                 {
-                    var myPos = Camera.main.transform.position;
-                    var zomPos = vehicle.transform.position;
+                    
 
-                    if (Menu.EnableEsp && Menu.GlowVehicles)
+                    if (Camera.main != null && vehicle != null)
                     {
-                        var dist = Vector3.Distance(myPos, zomPos);
+                        
 
-                        if (dist <= Menu.Distance || Menu.InfDistance)
+                        var myPos = Camera.main.transform.position;
+                        
+
+                        var zomPos = vehicle.gameObject.transform.position;
+
+                        
+
+                        if (Menu.EnableEsp && Menu.GlowVehicles)
                         {
-                            var highlighter = vehicle.gameObject.GetComponent<Highlighter>() ?? vehicle.gameObject.AddComponent<Highlighter>();
+                            var dist = Vector3.Distance(myPos, zomPos);
 
-                            highlighter.ConstantParams(Menu.VehicleGlow);
-                            highlighter.OccluderOn();
-                            highlighter.SeeThroughOn();
-                            highlighter.ConstantOn();
+                            if (dist <= Menu.Distance || Menu.InfDistance)
+                            {
+                                var highlighter = vehicle.gameObject.GetComponent<Highlighter>() ?? vehicle.gameObject.AddComponent<Highlighter>();
+
+                                highlighter.ConstantParams(Menu.VehicleGlow);
+                                highlighter.OccluderOn();
+                                highlighter.SeeThroughOn();
+                                highlighter.ConstantOn();
+                            }
+                            else
+                            {
+                                var highlighter = vehicle.gameObject.GetComponent<Highlighter>();
+
+                                if (highlighter != null)
+                                    highlighter.ConstantOffImmediate();
+                            }
                         }
                         else
                         {
                             var highlighter = vehicle.gameObject.GetComponent<Highlighter>();
 
                             if (highlighter != null)
+                            {
                                 highlighter.ConstantOffImmediate();
+                            }
                         }
                     }
-                    else
-                    {
-                        var highlighter = vehicle.gameObject.GetComponent<Highlighter>();
-
-                        if (highlighter != null)
-                        {
-                            highlighter.ConstantOffImmediate();
-                        }
-                    }
+                    
                 }
             }
             
@@ -1062,38 +1079,43 @@ namespace TsunamiHack.Tsunami.Lib
                 foreach (var item in Items)
                 {
                     
-                    if (Menu.EnableEsp && Menu.GlowItems)
+                    if (Camera.main != null && item != null)
                     {
-                        var myPos = Camera.main.transform.position;
-                        var targetpos = item.transform.position;
-                        
-                        var dist = Vector3.Distance(myPos, targetpos);
-
-                        if (dist <= Menu.Distance || Menu.InfDistance)
+                        if (Menu.EnableEsp && Menu.GlowItems)
                         {
-                            var highlighter = item.gameObject.GetComponent<Highlighter>() ?? item.gameObject.AddComponent<Highlighter>();
+                        
+                        
+                            var myPos = Camera.main.transform.position;
+                            var targetpos = item.gameObject.transform.position;
+                        
+                            var dist = Vector3.Distance(myPos, targetpos);
 
-                            highlighter.ConstantParams(Menu.ItemGlow);
-                            highlighter.OccluderOn();
-                            highlighter.SeeThroughOn();
-                            highlighter.ConstantOn();
+                            if (dist <= Menu.Distance || Menu.InfDistance)
+                            {
+                                var highlighter = item.gameObject.GetComponent<Highlighter>() ?? item.gameObject.AddComponent<Highlighter>();
+
+                                highlighter.ConstantParams(Menu.ItemGlow);
+                                highlighter.OccluderOn();
+                                highlighter.SeeThroughOn();
+                                highlighter.ConstantOn();
+                            }
+                            else
+                            {
+                                var highlighter = item.gameObject.GetComponent<Highlighter>();
+
+                                if (highlighter != null)
+                                    highlighter.ConstantOffImmediate();
+                            }
                         }
                         else
                         {
                             var highlighter = item.gameObject.GetComponent<Highlighter>();
 
                             if (highlighter != null)
+                            {
                                 highlighter.ConstantOffImmediate();
-                        }
-                    }
-                    else
-                    {
-                        var highlighter = item.gameObject.GetComponent<Highlighter>();
-
-                        if (highlighter != null)
-                        {
-                            highlighter.ConstantOffImmediate();
-                        }
+                            }
+                        }  
                     }
                 }
             }   
