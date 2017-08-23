@@ -149,7 +149,8 @@ namespace TsunamiHack.Tsunami.Menu
         
         public void Start()
         {
-            Lib.Visuals.Start(this);
+//            Lib.Visuals.Start(this);
+            Lib.VisualsV2.Start();
             
             var size = new Vector2(203,815);
             SelectionRect =
@@ -218,9 +219,10 @@ namespace TsunamiHack.Tsunami.Menu
         
         public void Update()
         {
-            if(Provider.isConnected)
-                Lib.Visuals.Update();
+//            if(Provider.isConnected)
+//                Lib.Visuals.Update();
                 
+            Lib.VisualsV2.Update();
         }
 
         public void OnGUI()
@@ -234,9 +236,9 @@ namespace TsunamiHack.Tsunami.Menu
                 SettingsRect = GUI.Window(2007, SettingsRect, SetFunct, "Settings");
             }
             
-            if(Provider.isConnected)
-                Lib.Visuals.OnGUI();
-
+//            if(Provider.isConnected)
+//                Lib.Visuals.OnGUI();
+//TODO: remove this comment once labels have been created in v2
         }
 
         public void MenuFunct(int id)
@@ -272,27 +274,27 @@ namespace TsunamiHack.Tsunami.Menu
             GUILayout.Space(2f);
             GUILayout.Label("Animals\n--------------------------------------");
             GUILayout.Space(2f);
-            Animals = GUILayout.Toggle(Animals, " Show Animals");
+            Animals = GUILayout.Toggle(Animals, " Show Animal Glow");
             AnimalName = GUILayout.Toggle(AnimalName, " Show Animal Name");
             AnimalDistance = GUILayout.Toggle(AnimalDistance, " Show Animal Distance");
             
             GUILayout.Space(2f);
             GUILayout.Label("Forages\n--------------------------------------");
             GUILayout.Space(2f);
-            Forages = GUILayout.Toggle(Forages, " Show Forages");
+            Forages = GUILayout.Toggle(Forages, " Show Forage Glow");
 //            ForageType = GUILayout.Toggle(ForageType, " Show Forage Type");                //FIX
 //            ForageDistance = GUILayout.Toggle(ForageDistance, " Show Forage Distance");    //FIX
 
             GUILayout.Space(2f);
             GUILayout.Label("Airdrops\n--------------------------------------");
             GUILayout.Space(2f);
-            Airdrop = GUILayout.Toggle(Airdrop, " Show Airdrops");
+            Airdrop = GUILayout.Toggle(Airdrop, " Show Airdrop Glow");
             AirdropDistance = GUILayout.Toggle(AirdropDistance, " Show Airdrop Distance");
             
             GUILayout.Space(2f);
             GUILayout.Label("NPCs\n--------------------------------------");
             GUILayout.Space(2f);
-            Npc = GUILayout.Toggle(Npc, " Show NPCs");
+            Npc = GUILayout.Toggle(Npc, " Show NPC Glow");
             NpcName = GUILayout.Toggle(NpcName, " Show NPC Name");
 //            NpcWeapon = GUILayout.Toggle(NpcWeapon, " Show NPC Weapon");     FIX
             NpcDistance = GUILayout.Toggle(NpcDistance, "Show NPC Distance");
@@ -305,35 +307,35 @@ namespace TsunamiHack.Tsunami.Menu
             GUILayout.Space(2f);
             GUILayout.Label("Beds\n--------------------------------------");
             GUILayout.Space(2f);
-            Bed = GUILayout.Toggle(Bed, " Show Beds");
+            Bed = GUILayout.Toggle(Bed, " Show Bed Glow");
             BedType = GUILayout.Toggle(BedType, " Show Bed Name");
             BedDistance = GUILayout.Toggle(BedDistance, " Show Bed Distance");
             
             GUILayout.Space(2f);
             GUILayout.Label("Doors\n--------------------------------------");
             GUILayout.Space(2f);
-            Doors = GUILayout.Toggle(Doors, " Show Doors");
+            Doors = GUILayout.Toggle(Doors, " Show Door Glow");
             DoorType = GUILayout.Toggle(DoorType, " Show Door Type");
             DoorDistance = GUILayout.Toggle(DoorDistance, " Show Door Distance");
             
             GUILayout.Space(2f);
             GUILayout.Label("Traps\n--------------------------------------");
             GUILayout.Space(2f);
-            Traps = GUILayout.Toggle(Traps, " Show Traps");
+            Traps = GUILayout.Toggle(Traps, " Show Trap Glow");
             TrapType = GUILayout.Toggle(TrapType, " Show Trap Type");
             TrapDistance = GUILayout.Toggle(TrapDistance, " Show Trap Distance");
             
             GUILayout.Space(2f);
             GUILayout.Label("Claim Flags\n--------------------------------------");
             GUILayout.Space(2f);
-            Flag = GUILayout.Toggle(Flag, " Show Flags");
+            Flag = GUILayout.Toggle(Flag, " Show Flag Glow");
             FlagType = GUILayout.Toggle(FlagType, " Show Flag Type");
             FlagDistance = GUILayout.Toggle(FlagDistance, "Show Flag Distance");
             
             GUILayout.Space(2f);
             GUILayout.Label("Sentries\n--------------------------------------");
             GUILayout.Space(2f);
-            Sentries = GUILayout.Toggle(Sentries, " Show Sentries");
+            Sentries = GUILayout.Toggle(Sentries, " Show Sentrie Glow");
             SentryType = GUILayout.Toggle(SentryType, " Show Sentry Type");
 //            SentryWeapon = GUILayout.Toggle(SentryWeapon, " Show Sentry Weapon"); //FIX
             SentryState = GUILayout.Toggle(SentryState, " Show Sentry State");
@@ -342,7 +344,7 @@ namespace TsunamiHack.Tsunami.Menu
             GUILayout.Space(2f);
             GUILayout.Label("Storages\n--------------------------------------");
             GUILayout.Space(2f);
-            Storages = GUILayout.Toggle(Storages, " Show Storages");
+            Storages = GUILayout.Toggle(Storages, " Show Storage Glow");
             StorageType = GUILayout.Toggle(StorageType, " Show Storage Type");
             StorageDistance = GUILayout.Toggle(StorageDistance, " Show Storage Distance");
             
@@ -371,7 +373,7 @@ namespace TsunamiHack.Tsunami.Menu
             GlowPlayers = GUILayout.Toggle(GlowPlayers, " Show Player Glow");
             GlowZombies = GUILayout.Toggle(GlowZombies, " Show Zombie Glow");
             GlowItems = GUILayout.Toggle(GlowItems, " Show Item Glow");
-            GlowInteractables = GUILayout.Toggle(GlowInteractables, " Show Interactables Glow");
+//            GlowInteractables = GUILayout.Toggle(GlowInteractables, " Show Interactables Glow");
             GlowVehicles = GUILayout.Toggle(GlowVehicles, " Show Vehicle Glow");
             
             GUILayout.Space(2f);
