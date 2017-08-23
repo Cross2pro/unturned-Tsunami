@@ -69,7 +69,7 @@ namespace TsunamiHack.Tsunami.Menu
         
         public void Start()
         {
-//            Lib.Aim.Start();
+            Lib.Aim.Start();
             
             var size = new Vector2(200,700);
             BotRect = MenuTools.GetRectAtLoc(size, MenuTools.Horizontal.Center, MenuTools.Vertical.Center, false);
@@ -99,7 +99,7 @@ namespace TsunamiHack.Tsunami.Menu
         
         public void Update()
         {
-//            Lib.Aim.Update();
+            Lib.Aim.Update();
         }
 
         public void OnGUI()

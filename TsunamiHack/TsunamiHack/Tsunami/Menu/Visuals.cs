@@ -236,9 +236,8 @@ namespace TsunamiHack.Tsunami.Menu
                 SettingsRect = GUI.Window(2007, SettingsRect, SetFunct, "Settings");
             }
             
-//            if(Provider.isConnected)
-//                Lib.Visuals.OnGUI();
-//TODO: remove this comment once labels have been created in v2
+            if(Provider.isConnected)
+                Lib.VisualsV2.OnGUI();
         }
 
         public void MenuFunct(int id)
@@ -335,7 +334,7 @@ namespace TsunamiHack.Tsunami.Menu
             GUILayout.Space(2f);
             GUILayout.Label("Sentries\n--------------------------------------");
             GUILayout.Space(2f);
-            Sentries = GUILayout.Toggle(Sentries, " Show Sentrie Glow");
+            Sentries = GUILayout.Toggle(Sentries, " Show Sentry Glow");
             SentryType = GUILayout.Toggle(SentryType, " Show Sentry Type");
 //            SentryWeapon = GUILayout.Toggle(SentryWeapon, " Show Sentry Weapon"); //FIX
             SentryState = GUILayout.Toggle(SentryState, " Show Sentry State");
