@@ -21,34 +21,34 @@ namespace TsunamiHack.Tsunami.Util
 
         public static SteamPlayer GetSteamPlayer(Transform trans)
         {
-            Logging.LogMsg("DEBUG", "foreaching in steamplayer");
+            Logging.Log("DEBUG", "foreaching in steamplayer");
 
             foreach (var user in Provider.clients)
             {
-                Logging.LogMsg("DEBUG", "checking if transform is equal");
+                Logging.Log("DEBUG", "checking if transform is equal");
 
                 if (user.player.transform == trans)
                     return user;
             }
 
-            Logging.LogMsg("DEBUG", "returning null");
+            Logging.Log("DEBUG", "returning null");
 
             return null;
         }
         
         public static SteamPlayer GetSteamPlayer(GameObject trans)
         {
-            Logging.LogMsg("DEBUG", "foreaching in steamplayer");
+            Logging.Log("DEBUG", "foreaching in steamplayer");
 
             foreach (var user in Provider.clients)
             {
-                Logging.LogMsg("DEBUG", "checking if transform is equal");
+                Logging.Log("DEBUG", "checking if transform is equal");
 
                 if (user.player.transform.gameObject == trans)
                     return user;
             }
 
-            Logging.LogMsg("DEBUG", "returning null");
+            Logging.Log("DEBUG", "returning null");
 
             return null;
         }

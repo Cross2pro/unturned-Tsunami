@@ -41,7 +41,7 @@ namespace TsunamiHack.Tsunami.Manager
 
                 if (WaveMaker.Friends == null)
                 {
-                    Logging.LogMsg("Internal Error", "Unable to load friends file");
+                    Logging.Log("Internal Error", "Unable to load friends file");
                     throw new UnableToLoadException("Unable to load friends file");
                 }
             }
@@ -51,7 +51,7 @@ namespace TsunamiHack.Tsunami.Manager
 
                 if (WaveMaker.Friends == null)
                 {
-                    Logging.LogMsg( "Internal Error", "Unable to create friends file" );
+                    Logging.Log( "Internal Error", "Unable to create friends file" );
                     throw new UnableToLoadException( "Unable to create friends file" );
                 }
             }
@@ -64,7 +64,7 @@ namespace TsunamiHack.Tsunami.Manager
 
                 if (WaveMaker.Settings == null)
                 {
-                    Logging.LogMsg("Internal Error", "Unable to load settings file");
+                    Logging.Log("Internal Error", "Unable to load settings file");
                     throw new UnableToLoadException("Unable to load settings file");
                 }
             }
@@ -74,7 +74,7 @@ namespace TsunamiHack.Tsunami.Manager
 
                 if (WaveMaker.Settings == null)
                 {
-                    Logging.LogMsg("Internal Error", "Unable to create settings file");
+                    Logging.Log("Internal Error", "Unable to create settings file");
                     throw new UnableToLoadException("Unable to create settings file");
                 }
             }
@@ -90,7 +90,7 @@ namespace TsunamiHack.Tsunami.Manager
 
                 if (WaveMaker.Keybinds == null)
                 {
-                    Logging.LogMsg("Internal Error", "Unable to load keybinds file");
+                    Logging.Log("Internal Error", "Unable to load keybinds file");
                     throw new UnableToLoadException("Unable to load keybinds file");
                 }
             }
@@ -100,7 +100,7 @@ namespace TsunamiHack.Tsunami.Manager
 
                 if (WaveMaker.Keybinds == null)
                 {
-                    Logging.LogMsg("Internal Error", "Unable to create keybinds file");
+                    Logging.Log("Internal Error", "Unable to create keybinds file");
                     throw new UnableToLoadException("Unable to create keybinds file");
                 }
             }

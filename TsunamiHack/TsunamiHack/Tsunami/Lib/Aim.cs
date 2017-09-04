@@ -61,7 +61,6 @@ namespace TsunamiHack.Tsunami.Lib
                 }
                 else
                     Player.player.look.sensitivity = defsense;
-                
             }
             
             
@@ -87,8 +86,9 @@ namespace TsunamiHack.Tsunami.Lib
                 else
                     return false;
 //            } catch(Exception){}
-            
 
+
+            return false;
         }
 
         

@@ -16,10 +16,11 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>bin\debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -138,9 +139,6 @@
     <Reference Include="UnityEngine.Networking, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Unturned\Unturned_Data\Managed\Originals\UnityEngine.Networking.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.PlaymodeTestsRunner">
-      <HintPath>..\..\..\..\..\Desktop\Steam\steamapps\common\Unturned\Unturned_Data\Managed\UnityEngine.PlaymodeTestsRunner.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEngine.PlaymodeTestsRunner, Version=1.0.6302.26667, Culture=neutral, PublicKeyToken=null">
       <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Unturned\Unturned_Data\Managed\Originals\UnityEngine.PlaymodeTestsRunner.dll</HintPath>
     </Reference>
@@ -163,6 +161,7 @@
     <Compile Include="Tsunami\ILibParent.cs" />
     <Compile Include="Tsunami\IMenuParent.cs" />
     <Compile Include="Tsunami\Lib\Aim.cs" />
+    <Compile Include="Tsunami\Lib\AimV2.cs" />
     <Compile Include="Tsunami\Lib\Keybind.cs" />
     <Compile Include="Tsunami\Lib\Main.cs" />
     <Compile Include="Tsunami\Lib\VisualsV2.cs" />
@@ -192,6 +191,7 @@
     <Compile Include="Tsunami\Types\Setting.cs" />
     <Compile Include="Tsunami\Types\TargetLimb.cs" />
     <Compile Include="Tsunami\Types\TsuColor.cs" />
+    <Compile Include="Tsunami\Types\UnableToMatchPlayerException.cs" />
     <Compile Include="Tsunami\Util\Blocker.cs" />
     <Compile Include="Tsunami\Util\DataCollector.cs" />
     <Compile Include="Tsunami\Util\Db.cs" />

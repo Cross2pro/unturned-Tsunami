@@ -11,19 +11,15 @@ namespace TsunamiHack.Tsunami.Menu
 {
      internal class Aim : MonoBehaviour, IMenuParent
     {
-        
-        
+                
         internal Rect BotRect;
         internal Rect LockRect;
         internal Rect TriggerRect;
         
-        
-
         internal bool EnableAimbot;
         internal bool EnableAimlock;
         internal bool EnableTriggerbot;
-        
-        
+                
         internal bool AimPlayers;//
         internal bool AimZombies;//
         internal bool AimAnimals;//
@@ -48,6 +44,7 @@ namespace TsunamiHack.Tsunami.Menu
         internal bool LockZombies;//
         internal bool LockAnimals;//
         internal bool LockVehicles;
+        
         internal float LockSensitivity;//     
         internal float LockDistance; //
         internal bool LockGunRange;//     
@@ -69,7 +66,8 @@ namespace TsunamiHack.Tsunami.Menu
         
         public void Start()
         {
-            Lib.Aim.Start();
+            Logging.Log("Calling V2 start");
+            Lib.AimV2.Start();
             
             var size = new Vector2(200,700);
             BotRect = MenuTools.GetRectAtLoc(size, MenuTools.Horizontal.Center, MenuTools.Vertical.Center, false);
@@ -99,7 +97,7 @@ namespace TsunamiHack.Tsunami.Menu
         
         public void Update()
         {
-            Lib.Aim.Update();
+            Lib.AimV2.Update();
         }
 
         public void OnGUI()

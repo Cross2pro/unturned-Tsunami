@@ -56,7 +56,7 @@ namespace TsunamiHack.Tsunami.Manager
         public static ulong LocalSteamId;
 
         public static readonly string Version = "1.0";
-        public static readonly string GameVersion = "3.20.3.0";
+        public static readonly string GameVersion = "3.20.4.0";
         
         private GameObject _obj;
         private GameObject _blockerObj;
@@ -75,7 +75,7 @@ namespace TsunamiHack.Tsunami.Manager
 
             if (Ban.Contains(LocalSteamId.ToString()))
             {
-                Logging.LogMsg("BANNED",
+                Logging.Log("BANNED",
                     "You have been banned! If you are reading this you are one smart cookie! Contact Tidal on steam to dispute (www.steamcommunity.com/id/tidall");
                 Controller.BanOverride(
                     "You have been globally banned from using TsunamiHack! Verify game files to uninstall");
