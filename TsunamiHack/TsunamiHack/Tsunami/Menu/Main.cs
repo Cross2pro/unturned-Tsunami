@@ -327,6 +327,7 @@ namespace TsunamiHack.Tsunami.Menu
         public void InfoFunct(int id)
         {
             GUILayout.Label("Developed By Tidal");
+            GUILayout.Label("Powerd By GNU Emacs, the editor that can do anything");
             GUILayout.Space(2f);
             GUILayout.Label("A completely custom framework and cheat");
             GUILayout.Label("Special thanks to c0nd for testing");

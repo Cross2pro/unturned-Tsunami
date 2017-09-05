@@ -24,17 +24,25 @@ namespace TsunamiHack.Tsunami.Menu
         internal bool AimZombies;//
         internal bool AimAnimals;//
         internal bool AimVehicles;//
+        
         internal float AimUpdateRate;//
+        
         internal bool AimClosest;//
         internal bool AimManualChangeTarget;//
+        
         internal float AimSpeed;//
+        internal bool AimIgnoreWalls;
+        
         internal float AimDistance;//
         internal bool AimInfDistance;//
         internal bool AimUseGunDistance;//
+        
         internal bool AimSilent;//
+        
         internal bool AimWhitelistFriends; //
         internal bool AimWhitelistAdmins; //
         internal bool AimWhitelistPlayers;
+        
         internal float AimFOV;//
         internal bool Aim360;//
         internal TargetLimb AimTargetLimb;//
@@ -66,7 +74,6 @@ namespace TsunamiHack.Tsunami.Menu
         
         public void Start()
         {
-            Logging.Log("Calling V2 start");
             Lib.AimV2.Start();
             
             var size = new Vector2(200,700);
@@ -142,6 +149,8 @@ namespace TsunamiHack.Tsunami.Menu
             GUILayout.Space(2f);
             AimSilent = GUILayout.Toggle(AimSilent, " Enable Silent Aim");
             GUILayout.Space(2f);
+            AimIgnoreWalls = GUILayout.Toggle(AimIgnoreWalls, " Ignore Walls");
+            GUILayout.Space(2f);
             Aim360 = GUILayout.Toggle(Aim360, " 360 Aim FOV");
             GUILayout.Label($"Aim FOV : {AimFOV}");
             AimFOV = GUILayout.HorizontalSlider((float) Math.Round(AimFOV, 0), 10f, 360f);
@@ -152,7 +161,7 @@ namespace TsunamiHack.Tsunami.Menu
             if (GUILayout.Button($"Target Limb : {AimTargetLimb}"))
             {
                 Limb++;
-                if (Limb == 4)
+                if (Limb == 3)
                     Limb = 1;
                 
                 AimTargetLimb = (TargetLimb) Limb;                

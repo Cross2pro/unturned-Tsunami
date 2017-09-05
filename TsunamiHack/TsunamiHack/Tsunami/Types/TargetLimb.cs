@@ -4,6 +4,5 @@
     {
         Head = 1,
         Chest = 2,
-        Legs = 3
     }
 }
