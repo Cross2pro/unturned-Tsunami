@@ -11,16 +11,16 @@ namespace TsunamiHack.Tsunami.Util
     
         //TODO: Add a way to deallocate unused windows using "Inuse" Popup var
         
-        private  List<Popup> MenuList;
-        private  List<Popup> DynamicList;
+        private  List<Popup> _menuList;
+        private  List<Popup> _dynamicList;
 
         public  bool EnableFirstTime;
         
         private void Start()
         {
             EnableFirstTime = WaveMaker.FirstTime;
-            MenuList = new List<Popup>();
-            DynamicList = new List<Popup>();
+            _menuList = new List<Popup>();
+            _dynamicList = new List<Popup>();
             
             //TODO: add default popups
 
@@ -50,7 +50,7 @@ namespace TsunamiHack.Tsunami.Util
         {
             if (Provider.isConnected)
             {
-                foreach (var popup in MenuList)
+                foreach (var popup in _menuList)
                 {
                     if (popup.PopupOpened)
                     {
@@ -62,17 +62,17 @@ namespace TsunamiHack.Tsunami.Util
 
         public void AddPopup(Popup newPopup)
         {
-            if (MenuList.Exists(p => p.Id == newPopup.Id) ||
-                MenuList.Exists(p => p == newPopup)) return;
+            if (_menuList.Exists(p => p.Id == newPopup.Id) ||
+                _menuList.Exists(p => p == newPopup)) return;
             
-            MenuList.Add(newPopup);
+            _menuList.Add(newPopup);
         }
 
         public Popup GetPopup(int id)
         {
-            if (MenuList.Exists(p => p.Id == id))
+            if (_menuList.Exists(p => p.Id == id))
             {
-                return MenuList.Find(popup => popup.Id == id);
+                return _menuList.Find(popup => popup.Id == id);
             }
 
             return null;
@@ -80,9 +80,9 @@ namespace TsunamiHack.Tsunami.Util
 
         public Popup GetPopup(string title)
         {
-            if (MenuList.Exists(p => p.PopupTitle == title))
+            if (_menuList.Exists(p => p.PopupTitle == title))
             {
-                return MenuList.Find(popup => popup.PopupTitle == title);
+                return _menuList.Find(popup => popup.PopupTitle == title);
             }
 
             return null;
@@ -90,9 +90,9 @@ namespace TsunamiHack.Tsunami.Util
 
         public void DeactivatePopup(int id)
         {
-            if (MenuList.Exists(p => p.Id == id))
+            if (_menuList.Exists(p => p.Id == id))
             {
-                MenuList.Remove(MenuList.Find(p => p.Id == id));
+                _menuList.Remove(_menuList.Find(p => p.Id == id));
             }
         }
     }

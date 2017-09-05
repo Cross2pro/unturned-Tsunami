@@ -3,8 +3,6 @@ using UnityEngine;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
-using System.Runtime.InteropServices;
-using JetBrains.Annotations;
 using TsunamiHack.Tsunami.Manager;
 using TsunamiHack.Tsunami.Types;
 using TsunamiHack.Tsunami.Types.Lists;
@@ -69,7 +67,6 @@ namespace TsunamiHack.Tsunami.Util
             return File.Exists(KeybindPath);
         }
 
-        [Obsolete]
         public static void LoadKeybinds(out KeybindConfig keybinds)
         {
             var raw = File.ReadAllText(KeybindPath);
@@ -89,7 +86,6 @@ namespace TsunamiHack.Tsunami.Util
             SaveKeybinds(keybinds);// --------------------// --------------------
         }
 
-        [Obsolete]
         private static void SaveKeybinds(KeybindConfig config)
         {
             var json = JsonConvert.SerializeObject(config);
@@ -111,7 +107,6 @@ namespace TsunamiHack.Tsunami.Util
             return File.Exists(FriendsPath);
         }
 
-        [Obsolete]
         public static void LoadFriends(out FriendsList fList)
         {
             var raw = File.ReadAllText(FriendsPath);
@@ -125,7 +120,7 @@ namespace TsunamiHack.Tsunami.Util
             SaveFriends(fList);
         }
 
-        [Obsolete]
+        
         public static void SaveFriends(FriendsList friends)
         {
             var json = JsonConvert.SerializeObject(friends);
@@ -147,7 +142,6 @@ namespace TsunamiHack.Tsunami.Util
             return File.Exists(SettingsPath);
         }
 
-        [Obsolete]
         public static void LoadSettings(out Settings settings )
         {
             var raw = File.ReadAllText(SettingsPath);
@@ -178,6 +172,7 @@ namespace TsunamiHack.Tsunami.Util
         }
 
         
+        // ReSharper disable once UnusedMember.Local
         private static void SaveSettings(Settings settings)
         {
             var raw = JsonConvert.SerializeObject(settings);
@@ -211,7 +206,7 @@ namespace TsunamiHack.Tsunami.Util
 
             if (result)
             {
-                var str = "";
+                string str;
                 
                 using (var reader = new StreamReader(InfoPath))
                 {
@@ -296,7 +291,6 @@ namespace TsunamiHack.Tsunami.Util
         
     #region  Stream
 
-        [Obsolete]
         public static void StreamLoadKeybinds(out KeybindConfig keybinds)
         {
             _reader = new StreamReader(KeybindPath);
@@ -305,7 +299,7 @@ namespace TsunamiHack.Tsunami.Util
             keybinds = JsonConvert.DeserializeObject<KeybindConfig>(json);
         }
 
-        [Obsolete]
+        
         public static void StreamSaveKeybinds( KeybindConfig config)
         {
             var json = JsonConvert.SerializeObject(config);
@@ -320,7 +314,6 @@ namespace TsunamiHack.Tsunami.Util
             _writer.Dispose();
         }
 
-        [Obsolete]
         public static void StreamLoadFriends(out FriendsList friends)
         {
             _reader = new StreamReader(FriendsPath);
@@ -329,7 +322,6 @@ namespace TsunamiHack.Tsunami.Util
             friends = JsonConvert.DeserializeObject<FriendsList>(json);
         }
 
-        [Obsolete]
         public static void StreamSaveFriends(FriendsList list)
         {
             _writer = new StreamWriter(FriendsPath);
@@ -338,7 +330,6 @@ namespace TsunamiHack.Tsunami.Util
             _writer.Dispose();
         }
 
-        [Obsolete]
         public static void StreamLoadSettings(out Settings list)
         {
             _reader = new StreamReader(SettingsPath);
@@ -347,7 +338,6 @@ namespace TsunamiHack.Tsunami.Util
             list = JsonConvert.DeserializeObject<Settings>(json);
         }
 
-        [Obsolete]
         public static void StreamSaveSettings(Settings settings)
         {
             _writer = new StreamWriter(SettingsPath);

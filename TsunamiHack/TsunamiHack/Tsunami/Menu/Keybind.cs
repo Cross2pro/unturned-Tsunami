@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SDG.Unturned;
+﻿using SDG.Unturned;
 using TsunamiHack.Tsunami.Manager;
 using TsunamiHack.Tsunami.Types;
-using TsunamiHack.Tsunami.Types.Configs;
 using TsunamiHack.Tsunami.Util;
 using UnityEngine;
 
@@ -17,26 +11,26 @@ namespace TsunamiHack.Tsunami.Menu
         public bool MenuOpened { get; private set; }
         private Rect _windowRect;
         public bool Changing;
-        public string focus;
+        public string Focus;
         public bool KeybindsChanged;
 
 
-        private KeyCode _MainKey;
-        private KeyCode _VisualsKey;
-        private KeyCode _KeybindKey;
-        private KeyCode _AimKey;
-        private KeyCode _ChangeTargetKey;
+        private KeyCode _mainKey;
+        private KeyCode _visualsKey;
+        private KeyCode _keybindKey;
+        private KeyCode _aimKey;
+        private KeyCode _changeTargetKey;
                 
         public void Start()
         {
             var size = new Vector2(200,300);
             _windowRect = MenuTools.GetRectAtLoc(size, MenuTools.Horizontal.Center, MenuTools.Vertical.Center, false);
 
-            _MainKey = WaveMaker.Keybinds.GetBind("main");
-            _VisualsKey = WaveMaker.Keybinds.GetBind("visuals");
-            _KeybindKey = WaveMaker.Keybinds.GetBind("keybinds");
-            _AimKey = WaveMaker.Keybinds.GetBind("aim");
-            _ChangeTargetKey = WaveMaker.Keybinds.GetBind("changetarget");
+            _mainKey = WaveMaker.Keybinds.GetBind("main");
+            _visualsKey = WaveMaker.Keybinds.GetBind("visuals");
+            _keybindKey = WaveMaker.Keybinds.GetBind("keybinds");
+            _aimKey = WaveMaker.Keybinds.GetBind("aim");
+            _changeTargetKey = WaveMaker.Keybinds.GetBind("changetarget");
 
 
         }
@@ -61,7 +55,7 @@ namespace TsunamiHack.Tsunami.Menu
                     }
                     else
                     {
-                        WaveMaker.Keybinds.ChangeBind(focus, Event.current.keyCode);
+                        WaveMaker.Keybinds.ChangeBind(Focus, Event.current.keyCode);
                         Changing = false;
                         KeybindsChanged = true;
                         WaveMaker.Keybinds.SaveBinds();
@@ -71,7 +65,7 @@ namespace TsunamiHack.Tsunami.Menu
                 {
                     var pressed = Event.current.keyCode;
 
-                    if (pressed == _MainKey)
+                    if (pressed == _mainKey)
                     {
                         var ftpopup = WaveMaker.PopupController.GetPopup(WaveMaker.FtPopupId);
                         
@@ -88,11 +82,11 @@ namespace TsunamiHack.Tsunami.Menu
                             WaveMaker.FirstTime = false;
                         }
                     }
-                    else if (pressed == _VisualsKey)
+                    else if (pressed == _visualsKey)
                         UseMenu(WaveMaker.VisualsId);
-                    else if (pressed == _KeybindKey)
+                    else if (pressed == _keybindKey)
                         UseMenu(WaveMaker.KeybindId);
-                    else if (pressed == _AimKey)
+                    else if (pressed == _aimKey)
                         UseMenu(WaveMaker.AimId);
                         
                     //TODO: add other menus
@@ -129,11 +123,11 @@ namespace TsunamiHack.Tsunami.Menu
         {
             if (KeybindsChanged)
             {
-                _MainKey = WaveMaker.Keybinds.GetBind("main");
-                _VisualsKey = WaveMaker.Keybinds.GetBind("visuals");
-                _KeybindKey = WaveMaker.Keybinds.GetBind("keybinds");
-                _AimKey = WaveMaker.Keybinds.GetBind("aim");
-                _ChangeTargetKey = WaveMaker.Keybinds.GetBind("changetarget");
+                _mainKey = WaveMaker.Keybinds.GetBind("main");
+                _visualsKey = WaveMaker.Keybinds.GetBind("visuals");
+                _keybindKey = WaveMaker.Keybinds.GetBind("keybinds");
+                _aimKey = WaveMaker.Keybinds.GetBind("aim");
+                _changeTargetKey = WaveMaker.Keybinds.GetBind("changetarget");
 
                 
                 KeybindsChanged = false;
@@ -157,35 +151,35 @@ namespace TsunamiHack.Tsunami.Menu
         public void MenuFunct(int id)
         {
 
-            var maintext = Changing && focus == "main" ? "??" : WaveMaker.Keybinds.GetBind("main").ToString();
+            var maintext = Changing && Focus == "main" ? "??" : WaveMaker.Keybinds.GetBind("main").ToString();
             if (GUILayout.Button($"Main Menu : {maintext}"))
             {
                 Changing = true;
-                focus = "main";
+                Focus = "main";
             }
             GUILayout.Space(2f);
 
-            var visualstext = Changing && focus == "visuals" ? "??" : WaveMaker.Keybinds.GetBind("visuals").ToString();
+            var visualstext = Changing && Focus == "visuals" ? "??" : WaveMaker.Keybinds.GetBind("visuals").ToString();
             if (GUILayout.Button($"Visuals Menu : {visualstext}"))
             {
                 Changing = true;
-                focus = "visuals";
+                Focus = "visuals";
             }
             GUILayout.Space(2f);
 
-            var aimtext = Changing && focus == "aim" ? "??" : WaveMaker.Keybinds.GetBind("aim").ToString();
+            var aimtext = Changing && Focus == "aim" ? "??" : WaveMaker.Keybinds.GetBind("aim").ToString();
             if (GUILayout.Button($"Aim Menu : {aimtext}"))
             {
                 Changing = true;
-                focus = "aim";
+                Focus = "aim";
             }
             GUILayout.Space(2f);
 
-            var keybindtext = Changing && focus == "keybinds" ? "??" : WaveMaker.Keybinds.GetBind("keybinds").ToString();
+            var keybindtext = Changing && Focus == "keybinds" ? "??" : WaveMaker.Keybinds.GetBind("keybinds").ToString();
             if (GUILayout.Button($"Keybinds Menu : {keybindtext}"))
             {
                 Changing = true;
-                focus = "keybinds";
+                Focus = "keybinds";
             }
             GUILayout.Space(2f);
 

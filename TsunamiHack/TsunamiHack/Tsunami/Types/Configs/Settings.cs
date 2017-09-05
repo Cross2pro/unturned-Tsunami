@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace TsunamiHack.Tsunami.Types.Configs
 {
@@ -17,7 +16,7 @@ namespace TsunamiHack.Tsunami.Types.Configs
             ColorList = new Dictionary<string, TsuColor>();
         }
 
-        public void addSetting(string name, object value)
+        public void AddSetting(string name, object value)
         {
             if (SettingList.Exists(setting => setting.Name == name))
                 return;

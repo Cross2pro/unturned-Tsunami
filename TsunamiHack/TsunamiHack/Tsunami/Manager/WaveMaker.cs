@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Text;
-using SDG.Unturned;
+﻿using SDG.Unturned;
 using TsunamiHack.Tsunami.Types;
 using TsunamiHack.Tsunami.Types.Lists;
 using TsunamiHack.Tsunami.Types.Configs;
 using TsunamiHack.Tsunami.Util;
 using UnityEngine;
-using UnityEngine.Networking;
 
 namespace TsunamiHack.Tsunami.Manager
 {
@@ -20,7 +13,7 @@ namespace TsunamiHack.Tsunami.Manager
         //TODO: change window sizes to more accurately change between devices
         //TODO: add shutoff for all hacks at once
 
-        public static bool DEV = false;
+        public static bool Dev = false;
         
         public static PremiumList Prem;
         public static BanList Ban;
@@ -65,8 +58,8 @@ namespace TsunamiHack.Tsunami.Manager
         {
             LocalSteamId = Provider.client.m_SteamID;
 
-            if (LocalSteamId == WaveMaker.Controller.Dev || LocalSteamId == ulong.Parse("76561198308025096"))
-                DEV = true;
+            if (LocalSteamId == Controller.Dev || LocalSteamId == ulong.Parse("76561198308025096"))
+                Dev = true;
 
             if (FirstTime)
             {
@@ -78,25 +71,25 @@ namespace TsunamiHack.Tsunami.Manager
                 Logging.Log("BANNED",
                     "You have been banned! If you are reading this you are one smart cookie! Contact Tidal on steam to dispute (www.steamcommunity.com/id/tidall");
                 Controller.BanOverride(
-                    "You have been globally banned from using TsunamiHack! Verify game files to uninstall");
-                Util.Blocker.DisabledType = Blocker.Type.Banned;
+                    "You have been globally banned from using TsunamiHack! Verify game files to uninstall"); //change this when i make installer
+                Blocker.DisabledType = Blocker.Type.Banned;
             }
             else if (Version != Controller.Version)
             {
-                Util.Blocker.DisabledType = Blocker.Type.OutOfDate;
+                Blocker.DisabledType = Blocker.Type.OutOfDate;
                 Blocker.BlockerEnabled = true;
-                WaveMaker.HackDisabled = true;
+                HackDisabled = true;
                 Controller.Disabled = true;
             }
             else if (GameVersion != Provider.APP_VERSION)
             {
-                Util.Blocker.DisabledType = Blocker.Type.GameOutOfDate;
+                Blocker.DisabledType = Blocker.Type.GameOutOfDate;
                 Blocker.BlockerEnabled = true;
-                WaveMaker.HackDisabled = true;
+                HackDisabled = true;
                 Controller.Disabled = true;
             } 
             else
-                Util.Blocker.DisabledType = Blocker.Type.Disabled;
+                Blocker.DisabledType = Blocker.Type.Disabled;
         }
 
         public void OnUpdate()
@@ -105,7 +98,7 @@ namespace TsunamiHack.Tsunami.Manager
             {
                 _blockerObj = new GameObject();
                 Blocker = _blockerObj.AddComponent<Blocker>();
-                UnityEngine.Object.DontDestroyOnLoad(Blocker);
+                Object.DontDestroyOnLoad(Blocker);
             }
 
             if (Provider.isConnected && !HackDisabled)
@@ -119,11 +112,11 @@ namespace TsunamiHack.Tsunami.Manager
                     PopupController = _obj.AddComponent<PopupController>();
                     MenuAim = _obj.AddComponent<Menu.Aim>();
 
-                    UnityEngine.Object.DontDestroyOnLoad(MenuMain);
-                    UnityEngine.Object.DontDestroyOnLoad(MenuKeybind);
-                    UnityEngine.Object.DontDestroyOnLoad(PopupController);
-                    UnityEngine.Object.DontDestroyOnLoad(MenuVisuals);
-                    UnityEngine.Object.DontDestroyOnLoad(MenuAim);
+                    Object.DontDestroyOnLoad(MenuMain);
+                    Object.DontDestroyOnLoad(MenuKeybind);
+                    Object.DontDestroyOnLoad(PopupController);
+                    Object.DontDestroyOnLoad(MenuVisuals);
+                    Object.DontDestroyOnLoad(MenuAim);
 
                     //TODO: add other hack objects
                 }
@@ -133,11 +126,11 @@ namespace TsunamiHack.Tsunami.Manager
             {
                 if (_obj != null)
                 {
-                    UnityEngine.Object.Destroy(MenuMain);
-                    UnityEngine.Object.Destroy(MenuKeybind);
-                    UnityEngine.Object.Destroy(PopupController);
-                    UnityEngine.Object.Destroy(MenuVisuals);
-                    UnityEngine.Object.Destroy(MenuAim);
+                    Object.Destroy(MenuMain);
+                    Object.Destroy(MenuKeybind);
+                    Object.Destroy(PopupController);
+                    Object.Destroy(MenuVisuals);
+                    Object.Destroy(MenuAim);
                     
                     _obj = null;
                     MenuMain = null;

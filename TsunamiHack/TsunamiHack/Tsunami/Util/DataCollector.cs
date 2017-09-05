@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Globalization;
 using System.Net;
 using System.Management;
 using System.Security.Cryptography;
@@ -13,7 +12,7 @@ namespace TsunamiHack.Tsunami.Util
         
         private const string IpCheckUrl = "https://api.ipify.org/";
 
-        public static string GetHWID()
+        public static string GetHwid()
         {
             return GetHash("CPU>>" + GetCpuId() + "Bios>>" + GetBiosId() + "Hdd>>" + GetHddId() + "Board>>" + GetBiosId());
         }
@@ -29,9 +28,9 @@ namespace TsunamiHack.Tsunami.Util
         public static string GetCpuId()
         {   
             var result = "";
-            var mc = new System.Management.ManagementClass("Win32_Processor");
+            var mc = new ManagementClass("Win32_Processor");
             var moc = mc.GetInstances();
-            foreach (System.Management.ManagementBaseObject mo in moc)
+            foreach (ManagementBaseObject mo in moc)
             {
                 if (result != "") continue;
                 try
@@ -39,6 +38,7 @@ namespace TsunamiHack.Tsunami.Util
                     result = mo["ProcessorId"].ToString();
                     break;
                 }
+                // ReSharper disable once EmptyGeneralCatchClause
                 catch
                 {
                 }

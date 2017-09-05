@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections;
-using System.Data.SqlTypes;
-using System.Reflection;
-using System.Security.Cryptography.X509Certificates;
 using SDG.Unturned;
 using TsunamiHack.Tsunami.Manager;
 using TsunamiHack.Tsunami.Types;
-using TsunamiHack.Tsunami.Types.Configs;
 using TsunamiHack.Tsunami.Util;
 using UnityEngine;
 
@@ -15,7 +10,7 @@ namespace TsunamiHack.Tsunami.Menu
     internal class Visuals : MonoBehaviour
     {
         internal bool MenuOpened { get; private set; }
-        internal enum NVType
+        internal enum NvType
         {
             Military = 1, Civilian, HeadLamp, None
         }
@@ -107,7 +102,7 @@ namespace TsunamiHack.Tsunami.Menu
         internal bool NoSnow;
         internal bool NoFog;
         internal bool NoWater;
-        internal NVType Nv;
+        internal NvType Nv;
         internal int NvInt;
         internal float Altitude;
         
@@ -176,7 +171,7 @@ namespace TsunamiHack.Tsunami.Menu
             EnvRect.x = SelectionRect.x - 207;
 
             NvInt = 4;
-            Nv = (NVType) NvInt;
+            Nv = (NvType) NvInt;
 
             ChangeInt = 1;
             Changing = (ColorChangeType) ChangeInt;
@@ -440,8 +435,8 @@ namespace TsunamiHack.Tsunami.Menu
 
             if (GUILayout.Button("Military"))
             {
-                if(Nv != NVType.Military)
-                    Nv = (NVType) 1;
+                if(Nv != NvType.Military)
+                    Nv = (NvType) 1;
                 
                 LevelLighting.vision = ELightingVision.MILITARY;
                 LevelLighting.updateLighting();
@@ -451,8 +446,8 @@ namespace TsunamiHack.Tsunami.Menu
 
             if (GUILayout.Button("Civilian"))
             {
-                if(Nv != NVType.Civilian)
-                    Nv = (NVType) 2;
+                if(Nv != NvType.Civilian)
+                    Nv = (NvType) 2;
                 
                 LevelLighting.vision = ELightingVision.CIVILIAN;
                 LevelLighting.updateLighting();
@@ -462,8 +457,8 @@ namespace TsunamiHack.Tsunami.Menu
             
             if (GUILayout.Button("None"))
             {
-                if(Nv != NVType.None)
-                    Nv = (NVType) 4;
+                if(Nv != NvType.None)
+                    Nv = (NvType) 4;
                 
                 LevelLighting.vision = ELightingVision.NONE;
                 LevelLighting.updateLighting();

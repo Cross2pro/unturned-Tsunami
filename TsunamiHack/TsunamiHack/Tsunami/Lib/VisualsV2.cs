@@ -233,15 +233,15 @@ namespace TsunamiHack.Tsunami.Lib
         {
             foreach (var go in list)
             {
-                if (Camera.main != null && go.gameObject != null)
+                if (Camera.main != null && go.GameObject != null)
                 {
                     var mypos = Camera.main.gameObject.transform.position;
-                    var targetpos = go.gameObject.transform.position;
+                    var targetpos = go.GameObject.transform.position;
 
                     if (Vector3.Distance(mypos, targetpos) <= Menu.Distance || Menu.InfDistance)
                     {
-                        var highlighter = go.gameObject.GetComponent<Highlighter>() ??
-                                          go.gameObject.AddComponent<Highlighter>();
+                        var highlighter = go.GameObject.GetComponent<Highlighter>() ??
+                                          go.GameObject.AddComponent<Highlighter>();
                         
                         highlighter.ConstantParams(glowColor);
                         highlighter.OccluderOn();
@@ -250,9 +250,9 @@ namespace TsunamiHack.Tsunami.Lib
                     }
                     else
                     {
-                        if(go.gameObject.GetComponent<Highlighter>() != null)
+                        if(go.GameObject.GetComponent<Highlighter>() != null)
                         {
-                            var highlighter = go.gameObject.GetComponent<Highlighter>();
+                            var highlighter = go.GameObject.GetComponent<Highlighter>();
                             
                             highlighter.ConstantOffImmediate();
                         }
@@ -265,8 +265,8 @@ namespace TsunamiHack.Tsunami.Lib
         {
             foreach (var go in list)
             {
-                if(go.gameObject.GetComponent<Highlighter>() != null)
-                    go.gameObject.GetComponent<Highlighter>().ConstantOffImmediate();
+                if(go.GameObject.GetComponent<Highlighter>() != null)
+                    go.GameObject.GetComponent<Highlighter>().ConstantOffImmediate();
                     
             }
         }

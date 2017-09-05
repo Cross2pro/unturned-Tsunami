@@ -1,17 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using SDG.Unturned;
 using TsunamiHack.Tsunami.Manager;
 using TsunamiHack.Tsunami.Types;
-using TsunamiHack.Tsunami.Types.Lists;
 using TsunamiHack.Tsunami.Util;
 using UnityEngine;
-using UnityEngine.SocialPlatforms;
 
 namespace TsunamiHack.Tsunami.Menu
 {
@@ -41,11 +34,11 @@ namespace TsunamiHack.Tsunami.Menu
 
         internal bool InfoWin;
 
-        internal List<Friend> addlist;
-        internal List<Friend> remlist;
+        internal List<Friend> Addlist;
+        internal List<Friend> Remlist;
 
-        internal ulong playerfocus;
-        internal ulong friendfocus;
+        internal ulong Playerfocus;
+        internal ulong Friendfocus;
 
         internal Vector2 Playerscroll;
         internal Vector2 Friendscroll;
@@ -86,8 +79,8 @@ namespace TsunamiHack.Tsunami.Menu
             InfoRect = MenuTools.GetRectAtLoc(size, MenuTools.Horizontal.Left, MenuTools.Vertical.Top, true, 5f);
             
             
-            addlist = new List<Friend>();
-            remlist = new List<Friend>();
+            Addlist = new List<Friend>();
+            Remlist = new List<Friend>();
 
             Playerscroll = new Vector2();
             Playerscroll.y = 1f;
@@ -95,8 +88,8 @@ namespace TsunamiHack.Tsunami.Menu
             Friendscroll = new Vector2();
             Friendscroll.y = 1f;
 
-            playerfocus = 0;
-            friendfocus = 0;
+            Playerfocus = 0;
+            Friendfocus = 0;
             
             
             
@@ -104,25 +97,25 @@ namespace TsunamiHack.Tsunami.Menu
 
         public void Update()
         {
-            if (remlist.Count != 0)
+            if (Remlist.Count != 0)
             {
-                foreach (var rem in remlist)
+                foreach (var rem in Remlist)
                 {
                     WaveMaker.Friends.Userlist.Remove(rem);
                 }
                 
-                remlist = new List<Friend>();
+                Remlist = new List<Friend>();
                 WaveMaker.Friends.SaveFriends();
             }
 
-            if (addlist.Count != 0)
+            if (Addlist.Count != 0)
             {
-                foreach (var add in addlist)
+                foreach (var add in Addlist)
                 {
                     WaveMaker.Friends.Userlist.Add(add);
                 }
                 
-                addlist = new List<Friend>();
+                Addlist = new List<Friend>();
                 WaveMaker.Friends.SaveFriends();
             }
 
@@ -240,13 +233,13 @@ namespace TsunamiHack.Tsunami.Menu
                     
                     if(GUILayout.Button(client.playerID.nickName))
                     {
-                        if (friendfocus == client.playerID.steamID.m_SteamID)
-                            friendfocus = 0;
+                        if (Friendfocus == client.playerID.steamID.m_SteamID)
+                            Friendfocus = 0;
                         else
-                            friendfocus = client.playerID.steamID.m_SteamID; 
+                            Friendfocus = client.playerID.steamID.m_SteamID; 
                     }
                     
-                    if (friendfocus == client.playerID.steamID.m_SteamID)
+                    if (Friendfocus == client.playerID.steamID.m_SteamID)
                     {
                         GUILayout.Label("--------------------------------------");
                         GUILayout.Label($"Steam Name: {client.playerID.playerName}");
@@ -255,8 +248,8 @@ namespace TsunamiHack.Tsunami.Menu
                         GUILayout.Label($"Pro: {client.isPro}");
                         if (GUILayout.Button("Remove friend"))
                         {
-                            friendfocus = 0;
-                            remlist.Add(friend);
+                            Friendfocus = 0;
+                            Remlist.Add(friend);
                         }
                         if (GUILayout.Button("View Steam Profile"))
                         {
@@ -284,14 +277,14 @@ namespace TsunamiHack.Tsunami.Menu
                 {
                     if(GUILayout.Button(client.playerID.nickName))
                     {
-                        if (playerfocus == client.playerID.steamID.m_SteamID)
-                            playerfocus = 0;
+                        if (Playerfocus == client.playerID.steamID.m_SteamID)
+                            Playerfocus = 0;
                         else
-                            playerfocus = client.playerID.steamID.m_SteamID;
+                            Playerfocus = client.playerID.steamID.m_SteamID;
                     
                     }
                 
-                    if (playerfocus == client.playerID.steamID.m_SteamID)
+                    if (Playerfocus == client.playerID.steamID.m_SteamID)
                     {
                         GUILayout.Label("--------------------------------------");
                         GUILayout.Label($"Steam Name: {client.playerID.playerName}");
@@ -300,8 +293,8 @@ namespace TsunamiHack.Tsunami.Menu
                         GUILayout.Label($"Pro: {client.isPro}");
                         if (GUILayout.Button("Add to friends"))
                         {
-                            playerfocus = 0;
-                            addlist.Add(new Friend(client.playerID.playerName, client.playerID.steamID.m_SteamID));
+                            Playerfocus = 0;
+                            Addlist.Add(new Friend(client.playerID.playerName, client.playerID.steamID.m_SteamID));
                         }
                         if (GUILayout.Button("View Steam Profile"))
                         {

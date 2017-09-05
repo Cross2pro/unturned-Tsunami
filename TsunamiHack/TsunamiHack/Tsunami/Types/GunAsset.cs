@@ -1,5 +1,5 @@
 ﻿using SDG.Unturned;
-using UnityEngine;
+// ReSharper disable InconsistentNaming
 
 namespace TsunamiHack.Tsunami.Types
 {

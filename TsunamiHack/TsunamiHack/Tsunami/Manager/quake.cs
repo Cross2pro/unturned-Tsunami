@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using SDG.Unturned;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace TsunamiHack.Tsunami.Manager
 {
@@ -27,11 +20,6 @@ namespace TsunamiHack.Tsunami.Manager
             //Call Updates
 
             WM.OnUpdate();
-        }
-
-        public void OnGUI()
-        {
-            //nothing
         }
     }
 }

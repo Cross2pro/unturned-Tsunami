@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Globalization;
 using TsunamiHack.Tsunami.Types;
 using TsunamiHack.Tsunami.Types.Lists;
+// ReSharper disable InconsistentNaming
 
 
 namespace TsunamiHack.Tsunami.Util

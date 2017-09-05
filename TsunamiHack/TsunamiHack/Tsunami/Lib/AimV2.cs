@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using Mono.Security;
@@ -28,11 +29,15 @@ namespace TsunamiHack.Tsunami.Lib
 
 		private static Transform target;
 
+		private static List<Zombie> Zombies;
+		private static int update;
+
 		internal static void Start()
 		{
 			lastLock = DateTime.Now;
 			menu = WaveMaker.MenuAim;
 
+			update = 50;
 			defsense = Player.player.look.sensitivity;
 
 			prim = typeof(PlayerEquipment).GetField("prim", BindingFlags.Instance | BindingFlags.NonPublic);
@@ -151,7 +156,6 @@ namespace TsunamiHack.Tsunami.Lib
 
 					//if unable to match the client throw unable tomatch
 					throw new UnableToMatchPlayerException();
-					return false;
 				}
 
 			} //if cant match log exception
@@ -224,45 +228,6 @@ namespace TsunamiHack.Tsunami.Lib
 
 		// aimbot
 
-		internal static void UpdateAim()
-		{
-			//if aimbot is enabled and you are connected to server
-
-			//if player aimbot is enabled
-			//setup range
-			//go through all players
-			//if player is closer than range or inf range 
-			//if player is an enemy, or no whitelists are active
-			//mark that transform as target
-
-			Transform closestTarget = null;
-			float closestDist = 0f;
-
-			if (menu.EnableAimbot && Provider.isConnected)
-			{
-				if (menu.AimPlayers)
-				{
-					var range = menu.AimDistance;
-					if (menu.AimUseGunDistance && Player.player.equipment.asset is ItemGunAsset)
-						range = ((ItemGunAsset) Player.player.equipment.asset).range;
-
-//					foreach (var client in Provider.clients)
-//					{
-//						if (menu.AimWhitelistFriends && WaveMaker.Friends.Contains(client.playerID.steamID.m_SteamID))
-//							goto END;
-//
-//						if (menu.END:;
-//					}
-
-				}
-
-				if (closestTarget != null)
-				{
-
-				}
-
-			}
-		}
 
 		internal static void UpdateAimbot()
 		{
@@ -270,12 +235,6 @@ namespace TsunamiHack.Tsunami.Lib
 
 			if (menu.EnableAimbot)
 			{
-				//Setup vars
-				var player = Player.player;
-				var look = Player.player.look;
-				var main = Camera.main;
-				var position = main.transform.position;
-
 
 				if (!menu.AimManualChangeTarget)
 				{
@@ -284,9 +243,9 @@ namespace TsunamiHack.Tsunami.Lib
 
 
 				var dist = menu.AimDistance;
-				if (menu.AimInfDistance && player.equipment.asset is ItemWeaponAsset)
+				if (menu.AimInfDistance && Player.player.equipment.asset is ItemWeaponAsset)
 				{
-					dist = ((ItemWeaponAsset) player.equipment.asset).range;
+					dist = ((ItemWeaponAsset) Player.player.equipment.asset).range;
 				}
 
 
@@ -315,25 +274,24 @@ namespace TsunamiHack.Tsunami.Lib
 								{
 									if (!menu.AimWhitelistAdmins || !client.isAdmin)
 									{
-										var tarLimbPos = getVectorOfTarget(client.player.transform, tarLimb);
+										var tarLimbPos = GetLimbPosition(client.player.transform, tarLimb);
 
 										float sqrMagnitude;
 										if (menu.AimClosest)
 										{
-											var tarScrnPt = main.WorldToScreenPoint(tarLimbPos);
-											sqrMagnitude = (new Vector3((float) (Screen.width / 2), (float) (Screen.height / 2)) - tarScrnPt)
-												.sqrMagnitude;
+											var tarScrnPt = Camera.main.WorldToScreenPoint(tarLimbPos);
+											sqrMagnitude = (new Vector3(Screen.width / 2f, Screen.height / 2f) - tarScrnPt).sqrMagnitude;
 										}
 										else
 										{
-											sqrMagnitude = (tarLimbPos - position).sqrMagnitude;
+											sqrMagnitude = (tarLimbPos - Camera.main.transform.position).sqrMagnitude;
 										}
 
 										if (sqrMagnitude <= squarerange && !client.player.life.isDead && Player.player.name != client.player.name)
 										{
 											if (!menu.Aim360)
 											{
-												var tarLimbPosScrnPt = main.WorldToViewportPoint(tarLimbPos);
+												var tarLimbPosScrnPt = Camera.main.WorldToViewportPoint(tarLimbPos);
 												if (tarLimbPosScrnPt.z <= 0f || tarLimbPosScrnPt.x <= 0f || tarLimbPosScrnPt.x >= 1f ||
 												    tarLimbPosScrnPt.y <= 0f || tarLimbPosScrnPt.y >= 1f)
 												{
@@ -342,9 +300,9 @@ namespace TsunamiHack.Tsunami.Lib
 											}
 											if (!menu.AimIgnoreWalls)
 											{
-												var distance = tarLimbPos - look.aim.position;
+												var distance = tarLimbPos - Player.player.look.aim.position;
 												RaycastHit raycastHit;
-												if (!Physics.Raycast(look.aim.position, distance, out raycastHit, dist, RayMasks.DAMAGE_CLIENT) ||
+												if (!Physics.Raycast(Player.player.look.aim.position, distance, out raycastHit, dist, RayMasks.DAMAGE_CLIENT) ||
 												    !raycastHit.transform.CompareTag("Enemy"))
 												{
 													goto Exit;
@@ -356,117 +314,126 @@ namespace TsunamiHack.Tsunami.Lib
 									}
 								}
 							}
-						}
-						catch (System.Exception)
-						{
-						}
-						Exit:
-						;
+						} catch (System.Exception){}
+						Exit:;
 					}
 				}
 
-//				if (menu.AimZombies)
-//				{
-//					foreach (var current in)
-//					{
-//						if (!this.manuallyChangeTarget || !(menu_Aimbot.target == current.transform))
-//						{
-//							tarScrnPt3 vector5 = menu_Aimbot.getVectorOfTarget(current.transform, tarLimb);
-//							float sqrMagnitude2;
-//							if (this.aimClosestCrosshair)
-//							{
-//								Vector3 vector6 = main.WorldToScreenPoint(vector5);
-//								sqrMagnitude2 = (new Vector3((float) (Screen.width / 2), (float) (Screen.height / 2)) - vector6).sqrMagnitude;
-//							}
-//							else
-//							{
-//								sqrMagnitude2 = (vector5 - position).sqrMagnitude;
-//							}
-//							if (sqrMagnitude2 <= squarerange && !current.isDead)
-//							{
-//								if (!this.aim360)
-//								{
-//									Vector3 vector7 = main.WorldToViewportPoint(vector5);
-//									if (vector7.z <= 0f || vector7.x <= 0f || vector7.x >= 1f || vector7.y <= 0f || vector7.y >= 1f)
-//									{
-//										continue;
-//									}
-//								}
-//								if (!this.aimWalls)
-//								{
-//									Vector3 vector8 = vector5 - look.aim.position;
-//									RaycastHit raycastHit2;
-//									if (!Physics.Raycast(look.aim.position, vector8, out raycastHit2, dist, RayMasks.DAMAGE_CLIENT) ||
-//									    raycastHit2.transform.tag != "Zombie")
-//									{
-//										continue;
-//									}
-//								}
-//								menu_Aimbot.target = current.transform;
-//								squarerange = sqrMagnitude2;
-//							}
-//						}
-//					}
-//				}
-
-
-				if (target != null && !menu.AimSilent)
+				if (menu.AimZombies)
 				{
-					if (menu.AimManualChangeTarget && !menu.AimIgnoreWalls)
-					{
-						var vector9 = getVectorOfTarget(target.transform, tarLimb) - Camera.main.transform.position;
-						RaycastHit hit;
-						if (!Physics.Raycast(look.aim.position, vector9, out hit, dist, RayMasks.DAMAGE_CLIENT))
-						{
-							return;
-						}
-						if (!hit.transform.CompareTag("Zombie") && !hit.transform.CompareTag("Enemy") &&
-						    !hit.transform.CompareTag("Animal") && !hit.transform.CompareTag("Vehicle"))
-						{
-							return;
-						}
-					}
 
-					var targetVector = getVectorOfTarget(target.transform, tarLimb);
-					var num3 = menu.AimSpeed * 100f * Time.deltaTime;
-					var quaternion = Quaternion.LookRotation(targetVector - look.aim.position);
-					var quaternion2 = Quaternion.RotateTowards(main.transform.rotation, quaternion, num3);
-					var xVal = quaternion2.eulerAngles.x;
-					if (xVal <= 90f)
+					update++;
+					if (update > 50)
 					{
-						xVal += 90f;
+						Zombies = new List<Zombie>();
+						foreach (var region in ZombieManager.regions)
+						{
+							foreach (var zom in region.zombies)
+							{
+								Zombies.Add(zom);
+							}
+						}
+
+						update = 0;
 					}
-					if (xVal > 180f)
+					
+					
+					foreach (var zombie in Zombies)
 					{
-						xVal -= 270f;
+						if (menu.AimManualChangeTarget && target == zombie.transform) continue;
+						
+						var targetVectorPos = GetLimbPosition(zombie.transform, tarLimb);
+						float distance;
+						if (menu.AimClosest)
+						{
+							var scrnpt = Camera.main.WorldToScreenPoint(targetVectorPos);
+							distance = (new Vector3(Screen.width / 2f, Screen.height / 2f) - scrnpt).sqrMagnitude;
+						}
+						else
+						{
+							distance = (targetVectorPos - Camera.main.transform.position).sqrMagnitude;
+						}
+						
+						if (!(distance <= squarerange) || zombie.isDead) continue;
+						
+						if (!menu.Aim360)
+						{
+							var targetScrnPt = Camera.main.WorldToViewportPoint(targetVectorPos);
+							if (targetScrnPt.z <= 0f || targetScrnPt.x <= 0f || targetScrnPt.x >= 1f || targetScrnPt.y <= 0f || targetScrnPt.y >= 1f)
+							{
+								continue;
+							}
+						}
+						if (!menu.AimIgnoreWalls)
+						{
+							var vector8 = targetVectorPos - Player.player.look.aim.position;
+							RaycastHit raycastHit2;
+							if (!Physics.Raycast(Player.player.look.aim.position, vector8, out raycastHit2, dist, RayMasks.DAMAGE_CLIENT) || !raycastHit2.transform.CompareTag("Zombie"))
+							{
+								continue;
+							}
+						}
+						target = zombie.transform;
+						squarerange = distance;
 					}
-					yaw.SetValue(look, quaternion2.eulerAngles.y);
-					pitch.SetValue(look, xVal);
 				}
+
+
+				if (target == null || menu.AimSilent) return;
+				
+				if (menu.AimManualChangeTarget && !menu.AimIgnoreWalls)
+				{
+					var vector9 = GetLimbPosition(target.transform, tarLimb) - Camera.main.transform.position;
+					RaycastHit hit;
+					if (!Physics.Raycast(Player.player.look.aim.position, vector9, out hit, dist, RayMasks.DAMAGE_CLIENT))
+					{
+						return;
+					}
+					if (!hit.transform.CompareTag("Zombie") && !hit.transform.CompareTag("Enemy") &&
+					    !hit.transform.CompareTag("Animal") && !hit.transform.CompareTag("Vehicle"))
+					{
+						return;
+					}
+				}
+
+				var num3 = menu.AimSpeed * 100f * Time.deltaTime;
+				var targetVector = GetLimbPosition(target.transform, tarLimb);
+				var quaternion = Quaternion.LookRotation(targetVector - Player.player.look.aim.position);
+				var quaternion2 = Quaternion.RotateTowards(Camera.main.transform.rotation, quaternion, num3);
+				
+				var xVal = quaternion2.eulerAngles.x;
+				if (xVal <= 90f)
+				{
+					xVal += 90f;
+				}
+				if (xVal > 180f)
+				{
+					xVal -= 270f;
+				}
+				
+				yaw.SetValue(Player.player.look, quaternion2.eulerAngles.y);
+				pitch.SetValue(Player.player.look, xVal);
 			}
 		}
 
 
 
 
-		public static Vector3 getVectorOfTarget(Transform target, string objName)
+		public static Vector3 GetLimbPosition(Transform target, string objName)
 		{
-			Transform[] componentsInChildren = target.transform.GetComponentsInChildren<Transform>();
-			Vector3 result = Vector3.zero;
+			var componentsInChildren = target.transform.GetComponentsInChildren<Transform>();
+			var result = Vector3.zero;
 
-			if (componentsInChildren != null)
+			if (componentsInChildren == null) return result;
+			
+			foreach (var transform in componentsInChildren)
 			{
-				Transform[] array = componentsInChildren;
-				for (int i = 0; i < array.Length; i++)
-				{
-					Transform transform = array[i];
-					if (transform.name.Trim() == objName)
-					{
-						result = transform.position + new Vector3(0f, 0.4f, 0f);
-						break;
-					}
-				}
+				if (transform.name.Trim() != objName) continue;
+					
+				result = transform.position + new Vector3(0f, 0.4f, 0f);
+				break;
 			}
+			
 			return result;
 		}
 

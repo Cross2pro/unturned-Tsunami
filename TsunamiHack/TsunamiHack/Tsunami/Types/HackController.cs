@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using TsunamiHack.Tsunami.Manager;
+﻿using TsunamiHack.Tsunami.Manager;
 
 namespace TsunamiHack.Tsunami.Types
 {

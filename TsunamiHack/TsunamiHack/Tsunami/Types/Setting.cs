@@ -1,6 +1,4 @@
 ﻿using System;
-using SDG.Unturned;
-using UnityEngine;
 
 namespace TsunamiHack.Tsunami.Types
 {

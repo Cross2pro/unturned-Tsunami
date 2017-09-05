@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace TsunamiHack.Tsunami
 {
     internal interface IMenuParent
@@ -12,6 +7,7 @@ namespace TsunamiHack.Tsunami
         #region Unity Update Loop Members
         void Start();
         void Update();
+        // ReSharper disable once InconsistentNaming
         void OnGUI();
         void MenuFunct(int id);
         #endregion

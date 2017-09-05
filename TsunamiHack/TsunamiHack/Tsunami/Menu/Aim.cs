@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Security.Cryptography;
-using System.Security.Cryptography.X509Certificates;
 using TsunamiHack.Tsunami.Manager;
 using TsunamiHack.Tsunami.Types;
 using TsunamiHack.Tsunami.Util;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace TsunamiHack.Tsunami.Menu
 {
@@ -43,7 +40,7 @@ namespace TsunamiHack.Tsunami.Menu
         internal bool AimWhitelistAdmins; //
         internal bool AimWhitelistPlayers;
         
-        internal float AimFOV;//
+        internal float AimFov;//
         internal bool Aim360;//
         internal TargetLimb AimTargetLimb;//
         internal int Limb;//
@@ -90,7 +87,7 @@ namespace TsunamiHack.Tsunami.Menu
             Limb = 1;
             AimTargetLimb = (TargetLimb)Limb;
 
-            AimFOV = 180f;
+            AimFov = 180f;
             AimSpeed = 5f;
             AimDistance = 200f;
             AimUpdateRate = 5f;
@@ -136,7 +133,7 @@ namespace TsunamiHack.Tsunami.Menu
             if (GUILayout.Button($"Change Target : {WaveMaker.Keybinds.GetBind("changetarget")}"))
             {
                 WaveMaker.MenuKeybind.Changing = true;
-                WaveMaker.MenuKeybind.focus = "changetarget"; 
+                WaveMaker.MenuKeybind.Focus = "changetarget"; 
             }
             GUILayout.Space(2f);
             GUILayout.Label("----------------------------------------\nWhitelist Settings\n----------------------------------------");
@@ -152,8 +149,8 @@ namespace TsunamiHack.Tsunami.Menu
             AimIgnoreWalls = GUILayout.Toggle(AimIgnoreWalls, " Ignore Walls");
             GUILayout.Space(2f);
             Aim360 = GUILayout.Toggle(Aim360, " 360 Aim FOV");
-            GUILayout.Label($"Aim FOV : {AimFOV}");
-            AimFOV = GUILayout.HorizontalSlider((float) Math.Round(AimFOV, 0), 10f, 360f);
+            GUILayout.Label($"Aim FOV : {AimFov}");
+            AimFov = GUILayout.HorizontalSlider((float) Math.Round(AimFov, 0), 10f, 360f);
             GUILayout.Space(2f);
             GUILayout.Label($"Aim Speed : {AimSpeed}");
             AimSpeed = GUILayout.HorizontalSlider((float) Math.Round(AimSpeed, 0), 1f, 10f);

@@ -1,6 +1,4 @@
-﻿using SDG.Unturned;
-using TsunamiHack.Tsunami.Types;
-using TsunamiHack.Tsunami.Types.Lists;
+﻿using TsunamiHack.Tsunami.Types;
 using TsunamiHack.Tsunami.Util;
 
 namespace TsunamiHack.Tsunami.Manager
@@ -55,7 +53,6 @@ namespace TsunamiHack.Tsunami.Manager
                     throw new UnableToLoadException( "Unable to create friends file" );
                 }
             }
-/**/
             // --- Settings ---
 
             if (FileIo.SettingsExist())

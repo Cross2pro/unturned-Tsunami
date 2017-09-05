@@ -1,17 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
 using TsunamiHack.Tsunami.Types;
 using Newtonsoft.Json;
-using SDG.Provider.Services;
-using TsunamiHack.Tsunami.Manager;
 using TsunamiHack.Tsunami.Types.Lists;
-using UnityEngine;
 
 namespace TsunamiHack.Tsunami.Util
 {
@@ -33,6 +26,7 @@ namespace TsunamiHack.Tsunami.Util
         [Obsolete]
         public static void DownloadList(out InfoList list, ListType type)
         {
+            // ReSharper disable once RedundantAssignment
             list = null;
 
             var web = new WebClient();

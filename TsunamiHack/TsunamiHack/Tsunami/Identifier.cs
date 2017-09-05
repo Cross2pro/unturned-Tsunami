@@ -14,9 +14,9 @@ namespace TsunamiHack.Tsunami
 
         public string Info { get{ return _info; } }
 
-        public Identifier(string Description)
+        public Identifier(string description)
         {
-            _info = Description;
+            _info = description;
         }
 
     }

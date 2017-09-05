@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TsunamiHack.Tsunami.Types;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace TsunamiHack.Tsunami.Util
 {
@@ -40,6 +34,7 @@ namespace TsunamiHack.Tsunami.Util
         
         public static Rect GetRectAtLoc(Vector2 menuSize, Horizontal hori, Vertical vert, bool usePadding, float padding = 0f)
         {
+            // ReSharper disable once RedundantAssignment
             var rect = new Rect();
             var width = (int) menuSize.x;
             var height = (int) menuSize.y;

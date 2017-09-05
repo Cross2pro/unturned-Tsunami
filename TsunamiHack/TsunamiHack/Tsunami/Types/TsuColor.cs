@@ -1,6 +1,7 @@
 ﻿using System;
 using Newtonsoft.Json;
 using UnityEngine;
+// ReSharper disable InconsistentNaming
 
 namespace TsunamiHack.Tsunami.Types
 {

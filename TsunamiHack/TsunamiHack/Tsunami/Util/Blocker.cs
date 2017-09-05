@@ -1,6 +1,4 @@
-﻿using System;
-using System.Runtime.InteropServices;
-using SDG.Unturned;
+﻿using SDG.Unturned;
 using TsunamiHack.Tsunami.Manager;
 using TsunamiHack.Tsunami.Types;
 using UnityEngine;
@@ -11,29 +9,24 @@ namespace TsunamiHack.Tsunami.Util
     {
         internal enum Type { Banned, Disabled, OutOfDate, GameOutOfDate}
         
-        private HackController ctrl;
+        private HackController _ctrl;
 
         internal static bool BlockerEnabled;
-        internal Rect windowRect;
+        internal Rect WindowRect;
         internal bool Banned;
         internal static Type DisabledType;
         
         private void Start()
         {
             var size = new Vector2(425,400);
-            windowRect = MenuTools.GetRectAtLoc(size, MenuTools.Horizontal.Center, MenuTools.Vertical.Center, false);
+            WindowRect = MenuTools.GetRectAtLoc(size, MenuTools.Horizontal.Center, MenuTools.Vertical.Center, false);
             
-            ctrl = WaveMaker.Controller;
+            _ctrl = WaveMaker.Controller;
 
-            if (ctrl.Disabled)
+            if (_ctrl.Disabled)
                 BlockerEnabled = true;
             
             
-            
-        }
-
-        private void Update()
-        {
             
         }
 
@@ -44,17 +37,17 @@ namespace TsunamiHack.Tsunami.Util
                 switch (DisabledType)
                 {
                         case Type.Banned:
-                            windowRect = GUI.Window(WaveMaker.BannedId, windowRect, BannedMenuFunct, "HACK DISABLED");
+                            WindowRect = GUI.Window(WaveMaker.BannedId, WindowRect, BannedMenuFunct, "HACK DISABLED");
                             break;
                             
                         case Type.Disabled:
-                            windowRect = GUI.Window(WaveMaker.BannedId, windowRect, DisabledMenuFunct, "HACK DISABLED");
+                            WindowRect = GUI.Window(WaveMaker.BannedId, WindowRect, DisabledMenuFunct, "HACK DISABLED");
                             break;
                         case Type.OutOfDate:
-                            windowRect = GUI.Window(WaveMaker.BannedId, windowRect, OutOfDateMenuFunct, "OUT OF DATE");
+                            WindowRect = GUI.Window(WaveMaker.BannedId, WindowRect, OutOfDateMenuFunct, "OUT OF DATE");
                             break;
                         case Type.GameOutOfDate:
-                            windowRect = GUI.Window(WaveMaker.BannedId, windowRect, GameOutOfDateMenuFunct, "YOU ARE USING A REPOSTED VERSION");
+                            WindowRect = GUI.Window(WaveMaker.BannedId, WindowRect, GameOutOfDateMenuFunct, "YOU ARE USING A REPOSTED VERSION");
                             break;
                 }
             }
@@ -69,9 +62,9 @@ namespace TsunamiHack.Tsunami.Util
             GUILayout.Space(50f);
             GUILayout.Label($"TsunamiHack has been globally disabled by its creator.");
             GUILayout.Space(8f);
-            GUILayout.Label($"Reason: {ctrl.Reason}");
+            GUILayout.Label($"Reason: {_ctrl.Reason}");
             GUILayout.Space(8f);
-            GUILayout.Label($"This operation was made by {ctrl.AuthorizedBy}");
+            GUILayout.Label($"This operation was made by {_ctrl.AuthorizedBy}");
             GUILayout.Space(100f);
             GUILayout.Label("To remove the hack and play normally, click \"EXIT GAME\" and \"Verify Game Files\" through steam");
             GUILayout.Space(20f);

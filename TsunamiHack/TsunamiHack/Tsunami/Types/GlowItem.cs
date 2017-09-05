@@ -2,18 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 using SDG.Unturned;
-using TsunamiHack.Tsunami.Util;
+// ReSharper disable EmptyGeneralCatchClause
 
 namespace TsunamiHack.Tsunami.Types
 {
     internal class GlowItem
     {
       
-        internal GameObject gameObject;
+        internal GameObject GameObject;
 
         internal GlowItem(GameObject obj)
         {
-            gameObject = obj;
+            GameObject = obj;
         }
         
         

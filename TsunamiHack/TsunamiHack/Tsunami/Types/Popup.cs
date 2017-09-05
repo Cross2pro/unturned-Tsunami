@@ -1,6 +1,5 @@
 ﻿using System;
 using UnityEngine;
-using TsunamiHack.Tsunami;
 
 namespace TsunamiHack.Tsunami.Types
 {
@@ -102,14 +101,14 @@ namespace TsunamiHack.Tsunami.Types
 
 
         [Obsolete]
-        public Popup(Rect windowRect, string title, string message, int id, bool IsMoving = false)
+        public Popup(Rect windowRect, string title, string message, int id, bool isMoving = false)
         {
             PopupOpened = false;
             PopupRect = windowRect;
             PopupTitle = title;
             PopupMessage = message;
             Id = id;
-            this.IsMoving = IsMoving;
+            IsMoving = isMoving;
         }
     }
 }

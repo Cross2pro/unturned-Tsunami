@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Steamworks;
 using TsunamiHack.Tsunami.Util;
 
 namespace TsunamiHack.Tsunami.Types.Lists
