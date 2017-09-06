@@ -96,6 +96,8 @@ namespace TsunamiHack.Tsunami.Menu
             LockDistance = 200f;
             LockUpdateRate = 5f;
 
+            TriggerDistance = 200f;
+
         }
 
         
@@ -116,6 +118,8 @@ namespace TsunamiHack.Tsunami.Menu
         
         public void MenuFunct(int id)
         {
+            AimClosest = true;
+            
             GUILayout.Space(2f);
             EnableAimbot = GUILayout.Toggle(EnableAimbot, " Enable Aimbot");
             GUILayout.Space(2f);
@@ -123,24 +127,23 @@ namespace TsunamiHack.Tsunami.Menu
             GUILayout.Space(2f);
             AimPlayers = GUILayout.Toggle(AimPlayers, " Aim at Players");
             AimZombies = GUILayout.Toggle(AimZombies, " Aim at Zombies");
-            AimAnimals = GUILayout.Toggle(AimAnimals, " Aim at Animals");
-            AimVehicles = GUILayout.Toggle(AimVehicles, " Aim at Vehicles");
+            AimAnimals = GUILayout.Toggle(AimAnimals, " Aim at Animals*");
+            AimVehicles = GUILayout.Toggle(AimVehicles, " Aim at Vehicles*");
             GUILayout.Space(2f);
             GUILayout.Label("----------------------------------------\nTarget Selection\n----------------------------------------");
             GUILayout.Space(2f);
             AimClosest = GUILayout.Toggle(AimClosest, " Aim Closest Target");
-            AimManualChangeTarget = GUILayout.Toggle(AimManualChangeTarget, " Manually Change Target");
-            if (GUILayout.Button($"Change Target : {WaveMaker.Keybinds.GetBind("changetarget")}"))
-            {
-                WaveMaker.MenuKeybind.Changing = true;
-                WaveMaker.MenuKeybind.Focus = "changetarget"; 
-            }
+//            AimManualChangeTarget = GUILayout.Toggle(AimManualChangeTarget, " Manually Change Target");
+//            if (GUILayout.Button($"Change Target : {WaveMaker.Keybinds.GetBind("changetarget")}"))
+//            {
+//                WaveMaker.MenuKeybind.Changing = true;
+//                WaveMaker.MenuKeybind.Focus = "changetarget"; 
+//            }
             GUILayout.Space(2f);
             GUILayout.Label("----------------------------------------\nWhitelist Settings\n----------------------------------------");
             GUILayout.Space(2f);
-            AimWhitelistFriends = GUILayout.Toggle(AimWhitelistFriends, " Whitelist steam Friends");
+            AimWhitelistFriends = GUILayout.Toggle(AimWhitelistFriends, " Whitelist Friends");
             AimWhitelistAdmins = GUILayout.Toggle(AimWhitelistAdmins, " Whitelist server Admins");
-            AimWhitelistPlayers = GUILayout.Toggle(AimWhitelistPlayers, " Whitelist Friends");
             GUILayout.Space(2f);
             GUILayout.Label("----------------------------------------\nAimbot Settings\n----------------------------------------");
             GUILayout.Space(2f);
@@ -166,12 +169,13 @@ namespace TsunamiHack.Tsunami.Menu
             GUILayout.Space(2f);
             AimInfDistance = GUILayout.Toggle(AimInfDistance, " Infinite Aim Distance");
             GUILayout.Label($"Aim Distance: {AimDistance}");
-            AimDistance = GUILayout.HorizontalSlider((float) Math.Round(AimDistance, 0), 0f, 1000f);
+            AimDistance = GUILayout.HorizontalSlider((float) Math.Round(AimDistance, 0), 10f, 1000f);
             GUILayout.Space(2f);
             AimUseGunDistance = GUILayout.Toggle(AimUseGunDistance, " Use Gun Range");
             GUILayout.Space(2f);
             GUILayout.Label($"Aim Update Rate: {AimUpdateRate}");
-            AimUpdateRate = GUILayout.HorizontalSlider((float) Math.Round(AimUpdateRate, 0), 0f, 100f);
+            AimUpdateRate = GUILayout.HorizontalSlider((float) Math.Round(AimUpdateRate, 0), 10f, 100f);
+            GUILayout.Label("* Features Coming Soon");
         }
 
         public void LockMenuFunct(int id)
@@ -188,7 +192,7 @@ namespace TsunamiHack.Tsunami.Menu
             GUILayout.Space(2f);
             GUILayout.Label("----------------------------------------\nWhitelist Settings\n----------------------------------------");
             GUILayout.Space(2f);
-            LockWhiteListFriends = GUILayout.Toggle(LockWhiteListFriends, " Whitelist steam Friends");
+            LockWhiteListFriends = GUILayout.Toggle(LockWhiteListFriends, " Whitelist Friends");
             LockWhitelistAdmins = GUILayout.Toggle(LockWhitelistAdmins, " Whitelist server Admins");
             GUILayout.Space(2f);
             GUILayout.Label("----------------------------------------\nAimbot Settings\n----------------------------------------");
@@ -207,7 +211,7 @@ namespace TsunamiHack.Tsunami.Menu
             GUILayout.Space(2f);
             
             GUILayout.Label($"Lock Update Rate: {LockUpdateRate}");
-            LockUpdateRate = GUILayout.HorizontalSlider((float) Math.Round(LockUpdateRate, 0), 0f, 100f);
+            LockUpdateRate = GUILayout.HorizontalSlider((float) Math.Round(LockUpdateRate, 0), 1f, 100f);
             
         }
 
@@ -225,8 +229,8 @@ namespace TsunamiHack.Tsunami.Menu
             GUILayout.Space(2f);
             GUILayout.Label("----------------------------------------\nWhitelist Settings\n----------------------------------------");
             GUILayout.Space(2f);
-            TriggerWhiteListFriends = GUILayout.Toggle(TriggerWhiteListFriends, " Trigger steam Friends");
-            TriggerWhiteListAdmins = GUILayout.Toggle(TriggerWhiteListAdmins, " Trigger server Admins");
+            TriggerWhiteListFriends = GUILayout.Toggle(TriggerWhiteListFriends, " Whitelist Friends");
+            TriggerWhiteListAdmins = GUILayout.Toggle(TriggerWhiteListAdmins, " Whitelist server Admins");
             GUILayout.Space(2f);
             GUILayout.Label("----------------------------------------\nTrigger Settings\n----------------------------------------");
             GUILayout.Space(2f);

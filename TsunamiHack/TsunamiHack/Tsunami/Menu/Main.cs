@@ -269,19 +269,22 @@ namespace TsunamiHack.Tsunami.Menu
             Playerscroll = GUILayout.BeginScrollView(Playerscroll, false, true);
 
             if (Provider.clients.Count == 0)
+            {
+                GUILayout.Button("No Players Present On Server");
                 return;
+            }
 
             foreach (var client in Provider.clients)
             {
                 if (!WaveMaker.Friends.Contains(client.playerID.steamID.m_SteamID) && client.player != Player.player)
-                {
+                {                       
+                        
                     if(GUILayout.Button(client.playerID.nickName))
                     {
                         if (Playerfocus == client.playerID.steamID.m_SteamID)
                             Playerfocus = 0;
                         else
                             Playerfocus = client.playerID.steamID.m_SteamID;
-                    
                     }
                 
                     if (Playerfocus == client.playerID.steamID.m_SteamID)

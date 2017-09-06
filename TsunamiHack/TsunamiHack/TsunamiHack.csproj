@@ -160,7 +160,6 @@
     <Compile Include="Tsunami\Identifier.cs" />
     <Compile Include="Tsunami\ILibParent.cs" />
     <Compile Include="Tsunami\IMenuParent.cs" />
-    <Compile Include="Tsunami\Lib\Aim.cs" />
     <Compile Include="Tsunami\Lib\AimV2.cs" />
     <Compile Include="Tsunami\Lib\Keybind.cs" />
     <Compile Include="Tsunami\Lib\Main.cs" />
@@ -187,6 +186,7 @@
     <Compile Include="Tsunami\Types\Keybind.cs" />
     <Compile Include="Tsunami\Types\Configs\KeybindConfig.cs" />
     <Compile Include="Tsunami\Types\Lists\PremiumList.cs" />
+    <Compile Include="Tsunami\Types\NvType.cs" />
     <Compile Include="Tsunami\Types\Popup.cs" />
     <Compile Include="Tsunami\Types\Setting.cs" />
     <Compile Include="Tsunami\Types\TargetLimb.cs" />

@@ -4,16 +4,13 @@ using TsunamiHack.Tsunami.Manager;
 using TsunamiHack.Tsunami.Types;
 using TsunamiHack.Tsunami.Util;
 using UnityEngine;
+// ReSharper disable CompareOfFloatsByEqualityOperator
 
 namespace TsunamiHack.Tsunami.Menu
 {
     internal class Visuals : MonoBehaviour
     {
         internal bool MenuOpened { get; private set; }
-        internal enum NvType
-        {
-            Military = 1, Civilian, HeadLamp, None
-        }
         
         
         
@@ -230,9 +227,15 @@ namespace TsunamiHack.Tsunami.Menu
                 EnvRect = GUI.Window(2006, EnvRect, EnvFunct, "Environment Hacks");
                 SettingsRect = GUI.Window(2007, SettingsRect, SetFunct, "Settings");
             }
+
+            if (Provider.isConnected)
+            {
+                Lib.VisualsV2.CheckBoxes();
+                Lib.VisualsV2.CheckLabels();
+            }
+                
             
-            if(Provider.isConnected)
-                Lib.VisualsV2.OnGUI();
+            
         }
 
         public void MenuFunct(int id)
@@ -436,7 +439,7 @@ namespace TsunamiHack.Tsunami.Menu
             if (GUILayout.Button("Military"))
             {
                 if(Nv != NvType.Military)
-                    Nv = (NvType) 1;
+                    Nv = NvType.Military;
                 
                 LevelLighting.vision = ELightingVision.MILITARY;
                 LevelLighting.updateLighting();
@@ -447,7 +450,7 @@ namespace TsunamiHack.Tsunami.Menu
             if (GUILayout.Button("Civilian"))
             {
                 if(Nv != NvType.Civilian)
-                    Nv = (NvType) 2;
+                    Nv = NvType.Civilian;
                 
                 LevelLighting.vision = ELightingVision.CIVILIAN;
                 LevelLighting.updateLighting();
@@ -458,7 +461,7 @@ namespace TsunamiHack.Tsunami.Menu
             if (GUILayout.Button("None"))
             {
                 if(Nv != NvType.None)
-                    Nv = (NvType) 4;
+                    Nv = NvType.None;
                 
                 LevelLighting.vision = ELightingVision.NONE;
                 LevelLighting.updateLighting();

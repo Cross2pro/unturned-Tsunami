@@ -275,62 +275,49 @@ namespace TsunamiHack.Tsunami.Lib
         {
             if (Menu.PlayerBox)
             {
-                try
+                
+                foreach (var client in Provider.clients)
                 {
-                    foreach (var player in Players)
+                    if (client.player == Player.player) continue;
+                    
+                    var dist = Vector3.Distance(Camera.main.transform.position, client.player.transform.position);
+                    if (dist <= Menu.Distance || Menu.InfDistance)
                     {
-                        if (!player.player.life.isDead && player.player != Player.player)
+                        var scrnpt = Camera.main.WorldToScreenPoint(client.player.transform.position);
+                        if (scrnpt.z >= 0)
                         {
-                            var mypos = Camera.main.transform.position;
-                            var targetpos = player.player.transform.position;
-                            var dist = Vector3.Distance(mypos, targetpos);
-
-                            if (dist <= Menu.Distance || Menu.InfDistance)
-                            {
-                                var pos = Camera.main.WorldToScreenPoint(targetpos);
-
-                                if (pos.z >= 0)
-                                {
-                                    pos.y = Screen.height - pos.y;
-                                
-                                    var color = WaveMaker.Friends.Contains(player.playerID.steamID.m_SteamID) ? Menu.BoxPlayerFriendly : Menu.BoxPlayerEnemy;
-                                
-                                    DrawBox(player.player.transform, pos, color);
-                                }
-                            }
+                            scrnpt.y = Screen.height - scrnpt.y;
+                            var color = WaveMaker.Friends.Contains(client.playerID.steamID.m_SteamID)
+                                ? Menu.BoxPlayerFriendly
+                                : Menu.BoxPlayerEnemy;
+                            DrawBox(client.player.transform, scrnpt, color);
                         }
-                    }           
-                } catch(Exception){}  
-            }            
+                    }
+                    
+                }
+            }    
 
             if (Menu.ZombieBox)
             {
-                try
+
+                foreach (var zombie in Zombies)
                 {
-                    foreach (var zombie in Zombies)
+                    if (!zombie.isDead)
                     {
-                        if (!zombie.isDead)
+                        var dist = Vector3.Distance(Camera.main.transform.position, zombie.transform.position);
+                        if (dist <= Menu.Distance || Menu.InfDistance)
                         {
-                            var mypos = Camera.main.transform.position;
-                            var targetpos = zombie.transform.position;
-                            var dist = Vector3.Distance(mypos, targetpos);
+                            var pos = Camera.main.WorldToScreenPoint(zombie.transform.position);
 
-                            if (dist <= Menu.Distance || Menu.InfDistance)
+                            if (pos.z >= 0)
                             {
-                                var pos = zombie.transform.position;
-                                pos = Camera.main.WorldToScreenPoint(pos);
-
-                                if (pos.z >= 0)
-                                {
-                                    pos.y = Screen.height - pos.y;
-
-                                    DrawBox(zombie.transform, pos, Menu.BoxZombie);
-                                }
-                            }         
-                        }   
-                    }    
-                } catch(Exception) {}
-                
+                                pos.y = Screen.height - pos.y;
+                                DrawBox(zombie.transform, pos, Menu.BoxZombie);
+                            }
+                        }         
+                    }   
+                }    
+            
             }
         }
 
@@ -601,7 +588,7 @@ namespace TsunamiHack.Tsunami.Lib
                                 
                                  
                                 
-                                GUI.Label(new Rect(scrnPt + new Vector3(0,4f,0), new Vector2(170,50)), $"<color={ColorUtility.ToHtmlStringRGBA(Menu.BoxZombie)}><size={size}>{text}</size></color>" );        
+                                GUI.Label(new Rect(scrnPt + new Vector3(0,4f,0), new Vector2(170,50)), $"<size={size}>{text}</size>" );        
                             }
                         }
                     }
