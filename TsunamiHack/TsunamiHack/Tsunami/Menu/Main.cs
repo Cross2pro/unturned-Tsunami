@@ -141,9 +141,9 @@ namespace TsunamiHack.Tsunami.Menu
                 if (InfoWin)
                     InfoRect = GUI.Window(2013, InfoRect, InfoFunct, "Info");
 
-                var size = new Vector2(200,30);
+                var size = new Vector2(200,60);
                 var rect = MenuTools.GetRectAtLoc(size, MenuTools.Horizontal.Right, MenuTools.Vertical.Top, true, 5f);
-                GUI.Label(rect, $"Tsunami Hack (V {WaveMaker.Version}) By <size=15><b>Tidal</b></size>");
+                GUI.Label(rect, $"Tsunami Hack (V {WaveMaker.Version}) By <size=15><b>Tidal</b></size>\n               Featuring <b>Deus Myke</b>");
             }
             
         }
@@ -327,12 +327,12 @@ namespace TsunamiHack.Tsunami.Menu
             GUILayout.Space(2f);
             GUILayout.Label("A completely custom framework and cheat");
             GUILayout.Label("Special thanks to c0nd for testing");
+            GUILayout.Label("Thanks to Deus Myke, for hosting this hack on your channel");
             GUILayout.Space(2f);
             GUILayout.Label("Credit where credit is due:");
             GUILayout.Space(1f);
             GUILayout.Label("-Some util classes provided by Pf");
             GUILayout.Label("-Some emotional support provided by Pf");
-            GUILayout.Label("-Inspired by MSZ Reborn & Pirate Perfection");
             GUILayout.Label("-Thanks to stack overflow and the unity scripting api, obv");
             GUILayout.Label("-And thank god for Rider IDE");
             GUILayout.Space(5f);
