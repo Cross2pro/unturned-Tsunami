@@ -16,8 +16,6 @@ namespace TsunamiHack.Tsunami.Lib
         internal static Dictionary<Guid, GunAsset> backupsshake = new Dictionary<Guid, GunAsset>();
         internal static Dictionary<Guid, GunAsset> backupsdrop = new Dictionary<Guid, GunAsset>();
 
-
-        
         internal static Menu.Main menu;
         
         public static void Start()

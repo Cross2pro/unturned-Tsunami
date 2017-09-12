@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
+using SDG.Framework.UI.Sleek2;
 using SDG.Unturned;
 using TsunamiHack.Tsunami.Manager;
 using TsunamiHack.Tsunami.Types;
@@ -11,12 +13,14 @@ namespace TsunamiHack.Tsunami.Menu
     internal class Main : MonoBehaviour, IMenuParent
     {
         public bool MenuOpened { get; private set; }
+        public bool PremWindowOpen;
 
         internal Rect MainRect;
         internal Rect TextRect;
         internal Rect FriendsRect;
         internal Rect PlayerRect;
         internal Rect InfoRect;
+        internal Rect PremRect;
         
         //Main
         internal bool NoRecoil;//
@@ -43,9 +47,13 @@ namespace TsunamiHack.Tsunami.Menu
         internal Vector2 Playerscroll;
         internal Vector2 Friendscroll;
 
+        internal FieldInfo VehicleLocked;
+
         public void Start()
         {
             Lib.Main.Start();
+
+            VehicleLocked = typeof(InteractableVehicle).GetField("_isLocked", BindingFlags.NonPublic | BindingFlags.Instance);
             
             try
             {
@@ -55,9 +63,7 @@ namespace TsunamiHack.Tsunami.Menu
             catch (Exception e)
             {
                 Logging.Exception(e);
-            }
-            
-            
+            }  
             
             var size = new Vector2(205, 590);
             PlayerRect = MenuTools.GetRectAtLoc(size, MenuTools.Horizontal.Center, MenuTools.Vertical.Center, false);
@@ -78,6 +84,8 @@ namespace TsunamiHack.Tsunami.Menu
             size = new Vector2(200,500);
             InfoRect = MenuTools.GetRectAtLoc(size, MenuTools.Horizontal.Left, MenuTools.Vertical.Top, true, 5f);
             
+            size = new Vector2(200, 700);
+            PremRect = MenuTools.GetRectAtLoc(size, MenuTools.Horizontal.Left, MenuTools.Vertical.Top, true, 5f);
             
             Addlist = new List<Friend>();
             Remlist = new List<Friend>();
@@ -90,8 +98,6 @@ namespace TsunamiHack.Tsunami.Menu
 
             Playerfocus = 0;
             Friendfocus = 0;
-            
-            
             
         }
 
@@ -120,7 +126,21 @@ namespace TsunamiHack.Tsunami.Menu
             }
 
             Player.player.look.isOrbiting = CameraFreeFlight;
-            
+
+            if (UnlockCar)
+            {
+                RaycastHit hit;
+                Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, float.PositiveInfinity, RayMasks.DAMAGE_CLIENT);
+
+                if (hit.transform != null)
+                {
+                    if (hit.transform.CompareTag("Vehicle"))
+                    {
+                        TargetCar = PlayerTools.GetVehicle(hit.transform);
+                    }
+
+                }
+            }
             
             Lib.Main.Update();
             
@@ -136,6 +156,8 @@ namespace TsunamiHack.Tsunami.Menu
                     FriendsRect = GUI.Window(2010, FriendsRect, FriendFucnt, "Friends List");
                     MainRect = GUI.Window(2011, MainRect, MenuFunct, "Main Menu");
                     TextRect = GUI.Window(2012, TextRect, TextFunct, "Instructions");
+                    if (PremWindowOpen)
+                        PremRect = GUI.Window(2013, PremRect, PremiumFunct, "Premium Features");
                 }
 
                 if (InfoWin)
@@ -218,6 +240,14 @@ namespace TsunamiHack.Tsunami.Menu
             }
             GUILayout.Space(2f);
             GUILayout.Label("We are looking for beta testers to try out the latest features and report bugs, contact Tidal on Discord to apply");
+
+            if (WaveMaker.isBeta)
+            {
+                if (GUILayout.Button("Premium Cheats"))
+                {
+                    PremWindowOpen = !PremWindowOpen;
+                }
+            }
             
         }
 
@@ -342,6 +372,41 @@ namespace TsunamiHack.Tsunami.Menu
             {
                 InfoWin = false;
             }
+        }
+
+        internal bool UnlockCar;
+        internal InteractableVehicle TargetCar;
+        
+        public void PremiumFunct(int id)
+        {
+            UnlockCar = GUILayout.Toggle(UnlockCar, "Unlock cars");
+
+            if (TargetCar != null && UnlockCar != false)
+            {
+                GUILayout.Label($"Selected Vehicle: {TargetCar.name}");
+                GUILayout.Label($"Fuel: {TargetCar.fuel}/{TargetCar.asset.fuelMax}");
+                GUILayout.Label($"Health: {TargetCar.health}/{TargetCar.asset.healthMax}");
+                GUILayout.Label($"Locked: {TargetCar.isLocked}");
+                GUILayout.Space(2f);
+                if (GUILayout.Button($"Unlock Car"))
+                {
+                    if (TargetCar.isLocked)
+                        VehicleLocked.SetValue(TargetCar,false);
+                }    
+            }
+
+            if (TargetCar == null || UnlockCar == false);
+            {
+                GUILayout.Label($"Selected Vehicle: No Car Selected");
+                GUILayout.Label($"Fuel: ");
+                GUILayout.Label($"Health: ");
+                GUILayout.Label($"Locked: ");
+                GUILayout.Space(2f);
+                GUILayout.Button($"Unlock Car");
+            }
+            
+                
+            GUI.DragWindow();
         }
 
         #region Interface Members

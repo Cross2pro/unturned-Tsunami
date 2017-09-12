@@ -20,6 +20,7 @@ namespace TsunamiHack.Tsunami.Menu
         private KeyCode _keybindKey;
         private KeyCode _aimKey;
         private KeyCode _changeTargetKey;
+        private KeyCode _aimbotToggleKey;
                 
         public void Start()
         {
@@ -31,7 +32,7 @@ namespace TsunamiHack.Tsunami.Menu
             _keybindKey = WaveMaker.Keybinds.GetBind("keybinds");
             _aimKey = WaveMaker.Keybinds.GetBind("aim");
             _changeTargetKey = WaveMaker.Keybinds.GetBind("changetarget");
-
+            _aimbotToggleKey = WaveMaker.Keybinds.GetBind("toggleaimbot");
 
         }
 
@@ -88,6 +89,8 @@ namespace TsunamiHack.Tsunami.Menu
                         UseMenu(WaveMaker.KeybindId);
                     else if (pressed == _aimKey)
                         UseMenu(WaveMaker.AimId);
+                    else if (pressed == _aimbotToggleKey)
+                        WaveMaker.MenuAim.EnableAimbot = !WaveMaker.MenuAim.EnableAimbot;
                         
                     //TODO: add other menus
 
@@ -128,7 +131,7 @@ namespace TsunamiHack.Tsunami.Menu
                 _keybindKey = WaveMaker.Keybinds.GetBind("keybinds");
                 _aimKey = WaveMaker.Keybinds.GetBind("aim");
                 _changeTargetKey = WaveMaker.Keybinds.GetBind("changetarget");
-
+                _aimbotToggleKey = WaveMaker.Keybinds.GetBind("toggleaimbot");
                 
                 KeybindsChanged = false;
             }
@@ -180,6 +183,14 @@ namespace TsunamiHack.Tsunami.Menu
             {
                 Changing = true;
                 Focus = "keybinds";
+            }
+            GUILayout.Space(2f);
+            
+            var aimtoggletext  = Changing && Focus == "Aimbot Toggle" ? "??" : WaveMaker.Keybinds.GetBind("toggleaimbot").ToString();
+            if (GUILayout.Button($"Toggle Aimbot : {aimtoggletext}"))
+            {
+                Changing = true;
+                Focus = "toggleaimbot";
             }
             GUILayout.Space(2f);
 

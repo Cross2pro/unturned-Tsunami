@@ -5,14 +5,31 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TsuManager"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid Background="Gray">
+        Title="Tsunami Hack \\ Installer" Height="500" Width="700" ResizeMode="NoResize">
+    
+    <!-- Colors:
+    
+        Sidebar:           #2A292F
+                Buttons:   #333236
+                Border:    #222126
+        Content:           #3B3B3D
+        Content Menu: Old: #1C1C1C
+                      New: #333236
+                   Border: #2A292F
+    
+    -->
+    
+    
+    
+    <Grid Name="grdContainer"  Background="Gray">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*"/>
-            <ColumnDefinition Width="8*"/>
+            <ColumnDefinition Name="cgSidebar"  Width="2*"/>
+            <ColumnDefinition Name="cgContent" Width="8*"/>
         </Grid.ColumnDefinitions>
         
-        <Grid Grid.Column="0">
+        <!-- SideBar -->
+
+        <Grid Name="grdSidebar" Background="#2A292F" Grid.Column="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="2*"/>
                 <RowDefinition Height="2*"/>
@@ -24,13 +41,58 @@
                 <RowDefinition Height="2*"/>
                 <RowDefinition Height="2*"/>
             </Grid.RowDefinitions>
+
+            <Button Name="btnHome"    Grid.Row="1" Width="120" Height="40" Content="Home"    Background="#333236" Foreground="White" FontSize="20" FontWeight="ExtraBold" Click="btnHome_OnClick"/>
+            <Button Name="btnInstall" Grid.Row="2" Width="120" Height="40" Content="Install" Background="#333236" Foreground="White" FontSize="20" FontWeight="ExtraBold" Click="btnInstall_OnClick"/>
+            <Button Name="btnAbout"   Grid.Row="3" Width="120" Height="40" Content="About"   Background="#333236" Foreground="White" FontSize="20" FontWeight="ExtraBold" Click="btnAbout_OnClick"/>
+
+            <Rectangle Grid.RowSpan="9" Width="3" HorizontalAlignment="Right" Stroke="#222126" Fill="#2A292F"/>
+            
         </Grid>
         
-        <Grid Grid.Column="1">
+        <!-- Content -->
+
+
+        
+        <Grid Name="grdContent" Background="#3B3B3D" Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="9*"/>
             </Grid.RowDefinitions>
+
+            <Frame Name="ContentFrame" Grid.Row="1" Margin="5" />
+            
+            <!-- Menu Bar  -->
+
+            <Grid Name="grdMenu"  Background ="#333236">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="9*"/>
+                </Grid.ColumnDefinitions>
+
+                <Border Grid.ColumnSpan="2" BorderBrush="#2A292F" BorderThickness="2"/>
+
+                <!-- Title Bar -->
+                <Label Name="lblTitleBar" Grid.Column="1" Content="Tsunami Hack || Version: 1.0 " HorizontalAlignment="Right" VerticalAlignment="Top" FontSize="14" Foreground="White" FontWeight="ExtraBold"/>
+                <Label Name="lblCreateBy" Grid.Column="1" Content="Created By Tidal feat. Deus Myke" HorizontalAlignment="Right" VerticalAlignment="Bottom" FontSize="11" Foreground="White" FontWeight="Bold"/>
+
+                <!-- Resize Button -->
+                <Grid Name="grdResize" >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="2*"/>
+                        <RowDefinition Height="6*"/>
+                        <RowDefinition Height="2*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="6*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <Button Name="btnResize" Grid.Row="1" Grid.Column="0" Content="" Background="Transparent" BorderBrush="Transparent" Foreground="White" FontSize="20" FontWeight="ExtraBold" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Click="BtnResize_OnClick" Margin="5,0,0,0" />
+                </Grid>
+                
+            </Grid>
+            
         </Grid>
     </Grid>
 </Window>

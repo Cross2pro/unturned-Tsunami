@@ -13,7 +13,9 @@ namespace TsunamiHack.Tsunami.Manager
         //TODO: change window sizes to more accurately change between devices
         //TODO: add shutoff for all hacks at once
 
-        public static bool Dev = false;
+        public static bool isDev;
+        public static bool isPremium;
+        public static bool isBeta;
         
         public static PremiumList Prem;
         public static BanList Ban;
@@ -56,16 +58,31 @@ namespace TsunamiHack.Tsunami.Manager
 
         public void Start()
         {
+            
+            //Checking if player is dev
             LocalSteamId = Provider.client.m_SteamID;
 
             if (LocalSteamId == Controller.Dev || LocalSteamId == ulong.Parse("76561198308025096"))
-                Dev = true;
+            {
+                isDev = true;
+                isBeta = true;
+                isPremium = true;
+            }
 
+            if (Prem.Contain(LocalSteamId.ToString()))
+                isPremium = true;
+
+            if (Beta.Contain(LocalSteamId.ToString()))
+                isBeta = true;
+                
+
+            //Checking if first time
             if (FirstTime)
             {
                 PopupController.EnableFirstTime = true;
             }
 
+            //Checking blocker
             if (Ban.Contains(LocalSteamId.ToString()))
             {
                 Logging.Log("BANNED",
@@ -90,10 +107,21 @@ namespace TsunamiHack.Tsunami.Manager
             } 
             else
                 Blocker.DisabledType = Blocker.Type.Disabled;
+
+            
+            //Whitelist me from all disabling
+            if (PlayerTools.GetSteamPlayer(Player.player).playerID.steamID.m_SteamID == Controller.Dev)
+            {
+                HackDisabled = false;
+                Controller.Disabled = false;
+                Blocker.BlockerEnabled = false;
+            }
+                 
         }
 
         public void OnUpdate()
         {
+            
             if (_blockerObj == null)
             {
                 _blockerObj = new GameObject();

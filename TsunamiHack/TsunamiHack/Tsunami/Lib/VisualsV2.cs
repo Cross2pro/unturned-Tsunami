@@ -48,14 +48,15 @@ namespace TsunamiHack.Tsunami.Lib
             BoxMaterial.SetInt("_ZWrite", 0);
             
             GenerateDicts();
+            LastUpdate = DateTime.Now;
         }
         
         public static void Update() 
         {
-            //TODO: add update delay
-            
-            if (Provider.isConnected)
+            if ((DateTime.Now - LastUpdate).TotalMilliseconds >= Menu.UpdateRate)
             {
+                if (Provider.isConnected)
+                {
 
                     if (Menu.GlowPlayers && Menu.EnableEsp)
                     {
@@ -219,6 +220,8 @@ namespace TsunamiHack.Tsunami.Lib
                         Npcs = new List<InteractableObjectNPC>();
                     }
                 }
+                
+            }
 
         }
 

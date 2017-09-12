@@ -2,11 +2,27 @@
 using SDG.Unturned;
 using UnityEngine;
 using Object = UnityEngine.Object;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace TsunamiHack.Tsunami.Util
 {
     internal class PlayerTools
     {
+
+        public static InteractableVehicle GetVehicle(Transform trans)
+        {
+            foreach (var veh in VehicleManager.vehicles)
+            {
+                if (veh.gameObject.transform == trans)
+                    return veh;
+
+                return null;
+            }
+
+            return null;
+        }
+        
         public static SteamPlayer GetSteamPlayer(Player player)
         {
             foreach (var user in Provider.clients)

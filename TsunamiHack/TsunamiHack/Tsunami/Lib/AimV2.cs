@@ -270,51 +270,63 @@ namespace TsunamiHack.Tsunami.Lib
 							if (!menu.AimManualChangeTarget || !(target == client.player.transform))
 							{
 
-								if (!menu.AimWhitelistFriends || !WaveMaker.Friends.Contains(client.playerID.steamID.m_SteamID))
+								if (!WaveMaker.Friends.Contains(client.playerID.steamID.m_SteamID))
 								{
-									if (!menu.AimWhitelistAdmins || !client.isAdmin)
+									if (!menu.AimWhitelistFriends)
 									{
-										var tarLimbPos = GetLimbPosition(client.player.transform, tarLimb);
+										if (!menu.AimWhitelistAdmins || !client.isAdmin)
+										{
+											var tarLimbPos = GetLimbPosition(client.player.transform, tarLimb);
 
-										float sqrMagnitude;
-										if (menu.AimClosest)
-										{
-											var tarScrnPt = Camera.main.WorldToScreenPoint(tarLimbPos);
-											sqrMagnitude = (new Vector3(Screen.width / 2f, Screen.height / 2f) - tarScrnPt).sqrMagnitude;
-										}
-										else
-										{
-											sqrMagnitude = (tarLimbPos - Camera.main.transform.position).sqrMagnitude;
-										}
+											float sqrMagnitude;
+											if (menu.AimClosest)
+											{
+												var tarScrnPt = Camera.main.WorldToScreenPoint(tarLimbPos);
+												sqrMagnitude = (new Vector3(Screen.width / 2f, Screen.height / 2f) - tarScrnPt).sqrMagnitude;
+											}
+											else
+											{
+												sqrMagnitude = (tarLimbPos - Camera.main.transform.position).sqrMagnitude;
+											}
 
-										if (sqrMagnitude <= squarerange && !client.player.life.isDead && Player.player.name != client.player.name)
-										{
-											if (!menu.Aim360)
+											if (sqrMagnitude <= squarerange && !client.player.life.isDead && Player.player.name != client.player.name)
 											{
-												var tarLimbPosScrnPt = Camera.main.WorldToViewportPoint(tarLimbPos);
-												if (tarLimbPosScrnPt.z <= 0f || tarLimbPosScrnPt.x <= 0f || tarLimbPosScrnPt.x >= 1f ||
-												    tarLimbPosScrnPt.y <= 0f || tarLimbPosScrnPt.y >= 1f)
+												if (!menu.Aim360)
 												{
-													goto Exit;
+													var tarLimbPosScrnPt = Camera.main.WorldToViewportPoint(tarLimbPos);
+													if (tarLimbPosScrnPt.z <= 0f || tarLimbPosScrnPt.x <= 0f || tarLimbPosScrnPt.x >= 1f ||
+													    tarLimbPosScrnPt.y <= 0f || tarLimbPosScrnPt.y >= 1f)
+													{
+														goto Exit;
+													}
 												}
-											}
-											if (!menu.AimIgnoreWalls)
-											{
-												var distance = tarLimbPos - Player.player.look.aim.position;
-												RaycastHit raycastHit;
-												if (!Physics.Raycast(Player.player.look.aim.position, distance, out raycastHit, dist, RayMasks.DAMAGE_CLIENT) ||
-												    !raycastHit.transform.CompareTag("Enemy"))
+												if (!menu.AimIgnoreWalls)
 												{
-													goto Exit;
+													var distance = tarLimbPos - Player.player.look.aim.position;
+													RaycastHit raycastHit;
+													if (!Physics.Raycast(Player.player.look.aim.position, distance, out raycastHit, dist,
+														    RayMasks.DAMAGE_CLIENT) ||
+													    !raycastHit.transform.CompareTag("Enemy"))
+													{
+														goto Exit;
+													}
 												}
+												target = client.player.transform;
+												squarerange = sqrMagnitude;
 											}
-											target = client.player.transform;
-											squarerange = sqrMagnitude;
 										}
 									}
 								}
+								else
+								{
+									target = null;
+									goto Exit;
+								}
 							}
+							
+							
 						} catch (System.Exception){}
+						
 						Exit:;
 					}
 				}

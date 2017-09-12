@@ -3,6 +3,7 @@ using UnityEngine;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
+using SDG.Unturned;
 using TsunamiHack.Tsunami.Manager;
 using TsunamiHack.Tsunami.Types;
 using TsunamiHack.Tsunami.Types.Lists;
@@ -226,6 +227,7 @@ namespace TsunamiHack.Tsunami.Util
                         keybinds.AddBind("aim", KeyCode.F3);
                         keybinds.AddBind("keybinds", KeyCode.F4);
                         keybinds.AddBind("changetarget", KeyCode.Backslash);
+                        keybinds.AddBind("toggleaimbot", KeyCode.F5);
 
 
                         WaveMaker.Keybinds = keybinds;

@@ -1,0 +1,44 @@
+﻿<Window x:Class="TsuManager.BlockedWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TsuManager"
+        mc:Ignorable="d"
+        Title="BlockedWindow" Height="450" Width="500">
+    <Grid Background="#3B3B3D">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="4*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="1" Background="#2A292F">
+            <Border BorderBrush="#222126" BorderThickness="2" Grid.ColumnSpan="1"/>
+            <Label Grid.Row="1"  Content="TSUNAMI HACK GLOBALLY DISABLED" FontSize="23" FontWeight="ExtraBold" Foreground="White" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
+        </Grid>
+        
+        
+        <Label Content="Reason:" FontSize="19" Grid.Row="2" FontWeight="ExtraBold" Foreground="White" Margin="25,15,0,0"/>
+        
+        <Label Name="lblBlockReason" Content="" FontSize="19" Grid.Row="2" FontWeight="ExtraBold" Foreground="White" Margin="15,50,15,0" HorizontalContentAlignment="Center"/>
+
+        <Grid Grid.Row="3" Background="#2A292F">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Border BorderBrush="#222126" BorderThickness="2" Grid.ColumnSpan="3"/>
+            
+            <Button Name="btnBlockDiscord" Width="130" Height="55" Content="Join Discord" FontSize="15" FontWeight="Bold" Background="#333236" Foreground="White"/>
+
+            <Button Grid.Column="1" Name="btnBlockClose"  Width="130" Height="55" Content="Close Installer" FontSize="15" FontWeight="Bold" Background="#333236" Foreground="White"/>
+
+            <Button Grid.Column="2" Name="btnBlockUninstall"  Width="130" Height="55" Content="Uninstall" FontSize="15" FontWeight="Bold" Background="#333236" Foreground="White"/>
+        </Grid>
+    </Grid>
+</Window>
