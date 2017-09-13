@@ -15,6 +15,8 @@ namespace TsunamiHack.Tsunami.Manager
                 FileIo.CheckDirectory();
                 FileIo.CheckEmpty();
                 
+                FileIo.CheckIfAgreed();
+                
                 LoadDownloads();
 
                 WaveMaker.FirstTime = FileIo.CheckIfFirstTime();

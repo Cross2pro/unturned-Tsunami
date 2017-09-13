@@ -5,6 +5,7 @@ using System.Runtime.InteropServices;
 using Mono.Security;
 using Pathfinding;
 using SDG.Unturned;
+using Steamworks;
 using TsunamiHack.Tsunami.Manager;
 using TsunamiHack.Tsunami.Types;
 using TsunamiHack.Tsunami.Types.Lists;
@@ -47,11 +48,13 @@ namespace TsunamiHack.Tsunami.Lib
 
 		internal static void Update()
 		{
+			UpdateAimbot();
+			
 			if ((DateTime.Now - lastLock).TotalMilliseconds >= menu.LockUpdateRate)
 			{
 				UpdateLock();
 				UpdateTb();
-				UpdateAimbot();
+				
 
 				lastLock = DateTime.Now;
 			}
@@ -267,53 +270,55 @@ namespace TsunamiHack.Tsunami.Lib
 					{
 						try
 						{
-							if (!menu.AimManualChangeTarget || !(target == client.player.transform))
+							
+							//if client != local client
+							//if player isnt friend or player is friend and whitelist friends is disabled
+							//if player isnt admin or player is admin and whitelist admins is disabled
+
+							if (client.player != Player.player)
 							{
-
-								if (!WaveMaker.Friends.Contains(client.playerID.steamID.m_SteamID))
+								if (!WaveMaker.Friends.Contains(client.playerID.steamID.m_SteamID) ||
+								    (WaveMaker.Friends.Contains(client.playerID.steamID.m_SteamID) && !menu.AimWhitelistFriends))
 								{
-									if (!menu.AimWhitelistFriends)
+									if (!client.isAdmin || (client.isAdmin && !menu.AimWhitelistAdmins))
 									{
-										if (!menu.AimWhitelistAdmins || !client.isAdmin)
+										var tarLimbPos = GetLimbPosition(client.player.transform, tarLimb);
+
+										float sqrMagnitude;
+										if (menu.AimClosest)
 										{
-											var tarLimbPos = GetLimbPosition(client.player.transform, tarLimb);
+											var tarScrnPt = Camera.main.WorldToScreenPoint(tarLimbPos);
+											sqrMagnitude = (new Vector3(Screen.width / 2f, Screen.height / 2f) - tarScrnPt).sqrMagnitude;
+										}
+										else
+										{
+											sqrMagnitude = (tarLimbPos - Camera.main.transform.position).sqrMagnitude;
+										}
 
-											float sqrMagnitude;
-											if (menu.AimClosest)
+										if (sqrMagnitude <= squarerange && !client.player.life.isDead && Player.player.name != client.player.name)
+										{
+											if (!menu.Aim360)
 											{
-												var tarScrnPt = Camera.main.WorldToScreenPoint(tarLimbPos);
-												sqrMagnitude = (new Vector3(Screen.width / 2f, Screen.height / 2f) - tarScrnPt).sqrMagnitude;
-											}
-											else
-											{
-												sqrMagnitude = (tarLimbPos - Camera.main.transform.position).sqrMagnitude;
-											}
-
-											if (sqrMagnitude <= squarerange && !client.player.life.isDead && Player.player.name != client.player.name)
-											{
-												if (!menu.Aim360)
+												var tarLimbPosScrnPt = Camera.main.WorldToViewportPoint(tarLimbPos);
+												if (tarLimbPosScrnPt.z <= 0f || tarLimbPosScrnPt.x <= 0f || tarLimbPosScrnPt.x >= 1f ||
+												    tarLimbPosScrnPt.y <= 0f || tarLimbPosScrnPt.y >= 1f)
 												{
-													var tarLimbPosScrnPt = Camera.main.WorldToViewportPoint(tarLimbPos);
-													if (tarLimbPosScrnPt.z <= 0f || tarLimbPosScrnPt.x <= 0f || tarLimbPosScrnPt.x >= 1f ||
-													    tarLimbPosScrnPt.y <= 0f || tarLimbPosScrnPt.y >= 1f)
-													{
-														goto Exit;
-													}
+													goto Exit;
 												}
-												if (!menu.AimIgnoreWalls)
-												{
-													var distance = tarLimbPos - Player.player.look.aim.position;
-													RaycastHit raycastHit;
-													if (!Physics.Raycast(Player.player.look.aim.position, distance, out raycastHit, dist,
-														    RayMasks.DAMAGE_CLIENT) ||
-													    !raycastHit.transform.CompareTag("Enemy"))
-													{
-														goto Exit;
-													}
-												}
-												target = client.player.transform;
-												squarerange = sqrMagnitude;
 											}
+											if (!menu.AimIgnoreWalls)
+											{
+												var distance = tarLimbPos - Player.player.look.aim.position;
+												RaycastHit raycastHit;
+												if (!Physics.Raycast(Player.player.look.aim.position, distance, out raycastHit, dist,
+													    RayMasks.DAMAGE_CLIENT) ||
+												    !raycastHit.transform.CompareTag("Enemy"))
+												{
+													goto Exit;
+												}
+											}
+											target = client.player.transform;
+											squarerange = sqrMagnitude;
 										}
 									}
 								}
@@ -321,9 +326,9 @@ namespace TsunamiHack.Tsunami.Lib
 								{
 									target = null;
 									goto Exit;
+
 								}
 							}
-							
 							
 						} catch (System.Exception){}
 						
@@ -408,7 +413,7 @@ namespace TsunamiHack.Tsunami.Lib
 					}
 				}
 
-				var num3 = menu.AimSpeed * 100f * Time.deltaTime;
+				var num3 = menu.AimSpeed * 5f;
 				var targetVector = GetLimbPosition(target.transform, tarLimb);
 				var quaternion = Quaternion.LookRotation(targetVector - Player.player.look.aim.position);
 				var quaternion2 = Quaternion.RotateTowards(Camera.main.transform.rotation, quaternion, num3);

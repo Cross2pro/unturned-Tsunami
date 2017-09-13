@@ -2,6 +2,7 @@
 using UnityEngine;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing;
 using System.IO;
 using SDG.Unturned;
 using TsunamiHack.Tsunami.Manager;
@@ -19,6 +20,7 @@ namespace TsunamiHack.Tsunami.Util
         private static readonly string InfoPath = Directory + @"\Info.dat";
         private static readonly string FriendsPath = Directory + @"\Friends.dat";
         private static readonly string SettingsPath = Directory + @"\Settings.dat";
+        private static readonly string EulaPath = Directory + @"\Agreement.dat";
 
         private static StreamReader _reader;
         private static StreamWriter _writer;
@@ -285,6 +287,30 @@ namespace TsunamiHack.Tsunami.Util
             }
 
             return !result;
+        }
+
+        public static void CheckIfAgreed()
+        {
+            var res = File.Exists(EulaPath);
+
+            if (!res)
+            {
+                WaveMaker.ShowEula = true;
+                
+            }
+                
+        }
+
+        public static void AgreeEula()
+        {
+            using (var writer = new StreamWriter(EulaPath))
+            {
+                writer.WriteLine("Agreed");
+                writer.Flush();
+                writer.Dispose();
+            }
+
+            WaveMaker.ShowEula = false;
         }
 
     #endregion  

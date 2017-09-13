@@ -16,6 +16,9 @@ namespace TsunamiHack.Tsunami.Manager
         public static bool isDev;
         public static bool isPremium;
         public static bool isBeta;
+
+        public static bool ShowEula;
+        public static string eula;
         
         public static PremiumList Prem;
         public static BanList Ban;
@@ -58,6 +61,14 @@ namespace TsunamiHack.Tsunami.Manager
 
         public void Start()
         {
+
+            if (ShowEula)
+            {
+                WebAccess.DownloadEula(out eula);
+                Blocker.BlockerEnabled = true;
+                Blocker.DisabledType = Blocker.Type.EulaAgree;
+            }
+            
             
             //Checking if player is dev
             LocalSteamId = Provider.client.m_SteamID;

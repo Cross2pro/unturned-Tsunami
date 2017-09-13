@@ -7,7 +7,7 @@ namespace TsunamiHack.Tsunami.Util
 {
     internal class Blocker : MonoBehaviour
     {
-        internal enum Type { Banned, Disabled, OutOfDate, GameOutOfDate}
+        internal enum Type { Banned, Disabled, OutOfDate, GameOutOfDate, EulaAgree}
         
         private HackController _ctrl;
 
@@ -15,6 +15,8 @@ namespace TsunamiHack.Tsunami.Util
         internal Rect WindowRect;
         internal bool Banned;
         internal static Type DisabledType;
+        internal static Vector2 scrollpos;
+        internal static bool EulaAgreed;
         
         private void Start()
         {
@@ -48,6 +50,10 @@ namespace TsunamiHack.Tsunami.Util
                             break;
                         case Type.GameOutOfDate:
                             WindowRect = GUI.Window(WaveMaker.BannedId, WindowRect, GameOutOfDateMenuFunct, "YOU ARE USING A REPOSTED VERSION");
+                            break;
+                        case Type.EulaAgree:
+                            WindowRect = GUI.Window(WaveMaker.BannedId, WindowRect, EulaAgreementFunct,
+                                "You Must Agree to the Tsunami Hack Eula to use");
                             break;
                 }
             }
@@ -142,7 +148,32 @@ namespace TsunamiHack.Tsunami.Util
                 Application.Quit();
             }
         }
-        
-        
+
+        private void EulaAgreementFunct(int id)
+        {
+            PlayerPauseUI.active = true;
+            PlayerUI.window.showCursor = true;
+            
+            GUILayout.Space(50f);
+            GUILayout.Label("You Must Agree to our EULA to use Tsunami Hack");
+            GUILayout.Space(8f);
+            scrollpos = GUILayout.BeginScrollView(scrollpos, false, true);
+            GUILayout.Label(WaveMaker.eula);
+            GUILayout.EndScrollView();
+            GUILayout.Space(10f);
+            EulaAgreed = GUILayout.Toggle(EulaAgreed,"I AGREE TO TSUNAMI HACK EULA");
+            GUILayout.Space(4f);
+            if (GUILayout.Button("Continue"))
+            {
+                if (EulaAgreed)
+                {
+                    FileIo.AgreeEula();
+                    BlockerEnabled = false;
+                    PlayerPauseUI.active = false;
+                    PlayerUI.window.showCursor = false;
+                }
+                
+            }
+        }
     }
 }

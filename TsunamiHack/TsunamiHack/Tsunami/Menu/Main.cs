@@ -99,6 +99,7 @@ namespace TsunamiHack.Tsunami.Menu
             Playerfocus = 0;
             Friendfocus = 0;
             
+            
         }
 
         public void Update()
@@ -150,14 +151,20 @@ namespace TsunamiHack.Tsunami.Menu
         {
             if (Provider.isConnected)
             {
+                if (WaveMaker.ShowEula)
+                {
+                    
+                }
+                
                 if (WaveMaker.MenuOpened ==  WaveMaker.MainId)
                 {
                     PlayerRect = GUI.Window(2009, PlayerRect, PlayerFunct, "Player List");
                     FriendsRect = GUI.Window(2010, FriendsRect, FriendFucnt, "Friends List");
                     MainRect = GUI.Window(2011, MainRect, MenuFunct, "Main Menu");
                     TextRect = GUI.Window(2012, TextRect, TextFunct, "Instructions");
-                    if (PremWindowOpen)
-                        PremRect = GUI.Window(2013, PremRect, PremiumFunct, "Premium Features");
+//                    if (PremWindowOpen)
+//                        PremRect = GUI.Window(2013, PremRect, PremiumFunct, "Premium Features");
+                    
                 }
 
                 if (InfoWin)
