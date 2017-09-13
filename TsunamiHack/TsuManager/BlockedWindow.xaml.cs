@@ -19,9 +19,26 @@ namespace TsuManager
     /// </summary>
     public partial class BlockedWindow : Window
     {
-        public BlockedWindow()
+        public BlockedWindow(string reason)
         {
             InitializeComponent();
+
+            lblBlockReason.Text = reason;
+        }
+
+        private void BtnBlockDiscord_OnClick(object sender, RoutedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://discord.gg/cW8Mjdf");
+        }
+
+        private void BtnBlockClose_OnClick(object sender, RoutedEventArgs e)
+        {
+            Environment.Exit(0);   
+        }
+
+        private void BtnBlockUninstall_OnClick(object sender, RoutedEventArgs e)
+        {
+            //TODO: add uninstall code
         }
     }
 }

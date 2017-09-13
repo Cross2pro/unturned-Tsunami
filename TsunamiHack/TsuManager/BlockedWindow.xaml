@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TsuManager"
         mc:Ignorable="d"
-        Title="BlockedWindow" Height="450" Width="500">
+        Title="HACK DISABLED" Height="450" Width="500">
     <Grid Background="#3B3B3D">
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
@@ -21,10 +21,10 @@
         </Grid>
         
         
-        <Label Content="Reason:" FontSize="19" Grid.Row="2" FontWeight="ExtraBold" Foreground="White" Margin="25,15,0,0"/>
+        <Label Content="Reason:" FontSize="19" Grid.Row="2" FontWeight="ExtraBold" Foreground="White" Margin="25,15,0,0" />
         
-        <Label Name="lblBlockReason" Content="" FontSize="19" Grid.Row="2" FontWeight="ExtraBold" Foreground="White" Margin="15,50,15,0" HorizontalContentAlignment="Center"/>
-
+        <TextBlock Name="lblBlockReason" Text="" FontSize="19" Grid.Row="2" FontWeight="Bold" Foreground="White" Margin="30,50,15,0" TextWrapping="Wrap"/>
+        
         <Grid Grid.Row="3" Background="#2A292F">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
@@ -34,11 +34,13 @@
 
             <Border BorderBrush="#222126" BorderThickness="2" Grid.ColumnSpan="3"/>
             
-            <Button Name="btnBlockDiscord" Width="130" Height="55" Content="Join Discord" FontSize="15" FontWeight="Bold" Background="#333236" Foreground="White"/>
+            <Button Name="btnBlockDiscord" Width="130" Height="55" Content="Join Discord" FontSize="15" FontWeight="Bold" Background="#333236" Foreground="White" Click="BtnBlockDiscord_OnClick"/>
 
-            <Button Grid.Column="1" Name="btnBlockClose"  Width="130" Height="55" Content="Close Installer" FontSize="15" FontWeight="Bold" Background="#333236" Foreground="White"/>
+            <Button Grid.Column="1" Name="btnBlockClose"  Width="130" Height="55" Content="Close Installer" FontSize="15" FontWeight="Bold" Background="#333236" Foreground="White" Click="BtnBlockClose_OnClick"/>
 
-            <Button Grid.Column="2" Name="btnBlockUninstall"  Width="130" Height="55" Content="Uninstall" FontSize="15" FontWeight="Bold" Background="#333236" Foreground="White"/>
+            <Button Grid.Column="2" Name="btnBlockUninstall"  Width="130" Height="55" Content="Uninstall" FontSize="15" FontWeight="Bold" Background="#333236" Foreground="White" Click="BtnBlockUninstall_OnClick"/>
         </Grid>
+        
+        <Label Content="You will be required to uninstall Tsunami hack to be able to play Unturned normally." Grid.Row="4" Foreground="White" FontWeight="Bold" VerticalAlignment="Bottom" FontSize="10" Margin="0,0,0,2"/>
     </Grid>
 </Window>

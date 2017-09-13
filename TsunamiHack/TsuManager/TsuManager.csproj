@@ -62,6 +62,26 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="ContentAbout.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ContentHome.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Installation\InstallEula.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Installation\InstallSettings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Installation\InstallStatus.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -73,7 +93,23 @@
     <Compile Include="BlockedWindow.xaml.cs">
       <DependentUpon>BlockedWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ContentAbout.xaml.cs">
+      <DependentUpon>ContentAbout.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ContentHome.xaml.cs">
+      <DependentUpon>ContentHome.xaml</DependentUpon>
+    </Compile>
     <Compile Include="db.cs" />
+    <Compile Include="Installation\InstallationManager.cs" />
+    <Compile Include="Installation\InstallEula.xaml.cs">
+      <DependentUpon>InstallEula.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Installation\InstallSettings.xaml.cs">
+      <DependentUpon>InstallSettings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Installation\InstallStatus.xaml.cs">
+      <DependentUpon>InstallStatus.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

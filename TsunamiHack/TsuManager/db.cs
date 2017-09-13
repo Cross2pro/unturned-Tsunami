@@ -26,7 +26,7 @@ namespace TsuManager
 
             using (var connection = new SqlConnection(builder.ConnectionString))
             {
-                var cmd = "select * from installer where id = '1'";
+                var cmd = "select * from installer";
                 connection.Open();
 
                 using (var command = new SqlCommand(cmd, connection))
@@ -53,7 +53,7 @@ namespace TsuManager
                         while (reader.Read())
                         {
                             var bl = reader["status"].ToString();
-                            _mainWindow.Disabled = bl == "0";
+                            _mainWindow.Disabled = bl == "1";
                             _mainWindow.Reason = reader["reason"].ToString();
                         }
                     }

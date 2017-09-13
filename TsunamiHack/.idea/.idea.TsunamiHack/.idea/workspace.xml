@@ -5,19 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="79d6ecbe-d677-4423-8cd9-3aaca4df3f23" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/TsuManager/db.cs" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/TsuManager/Installation/InstallationManager.cs" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/.idea.TsunamiHack/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/.idea.TsunamiHack/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TsuManager/MainWindow.xaml" afterPath="$PROJECT_DIR$/TsuManager/MainWindow.xaml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TsuManager/BlockedWindow.xaml" afterPath="$PROJECT_DIR$/TsuManager/BlockedWindow.xaml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TsuManager/BlockedWindow.xaml.cs" afterPath="$PROJECT_DIR$/TsuManager/BlockedWindow.xaml.cs" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TsuManager/MainWindow.xaml.cs" afterPath="$PROJECT_DIR$/TsuManager/MainWindow.xaml.cs" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TsuManager/TsuManager.csproj" afterPath="$PROJECT_DIR$/TsuManager/TsuManager.csproj" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TsunamiHack/Tsunami/Lib/AimV2.cs" afterPath="$PROJECT_DIR$/TsunamiHack/Tsunami/Lib/AimV2.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TsunamiHack/Tsunami/Lib/Main.cs" afterPath="$PROJECT_DIR$/TsunamiHack/Tsunami/Lib/Main.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TsunamiHack/Tsunami/Lib/VisualsV2.cs" afterPath="$PROJECT_DIR$/TsunamiHack/Tsunami/Lib/VisualsV2.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TsunamiHack/Tsunami/Manager/WaveMaker.cs" afterPath="$PROJECT_DIR$/TsunamiHack/Tsunami/Manager/WaveMaker.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TsunamiHack/Tsunami/Menu/Keybind.cs" afterPath="$PROJECT_DIR$/TsunamiHack/Tsunami/Menu/Keybind.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TsunamiHack/Tsunami/Menu/Main.cs" afterPath="$PROJECT_DIR$/TsunamiHack/Tsunami/Menu/Main.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TsunamiHack/Tsunami/Util/FileIO.cs" afterPath="$PROJECT_DIR$/TsunamiHack/Tsunami/Util/FileIO.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TsunamiHack/Tsunami/Util/PlayerTools.cs" afterPath="$PROJECT_DIR$/TsunamiHack/Tsunami/Util/PlayerTools.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TsuManager/db.cs" afterPath="$PROJECT_DIR$/TsuManager/db.cs" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -40,148 +34,97 @@
     <favorites_list name="TsunamiHack" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.4413203">
-      <split-first>
-        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="MainWindow.xaml" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/TsuManager/MainWindow.xaml">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="666">
-                  <caret line="60" column="21" lean-forward="false" selection-start-line="60" selection-start-column="21" selection-end-line="60" selection-end-column="21" />
-                  <folding>
-                    <marker date="1505187528954" expanded="true" signature="0:4473" ph="&lt;&lt;Grid Name=&quot;grdContainer&quot;  Background=&quot;Gray&quot;&gt;&#10;        &lt;Grid.ColumnDefinitions&gt;&#10;            &lt;ColumnDefinition Name=&quot;cgSidebar&quot;  Width=&quot;2*&quot;/&gt;&#10;            &lt;ColumnDefinition Name=&quot;cgContent&quot; Width=&quot;8*&quot;/&gt;&#10;        &lt;/Grid.ColumnDefinitions&gt;&#10;        &#10;        &lt;!-- SideBar --&gt;&#10;&#10;        &lt;Grid Name=&quot;grdSidebar&quot; Background=&quot;##2A292F&quot; Grid.Column=&quot;0&quot;&gt;&#10;            &lt;Grid.RowDefinitions&gt;&#10;                &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;                &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;                &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;                &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;                &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;                &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;                &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;                &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;                &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;            &lt;/Grid.RowDefinitions&gt;&#10;&#10;            &lt;Button Name=&quot;btnHome&quot;    Grid.Row=&quot;1&quot; Width=&quot;120&quot; Height=&quot;40&quot; Content=&quot;Home&quot;    Background=&quot;##333236&quot; Foreground=&quot;White&quot; FontSize=&quot;20&quot; FontWeight=&quot;ExtraBold&quot; Click=&quot;btnHome_OnClick&quot;/&gt;&#10;            &lt;Button Name=&quot;btnInstall&quot; Grid.Row=&quot;2&quot; Width=&quot;120&quot; Height=&quot;40&quot; Content=&quot;Install&quot; Background=&quot;##333236&quot; Foreground=&quot;White&quot; FontSize=&quot;20&quot; FontWeight=&quot;ExtraBold&quot; Click=&quot;btnInstall_OnClick&quot;/&gt;&#10;            &lt;Button Name=&quot;btnAbout&quot;   Grid.Row=&quot;3&quot; Width=&quot;120&quot; Height=&quot;40&quot; Content=&quot;About&quot;   Background=&quot;##333236&quot; Foreground=&quot;White&quot; FontSize=&quot;20&quot; FontWeight=&quot;ExtraBold&quot; Click=&quot;btnAbout_OnClick&quot;/&gt;&#10;&#10;            &lt;Rectangle Grid.RowSpan=&quot;9&quot; Width=&quot;3&quot; HorizontalAlignment=&quot;Right&quot; Stroke=&quot;##222126&quot; Fill=&quot;##2A292F&quot;/&gt;&#10;            &#10;        &lt;/Grid&gt;&#10;        &#10;        &lt;!-- Content --&gt;&#10;&#10;&#10;        &#10;        &lt;Grid Name=&quot;grdContent&quot; Background=&quot;##3B3B3D&quot; Grid.Column=&quot;1&quot;&gt;&#10;            &lt;Grid.RowDefinitions&gt;&#10;                &lt;RowDefinition Height=&quot;1*&quot;/&gt;&#10;                &lt;RowDefinition Height=&quot;9*&quot;/&gt;&#10;            &lt;/Grid.RowDefinitions&gt;&#10;&#10;            &lt;Frame Name=&quot;ContentFrame&quot; Grid.Row=&quot;1&quot; Margin=&quot;5&quot; /&gt;&#10;            &#10;            &lt;!-- Menu Bar  --&gt;&#10;&#10;            &lt;Grid Name=&quot;grdMenu&quot;  Background =&quot;##333236&quot;&gt;&#10;                &lt;Grid.ColumnDefinitions&gt;&#10;                    &lt;ColumnDefinition Width=&quot;1*&quot;/&gt;&#10;                    &lt;ColumnDefinition Width=&quot;9*&quot;/&gt;&#10;                &lt;/Grid.ColumnDefinitions&gt;&#10;&#10;                &lt;Border Grid.ColumnSpan=&quot;2&quot; BorderBrush=&quot;##2A292F&quot; BorderThickness=&quot;2&quot;/&gt;&#10;&#10;                &lt;!-- Title Bar --&gt;&#10;                &lt;Label Name=&quot;lblTitleBar&quot; Grid.Column=&quot;1&quot; Content=&quot;Tsunami Hack || Version: 1.0 &quot; HorizontalAlignment=&quot;Right&quot; VerticalAlignment=&quot;Top&quot; FontSize=&quot;14&quot; Foreground=&quot;White&quot; FontWeight=&quot;ExtraBold&quot;/&gt;&#10;                &lt;Label Name=&quot;lblCreateBy&quot; Grid.Column=&quot;1&quot; Content=&quot;Created By Tidal feat. Deus Myke&quot; HorizontalAlignment=&quot;Right&quot; VerticalAlignment=&quot;Bottom&quot; FontSize=&quot;11&quot; Foreground=&quot;White&quot; FontWeight=&quot;Bold&quot;/&gt;&#10;&#10;                &lt;!-- Resize Button --&gt;&#10;                &lt;Grid Name=&quot;grdResize&quot; &gt;&#10;                    &lt;Grid.RowDefinitions&gt;&#10;                        &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;                        &lt;RowDefinition Height=&quot;6*&quot;/&gt;&#10;                        &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;                    &lt;/Grid.RowDefinitions&gt;&#10;                    &lt;Grid.ColumnDefinitions&gt;&#10;                        &lt;ColumnDefinition Width=&quot;6*&quot;/&gt;&#10;                        &lt;ColumnDefinition Width=&quot;2*&quot;/&gt;&#10;                    &lt;/Grid.ColumnDefinitions&gt;&#10;                    &#10;                    &lt;Button Name=&quot;btnResize&quot; Grid.Row=&quot;1&quot; Grid.Column=&quot;0&quot; Content=&quot;&quot; Background=&quot;Transparent&quot; BorderBrush=&quot;Transparent&quot; Foreground=&quot;White&quot; FontSize=&quot;20&quot; FontWeight=&quot;ExtraBold&quot; VerticalContentAlignment=&quot;Center&quot; HorizontalContentAlignment=&quot;Left&quot; Click=&quot;BtnResize_OnClick&quot; Margin=&quot;5,0,0,0&quot; /&gt;&#10;                &lt;/Grid&gt;&#10;                &#10;            &lt;/Grid&gt;&#10;            &#10;        &lt;/Grid&gt;&#10;    &lt;/Grid&gt;.../&gt;" />
-                    <marker date="1505187528954" expanded="true" signature="496:771" ph="&lt;!--...--&gt;" />
-                    <marker date="1505187528954" expanded="true" signature="791:4463" ph="&lt;&lt;Grid.ColumnDefinitions&gt;&#10;            &lt;ColumnDefinition Name=&quot;cgSidebar&quot;  Width=&quot;2*&quot;/&gt;&#10;            &lt;ColumnDefinition Name=&quot;cgContent&quot; Width=&quot;8*&quot;/&gt;&#10;        &lt;/Grid.ColumnDefinitions&gt; &lt;Grid Name=&quot;grdSidebar&quot; Background=&quot;##2A292F&quot; Grid.Column=&quot;0&quot;&gt;&#10;            &lt;Grid.RowDefinitions&gt;&#10;                &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;                &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;                &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;                &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;                &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;                &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;                &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;                &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;                &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;            &lt;/Grid.RowDefinitions&gt;&#10;&#10;            &lt;Button Name=&quot;btnHome&quot;    Grid.Row=&quot;1&quot; Width=&quot;120&quot; Height=&quot;40&quot; Content=&quot;Home&quot;    Background=&quot;##333236&quot; Foreground=&quot;White&quot; FontSize=&quot;20&quot; FontWeight=&quot;ExtraBold&quot; Click=&quot;btnHome_OnClick&quot;/&gt;&#10;            &lt;Button Name=&quot;btnInstall&quot; Grid.Row=&quot;2&quot; Width=&quot;120&quot; Height=&quot;40&quot; Content=&quot;Install&quot; Background=&quot;##333236&quot; Foreground=&quot;White&quot; FontSize=&quot;20&quot; FontWeight=&quot;ExtraBold&quot; Click=&quot;btnInstall_OnClick&quot;/&gt;&#10;            &lt;Button Name=&quot;btnAbout&quot;   Grid.Row=&quot;3&quot; Width=&quot;120&quot; Height=&quot;40&quot; Content=&quot;About&quot;   Background=&quot;##333236&quot; Foreground=&quot;White&quot; FontSize=&quot;20&quot; FontWeight=&quot;ExtraBold&quot; Click=&quot;btnAbout_OnClick&quot;/&gt;&#10;&#10;            &lt;Rectangle Grid.RowSpan=&quot;9&quot; Width=&quot;3&quot; HorizontalAlignment=&quot;Right&quot; Stroke=&quot;##222126&quot; Fill=&quot;##2A292F&quot;/&gt;&#10;            &#10;        &lt;/Grid&gt; &lt;Grid Name=&quot;grdContent&quot; Background=&quot;##3B3B3D&quot; Grid.Column=&quot;1&quot;&gt;&#10;            &lt;Grid.RowDefinitions&gt;&#10;                &lt;RowDefinition Height=&quot;1*&quot;/&gt;&#10;                &lt;RowDefinition Height=&quot;9*&quot;/&gt;&#10;            &lt;/Grid.RowDefinitions&gt;&#10;&#10;            &lt;Frame Name=&quot;ContentFrame&quot; Grid.Row=&quot;1&quot; Margin=&quot;5&quot; /&gt;&#10;            &#10;            &lt;!-- Menu Bar  --&gt;&#10;&#10;            &lt;Grid Name=&quot;grdMenu&quot;  Background =&quot;##333236&quot;&gt;&#10;                &lt;Grid.ColumnDefinitions&gt;&#10;                    &lt;ColumnDefinition Width=&quot;1*&quot;/&gt;&#10;                    &lt;ColumnDefinition Width=&quot;9*&quot;/&gt;&#10;                &lt;/Grid.ColumnDefinitions&gt;&#10;&#10;                &lt;Border Grid.ColumnSpan=&quot;2&quot; BorderBrush=&quot;##2A292F&quot; BorderThickness=&quot;2&quot;/&gt;&#10;&#10;                &lt;!-- Title Bar --&gt;&#10;                &lt;Label Name=&quot;lblTitleBar&quot; Grid.Column=&quot;1&quot; Content=&quot;Tsunami Hack || Version: 1.0 &quot; HorizontalAlignment=&quot;Right&quot; VerticalAlignment=&quot;Top&quot; FontSize=&quot;14&quot; Foreground=&quot;White&quot; FontWeight=&quot;ExtraBold&quot;/&gt;&#10;                &lt;Label Name=&quot;lblCreateBy&quot; Grid.Column=&quot;1&quot; Content=&quot;Created By Tidal feat. Deus Myke&quot; HorizontalAlignment=&quot;Right&quot; VerticalAlignment=&quot;Bottom&quot; FontSize=&quot;11&quot; Foreground=&quot;White&quot; FontWeight=&quot;Bold&quot;/&gt;&#10;&#10;                &lt;!-- Resize Button --&gt;&#10;                &lt;Grid Name=&quot;grdResize&quot; &gt;&#10;                    &lt;Grid.RowDefinitions&gt;&#10;                        &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;                        &lt;RowDefinition Height=&quot;6*&quot;/&gt;&#10;                        &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;                    &lt;/Grid.RowDefinitions&gt;&#10;                    &lt;Grid.ColumnDefinitions&gt;&#10;                        &lt;ColumnDefinition Width=&quot;6*&quot;/&gt;&#10;                        &lt;ColumnDefinition Width=&quot;2*&quot;/&gt;&#10;                    &lt;/Grid.ColumnDefinitions&gt;&#10;                    &#10;                    &lt;Button Name=&quot;btnResize&quot; Grid.Row=&quot;1&quot; Grid.Column=&quot;0&quot; Content=&quot;&quot; Background=&quot;Transparent&quot; BorderBrush=&quot;Transparent&quot; Foreground=&quot;White&quot; FontSize=&quot;20&quot; FontWeight=&quot;ExtraBold&quot; VerticalContentAlignment=&quot;Center&quot; HorizontalContentAlignment=&quot;Left&quot; Click=&quot;BtnResize_OnClick&quot; Margin=&quot;5,0,0,0&quot; /&gt;&#10;                &lt;/Grid&gt;&#10;                &#10;            &lt;/Grid&gt;&#10;            &#10;        &lt;/Grid&gt;.../&gt;" />
-                    <marker date="1505187528954" expanded="true" signature="845:1024" ph="&lt;&lt;ColumnDefinition Name=&quot;cgSidebar&quot;  Width=&quot;2*&quot;/&gt; &lt;ColumnDefinition Name=&quot;cgContent&quot; Width=&quot;8*&quot;/&gt;.../&gt;" />
-                    <marker date="1505187528954" expanded="true" signature="1068:2338" ph="&lt;&lt;Grid.RowDefinitions&gt;&#10;                &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;                &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;                &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;                &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;                &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;                &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;                &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;                &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;                &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;            &lt;/Grid.RowDefinitions&gt; &lt;Button Name=&quot;btnHome&quot;    Grid.Row=&quot;1&quot; Width=&quot;120&quot; Height=&quot;40&quot; Content=&quot;Home&quot;    Background=&quot;##333236&quot; Foreground=&quot;White&quot; FontSize=&quot;20&quot; FontWeight=&quot;ExtraBold&quot; Click=&quot;btnHome_OnClick&quot;/&gt; &lt;Button Name=&quot;btnInstall&quot; Grid.Row=&quot;2&quot; Width=&quot;120&quot; Height=&quot;40&quot; Content=&quot;Install&quot; Background=&quot;##333236&quot; Foreground=&quot;White&quot; FontSize=&quot;20&quot; FontWeight=&quot;ExtraBold&quot; Click=&quot;btnInstall_OnClick&quot;/&gt; &lt;Button Name=&quot;btnAbout&quot;   Grid.Row=&quot;3&quot; Width=&quot;120&quot; Height=&quot;40&quot; Content=&quot;About&quot;   Background=&quot;##333236&quot; Foreground=&quot;White&quot; FontSize=&quot;20&quot; FontWeight=&quot;ExtraBold&quot; Click=&quot;btnAbout_OnClick&quot;/&gt; &lt;Rectangle Grid.RowSpan=&quot;9&quot; Width=&quot;3&quot; HorizontalAlignment=&quot;Right&quot; Stroke=&quot;##222126&quot; Fill=&quot;##2A292F&quot;/&gt;.../&gt;" />
-                    <marker date="1505187528954" expanded="true" signature="1142:1603" ph="&lt;&lt;RowDefinition Height=&quot;2*&quot;/&gt; &lt;RowDefinition Height=&quot;2*&quot;/&gt; &lt;RowDefinition Height=&quot;2*&quot;/&gt; &lt;RowDefinition Height=&quot;2*&quot;/&gt; &lt;RowDefinition Height=&quot;2*&quot;/&gt; &lt;RowDefinition Height=&quot;2*&quot;/&gt; &lt;RowDefinition Height=&quot;2*&quot;/&gt; &lt;RowDefinition Height=&quot;2*&quot;/&gt; &lt;RowDefinition Height=&quot;2*&quot;/&gt;.../&gt;" />
-                    <marker date="1505187528954" expanded="true" signature="2392:4451" ph="&lt;&lt;Grid.RowDefinitions&gt;&#10;                &lt;RowDefinition Height=&quot;1*&quot;/&gt;&#10;                &lt;RowDefinition Height=&quot;9*&quot;/&gt;&#10;            &lt;/Grid.RowDefinitions&gt; &lt;Frame Name=&quot;ContentFrame&quot; Grid.Row=&quot;1&quot; Margin=&quot;5&quot; /&gt; &lt;Grid Name=&quot;grdMenu&quot;  Background =&quot;##333236&quot;&gt;&#10;                &lt;Grid.ColumnDefinitions&gt;&#10;                    &lt;ColumnDefinition Width=&quot;1*&quot;/&gt;&#10;                    &lt;ColumnDefinition Width=&quot;9*&quot;/&gt;&#10;                &lt;/Grid.ColumnDefinitions&gt;&#10;&#10;                &lt;Border Grid.ColumnSpan=&quot;2&quot; BorderBrush=&quot;##2A292F&quot; BorderThickness=&quot;2&quot;/&gt;&#10;&#10;                &lt;!-- Title Bar --&gt;&#10;                &lt;Label Name=&quot;lblTitleBar&quot; Grid.Column=&quot;1&quot; Content=&quot;Tsunami Hack || Version: 1.0 &quot; HorizontalAlignment=&quot;Right&quot; VerticalAlignment=&quot;Top&quot; FontSize=&quot;14&quot; Foreground=&quot;White&quot; FontWeight=&quot;ExtraBold&quot;/&gt;&#10;                &lt;Label Name=&quot;lblCreateBy&quot; Grid.Column=&quot;1&quot; Content=&quot;Created By Tidal feat. Deus Myke&quot; HorizontalAlignment=&quot;Right&quot; VerticalAlignment=&quot;Bottom&quot; FontSize=&quot;11&quot; Foreground=&quot;White&quot; FontWeight=&quot;Bold&quot;/&gt;&#10;&#10;                &lt;!-- Resize Button --&gt;&#10;                &lt;Grid Name=&quot;grdResize&quot; &gt;&#10;                    &lt;Grid.RowDefinitions&gt;&#10;                        &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;                        &lt;RowDefinition Height=&quot;6*&quot;/&gt;&#10;                        &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;                    &lt;/Grid.RowDefinitions&gt;&#10;                    &lt;Grid.ColumnDefinitions&gt;&#10;                        &lt;ColumnDefinition Width=&quot;6*&quot;/&gt;&#10;                        &lt;ColumnDefinition Width=&quot;2*&quot;/&gt;&#10;                    &lt;/Grid.ColumnDefinitions&gt;&#10;                    &#10;                    &lt;Button Name=&quot;btnResize&quot; Grid.Row=&quot;1&quot; Grid.Column=&quot;0&quot; Content=&quot;&quot; Background=&quot;Transparent&quot; BorderBrush=&quot;Transparent&quot; Foreground=&quot;White&quot; FontSize=&quot;20&quot; FontWeight=&quot;ExtraBold&quot; VerticalContentAlignment=&quot;Center&quot; HorizontalContentAlignment=&quot;Left&quot; Click=&quot;BtnResize_OnClick&quot; Margin=&quot;5,0,0,0&quot; /&gt;&#10;                &lt;/Grid&gt;&#10;                &#10;            &lt;/Grid&gt;.../&gt;" />
-                    <marker date="1505187528954" expanded="true" signature="2466:2612" ph="&lt;&lt;RowDefinition Height=&quot;1*&quot;/&gt; &lt;RowDefinition Height=&quot;9*&quot;/&gt;.../&gt;" />
-                    <marker date="1505187528954" expanded="true" signature="2737:4422" ph="&lt;&lt;Grid.ColumnDefinitions&gt;&#10;                    &lt;ColumnDefinition Width=&quot;1*&quot;/&gt;&#10;                    &lt;ColumnDefinition Width=&quot;9*&quot;/&gt;&#10;                &lt;/Grid.ColumnDefinitions&gt; &lt;Border Grid.ColumnSpan=&quot;2&quot; BorderBrush=&quot;##2A292F&quot; BorderThickness=&quot;2&quot;/&gt; &lt;Label Name=&quot;lblTitleBar&quot; Grid.Column=&quot;1&quot; Content=&quot;Tsunami Hack || Version: 1.0 &quot; HorizontalAlignment=&quot;Right&quot; VerticalAlignment=&quot;Top&quot; FontSize=&quot;14&quot; Foreground=&quot;White&quot; FontWeight=&quot;ExtraBold&quot;/&gt; &lt;Label Name=&quot;lblCreateBy&quot; Grid.Column=&quot;1&quot; Content=&quot;Created By Tidal feat. Deus Myke&quot; HorizontalAlignment=&quot;Right&quot; VerticalAlignment=&quot;Bottom&quot; FontSize=&quot;11&quot; Foreground=&quot;White&quot; FontWeight=&quot;Bold&quot;/&gt; &lt;Grid Name=&quot;grdResize&quot; &gt;&#10;                    &lt;Grid.RowDefinitions&gt;&#10;                        &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;                        &lt;RowDefinition Height=&quot;6*&quot;/&gt;&#10;                        &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;                    &lt;/Grid.RowDefinitions&gt;&#10;                    &lt;Grid.ColumnDefinitions&gt;&#10;                        &lt;ColumnDefinition Width=&quot;6*&quot;/&gt;&#10;                        &lt;ColumnDefinition Width=&quot;2*&quot;/&gt;&#10;                    &lt;/Grid.ColumnDefinitions&gt;&#10;                    &#10;                    &lt;Button Name=&quot;btnResize&quot; Grid.Row=&quot;1&quot; Grid.Column=&quot;0&quot; Content=&quot;&quot; Background=&quot;Transparent&quot; BorderBrush=&quot;Transparent&quot; Foreground=&quot;White&quot; FontSize=&quot;20&quot; FontWeight=&quot;ExtraBold&quot; VerticalContentAlignment=&quot;Center&quot; HorizontalContentAlignment=&quot;Left&quot; Click=&quot;BtnResize_OnClick&quot; Margin=&quot;5,0,0,0&quot; /&gt;&#10;                &lt;/Grid&gt;.../&gt;" />
-                    <marker date="1505187528954" expanded="true" signature="2798:2966" ph="&lt;&lt;ColumnDefinition Width=&quot;1*&quot;/&gt; &lt;ColumnDefinition Width=&quot;9*&quot;/&gt;.../&gt;" />
-                    <marker date="1505187528954" expanded="true" signature="3565:4385" ph="&lt;&lt;Grid.RowDefinitions&gt;&#10;                        &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;                        &lt;RowDefinition Height=&quot;6*&quot;/&gt;&#10;                        &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;                    &lt;/Grid.RowDefinitions&gt; &lt;Grid.ColumnDefinitions&gt;&#10;                        &lt;ColumnDefinition Width=&quot;6*&quot;/&gt;&#10;                        &lt;ColumnDefinition Width=&quot;2*&quot;/&gt;&#10;                    &lt;/Grid.ColumnDefinitions&gt; &lt;Button Name=&quot;btnResize&quot; Grid.Row=&quot;1&quot; Grid.Column=&quot;0&quot; Content=&quot;&quot; Background=&quot;Transparent&quot; BorderBrush=&quot;Transparent&quot; Foreground=&quot;White&quot; FontSize=&quot;20&quot; FontWeight=&quot;ExtraBold&quot; VerticalContentAlignment=&quot;Center&quot; HorizontalContentAlignment=&quot;Left&quot; Click=&quot;BtnResize_OnClick&quot; Margin=&quot;5,0,0,0&quot; /&gt;.../&gt;" />
-                    <marker date="1505187528954" expanded="true" signature="3610:3833" ph="&lt;&lt;RowDefinition Height=&quot;2*&quot;/&gt; &lt;RowDefinition Height=&quot;6*&quot;/&gt; &lt;RowDefinition Height=&quot;2*&quot;/&gt;.../&gt;" />
-                    <marker date="1505187528954" expanded="true" signature="3854:4034" ph="&lt;&lt;ColumnDefinition Width=&quot;6*&quot;/&gt; &lt;ColumnDefinition Width=&quot;2*&quot;/&gt;.../&gt;" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="MainWindow.xaml.cs" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/TsuManager/MainWindow.xaml.cs">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="484">
-                  <caret line="43" column="47" lean-forward="false" selection-start-line="43" selection-start-column="47" selection-end-line="43" selection-end-column="47" />
-                  <folding>
-                    <marker date="1505165474208" expanded="true" signature="6:400" ph="..." />
-                    <marker date="1505165474208" expanded="true" signature="422:3348" ph="{...}" />
-                    <marker date="1505165474208" expanded="true" signature="429:507" ph="/// Interaction logic for MainWindow.xaml ... " />
-                    <marker date="1505165474208" expanded="true" signature="552:3346" ph="{...}" />
-                    <marker date="1505165474208" expanded="true" signature="868:1484" ph="{...}" />
-                    <marker date="1505165474208" expanded="true" signature="1012:1088" ph="{...}" />
-                    <marker date="1505165474208" expanded="true" signature="1558:2895" ph="{...}" />
-                    <marker date="1505165474208" expanded="true" signature="1598:2212" ph="{...}" />
-                    <marker date="1505165474208" expanded="true" signature="2229:2885" ph="{...}" />
-                    <marker date="1505165474208" expanded="true" signature="2967:3108" ph="{...}" />
-                    <marker date="1505165474208" expanded="true" signature="3003:3096" ph="/* TODO: Get Folder path of \appdata\locallow ... */" />
-                    <marker date="1505165474208" expanded="true" signature="3183:3216" ph="{...}" />
-                    <marker date="1505165474208" expanded="true" signature="3289:3322" ph="{...}" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="FileIo.cs" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/TsunamiHack/Tsunami/Util/FileIo.cs">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="190">
-                  <caret line="15" column="55" lean-forward="false" selection-start-line="15" selection-start-column="55" selection-end-line="15" selection-end-column="55" />
-                  <folding>
-                    <marker date="1504986881436" expanded="true" signature="6:274" ph="..." />
-                    <marker date="1504986881436" expanded="true" signature="310:11685" ph="{...}" />
-                    <marker date="1504986881436" expanded="true" signature="338:11683" ph="{...}" />
-                    <marker date="1504986881436" expanded="true" signature="954:1135" ph="{...}" />
-                    <marker date="1504986881436" expanded="true" signature="1020:1112" ph="{...}" />
-                    <marker date="1504986881436" expanded="true" signature="1176:1861" ph="{...}" />
-                    <marker date="1504986881436" expanded="true" signature="1241:1343" ph="{...}" />
-                    <marker date="1504986881436" expanded="true" signature="1384:1851" ph="{...}" />
-                    <marker date="1504986881436" expanded="true" signature="1437:1819" ph="{...}" />
-                    <marker date="1504986881436" expanded="true" signature="1693:1780" ph="{...}" />
-                    <marker date="1504986881436" expanded="true" signature="1867:3036" ph="Keybinds" />
-                    <marker date="1504986881436" expanded="true" signature="1927:1992" ph="{...}" />
-                    <marker date="1504986881436" expanded="true" signature="2061:2208" ph="{...}" />
-                    <marker date="1504986881436" expanded="true" signature="2279:2710" ph="{...}" />
-                    <marker date="1504986881436" expanded="true" signature="2774:3020" ph="{...}" />
-                    <marker date="1504986881436" expanded="true" signature="2879:2959" ph="{...}" />
-                    <marker date="1504986881436" expanded="true" signature="3042:3859" ph="Friends" />
-                    <marker date="1504986881436" expanded="true" signature="3100:3165" ph="{...}" />
-                    <marker date="1504986881436" expanded="true" signature="3228:3371" ph="{...}" />
-                    <marker date="1504986881436" expanded="true" signature="3436:3527" ph="{...}" />
-                    <marker date="1504986881436" expanded="true" signature="3597:3843" ph="{...}" />
-                    <marker date="1504986881436" expanded="true" signature="3702:3782" ph="{...}" />
-                    <marker date="1504986881436" expanded="true" signature="3865:6123" ph="Settings" />
-                    <marker date="1504986881436" expanded="true" signature="3925:3991" ph="{...}" />
-                    <marker date="1504986881436" expanded="true" signature="4056:4199" ph="{...}" />
-                    <marker date="1504986881436" expanded="true" signature="4265:5383" ph="{...}" />
-                    <marker date="1504986881436" expanded="true" signature="5170:5373" ph="{...}" />
-                    <marker date="1504986881436" expanded="true" signature="5506:5754" ph="{...}" />
-                    <marker date="1504986881436" expanded="true" signature="5612:5693" ph="{...}" />
-                    <marker date="1504986881436" expanded="true" signature="5812:6099" ph="{...}" />
-                    <marker date="1504986881436" expanded="true" signature="5886:6089" ph="{...}" />
-                    <marker date="1504986881436" expanded="true" signature="6129:9804" ph="first time" />
-                    <marker date="1504986881436" expanded="true" signature="6194:9788" ph="{...}" />
-                    <marker date="1504986881436" expanded="true" signature="6277:9640" ph="{...}" />
-                    <marker date="1504986881436" expanded="true" signature="6400:6518" ph="{...}" />
-                    <marker date="1504986881436" expanded="true" signature="6565:9625" ph="{...}" />
-                    <marker date="1504986881436" expanded="true" signature="6695:7520" ph="{...}" />
-                    <marker date="1504986881436" expanded="true" signature="7593:8921" ph="{...}" />
-                    <marker date="1504986881436" expanded="true" signature="8993:9351" ph="{...}" />
-                    <marker date="1504986881436" expanded="true" signature="9420:9607" ph="{...}" />
-                    <marker date="1504986881436" expanded="true" signature="9657:9749" ph="{...}" />
-                    <marker date="1504986881436" expanded="true" signature="9834:11672" ph="Stream" />
-                    <marker date="1504986881436" expanded="true" signature="9924:10147" ph="{...}" />
-                    <marker date="1504986881436" expanded="true" signature="10226:10551" ph="{...}" />
-                    <marker date="1504986881436" expanded="true" signature="10384:10464" ph="{...}" />
-                    <marker date="1504986881436" expanded="true" signature="10622:10842" ph="{...}" />
-                    <marker date="1504986881436" expanded="true" signature="10906:11101" ph="{...}" />
-                    <marker date="1504986881436" expanded="true" signature="11167:11382" ph="{...}" />
-                    <marker date="1504986881436" expanded="true" signature="11448:11648" ph="{...}" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-first>
-      <split-second>
-        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="MainWindow.xaml" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/TsuManager/MainWindow.xaml">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="756">
-                  <caret line="53" column="0" lean-forward="false" selection-start-line="53" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
-                  <folding>
-                    <marker date="1505187528954" expanded="true" signature="0:4473" ph="&lt;&lt;Grid Name=&quot;grdContainer&quot;  Background=&quot;Gray&quot;&gt;&#10;        &lt;Grid.ColumnDefinitions&gt;&#10;            &lt;ColumnDefinition Name=&quot;cgSidebar&quot;  Width=&quot;2*&quot;/&gt;&#10;            &lt;ColumnDefinition Name=&quot;cgContent&quot; Width=&quot;8*&quot;/&gt;&#10;        &lt;/Grid.ColumnDefinitions&gt;&#10;        &#10;        &lt;!-- SideBar --&gt;&#10;&#10;        &lt;Grid Name=&quot;grdSidebar&quot; Background=&quot;##2A292F&quot; Grid.Column=&quot;0&quot;&gt;&#10;            &lt;Grid.RowDefinitions&gt;&#10;                &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;                &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;                &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;                &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;                &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;                &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;                &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;                &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;                &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;            &lt;/Grid.RowDefinitions&gt;&#10;&#10;            &lt;Button Name=&quot;btnHome&quot;    Grid.Row=&quot;1&quot; Width=&quot;120&quot; Height=&quot;40&quot; Content=&quot;Home&quot;    Background=&quot;##333236&quot; Foreground=&quot;White&quot; FontSize=&quot;20&quot; FontWeight=&quot;ExtraBold&quot; Click=&quot;btnHome_OnClick&quot;/&gt;&#10;            &lt;Button Name=&quot;btnInstall&quot; Grid.Row=&quot;2&quot; Width=&quot;120&quot; Height=&quot;40&quot; Content=&quot;Install&quot; Background=&quot;##333236&quot; Foreground=&quot;White&quot; FontSize=&quot;20&quot; FontWeight=&quot;ExtraBold&quot; Click=&quot;btnInstall_OnClick&quot;/&gt;&#10;            &lt;Button Name=&quot;btnAbout&quot;   Grid.Row=&quot;3&quot; Width=&quot;120&quot; Height=&quot;40&quot; Content=&quot;About&quot;   Background=&quot;##333236&quot; Foreground=&quot;White&quot; FontSize=&quot;20&quot; FontWeight=&quot;ExtraBold&quot; Click=&quot;btnAbout_OnClick&quot;/&gt;&#10;&#10;            &lt;Rectangle Grid.RowSpan=&quot;9&quot; Width=&quot;3&quot; HorizontalAlignment=&quot;Right&quot; Stroke=&quot;##222126&quot; Fill=&quot;##2A292F&quot;/&gt;&#10;            &#10;        &lt;/Grid&gt;&#10;        &#10;        &lt;!-- Content --&gt;&#10;&#10;&#10;        &#10;        &lt;Grid Name=&quot;grdContent&quot; Background=&quot;##3B3B3D&quot; Grid.Column=&quot;1&quot;&gt;&#10;            &lt;Grid.RowDefinitions&gt;&#10;                &lt;RowDefinition Height=&quot;1*&quot;/&gt;&#10;                &lt;RowDefinition Height=&quot;9*&quot;/&gt;&#10;            &lt;/Grid.RowDefinitions&gt;&#10;&#10;            &lt;Frame Name=&quot;ContentFrame&quot; Grid.Row=&quot;1&quot; Margin=&quot;5&quot; /&gt;&#10;            &#10;            &lt;!-- Menu Bar  --&gt;&#10;&#10;            &lt;Grid Name=&quot;grdMenu&quot;  Background =&quot;##333236&quot;&gt;&#10;                &lt;Grid.ColumnDefinitions&gt;&#10;                    &lt;ColumnDefinition Width=&quot;1*&quot;/&gt;&#10;                    &lt;ColumnDefinition Width=&quot;9*&quot;/&gt;&#10;                &lt;/Grid.ColumnDefinitions&gt;&#10;&#10;                &lt;Border Grid.ColumnSpan=&quot;2&quot; BorderBrush=&quot;##2A292F&quot; BorderThickness=&quot;2&quot;/&gt;&#10;&#10;                &lt;!-- Title Bar --&gt;&#10;                &lt;Label Name=&quot;lblTitleBar&quot; Grid.Column=&quot;1&quot; Content=&quot;Tsunami Hack || Version: 1.0 &quot; HorizontalAlignment=&quot;Right&quot; VerticalAlignment=&quot;Top&quot; FontSize=&quot;14&quot; Foreground=&quot;White&quot; FontWeight=&quot;ExtraBold&quot;/&gt;&#10;                &lt;Label Name=&quot;lblCreateBy&quot; Grid.Column=&quot;1&quot; Content=&quot;Created By Tidal feat. Deus Myke&quot; HorizontalAlignment=&quot;Right&quot; VerticalAlignment=&quot;Bottom&quot; FontSize=&quot;11&quot; Foreground=&quot;White&quot; FontWeight=&quot;Bold&quot;/&gt;&#10;&#10;                &lt;!-- Resize Button --&gt;&#10;                &lt;Grid Name=&quot;grdResize&quot; &gt;&#10;                    &lt;Grid.RowDefinitions&gt;&#10;                        &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;                        &lt;RowDefinition Height=&quot;6*&quot;/&gt;&#10;                        &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;                    &lt;/Grid.RowDefinitions&gt;&#10;                    &lt;Grid.ColumnDefinitions&gt;&#10;                        &lt;ColumnDefinition Width=&quot;6*&quot;/&gt;&#10;                        &lt;ColumnDefinition Width=&quot;2*&quot;/&gt;&#10;                    &lt;/Grid.ColumnDefinitions&gt;&#10;                    &#10;                    &lt;Button Name=&quot;btnResize&quot; Grid.Row=&quot;1&quot; Grid.Column=&quot;0&quot; Content=&quot;&quot; Background=&quot;Transparent&quot; BorderBrush=&quot;Transparent&quot; Foreground=&quot;White&quot; FontSize=&quot;20&quot; FontWeight=&quot;ExtraBold&quot; VerticalContentAlignment=&quot;Center&quot; HorizontalContentAlignment=&quot;Left&quot; Click=&quot;BtnResize_OnClick&quot; Margin=&quot;5,0,0,0&quot; /&gt;&#10;                &lt;/Grid&gt;&#10;                &#10;            &lt;/Grid&gt;&#10;            &#10;        &lt;/Grid&gt;&#10;    &lt;/Grid&gt;.../&gt;" />
-                    <marker date="1505187528954" expanded="true" signature="496:771" ph="&lt;!--...--&gt;" />
-                    <marker date="1505187528954" expanded="true" signature="791:4463" ph="&lt;&lt;Grid.ColumnDefinitions&gt;&#10;            &lt;ColumnDefinition Name=&quot;cgSidebar&quot;  Width=&quot;2*&quot;/&gt;&#10;            &lt;ColumnDefinition Name=&quot;cgContent&quot; Width=&quot;8*&quot;/&gt;&#10;        &lt;/Grid.ColumnDefinitions&gt; &lt;Grid Name=&quot;grdSidebar&quot; Background=&quot;##2A292F&quot; Grid.Column=&quot;0&quot;&gt;&#10;            &lt;Grid.RowDefinitions&gt;&#10;                &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;                &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;                &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;                &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;                &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;                &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;                &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;                &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;                &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;            &lt;/Grid.RowDefinitions&gt;&#10;&#10;            &lt;Button Name=&quot;btnHome&quot;    Grid.Row=&quot;1&quot; Width=&quot;120&quot; Height=&quot;40&quot; Content=&quot;Home&quot;    Background=&quot;##333236&quot; Foreground=&quot;White&quot; FontSize=&quot;20&quot; FontWeight=&quot;ExtraBold&quot; Click=&quot;btnHome_OnClick&quot;/&gt;&#10;            &lt;Button Name=&quot;btnInstall&quot; Grid.Row=&quot;2&quot; Width=&quot;120&quot; Height=&quot;40&quot; Content=&quot;Install&quot; Background=&quot;##333236&quot; Foreground=&quot;White&quot; FontSize=&quot;20&quot; FontWeight=&quot;ExtraBold&quot; Click=&quot;btnInstall_OnClick&quot;/&gt;&#10;            &lt;Button Name=&quot;btnAbout&quot;   Grid.Row=&quot;3&quot; Width=&quot;120&quot; Height=&quot;40&quot; Content=&quot;About&quot;   Background=&quot;##333236&quot; Foreground=&quot;White&quot; FontSize=&quot;20&quot; FontWeight=&quot;ExtraBold&quot; Click=&quot;btnAbout_OnClick&quot;/&gt;&#10;&#10;            &lt;Rectangle Grid.RowSpan=&quot;9&quot; Width=&quot;3&quot; HorizontalAlignment=&quot;Right&quot; Stroke=&quot;##222126&quot; Fill=&quot;##2A292F&quot;/&gt;&#10;            &#10;        &lt;/Grid&gt; &lt;Grid Name=&quot;grdContent&quot; Background=&quot;##3B3B3D&quot; Grid.Column=&quot;1&quot;&gt;&#10;            &lt;Grid.RowDefinitions&gt;&#10;                &lt;RowDefinition Height=&quot;1*&quot;/&gt;&#10;                &lt;RowDefinition Height=&quot;9*&quot;/&gt;&#10;            &lt;/Grid.RowDefinitions&gt;&#10;&#10;            &lt;Frame Name=&quot;ContentFrame&quot; Grid.Row=&quot;1&quot; Margin=&quot;5&quot; /&gt;&#10;            &#10;            &lt;!-- Menu Bar  --&gt;&#10;&#10;            &lt;Grid Name=&quot;grdMenu&quot;  Background =&quot;##333236&quot;&gt;&#10;                &lt;Grid.ColumnDefinitions&gt;&#10;                    &lt;ColumnDefinition Width=&quot;1*&quot;/&gt;&#10;                    &lt;ColumnDefinition Width=&quot;9*&quot;/&gt;&#10;                &lt;/Grid.ColumnDefinitions&gt;&#10;&#10;                &lt;Border Grid.ColumnSpan=&quot;2&quot; BorderBrush=&quot;##2A292F&quot; BorderThickness=&quot;2&quot;/&gt;&#10;&#10;                &lt;!-- Title Bar --&gt;&#10;                &lt;Label Name=&quot;lblTitleBar&quot; Grid.Column=&quot;1&quot; Content=&quot;Tsunami Hack || Version: 1.0 &quot; HorizontalAlignment=&quot;Right&quot; VerticalAlignment=&quot;Top&quot; FontSize=&quot;14&quot; Foreground=&quot;White&quot; FontWeight=&quot;ExtraBold&quot;/&gt;&#10;                &lt;Label Name=&quot;lblCreateBy&quot; Grid.Column=&quot;1&quot; Content=&quot;Created By Tidal feat. Deus Myke&quot; HorizontalAlignment=&quot;Right&quot; VerticalAlignment=&quot;Bottom&quot; FontSize=&quot;11&quot; Foreground=&quot;White&quot; FontWeight=&quot;Bold&quot;/&gt;&#10;&#10;                &lt;!-- Resize Button --&gt;&#10;                &lt;Grid Name=&quot;grdResize&quot; &gt;&#10;                    &lt;Grid.RowDefinitions&gt;&#10;                        &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;                        &lt;RowDefinition Height=&quot;6*&quot;/&gt;&#10;                        &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;                    &lt;/Grid.RowDefinitions&gt;&#10;                    &lt;Grid.ColumnDefinitions&gt;&#10;                        &lt;ColumnDefinition Width=&quot;6*&quot;/&gt;&#10;                        &lt;ColumnDefinition Width=&quot;2*&quot;/&gt;&#10;                    &lt;/Grid.ColumnDefinitions&gt;&#10;                    &#10;                    &lt;Button Name=&quot;btnResize&quot; Grid.Row=&quot;1&quot; Grid.Column=&quot;0&quot; Content=&quot;&quot; Background=&quot;Transparent&quot; BorderBrush=&quot;Transparent&quot; Foreground=&quot;White&quot; FontSize=&quot;20&quot; FontWeight=&quot;ExtraBold&quot; VerticalContentAlignment=&quot;Center&quot; HorizontalContentAlignment=&quot;Left&quot; Click=&quot;BtnResize_OnClick&quot; Margin=&quot;5,0,0,0&quot; /&gt;&#10;                &lt;/Grid&gt;&#10;                &#10;            &lt;/Grid&gt;&#10;            &#10;        &lt;/Grid&gt;.../&gt;" />
-                    <marker date="1505187528954" expanded="true" signature="845:1024" ph="&lt;&lt;ColumnDefinition Name=&quot;cgSidebar&quot;  Width=&quot;2*&quot;/&gt; &lt;ColumnDefinition Name=&quot;cgContent&quot; Width=&quot;8*&quot;/&gt;.../&gt;" />
-                    <marker date="1505187528954" expanded="true" signature="1068:2338" ph="&lt;&lt;Grid.RowDefinitions&gt;&#10;                &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;                &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;                &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;                &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;                &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;                &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;                &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;                &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;                &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;            &lt;/Grid.RowDefinitions&gt; &lt;Button Name=&quot;btnHome&quot;    Grid.Row=&quot;1&quot; Width=&quot;120&quot; Height=&quot;40&quot; Content=&quot;Home&quot;    Background=&quot;##333236&quot; Foreground=&quot;White&quot; FontSize=&quot;20&quot; FontWeight=&quot;ExtraBold&quot; Click=&quot;btnHome_OnClick&quot;/&gt; &lt;Button Name=&quot;btnInstall&quot; Grid.Row=&quot;2&quot; Width=&quot;120&quot; Height=&quot;40&quot; Content=&quot;Install&quot; Background=&quot;##333236&quot; Foreground=&quot;White&quot; FontSize=&quot;20&quot; FontWeight=&quot;ExtraBold&quot; Click=&quot;btnInstall_OnClick&quot;/&gt; &lt;Button Name=&quot;btnAbout&quot;   Grid.Row=&quot;3&quot; Width=&quot;120&quot; Height=&quot;40&quot; Content=&quot;About&quot;   Background=&quot;##333236&quot; Foreground=&quot;White&quot; FontSize=&quot;20&quot; FontWeight=&quot;ExtraBold&quot; Click=&quot;btnAbout_OnClick&quot;/&gt; &lt;Rectangle Grid.RowSpan=&quot;9&quot; Width=&quot;3&quot; HorizontalAlignment=&quot;Right&quot; Stroke=&quot;##222126&quot; Fill=&quot;##2A292F&quot;/&gt;.../&gt;" />
-                    <marker date="1505187528954" expanded="true" signature="1142:1603" ph="&lt;&lt;RowDefinition Height=&quot;2*&quot;/&gt; &lt;RowDefinition Height=&quot;2*&quot;/&gt; &lt;RowDefinition Height=&quot;2*&quot;/&gt; &lt;RowDefinition Height=&quot;2*&quot;/&gt; &lt;RowDefinition Height=&quot;2*&quot;/&gt; &lt;RowDefinition Height=&quot;2*&quot;/&gt; &lt;RowDefinition Height=&quot;2*&quot;/&gt; &lt;RowDefinition Height=&quot;2*&quot;/&gt; &lt;RowDefinition Height=&quot;2*&quot;/&gt;.../&gt;" />
-                    <marker date="1505187528954" expanded="true" signature="2392:4451" ph="&lt;&lt;Grid.RowDefinitions&gt;&#10;                &lt;RowDefinition Height=&quot;1*&quot;/&gt;&#10;                &lt;RowDefinition Height=&quot;9*&quot;/&gt;&#10;            &lt;/Grid.RowDefinitions&gt; &lt;Frame Name=&quot;ContentFrame&quot; Grid.Row=&quot;1&quot; Margin=&quot;5&quot; /&gt; &lt;Grid Name=&quot;grdMenu&quot;  Background =&quot;##333236&quot;&gt;&#10;                &lt;Grid.ColumnDefinitions&gt;&#10;                    &lt;ColumnDefinition Width=&quot;1*&quot;/&gt;&#10;                    &lt;ColumnDefinition Width=&quot;9*&quot;/&gt;&#10;                &lt;/Grid.ColumnDefinitions&gt;&#10;&#10;                &lt;Border Grid.ColumnSpan=&quot;2&quot; BorderBrush=&quot;##2A292F&quot; BorderThickness=&quot;2&quot;/&gt;&#10;&#10;                &lt;!-- Title Bar --&gt;&#10;                &lt;Label Name=&quot;lblTitleBar&quot; Grid.Column=&quot;1&quot; Content=&quot;Tsunami Hack || Version: 1.0 &quot; HorizontalAlignment=&quot;Right&quot; VerticalAlignment=&quot;Top&quot; FontSize=&quot;14&quot; Foreground=&quot;White&quot; FontWeight=&quot;ExtraBold&quot;/&gt;&#10;                &lt;Label Name=&quot;lblCreateBy&quot; Grid.Column=&quot;1&quot; Content=&quot;Created By Tidal feat. Deus Myke&quot; HorizontalAlignment=&quot;Right&quot; VerticalAlignment=&quot;Bottom&quot; FontSize=&quot;11&quot; Foreground=&quot;White&quot; FontWeight=&quot;Bold&quot;/&gt;&#10;&#10;                &lt;!-- Resize Button --&gt;&#10;                &lt;Grid Name=&quot;grdResize&quot; &gt;&#10;                    &lt;Grid.RowDefinitions&gt;&#10;                        &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;                        &lt;RowDefinition Height=&quot;6*&quot;/&gt;&#10;                        &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;                    &lt;/Grid.RowDefinitions&gt;&#10;                    &lt;Grid.ColumnDefinitions&gt;&#10;                        &lt;ColumnDefinition Width=&quot;6*&quot;/&gt;&#10;                        &lt;ColumnDefinition Width=&quot;2*&quot;/&gt;&#10;                    &lt;/Grid.ColumnDefinitions&gt;&#10;                    &#10;                    &lt;Button Name=&quot;btnResize&quot; Grid.Row=&quot;1&quot; Grid.Column=&quot;0&quot; Content=&quot;&quot; Background=&quot;Transparent&quot; BorderBrush=&quot;Transparent&quot; Foreground=&quot;White&quot; FontSize=&quot;20&quot; FontWeight=&quot;ExtraBold&quot; VerticalContentAlignment=&quot;Center&quot; HorizontalContentAlignment=&quot;Left&quot; Click=&quot;BtnResize_OnClick&quot; Margin=&quot;5,0,0,0&quot; /&gt;&#10;                &lt;/Grid&gt;&#10;                &#10;            &lt;/Grid&gt;.../&gt;" />
-                    <marker date="1505187528954" expanded="true" signature="2466:2612" ph="&lt;&lt;RowDefinition Height=&quot;1*&quot;/&gt; &lt;RowDefinition Height=&quot;9*&quot;/&gt;.../&gt;" />
-                    <marker date="1505187528954" expanded="true" signature="2737:4422" ph="&lt;&lt;Grid.ColumnDefinitions&gt;&#10;                    &lt;ColumnDefinition Width=&quot;1*&quot;/&gt;&#10;                    &lt;ColumnDefinition Width=&quot;9*&quot;/&gt;&#10;                &lt;/Grid.ColumnDefinitions&gt; &lt;Border Grid.ColumnSpan=&quot;2&quot; BorderBrush=&quot;##2A292F&quot; BorderThickness=&quot;2&quot;/&gt; &lt;Label Name=&quot;lblTitleBar&quot; Grid.Column=&quot;1&quot; Content=&quot;Tsunami Hack || Version: 1.0 &quot; HorizontalAlignment=&quot;Right&quot; VerticalAlignment=&quot;Top&quot; FontSize=&quot;14&quot; Foreground=&quot;White&quot; FontWeight=&quot;ExtraBold&quot;/&gt; &lt;Label Name=&quot;lblCreateBy&quot; Grid.Column=&quot;1&quot; Content=&quot;Created By Tidal feat. Deus Myke&quot; HorizontalAlignment=&quot;Right&quot; VerticalAlignment=&quot;Bottom&quot; FontSize=&quot;11&quot; Foreground=&quot;White&quot; FontWeight=&quot;Bold&quot;/&gt; &lt;Grid Name=&quot;grdResize&quot; &gt;&#10;                    &lt;Grid.RowDefinitions&gt;&#10;                        &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;                        &lt;RowDefinition Height=&quot;6*&quot;/&gt;&#10;                        &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;                    &lt;/Grid.RowDefinitions&gt;&#10;                    &lt;Grid.ColumnDefinitions&gt;&#10;                        &lt;ColumnDefinition Width=&quot;6*&quot;/&gt;&#10;                        &lt;ColumnDefinition Width=&quot;2*&quot;/&gt;&#10;                    &lt;/Grid.ColumnDefinitions&gt;&#10;                    &#10;                    &lt;Button Name=&quot;btnResize&quot; Grid.Row=&quot;1&quot; Grid.Column=&quot;0&quot; Content=&quot;&quot; Background=&quot;Transparent&quot; BorderBrush=&quot;Transparent&quot; Foreground=&quot;White&quot; FontSize=&quot;20&quot; FontWeight=&quot;ExtraBold&quot; VerticalContentAlignment=&quot;Center&quot; HorizontalContentAlignment=&quot;Left&quot; Click=&quot;BtnResize_OnClick&quot; Margin=&quot;5,0,0,0&quot; /&gt;&#10;                &lt;/Grid&gt;.../&gt;" />
-                    <marker date="1505187528954" expanded="true" signature="2798:2966" ph="&lt;&lt;ColumnDefinition Width=&quot;1*&quot;/&gt; &lt;ColumnDefinition Width=&quot;9*&quot;/&gt;.../&gt;" />
-                    <marker date="1505187528954" expanded="true" signature="3565:4385" ph="&lt;&lt;Grid.RowDefinitions&gt;&#10;                        &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;                        &lt;RowDefinition Height=&quot;6*&quot;/&gt;&#10;                        &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;                    &lt;/Grid.RowDefinitions&gt; &lt;Grid.ColumnDefinitions&gt;&#10;                        &lt;ColumnDefinition Width=&quot;6*&quot;/&gt;&#10;                        &lt;ColumnDefinition Width=&quot;2*&quot;/&gt;&#10;                    &lt;/Grid.ColumnDefinitions&gt; &lt;Button Name=&quot;btnResize&quot; Grid.Row=&quot;1&quot; Grid.Column=&quot;0&quot; Content=&quot;&quot; Background=&quot;Transparent&quot; BorderBrush=&quot;Transparent&quot; Foreground=&quot;White&quot; FontSize=&quot;20&quot; FontWeight=&quot;ExtraBold&quot; VerticalContentAlignment=&quot;Center&quot; HorizontalContentAlignment=&quot;Left&quot; Click=&quot;BtnResize_OnClick&quot; Margin=&quot;5,0,0,0&quot; /&gt;.../&gt;" />
-                    <marker date="1505187528954" expanded="true" signature="3610:3833" ph="&lt;&lt;RowDefinition Height=&quot;2*&quot;/&gt; &lt;RowDefinition Height=&quot;6*&quot;/&gt; &lt;RowDefinition Height=&quot;2*&quot;/&gt;.../&gt;" />
-                    <marker date="1505187528954" expanded="true" signature="3854:4034" ph="&lt;&lt;ColumnDefinition Width=&quot;6*&quot;/&gt; &lt;ColumnDefinition Width=&quot;2*&quot;/&gt;.../&gt;" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-second>
-    </splitter>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="MainWindow.xaml.cs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/TsuManager/MainWindow.xaml.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="488">
+              <caret line="164" column="9" lean-forward="false" selection-start-line="164" selection-start-column="9" selection-end-line="164" selection-end-column="9" />
+              <folding>
+                <marker date="1505272347222" expanded="true" signature="6:448" ph="..." />
+                <marker date="1505272347222" expanded="true" signature="470:5614" ph="{...}" />
+                <marker date="1505272347222" expanded="true" signature="477:555" ph="/// Interaction logic for MainWindow.xaml ... " />
+                <marker date="1505272347222" expanded="true" signature="600:5612" ph="{...}" />
+                <marker date="1505272347222" expanded="true" signature="1061:2437" ph="{...}" />
+                <marker date="1505272347222" expanded="true" signature="1795:2041" ph="{...}" />
+                <marker date="1505272347222" expanded="true" signature="2511:3848" ph="{...}" />
+                <marker date="1505272347222" expanded="true" signature="2551:3165" ph="{...}" />
+                <marker date="1505272347222" expanded="true" signature="3182:3838" ph="{...}" />
+                <marker date="1505272347222" expanded="true" signature="3920:3966" ph="{...}" />
+                <marker date="1505272347222" expanded="true" signature="4041:5161" ph="{...}" />
+                <marker date="1505272347222" expanded="true" signature="4260:4535" ph="{...}" />
+                <marker date="1505272347222" expanded="true" signature="4404:4521" ph="{...}" />
+                <marker date="1505272347222" expanded="true" signature="4570:5079" ph="{...}" />
+                <marker date="1505272347222" expanded="true" signature="5234:5267" ph="{...}" />
+                <marker date="1505272347222" expanded="true" signature="5323:5597" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="InstallationManager.cs" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/TsuManager/Installation/InstallationManager.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="396">
+              <caret line="22" column="0" lean-forward="false" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+              <folding>
+                <marker date="1505272841524" expanded="true" signature="68:606" ph="{...}" />
+                <marker date="1505272841524" expanded="true" signature="109:604" ph="{...}" />
+                <marker date="1505272841524" expanded="true" signature="333:571" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="InstallEula.xaml.cs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/TsuManager/Installation/InstallEula.xaml.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="504">
+              <caret line="28" column="32" lean-forward="false" selection-start-line="28" selection-start-column="32" selection-end-line="28" selection-end-column="32" />
+              <folding>
+                <marker date="1505272831316" expanded="true" signature="6:381" ph="..." />
+                <marker date="1505272831316" expanded="true" signature="416:862" ph="{...}" />
+                <marker date="1505272831316" expanded="true" signature="423:502" ph="/// Interaction logic for InstallEula.xaml ... " />
+                <marker date="1505272831316" expanded="true" signature="546:860" ph="{...}" />
+                <marker date="1505272831316" expanded="true" signature="722:854" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="InstallSettings.xaml.cs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/TsuManager/Installation/InstallSettings.xaml.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="504">
+              <caret line="28" column="32" lean-forward="false" selection-start-line="28" selection-start-column="32" selection-end-line="28" selection-end-column="32" />
+              <folding>
+                <marker date="1505272831583" expanded="true" signature="6:381" ph="..." />
+                <marker date="1505272831583" expanded="true" signature="416:874" ph="{...}" />
+                <marker date="1505272831583" expanded="true" signature="423:506" ph="/// Interaction logic for InstallSettings.xaml ... " />
+                <marker date="1505272831583" expanded="true" signature="554:872" ph="{...}" />
+                <marker date="1505272831583" expanded="true" signature="734:866" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="InstallStatus.xaml.cs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/TsuManager/Installation/InstallStatus.xaml.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="504">
+              <caret line="28" column="32" lean-forward="false" selection-start-line="28" selection-start-column="32" selection-end-line="28" selection-end-column="32" />
+              <folding>
+                <marker date="1505272831649" expanded="true" signature="6:381" ph="..." />
+                <marker date="1505272831649" expanded="true" signature="416:868" ph="{...}" />
+                <marker date="1505272831649" expanded="true" signature="423:504" ph="/// Interaction logic for InstallStatus.xaml ... " />
+                <marker date="1505272831649" expanded="true" signature="550:866" ph="{...}" />
+                <marker date="1505272831649" expanded="true" signature="728:860" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
@@ -212,9 +155,13 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/TsunamiHack/Tsunami/Util/Db.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/TsuManager/Installation/InstallStatus.xaml.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/TsuManager/BlockedWindow.xaml.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/TsunamiHack/Tsunami/Types/UnableToMatchPlayerException.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/TsunamiHack/Tsunami/Lib/AimV2.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/43AF1925-F175-4730-97E0-2EC8339BFDFA/22/8d159f2a/Provider.cs" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/TsuManager/Installation/InstallSettings.xaml.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/TsuManager/Installation/InstallEula.xaml.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/43AF1925-F175-4730-97E0-2EC8339BFDFA/f0/faf7a007/Player.cs" root0="SKIP_INSPECTION" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/4A51E044-E714-4D14-969B-3DDAD020BA96/0c/9c1e2f49/HideFlags.cs" root0="SKIP_INSPECTION" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/43AF1925-F175-4730-97E0-2EC8339BFDFA/0e/3c6d65ce/PlayerEquipment.cs" root0="SKIP_INSPECTION" />
@@ -234,6 +181,7 @@
     <setting file="file://$PROJECT_DIR$/TsunamiHack/Tsunami/Menu/Aim.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/TsunamiHack/Tsunami/Menu/Keybind.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/43AF1925-F175-4730-97E0-2EC8339BFDFA/87/2ea1f578/ZombieRegion.cs" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/TsuManager/Installation/InstallationManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/TsunamiHack/Tsunami/Util/Logging.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/43AF1925-F175-4730-97E0-2EC8339BFDFA/54/b0a3019d/ItemGunAsset.cs" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/TsunamiHack/Tsunami/Util/Blocker.cs" root0="FORCE_HIGHLIGHTING" />
@@ -292,11 +240,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/43AF1925-F175-4730-97E0-2EC8339BFDFA/0e/3c6d65ce/PlayerEquipment.cs" />
-        <option value="$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/43AF1925-F175-4730-97E0-2EC8339BFDFA/54/b0a3019d/ItemGunAsset.cs" />
-        <option value="$PROJECT_DIR$/TsunamiHack/Properties/AssemblyInfo.cs" />
-        <option value="$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/43AF1925-F175-4730-97E0-2EC8339BFDFA/ab/5d2b546a/ZombieManager.cs" />
-        <option value="$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/43AF1925-F175-4730-97E0-2EC8339BFDFA/87/2ea1f578/ZombieRegion.cs" />
         <option value="$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/43AF1925-F175-4730-97E0-2EC8339BFDFA/dc/d0af53e0/InteractableItem.cs" />
         <option value="$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/43AF1925-F175-4730-97E0-2EC8339BFDFA/9c/92df973d/Item.cs" />
         <option value="$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/43AF1925-F175-4730-97E0-2EC8339BFDFA/b8/555cf4fc/Zombie.cs" />
@@ -341,8 +284,13 @@
         <option value="$PROJECT_DIR$/TsunamiHack/Tsunami/Menu/Main.cs" />
         <option value="$PROJECT_DIR$/TsunamiHack/Tsunami/Util/Db.cs" />
         <option value="$PROJECT_DIR$/TsuManager/db.cs" />
-        <option value="$PROJECT_DIR$/TsuManager/MainWindow.xaml.cs" />
         <option value="$PROJECT_DIR$/TsuManager/MainWindow.xaml" />
+        <option value="$PROJECT_DIR$/TsuManager/BlockedWindow.xaml.cs" />
+        <option value="$PROJECT_DIR$/TsuManager/MainWindow.xaml.cs" />
+        <option value="$PROJECT_DIR$/TsuManager/Installation/InstallEula.xaml.cs" />
+        <option value="$PROJECT_DIR$/TsuManager/Installation/InstallSettings.xaml.cs" />
+        <option value="$PROJECT_DIR$/TsuManager/Installation/InstallStatus.xaml.cs" />
+        <option value="$PROJECT_DIR$/TsuManager/Installation/InstallationManager.cs" />
       </list>
     </option>
   </component>
@@ -400,6 +348,108 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="TsuManager" />
+              <option name="myItemType" value="com.jetbrains.rider.projectView.solutionExplorer.SolutionExplorerNodeRider" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" />
+              <option name="myItemType" value="com.jetbrains.rider.projectView.solutionExplorer.SolutionExplorerViewPane$ProjectViewPaneTreeStructure$createRoot$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TsunamiHack (3 projects)" />
+              <option name="myItemType" value="com.jetbrains.rider.projectView.solutionExplorer.SolutionExplorerNodeRider" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TsuManager" />
+              <option name="myItemType" value="com.jetbrains.rider.projectView.solutionExplorer.SolutionExplorerNodeRider" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="BlockedWindow.xaml" />
+              <option name="myItemType" value="com.jetbrains.rider.projectView.solutionExplorer.SolutionExplorerNodeRider" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" />
+              <option name="myItemType" value="com.jetbrains.rider.projectView.solutionExplorer.SolutionExplorerViewPane$ProjectViewPaneTreeStructure$createRoot$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TsunamiHack (3 projects)" />
+              <option name="myItemType" value="com.jetbrains.rider.projectView.solutionExplorer.SolutionExplorerNodeRider" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TsuManager" />
+              <option name="myItemType" value="com.jetbrains.rider.projectView.solutionExplorer.SolutionExplorerNodeRider" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Installation" />
+              <option name="myItemType" value="com.jetbrains.rider.projectView.solutionExplorer.SolutionExplorerNodeRider" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="InstallStatus.xaml" />
+              <option name="myItemType" value="com.jetbrains.rider.projectView.solutionExplorer.SolutionExplorerNodeRider" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" />
+              <option name="myItemType" value="com.jetbrains.rider.projectView.solutionExplorer.SolutionExplorerViewPane$ProjectViewPaneTreeStructure$createRoot$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TsunamiHack (3 projects)" />
+              <option name="myItemType" value="com.jetbrains.rider.projectView.solutionExplorer.SolutionExplorerNodeRider" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TsuManager" />
+              <option name="myItemType" value="com.jetbrains.rider.projectView.solutionExplorer.SolutionExplorerNodeRider" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Installation" />
+              <option name="myItemType" value="com.jetbrains.rider.projectView.solutionExplorer.SolutionExplorerNodeRider" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="InstallSettings.xaml" />
+              <option name="myItemType" value="com.jetbrains.rider.projectView.solutionExplorer.SolutionExplorerNodeRider" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" />
+              <option name="myItemType" value="com.jetbrains.rider.projectView.solutionExplorer.SolutionExplorerViewPane$ProjectViewPaneTreeStructure$createRoot$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TsunamiHack (3 projects)" />
+              <option name="myItemType" value="com.jetbrains.rider.projectView.solutionExplorer.SolutionExplorerNodeRider" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TsuManager" />
+              <option name="myItemType" value="com.jetbrains.rider.projectView.solutionExplorer.SolutionExplorerNodeRider" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Installation" />
+              <option name="myItemType" value="com.jetbrains.rider.projectView.solutionExplorer.SolutionExplorerNodeRider" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="InstallEula.xaml" />
+              <option name="myItemType" value="com.jetbrains.rider.projectView.solutionExplorer.SolutionExplorerNodeRider" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" />
+              <option name="myItemType" value="com.jetbrains.rider.projectView.solutionExplorer.SolutionExplorerViewPane$ProjectViewPaneTreeStructure$createRoot$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TsunamiHack (3 projects)" />
+              <option name="myItemType" value="com.jetbrains.rider.projectView.solutionExplorer.SolutionExplorerNodeRider" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TsuManager" />
+              <option name="myItemType" value="com.jetbrains.rider.projectView.solutionExplorer.SolutionExplorerNodeRider" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Installation" />
               <option name="myItemType" value="com.jetbrains.rider.projectView.solutionExplorer.SolutionExplorerNodeRider" />
             </PATH_ELEMENT>
           </PATH>
@@ -645,12 +695,14 @@
       <workItem from="1505076013908" duration="661000" />
       <workItem from="1505087946923" duration="2565000" />
       <workItem from="1505163570181" duration="4077000" />
+      <workItem from="1505262027967" duration="16000" />
+      <workItem from="1505262046679" duration="6607000" />
     </task>
     <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="514801000" />
+    <option name="totallyTimeSpent" value="521424000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -672,8 +724,7 @@
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.8139282" sideWeight="0.49755502" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="NuGet" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32861805" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23227383" sideWeight="0.5" order="5" side_tool="false" content_ui="combo" />
-      <window_info id="Build" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32861805" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23227383" sideWeight="0.5" order="5" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.3294621" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
@@ -683,6 +734,7 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Build" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32861805" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3297062" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
@@ -757,287 +809,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/TsunamiHack/Tsunami/Lib/Visuals.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="28242">
-          <caret line="1569" column="43" lean-forward="false" selection-start-line="1569" selection-start-column="43" selection-end-line="1569" selection-end-column="43" />
-          <folding>
-            <marker date="1503522893123" expanded="true" signature="6:214" ph="..." />
-            <marker date="1503522893123" expanded="true" signature="279:68070" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="294:549" ph="/* TODO: fix positioning of labels ... */" />
-            <marker date="1503522893123" expanded="true" signature="2041:3472" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="3511:3800" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="3667:3784" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="3891:3964" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="4130:6275" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="4172:5309" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="4234:5284" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="4338:5266" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="4645:5244" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="4797:5218" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="5342:6265" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="5404:6251" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="5462:6230" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="5762:6199" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="5969:6173" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="6319:7992" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="6420:6486" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="6583:6649" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="6706:6772" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="6831:6898" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="6957:7024" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="7077:7141" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="7214:7277" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="7334:7400" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="7451:7514" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="7567:7631" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="7729:7795" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="7825:7890" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="8043:11092" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="8100:11082" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="8232:11068" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="8519:11050" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="8725:11021" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="8909:9040" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="9092:9915" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="9333:9754" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="9969:10281" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="11143:17069" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="11197:17059" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="11263:17018" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="11567:16996" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="11794:16970" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="12008:12149" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="12211:12699" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="12302:12464" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="12505:12665" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="12762:16150" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="13029:16066" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="16280:16445" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="16482:16633" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="17120:18800" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="17174:18790" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="17224:18776" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="17504:18758" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="17711:18736" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="17896:18026" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="18080:18393" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="18852:20406" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="18908:20396" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="19169:20365" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="19361:20346" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="19530:19669" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="19720:19965" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="20458:22237" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="20514:22227" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="20775:22213" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="20967:22195" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="21136:21570" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="21621:21868" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="22286:23764" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="22336:23754" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="22594:23740" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="22788:23722" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="22954:23074" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="23122:23371" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="23841:23874" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="23948:23981" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="24029:25776" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="24077:25766" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="24334:25752" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="24527:25734" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="24692:24809" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="24811:25139" ph="/* if (menu.NpcWeapon)     FIND WAY TO DETERMINE PRIMARY WEAPON ... */" />
-            <marker date="1503522893123" expanded="true" signature="25186:25406" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="25827:27345" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="25881:27335" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="26141:27320" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="26336:27302" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="26504:26602" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="26652:26872" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="27430:28930" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="27478:28920" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="27735:28905" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="27930:28887" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="28095:28190" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="28237:28457" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="28979:30499" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="29029:30489" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="29287:30475" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="29482:30457" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="29648:29778" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="29825:30045" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="30548:32041" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="30598:32031" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="30856:32017" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="31051:31999" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="31217:31319" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="31367:31587" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="32092:34308" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="32147:34298" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="32407:34284" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="32602:34266" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="32770:32868" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="32870:33239" ph="/* if (menu.SentryWeapon)        FIX NULLCHECK ... */" />
-            <marker date="1503522893123" expanded="true" signature="33286:33560" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="33634:33854" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="34358:35734" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="34412:35724" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="34496:35708" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="34783:35690" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="34992:35668" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="35172:35281" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="35909:36151" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="36200:38138" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="36243:38115" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="36322:38101" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="36401:37735" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="36733:37410" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="37439:37713" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="37760:38066" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="37928:38044" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="38195:40018" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="38286:40008" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="38369:39987" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="38603:39600" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="38780:39247" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="39281:39573" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="39630:39964" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="39806:39937" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="40076:42038" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="40120:42015" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="40185:42001" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="40289:41962" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="40599:41583" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="40773:41236" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="41269:41557" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="41612:41940" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="41786:41914" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="42093:44001" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="42134:43988" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="42192:43974" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="42292:43956" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="42376:43578" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="42780:43234" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="43267:43552" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="43607:43932" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="43778:43906" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="44073:44412" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="44097:44402" ph="/* UpdateAnimalGlow(); ... */" />
-            <marker date="1503522893123" expanded="true" signature="44461:46107" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="44507:46084" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="44569:46070" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="44686:45761" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="44986:45424" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="45453:45739" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="45786:46052" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="46157:47765" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="46204:47742" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="46268:47728" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="46565:47417" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="46658:47098" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="47127:47395" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="47442:47709" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="47814:49435" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="47860:49412" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="47922:49398" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="48217:49089" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="48310:48748" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="48777:49067" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="49114:49380" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="49481:51092" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="49524:51069" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="49580:51055" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="49885:50748" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="49978:50410" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="50439:50726" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="50773:51036" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="51140:52771" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="51184:52749" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="51242:52735" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="51533:52428" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="51626:52060" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="52089:52406" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="52453:52717" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="52839:54437" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="52883:54414" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="52941:54400" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="53232:54093" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="53325:53754" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="53783:54071" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="54118:54382" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="54485:56087" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="54529:56064" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="54587:56050" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="54877:55743" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="54970:55404" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="55433:55721" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="55768:56032" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="56136:57785" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="56183:57762" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="56246:57748" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="56542:57439" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="56635:57073" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="57102:57417" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="57464:57730" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="57858:59677" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="57905:59654" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="57969:59640" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="58035:59605" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="58351:59267" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="58452:58920" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="58953:59241" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="59296:59583" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="59723:61293" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="59766:61270" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="59822:61256" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="60110:60950" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="60203:60635" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="60664:60928" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="60975:61238" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="61600:62055" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="62107:64523" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="64606:65210" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="64796:65173" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="64909:65159" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="64985:65141" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="65305:66304" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="66348:66381" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="66427:68064" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="66503:67415" ph="{...}" />
-            <marker date="1503522893123" expanded="true" signature="67480:68052" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TsunamiHack/Tsunami/Lib/Aim.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="14" column="0" lean-forward="false" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TsunamiHack/Tsunami/Manager/Loader.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-216">
-          <caret line="54" column="13" lean-forward="false" selection-start-line="54" selection-start-column="13" selection-end-line="54" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TsunamiHack/Tsunami/Types/Configs/Settings.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="324">
-          <caret line="18" column="24" lean-forward="false" selection-start-line="18" selection-start-column="24" selection-end-line="18" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TsunamiHack/Tsunami/Types/Lists/BanList.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="72">
-          <caret line="4" column="13" lean-forward="false" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/TsunamiHack/Tsunami/Types/Lists/BetaList.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="72">
@@ -1133,13 +904,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="18">
           <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TsunamiHack/Tsunami/Util/Blocker.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -1308,25 +1072,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1332">
           <caret line="74" column="47" lean-forward="false" selection-start-line="74" selection-start-column="47" selection-end-line="74" selection-end-column="47" />
-          <folding>
-            <marker date="1505008287914" expanded="true" signature="6:183" ph="..." />
-            <marker date="1505008287914" expanded="true" signature="222:6101" ph="{...}" />
-            <marker date="1505008287914" expanded="true" signature="253:6099" ph="{...}" />
-            <marker date="1505008287914" expanded="true" signature="268:480" ph="/* TODO: Add way to check the integrity of local files if they are deleted during run ... */" />
-            <marker date="1505008287914" expanded="true" signature="2004:4233" ph="{...}" />
-            <marker date="1505008287914" expanded="true" signature="2222:2345" ph="{...}" />
-            <marker date="1505008287914" expanded="true" signature="2604:2688" ph="{...}" />
-            <marker date="1505008287914" expanded="true" signature="2775:3250" ph="{...}" />
-            <marker date="1505008287914" expanded="true" signature="3302:3521" ph="{...}" />
-            <marker date="1505008287914" expanded="true" signature="3579:3802" ph="{...}" />
-            <marker date="1505008287914" expanded="true" signature="4046:4205" ph="{...}" />
-            <marker date="1505008287914" expanded="true" signature="4265:6093" ph="{...}" />
-            <marker date="1505008287914" expanded="true" signature="4325:4515" ph="{...}" />
-            <marker date="1505008287914" expanded="true" signature="4571:5397" ph="{...}" />
-            <marker date="1505008287914" expanded="true" signature="4619:5383" ph="{...}" />
-            <marker date="1505008287914" expanded="true" signature="5462:6070" ph="{...}" />
-            <marker date="1505008287914" expanded="true" signature="5510:6056" ph="{...}" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1348,50 +1093,62 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="486">
           <caret line="30" column="44" lean-forward="false" selection-start-line="30" selection-start-column="44" selection-end-line="30" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TsuManager/db.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="660">
+          <caret line="59" column="17" lean-forward="true" selection-start-line="59" selection-start-column="17" selection-end-line="59" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TsunamiHack/Tsunami/Util/Blocker.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1504648481762" expanded="true" signature="6:176" ph="..." />
-            <marker date="1504648481762" expanded="true" signature="253:7813" ph="{...}" />
-            <marker date="1504648481762" expanded="true" signature="277:7811" ph="{...}" />
-            <marker date="1504648481762" expanded="true" signature="789:3136" ph="{...}" />
-            <marker date="1504648481762" expanded="true" signature="1203:1738" ph="{...}" />
-            <marker date="1504648481762" expanded="true" signature="1397:1724" ph="{...}" />
-            <marker date="1504648481762" expanded="true" signature="1480:1706" ph="{...}" />
-            <marker date="1504648481762" expanded="true" signature="1548:1684" ph="{...}" />
-            <marker date="1504648481762" expanded="true" signature="1909:2422" ph="{...}" />
-            <marker date="1504648481762" expanded="true" signature="2085:2408" ph="{...}" />
-            <marker date="1504648481762" expanded="true" signature="2168:2390" ph="{...}" />
-            <marker date="1504648481762" expanded="true" signature="2236:2368" ph="{...}" />
-            <marker date="1504648481762" expanded="true" signature="2608:3123" ph="{...}" />
-            <marker date="1504648481762" expanded="true" signature="2785:3109" ph="{...}" />
-            <marker date="1504648481762" expanded="true" signature="2868:3091" ph="{...}" />
-            <marker date="1504648481762" expanded="true" signature="2936:3069" ph="{...}" />
-            <marker date="1504648481762" expanded="true" signature="3205:4530" ph="{...}" />
-            <marker date="1504648481762" expanded="true" signature="3572:4520" ph="{...}" />
-            <marker date="1504648481762" expanded="true" signature="3749:4506" ph="{...}" />
-            <marker date="1504648481762" expanded="true" signature="3832:4488" ph="{...}" />
-            <marker date="1504648481762" expanded="true" signature="3900:4466" ph="{...}" />
-            <marker date="1504648481762" expanded="true" signature="4594:7805" ph="{...}" />
-            <marker date="1504648481762" expanded="true" signature="4963:5483" ph="{...}" />
-            <marker date="1504648481762" expanded="true" signature="5158:5469" ph="{...}" />
-            <marker date="1504648481762" expanded="true" signature="5241:5451" ph="{...}" />
-            <marker date="1504648481762" expanded="true" signature="5309:5429" ph="{...}" />
-            <marker date="1504648481762" expanded="true" signature="5517:6489" ph="{...}" />
-            <marker date="1504648481762" expanded="true" signature="5665:6475" ph="{...}" />
-            <marker date="1504648481762" expanded="true" signature="5924:6457" ph="{...}" />
-            <marker date="1504648481762" expanded="true" signature="6506:7778" ph="{...}" />
-            <marker date="1504648481762" expanded="true" signature="6653:7233" ph="{...}" />
-            <marker date="1504648481762" expanded="true" signature="6864:7215" ph="{...}" />
-            <marker date="1504648481762" expanded="true" signature="6955:7193" ph="{...}" />
-            <marker date="1504648481762" expanded="true" signature="7031:7167" ph="{...}" />
-            <marker date="1504648481762" expanded="true" signature="7335:7764" ph="{...}" />
-            <marker date="1504648481762" expanded="true" signature="7651:7746" ph="{...}" />
+            <marker date="1504648428141" expanded="true" signature="6:106" ph="..." />
+            <marker date="1504648428141" expanded="true" signature="142:5823" ph="{...}" />
+            <marker date="1504648428141" expanded="true" signature="187:5821" ph="{...}" />
+            <marker date="1504648428141" expanded="true" signature="504:853" ph="{...}" />
+            <marker date="1504648428141" expanded="true" signature="883:1891" ph="{...}" />
+            <marker date="1504648428141" expanded="true" signature="925:1881" ph="{...}" />
+            <marker date="1504648428141" expanded="true" signature="977:1867" ph="{...}" />
+            <marker date="1504648428141" expanded="true" signature="1939:2706" ph="{...}" />
+            <marker date="1504648428141" expanded="true" signature="2632:2696" ph="{...}" />
+            <marker date="1504648428141" expanded="true" signature="2752:3407" ph="{...}" />
+            <marker date="1504648428141" expanded="true" signature="3333:3397" ph="{...}" />
+            <marker date="1504648428141" expanded="true" signature="3456:4644" ph="{...}" />
+            <marker date="1504648428141" expanded="true" signature="4356:4464" ph="{...}" />
+            <marker date="1504648428141" expanded="true" signature="4557:4621" ph="{...}" />
+            <marker date="1504648428141" expanded="true" signature="4697:5797" ph="{...}" />
+            <marker date="1504648428141" expanded="true" signature="5522:5630" ph="{...}" />
+            <marker date="1504648428141" expanded="true" signature="5723:5787" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TsuManager/BlockedWindow.xaml.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="714">
+          <caret line="40" column="38" lean-forward="false" selection-start-line="40" selection-start-column="38" selection-end-line="40" selection-end-column="38" />
+          <folding>
+            <marker date="1505264515339" expanded="true" signature="6:348" ph="..." />
+            <marker date="1505264515339" expanded="true" signature="370:1113" ph="{...}" />
+            <marker date="1505264515339" expanded="true" signature="377:458" ph="/// Interaction logic for BlockedWindow.xaml ... " />
+            <marker date="1505264515339" expanded="true" signature="506:1111" ph="{...}" />
+            <marker date="1505264515339" expanded="true" signature="556:654" ph="{...}" />
+            <marker date="1505264515339" expanded="true" signature="734:830" ph="{...}" />
+            <marker date="1505264515339" expanded="true" signature="908:964" ph="{...}" />
+            <marker date="1505264515339" expanded="true" signature="1046:1105" ph="{...}" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/TsunamiHack/Tsunami/Util/FileIo.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="190">
+        <state relative-caret-position="270">
           <caret line="15" column="55" lean-forward="false" selection-start-line="15" selection-start-column="55" selection-end-line="15" selection-end-column="55" />
           <folding>
             <marker date="1504986881436" expanded="true" signature="6:274" ph="..." />
@@ -1447,54 +1204,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TsuManager/MainWindow.xaml.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="484">
-          <caret line="43" column="47" lean-forward="false" selection-start-line="43" selection-start-column="47" selection-end-line="43" selection-end-column="47" />
-          <folding>
-            <marker date="1505165474208" expanded="true" signature="6:400" ph="..." />
-            <marker date="1505165474208" expanded="true" signature="422:3348" ph="{...}" />
-            <marker date="1505165474208" expanded="true" signature="429:507" ph="/// Interaction logic for MainWindow.xaml ... " />
-            <marker date="1505165474208" expanded="true" signature="552:3346" ph="{...}" />
-            <marker date="1505165474208" expanded="true" signature="868:1484" ph="{...}" />
-            <marker date="1505165474208" expanded="true" signature="1012:1088" ph="{...}" />
-            <marker date="1505165474208" expanded="true" signature="1558:2895" ph="{...}" />
-            <marker date="1505165474208" expanded="true" signature="1598:2212" ph="{...}" />
-            <marker date="1505165474208" expanded="true" signature="2229:2885" ph="{...}" />
-            <marker date="1505165474208" expanded="true" signature="2967:3108" ph="{...}" />
-            <marker date="1505165474208" expanded="true" signature="3003:3096" ph="/* TODO: Get Folder path of \appdata\locallow ... */" />
-            <marker date="1505165474208" expanded="true" signature="3183:3216" ph="{...}" />
-            <marker date="1505165474208" expanded="true" signature="3289:3322" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TsuManager/db.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="660">
-          <caret line="59" column="17" lean-forward="true" selection-start-line="59" selection-start-column="17" selection-end-line="59" selection-end-column="17" />
-          <folding>
-            <marker date="1505164999701" expanded="true" signature="6:66" ph="..." />
-            <marker date="1505164999701" expanded="true" signature="88:2119" ph="{...}" />
-            <marker date="1505164999701" expanded="true" signature="110:2117" ph="{...}" />
-            <marker date="1505164999701" expanded="true" signature="364:418" ph="{...}" />
-            <marker date="1505164999701" expanded="true" signature="459:2102" ph="{...}" />
-            <marker date="1505164999701" expanded="true" signature="772:1295" ph="{...}" />
-            <marker date="1505164999701" expanded="true" signature="960:1281" ph="{...}" />
-            <marker date="1505164999701" expanded="true" signature="1043:1263" ph="{...}" />
-            <marker date="1505164999701" expanded="true" signature="1111:1241" ph="{...}" />
-            <marker date="1505164999701" expanded="true" signature="1389:2092" ph="{...}" />
-            <marker date="1505164999701" expanded="true" signature="1595:2044" ph="{...}" />
-            <marker date="1505164999701" expanded="true" signature="1678:2026" ph="{...}" />
-            <marker date="1505164999701" expanded="true" signature="1746:2004" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/TsuManager/MainWindow.xaml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="756">
-          <caret line="53" column="0" lean-forward="false" selection-start-line="53" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
+        <state relative-caret-position="858">
+          <caret line="60" column="21" lean-forward="false" selection-start-line="60" selection-start-column="21" selection-end-line="60" selection-end-column="21" />
           <folding>
             <marker date="1505187528954" expanded="true" signature="0:4473" ph="&lt;&lt;Grid Name=&quot;grdContainer&quot;  Background=&quot;Gray&quot;&gt;&#10;        &lt;Grid.ColumnDefinitions&gt;&#10;            &lt;ColumnDefinition Name=&quot;cgSidebar&quot;  Width=&quot;2*&quot;/&gt;&#10;            &lt;ColumnDefinition Name=&quot;cgContent&quot; Width=&quot;8*&quot;/&gt;&#10;        &lt;/Grid.ColumnDefinitions&gt;&#10;        &#10;        &lt;!-- SideBar --&gt;&#10;&#10;        &lt;Grid Name=&quot;grdSidebar&quot; Background=&quot;##2A292F&quot; Grid.Column=&quot;0&quot;&gt;&#10;            &lt;Grid.RowDefinitions&gt;&#10;                &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;                &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;                &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;                &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;                &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;                &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;                &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;                &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;                &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;            &lt;/Grid.RowDefinitions&gt;&#10;&#10;            &lt;Button Name=&quot;btnHome&quot;    Grid.Row=&quot;1&quot; Width=&quot;120&quot; Height=&quot;40&quot; Content=&quot;Home&quot;    Background=&quot;##333236&quot; Foreground=&quot;White&quot; FontSize=&quot;20&quot; FontWeight=&quot;ExtraBold&quot; Click=&quot;btnHome_OnClick&quot;/&gt;&#10;            &lt;Button Name=&quot;btnInstall&quot; Grid.Row=&quot;2&quot; Width=&quot;120&quot; Height=&quot;40&quot; Content=&quot;Install&quot; Background=&quot;##333236&quot; Foreground=&quot;White&quot; FontSize=&quot;20&quot; FontWeight=&quot;ExtraBold&quot; Click=&quot;btnInstall_OnClick&quot;/&gt;&#10;            &lt;Button Name=&quot;btnAbout&quot;   Grid.Row=&quot;3&quot; Width=&quot;120&quot; Height=&quot;40&quot; Content=&quot;About&quot;   Background=&quot;##333236&quot; Foreground=&quot;White&quot; FontSize=&quot;20&quot; FontWeight=&quot;ExtraBold&quot; Click=&quot;btnAbout_OnClick&quot;/&gt;&#10;&#10;            &lt;Rectangle Grid.RowSpan=&quot;9&quot; Width=&quot;3&quot; HorizontalAlignment=&quot;Right&quot; Stroke=&quot;##222126&quot; Fill=&quot;##2A292F&quot;/&gt;&#10;            &#10;        &lt;/Grid&gt;&#10;        &#10;        &lt;!-- Content --&gt;&#10;&#10;&#10;        &#10;        &lt;Grid Name=&quot;grdContent&quot; Background=&quot;##3B3B3D&quot; Grid.Column=&quot;1&quot;&gt;&#10;            &lt;Grid.RowDefinitions&gt;&#10;                &lt;RowDefinition Height=&quot;1*&quot;/&gt;&#10;                &lt;RowDefinition Height=&quot;9*&quot;/&gt;&#10;            &lt;/Grid.RowDefinitions&gt;&#10;&#10;            &lt;Frame Name=&quot;ContentFrame&quot; Grid.Row=&quot;1&quot; Margin=&quot;5&quot; /&gt;&#10;            &#10;            &lt;!-- Menu Bar  --&gt;&#10;&#10;            &lt;Grid Name=&quot;grdMenu&quot;  Background =&quot;##333236&quot;&gt;&#10;                &lt;Grid.ColumnDefinitions&gt;&#10;                    &lt;ColumnDefinition Width=&quot;1*&quot;/&gt;&#10;                    &lt;ColumnDefinition Width=&quot;9*&quot;/&gt;&#10;                &lt;/Grid.ColumnDefinitions&gt;&#10;&#10;                &lt;Border Grid.ColumnSpan=&quot;2&quot; BorderBrush=&quot;##2A292F&quot; BorderThickness=&quot;2&quot;/&gt;&#10;&#10;                &lt;!-- Title Bar --&gt;&#10;                &lt;Label Name=&quot;lblTitleBar&quot; Grid.Column=&quot;1&quot; Content=&quot;Tsunami Hack || Version: 1.0 &quot; HorizontalAlignment=&quot;Right&quot; VerticalAlignment=&quot;Top&quot; FontSize=&quot;14&quot; Foreground=&quot;White&quot; FontWeight=&quot;ExtraBold&quot;/&gt;&#10;                &lt;Label Name=&quot;lblCreateBy&quot; Grid.Column=&quot;1&quot; Content=&quot;Created By Tidal feat. Deus Myke&quot; HorizontalAlignment=&quot;Right&quot; VerticalAlignment=&quot;Bottom&quot; FontSize=&quot;11&quot; Foreground=&quot;White&quot; FontWeight=&quot;Bold&quot;/&gt;&#10;&#10;                &lt;!-- Resize Button --&gt;&#10;                &lt;Grid Name=&quot;grdResize&quot; &gt;&#10;                    &lt;Grid.RowDefinitions&gt;&#10;                        &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;                        &lt;RowDefinition Height=&quot;6*&quot;/&gt;&#10;                        &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;                    &lt;/Grid.RowDefinitions&gt;&#10;                    &lt;Grid.ColumnDefinitions&gt;&#10;                        &lt;ColumnDefinition Width=&quot;6*&quot;/&gt;&#10;                        &lt;ColumnDefinition Width=&quot;2*&quot;/&gt;&#10;                    &lt;/Grid.ColumnDefinitions&gt;&#10;                    &#10;                    &lt;Button Name=&quot;btnResize&quot; Grid.Row=&quot;1&quot; Grid.Column=&quot;0&quot; Content=&quot;&quot; Background=&quot;Transparent&quot; BorderBrush=&quot;Transparent&quot; Foreground=&quot;White&quot; FontSize=&quot;20&quot; FontWeight=&quot;ExtraBold&quot; VerticalContentAlignment=&quot;Center&quot; HorizontalContentAlignment=&quot;Left&quot; Click=&quot;BtnResize_OnClick&quot; Margin=&quot;5,0,0,0&quot; /&gt;&#10;                &lt;/Grid&gt;&#10;                &#10;            &lt;/Grid&gt;&#10;            &#10;        &lt;/Grid&gt;&#10;    &lt;/Grid&gt;.../&gt;" />
             <marker date="1505187528954" expanded="true" signature="496:771" ph="&lt;!--...--&gt;" />
@@ -1509,6 +1222,85 @@
             <marker date="1505187528954" expanded="true" signature="3565:4385" ph="&lt;&lt;Grid.RowDefinitions&gt;&#10;                        &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;                        &lt;RowDefinition Height=&quot;6*&quot;/&gt;&#10;                        &lt;RowDefinition Height=&quot;2*&quot;/&gt;&#10;                    &lt;/Grid.RowDefinitions&gt; &lt;Grid.ColumnDefinitions&gt;&#10;                        &lt;ColumnDefinition Width=&quot;6*&quot;/&gt;&#10;                        &lt;ColumnDefinition Width=&quot;2*&quot;/&gt;&#10;                    &lt;/Grid.ColumnDefinitions&gt; &lt;Button Name=&quot;btnResize&quot; Grid.Row=&quot;1&quot; Grid.Column=&quot;0&quot; Content=&quot;&quot; Background=&quot;Transparent&quot; BorderBrush=&quot;Transparent&quot; Foreground=&quot;White&quot; FontSize=&quot;20&quot; FontWeight=&quot;ExtraBold&quot; VerticalContentAlignment=&quot;Center&quot; HorizontalContentAlignment=&quot;Left&quot; Click=&quot;BtnResize_OnClick&quot; Margin=&quot;5,0,0,0&quot; /&gt;.../&gt;" />
             <marker date="1505187528954" expanded="true" signature="3610:3833" ph="&lt;&lt;RowDefinition Height=&quot;2*&quot;/&gt; &lt;RowDefinition Height=&quot;6*&quot;/&gt; &lt;RowDefinition Height=&quot;2*&quot;/&gt;.../&gt;" />
             <marker date="1505187528954" expanded="true" signature="3854:4034" ph="&lt;&lt;ColumnDefinition Width=&quot;6*&quot;/&gt; &lt;ColumnDefinition Width=&quot;2*&quot;/&gt;.../&gt;" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TsuManager/MainWindow.xaml.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="488">
+          <caret line="164" column="9" lean-forward="false" selection-start-line="164" selection-start-column="9" selection-end-line="164" selection-end-column="9" />
+          <folding>
+            <marker date="1505272347222" expanded="true" signature="6:448" ph="..." />
+            <marker date="1505272347222" expanded="true" signature="470:5614" ph="{...}" />
+            <marker date="1505272347222" expanded="true" signature="477:555" ph="/// Interaction logic for MainWindow.xaml ... " />
+            <marker date="1505272347222" expanded="true" signature="600:5612" ph="{...}" />
+            <marker date="1505272347222" expanded="true" signature="1061:2437" ph="{...}" />
+            <marker date="1505272347222" expanded="true" signature="1795:2041" ph="{...}" />
+            <marker date="1505272347222" expanded="true" signature="2511:3848" ph="{...}" />
+            <marker date="1505272347222" expanded="true" signature="2551:3165" ph="{...}" />
+            <marker date="1505272347222" expanded="true" signature="3182:3838" ph="{...}" />
+            <marker date="1505272347222" expanded="true" signature="3920:3966" ph="{...}" />
+            <marker date="1505272347222" expanded="true" signature="4041:5161" ph="{...}" />
+            <marker date="1505272347222" expanded="true" signature="4260:4535" ph="{...}" />
+            <marker date="1505272347222" expanded="true" signature="4404:4521" ph="{...}" />
+            <marker date="1505272347222" expanded="true" signature="4570:5079" ph="{...}" />
+            <marker date="1505272347222" expanded="true" signature="5234:5267" ph="{...}" />
+            <marker date="1505272347222" expanded="true" signature="5323:5597" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TsuManager/Installation/InstallSettings.xaml.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="504">
+          <caret line="28" column="32" lean-forward="false" selection-start-line="28" selection-start-column="32" selection-end-line="28" selection-end-column="32" />
+          <folding>
+            <marker date="1505272831583" expanded="true" signature="6:381" ph="..." />
+            <marker date="1505272831583" expanded="true" signature="416:874" ph="{...}" />
+            <marker date="1505272831583" expanded="true" signature="423:506" ph="/// Interaction logic for InstallSettings.xaml ... " />
+            <marker date="1505272831583" expanded="true" signature="554:872" ph="{...}" />
+            <marker date="1505272831583" expanded="true" signature="734:866" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TsuManager/Installation/InstallStatus.xaml.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="504">
+          <caret line="28" column="32" lean-forward="false" selection-start-line="28" selection-start-column="32" selection-end-line="28" selection-end-column="32" />
+          <folding>
+            <marker date="1505272831649" expanded="true" signature="6:381" ph="..." />
+            <marker date="1505272831649" expanded="true" signature="416:868" ph="{...}" />
+            <marker date="1505272831649" expanded="true" signature="423:504" ph="/// Interaction logic for InstallStatus.xaml ... " />
+            <marker date="1505272831649" expanded="true" signature="550:866" ph="{...}" />
+            <marker date="1505272831649" expanded="true" signature="728:860" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TsuManager/Installation/InstallEula.xaml.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="504">
+          <caret line="28" column="32" lean-forward="false" selection-start-line="28" selection-start-column="32" selection-end-line="28" selection-end-column="32" />
+          <folding>
+            <marker date="1505272831316" expanded="true" signature="6:381" ph="..." />
+            <marker date="1505272831316" expanded="true" signature="416:862" ph="{...}" />
+            <marker date="1505272831316" expanded="true" signature="423:502" ph="/// Interaction logic for InstallEula.xaml ... " />
+            <marker date="1505272831316" expanded="true" signature="546:860" ph="{...}" />
+            <marker date="1505272831316" expanded="true" signature="722:854" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TsuManager/Installation/InstallationManager.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="396">
+          <caret line="22" column="0" lean-forward="false" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+          <folding>
+            <marker date="1505272841524" expanded="true" signature="68:606" ph="{...}" />
+            <marker date="1505272841524" expanded="true" signature="109:604" ph="{...}" />
+            <marker date="1505272841524" expanded="true" signature="333:571" ph="{...}" />
           </folding>
         </state>
       </provider>
