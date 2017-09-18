@@ -2,7 +2,7 @@
 
 namespace TsuManager.Installation
 {
-    internal class InstallationManager
+    public class InstallationManager
     {
         internal MainWindow MWindow;
 

@@ -36,34 +36,27 @@ namespace TsunamiHack.Tsunami.Util
 
         public static SteamPlayer GetSteamPlayer(Transform trans)
         {
-            Logging.Log("DEBUG", "foreaching in steamplayer");
 
             foreach (var user in Provider.clients)
             {
-                Logging.Log("DEBUG", "checking if transform is equal");
 
                 if (user.player.transform == trans)
                     return user;
             }
-
-            Logging.Log("DEBUG", "returning null");
 
             return null;
         }
         
         public static SteamPlayer GetSteamPlayer(GameObject trans)
         {
-            Logging.Log("DEBUG", "foreaching in steamplayer");
 
             foreach (var user in Provider.clients)
             {
-                Logging.Log("DEBUG", "checking if transform is equal");
 
                 if (user.player.transform.gameObject == trans)
                     return user;
             }
 
-            Logging.Log("DEBUG", "returning null");
 
             return null;
         }

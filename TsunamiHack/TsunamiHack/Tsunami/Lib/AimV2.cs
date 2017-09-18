@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
-using System.Runtime.InteropServices;
-using Mono.Security;
-using Pathfinding;
 using SDG.Unturned;
-using Steamworks;
 using TsunamiHack.Tsunami.Manager;
 using TsunamiHack.Tsunami.Types;
-using TsunamiHack.Tsunami.Types.Lists;
 using TsunamiHack.Tsunami.Util;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -238,6 +234,60 @@ namespace TsunamiHack.Tsunami.Lib
 
 			if (menu.EnableAimbot)
 			{
+				var dist = menu.AimDistance;
+				if (menu.AimUseGunDistance && Player.player.equipment.asset is ItemWeaponAsset)
+				{
+					dist = ((ItemWeaponAsset) Player.player.equipment.asset).range;
+				}
+
+				if (menu.AimPlayers)
+				{				
+					
+					foreach (var player in Provider.clients)
+					{
+						try
+						{
+							//elimiated yourself, admins if whitelisting, and friends if whitelisting
+							if (player.player == Player.player) continue;
+							if (player.isAdmin && menu.AimWhitelistAdmins) continue;
+							if (WaveMaker.Friends.Contains(player.playerID.steamID.m_SteamID) && menu.AimWhitelistFriends) continue;
+
+							//elimiate people who are further than your aimdistance
+							var distance = Vector3.Distance(Camera.main.transform.position, player.player.transform.position);
+							if(distance > menu.AimDistance) continue;
+
+							//if 
+							
+							
+							
+							
+							
+							
+							
+							if (!menu.Aim360)
+							{
+								var renderer = player.player.gameObject.GetComponent<Renderer>();
+								if(!renderer.isVisible) continue;
+							}
+							
+							
+							
+							
+						
+						} catch(Exception) {}
+					}
+				}
+
+
+			}
+			
+			
+			
+			
+			var tarLimb = menu.Limb == 1 ? "Skull" : "Spine";
+
+			if (menu.EnableAimbot)
+			{
 
 				if (!menu.AimManualChangeTarget)
 				{
@@ -300,8 +350,7 @@ namespace TsunamiHack.Tsunami.Lib
 											if (!menu.Aim360)
 											{
 												var tarLimbPosScrnPt = Camera.main.WorldToViewportPoint(tarLimbPos);
-												if (tarLimbPosScrnPt.z <= 0f || tarLimbPosScrnPt.x <= 0f || tarLimbPosScrnPt.x >= 1f ||
-												    tarLimbPosScrnPt.y <= 0f || tarLimbPosScrnPt.y >= 1f)
+												if (tarLimbPosScrnPt.z <= 0f || tarLimbPosScrnPt.x <= 0f || tarLimbPosScrnPt.x >= 1f || tarLimbPosScrnPt.y <= 0f || tarLimbPosScrnPt.y >= 1f)
 												{
 													goto Exit;
 												}

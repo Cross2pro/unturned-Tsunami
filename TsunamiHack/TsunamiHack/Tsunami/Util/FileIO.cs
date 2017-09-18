@@ -85,6 +85,7 @@ namespace TsunamiHack.Tsunami.Util
             keybinds.AddBind("keybinds", KeyCode.F4);
             keybinds.AddBind("aim", KeyCode.F3);
             keybinds.AddBind("changetarget", KeyCode.Backslash);
+            keybinds.AddBind("toggleaimbot", KeyCode.F5);
 
             SaveKeybinds(keybinds);// --------------------// --------------------
         }
@@ -294,12 +295,12 @@ namespace TsunamiHack.Tsunami.Util
             var res = File.Exists(EulaPath);
 
             if (!res)
-            {
                 WaveMaker.ShowEula = true;
-                
-            }
-                
+            else
+                WaveMaker.ShowEula = false;
+            
         }
+        
 
         public static void AgreeEula()
         {

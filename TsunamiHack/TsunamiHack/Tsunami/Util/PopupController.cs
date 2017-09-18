@@ -14,7 +14,7 @@ namespace TsunamiHack.Tsunami.Util
         private  List<Popup> _menuList;
         private  List<Popup> _dynamicList;
 
-        public  bool EnableFirstTime;
+        public static bool EnableFirstTime;
         
         private void Start()
         {

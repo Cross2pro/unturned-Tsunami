@@ -12,9 +12,30 @@ namespace TsunamiHack.Tsunami.Lib
 {
     internal class VisualsV2
     {
+        internal struct ESPObject
+        {
+            public GameObject value;
+            public ulong steamID;
+            
+            internal ESPObject(ref GameObject go)
+            {
+                value = go;
+                steamID = 0L;
+            }
+            
+            internal ESPObject(ref GameObject go, ulong id)
+            {
+                value = new GameObject();
+                steamID = id;
+            }
+        }
+         
         internal static Menu.Visuals Menu;
         internal static float updateInterval;
-        internal static DateTime LastUpdate;
+        internal static DateTime updateLastUpdate;
+        internal static DateTime guiLastUpdate;
+
+        internal static float listupdateInterval = 5000f;
         
         internal static Dictionary<int, string> StorageIds;
         internal static Dictionary<int, string> DoorIds;
@@ -48,12 +69,13 @@ namespace TsunamiHack.Tsunami.Lib
             BoxMaterial.SetInt("_ZWrite", 0);
             
             GenerateDicts();
-            LastUpdate = DateTime.Now;
+            updateLastUpdate = DateTime.Now;
+            guiLastUpdate = DateTime.Now;
         }
         
         public static void Update() 
         {
-            if ((DateTime.Now - LastUpdate).TotalMilliseconds >= Menu.UpdateRate)
+            if ((DateTime.Now - updateLastUpdate).TotalMilliseconds >= Menu.UpdateRate)
             {
                 if (Provider.isConnected)
                 {
@@ -227,10 +249,21 @@ namespace TsunamiHack.Tsunami.Lib
 
         internal static void OnGUI()
         {
-            CheckLabels();
-            CheckBoxes();
+            if ((DateTime.Now - guiLastUpdate).TotalMilliseconds >= Menu.UpdateRate)
+            {
+                if (Provider.isConnected)
+                {
+                    CheckLabels();
+                    CheckBoxes();        
+                }
+            }
+            
         }
 
+        internal static void RefreshLists()
+        {
+            
+        }
 
         public static void EnableGlowGeneric(List<GlowItem> list, Color glowColor)
         {
@@ -276,7 +309,7 @@ namespace TsunamiHack.Tsunami.Lib
         
         internal static void CheckBoxes()
         {
-            if (Menu.PlayerBox)
+            if (Menu.PlayerBox && Menu.EnableEsp)
             {
                 
                 foreach (var client in Provider.clients)
@@ -300,7 +333,7 @@ namespace TsunamiHack.Tsunami.Lib
                 }
             }    
 
-            if (Menu.ZombieBox)
+            if (Menu.ZombieBox && Menu.EnableEsp)
             {
 
                 foreach (var zombie in Zombies)

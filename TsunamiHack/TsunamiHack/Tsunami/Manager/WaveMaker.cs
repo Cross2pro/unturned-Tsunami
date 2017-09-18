@@ -17,7 +17,7 @@ namespace TsunamiHack.Tsunami.Manager
         public static bool isPremium;
         public static bool isBeta;
 
-        public static bool ShowEula;
+        public static bool ShowEula = true;
         public static string eula;
         
         public static PremiumList Prem;
@@ -39,7 +39,6 @@ namespace TsunamiHack.Tsunami.Manager
         public static Menu.Aim MenuAim;
         public static PopupController PopupController;
         public static Blocker Blocker;
-
         public static readonly int MainId = 1; 
         public static readonly int VisualsId = 2;
         public static readonly int AimId = 3;
@@ -53,17 +52,18 @@ namespace TsunamiHack.Tsunami.Manager
 
         public static ulong LocalSteamId;
 
-        public static readonly string Version = "1.0";
-        public static readonly string GameVersion = "3.20.4.0";
+        public static readonly string Version = "1.1";
+        public static readonly string GameVersion = "3.20.5.0";
         
         private GameObject _obj;
         private GameObject _blockerObj;
 
         public void Start()
-        {
-
+        {            
+            
             if (ShowEula)
             {
+                
                 WebAccess.DownloadEula(out eula);
                 Blocker.BlockerEnabled = true;
                 Blocker.DisabledType = Blocker.Type.EulaAgree;
@@ -73,6 +73,7 @@ namespace TsunamiHack.Tsunami.Manager
             //Checking if player is dev
             LocalSteamId = Provider.client.m_SteamID;
 
+            
             if (LocalSteamId == Controller.Dev || LocalSteamId == ulong.Parse("76561198308025096"))
             {
                 isDev = true;
@@ -80,19 +81,25 @@ namespace TsunamiHack.Tsunami.Manager
                 isPremium = true;
             }
 
+            
             if (Prem.Contain(LocalSteamId.ToString()))
                 isPremium = true;
 
+            
             if (Beta.Contain(LocalSteamId.ToString()))
                 isBeta = true;
                 
 
+            
             //Checking if first time
             if (FirstTime)
             {
+            
+
                 PopupController.EnableFirstTime = true;
             }
 
+            
             //Checking blocker
             if (Ban.Contains(LocalSteamId.ToString()))
             {
@@ -121,12 +128,12 @@ namespace TsunamiHack.Tsunami.Manager
 
             
             //Whitelist me from all disabling
-            if (PlayerTools.GetSteamPlayer(Player.player).playerID.steamID.m_SteamID == Controller.Dev)
-            {
-                HackDisabled = false;
-                Controller.Disabled = false;
-                Blocker.BlockerEnabled = false;
-            }
+//            if (PlayerTools.GetSteamPlayer(Player.player).playerID.steamID.m_SteamID == Controller.Dev)
+//            {
+//                HackDisabled = false;
+//                Controller.Disabled = false;
+//                Blocker.BlockerEnabled = false;
+//            }
                  
         }
 

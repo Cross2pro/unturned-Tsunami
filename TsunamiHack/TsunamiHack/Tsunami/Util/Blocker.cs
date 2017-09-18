@@ -1,4 +1,5 @@
-﻿using SDG.Unturned;
+﻿using Pathfinding;
+using SDG.Unturned;
 using TsunamiHack.Tsunami.Manager;
 using TsunamiHack.Tsunami.Types;
 using UnityEngine;
@@ -11,7 +12,7 @@ namespace TsunamiHack.Tsunami.Util
         
         private HackController _ctrl;
 
-        internal static bool BlockerEnabled;
+        internal bool BlockerEnabled;
         internal Rect WindowRect;
         internal bool Banned;
         internal static Type DisabledType;
@@ -34,6 +35,13 @@ namespace TsunamiHack.Tsunami.Util
 
         private void OnGUI()
         {
+
+            if (WaveMaker.ShowEula)
+            {
+                WindowRect = GUI.Window(WaveMaker.BannedId, WindowRect, EulaAgreementFunct, "You Must Agree to The Tsunami Hack Eula To Use");
+                goto End;
+            }
+            
             if (BlockerEnabled)
             {
                 switch (DisabledType)
@@ -51,12 +59,10 @@ namespace TsunamiHack.Tsunami.Util
                         case Type.GameOutOfDate:
                             WindowRect = GUI.Window(WaveMaker.BannedId, WindowRect, GameOutOfDateMenuFunct, "YOU ARE USING A REPOSTED VERSION");
                             break;
-                        case Type.EulaAgree:
-                            WindowRect = GUI.Window(WaveMaker.BannedId, WindowRect, EulaAgreementFunct,
-                                "You Must Agree to the Tsunami Hack Eula to use");
-                            break;
                 }
             }
+            
+            End:;
         }
 
         private void DisabledMenuFunct(int id)
