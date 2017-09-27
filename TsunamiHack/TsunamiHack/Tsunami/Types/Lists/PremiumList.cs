@@ -2,28 +2,28 @@
 
 namespace TsunamiHack.Tsunami.Types.Lists
 {
-    internal class PremiumList
+    public class PremiumList
     {
         public List<string> UserList;
         
-        public string GetUserByIndex(int index)
+        internal string GetUserByIndex(int index)
         {
             return index > UserList.Count ? null : UserList[index];
         }
 
-        public string GetUserByName(string name)
+        internal string GetUserByName(string name)
         {
             if (!UserList.Contains(name)) return null;
             var index = UserList.IndexOf(name);
             return UserList[index];
         }
 
-        public List<string> GetFullList()
+        internal List<string> GetFullList()
         {
             return UserList;
         }
 
-        public bool Contain(string item)
+        internal bool Contain(string item)
         {
             return UserList.Contains(item);
         }

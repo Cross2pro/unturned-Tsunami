@@ -52,14 +52,21 @@ namespace TsunamiHack.Tsunami.Manager
 
         public static ulong LocalSteamId;
 
-        public static readonly string Version = "1.1";
-        public static readonly string GameVersion = "3.20.5.0";
+        public static readonly string Version = "1.1.2";
+        public static readonly string GameVersion = "3.20.6.0";
+
+        private string messagetoanyone =
+                "If you are reading this, youve obviously had to use some modified tool to open it. If you are really that desperate " +
+                "to get my source code, just fucking ask me im going to open source it anyway. Dont use this to make money, however, or" +
+                "we will be having some legal proceedings.";
         
         private GameObject _obj;
         private GameObject _blockerObj;
 
         public void Start()
         {            
+            
+            
             
             if (ShowEula)
             {
@@ -69,10 +76,8 @@ namespace TsunamiHack.Tsunami.Manager
                 Blocker.DisabledType = Blocker.Type.EulaAgree;
             }
             
-            
             //Checking if player is dev
             LocalSteamId = Provider.client.m_SteamID;
-
             
             if (LocalSteamId == Controller.Dev || LocalSteamId == ulong.Parse("76561198308025096"))
             {
@@ -81,39 +86,30 @@ namespace TsunamiHack.Tsunami.Manager
                 isPremium = true;
             }
 
-            
             if (Prem.Contain(LocalSteamId.ToString()))
                 isPremium = true;
-
-            
+  
             if (Beta.Contain(LocalSteamId.ToString()))
                 isBeta = true;
-                
-
-            
+                       
             //Checking if first time
             if (FirstTime)
             {
-            
-
                 PopupController.EnableFirstTime = true;
             }
 
-            
-            //Checking blocker
-            if (Ban.Contains(LocalSteamId.ToString()))
+            Logging.Log($"CURRENT VERSION NUMBER: {Controller.Version}");
+            Logging.Log($"CURRENT DLL VERSION NUMBER: {Version}");
+
+            if (Controller.Version != Version)
             {
-                Logging.Log("BANNED",
-                    "You have been banned! If you are reading this you are one smart cookie! Contact Tidal on steam to dispute (www.steamcommunity.com/id/tidall");
-                Controller.BanOverride(
-                    "You have been globally banned from using TsunamiHack! Verify game files to uninstall"); //change this when i make installer
-                Blocker.DisabledType = Blocker.Type.Banned;
-            }
-            else if (Version != Controller.Version)
-            {
+                Logging.Log("Setting Disabled Type");
                 Blocker.DisabledType = Blocker.Type.OutOfDate;
+                Logging.Log("Enabling Blocker");
                 Blocker.BlockerEnabled = true;
+                Logging.Log("setting hackdisabed to true");
                 HackDisabled = true;
+                Logging.Log("Setting controller disabled to true");
                 Controller.Disabled = true;
             }
             else if (GameVersion != Provider.APP_VERSION)
@@ -122,10 +118,17 @@ namespace TsunamiHack.Tsunami.Manager
                 Blocker.BlockerEnabled = true;
                 HackDisabled = true;
                 Controller.Disabled = true;
-            } 
-            else
+            }
+            else if (Ban.Contains(LocalSteamId.ToString()))
+            {
+                Logging.Log("YOU HAVE BEEN BANNED, CONTACT TIDAL ON STEAM TO DISPUTE WWW.STEAMCOMMUNITY.COM/ID/TIDALL", "FATAL ERROR, BANNED");
+                Controller.BanOverride("YOU HAVE BEEN GLOBALLY BANNED FROM USING TSUNAMI HACK, VERIFY GAME FILES TO UNINSTALL");
                 Blocker.DisabledType = Blocker.Type.Disabled;
-
+            }
+            else
+            {
+                Blocker.DisabledType = Blocker.Type.Disabled;
+            }
             
             //Whitelist me from all disabling
 //            if (PlayerTools.GetSteamPlayer(Player.player).playerID.steamID.m_SteamID == Controller.Dev)

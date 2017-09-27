@@ -2,7 +2,7 @@
 
 namespace TsunamiHack.Tsunami.Types
 {
-    internal class HackController
+    public class HackController
     {
         public bool Disabled;
         public string Reason;
@@ -10,7 +10,7 @@ namespace TsunamiHack.Tsunami.Types
         public string Version;
         public ulong Dev;
 
-        public void BanOverride(string reason)
+        internal void BanOverride(string reason)
         {
             WaveMaker.HackDisabled = true;
             Disabled = true;

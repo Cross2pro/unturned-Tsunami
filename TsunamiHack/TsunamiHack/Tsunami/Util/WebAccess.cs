@@ -10,10 +10,10 @@ namespace TsunamiHack.Tsunami.Util
 {
     internal static  class WebAccess
     {
-        private const string PremlistUrl = "https://pastebin.com/raw/KBRtvsdz";
-        private const string BanListUrl = "https://pastebin.com/raw/AxXtzUVL";
-        private const string BetaListUrl = "https://pastebin.com/raw/849dzxjn";
-        private const string ControllerInfoUrl = "https://pastebin.com/raw/v3VCgGCE";
+        private const string PremlistUrl = "https://pastebin.com/raw/HU0DXR3s";       //"https://pastebin.com/raw/KBRtvsdz"; 
+        private const string BanListUrl = "https://pastebin.com/raw/vRq5a5FR";        //"https://pastebin.com/raw/AxXtzUVL";
+        private const string BetaListUrl = "https://pastebin.com/raw/isaAstAt";       //"https://pastebin.com/raw/849dzxjn";
+        private const string ControllerInfoUrl = "https://pastebin.com/raw/f8NyLp37"; //"https://pastebin.com/raw/v3VCgGCE";
         private const string EulaUrl = "https://pastebin.com/raw/c0FD93MP";
 
         public enum ListType { Premium, Ban, Beta}

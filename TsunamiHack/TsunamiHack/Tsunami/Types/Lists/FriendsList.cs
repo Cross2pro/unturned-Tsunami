@@ -4,7 +4,7 @@ using TsunamiHack.Tsunami.Util;
 
 namespace TsunamiHack.Tsunami.Types.Lists
 {
-    internal class FriendsList
+    public class FriendsList
     {
         public List<Friend> Userlist;
 
@@ -28,7 +28,7 @@ namespace TsunamiHack.Tsunami.Types.Lists
            }
         }
 
-        public void RemoveFriend(string name)
+        internal void RemoveFriend(string name)
         {
             if (Array.Exists(Userlist.ToArray(), friend => friend.Name == name))
             {
@@ -42,7 +42,7 @@ namespace TsunamiHack.Tsunami.Types.Lists
             }
         }
 
-        public void AddFriend(Friend user)
+        internal void AddFriend(Friend user)
         {
             if (Array.Exists(Userlist.ToArray(), friend => friend.SteamId == user.SteamId))
             {

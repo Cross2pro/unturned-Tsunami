@@ -11,16 +11,16 @@ namespace TsunamiHack.Tsunami.Util
 {
     internal class Db
     {
-        private const string ds = "tidal.database.windows.net";
+        /*private const string ds = "tidal.database.windows.net";
         private const string un = "genericuser";
         private const string pw = "tzIhX@3E3T";
         private const string prem = "premium";
         private const string ban = "ban";
         private const string beta = "beta";
         private const string controller = "controller";
-        private const string users = "users";
+        private const string users = "users";*/
 
-        internal static void GetAll(out PremiumList premiumList, out BanList banlist, out BetaList betaList)
+       /* internal static void GetAll(out PremiumList premiumList, out BanList banlist, out BetaList betaList)
         {
             var builder = new SqlConnectionStringBuilder();
             builder.DataSource = ds;
@@ -89,9 +89,9 @@ namespace TsunamiHack.Tsunami.Util
                 }
             }
   
-        }
+        }*/
 
-        internal static void GetController(out HackController ctrl)
+       /* internal static void GetController(out HackController ctrl)
         {
             var builder = new SqlConnectionStringBuilder();
             builder.DataSource = ds;
@@ -125,9 +125,9 @@ namespace TsunamiHack.Tsunami.Util
                     }
                 }
             }
-        }
+        }*/
 
-        internal static void CheckUsers(ulong id, string name)
+       /* internal static void CheckUsers(ulong id, string name)
         {
             var builder = new SqlConnectionStringBuilder();
             builder.DataSource = ds;
@@ -212,7 +212,7 @@ namespace TsunamiHack.Tsunami.Util
                 }
             }
                 
-        }
+        }*/
     }
 }
 

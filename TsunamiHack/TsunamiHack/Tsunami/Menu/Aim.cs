@@ -87,7 +87,7 @@ namespace TsunamiHack.Tsunami.Menu
             Limb = 1;
             AimTargetLimb = (TargetLimb)Limb;
 
-            AimFov = 180f;
+            AimFov = Camera.main.fieldOfView;
             AimSpeed = 5f;
             AimDistance = 200f;
             AimUpdateRate = 5f;
@@ -152,8 +152,8 @@ namespace TsunamiHack.Tsunami.Menu
             AimIgnoreWalls = GUILayout.Toggle(AimIgnoreWalls, " Ignore Walls");
             GUILayout.Space(2f);
             Aim360 = GUILayout.Toggle(Aim360, " 360 Aim FOV");
-            GUILayout.Label($"Aim FOV : {AimFov}");
-            AimFov = GUILayout.HorizontalSlider((float) Math.Round(AimFov, 0), 10f, 360f);
+            GUILayout.Label($"Visible Aim FOV : {AimFov}");
+            AimFov = GUILayout.HorizontalSlider((float) Math.Round(AimFov, 0), 1f, Camera.main.fieldOfView);
             GUILayout.Space(2f);
             GUILayout.Label($"Aim Speed : {AimSpeed}");
             AimSpeed = GUILayout.HorizontalSlider((float) Math.Round(AimSpeed, 0), 1f, 10f);

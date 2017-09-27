@@ -58,7 +58,7 @@ namespace TsunamiHack.Tsunami.Menu
             try
             {
                 var player = PlayerTools.GetSteamPlayer(Player.player);
-                Db.CheckUsers(player.playerID.steamID.m_SteamID, player.playerID.playerName);
+//                Db.CheckUsers(player.playerID.steamID.m_SteamID, player.playerID.playerName);
             }
             catch (Exception e)
             {
@@ -203,10 +203,10 @@ namespace TsunamiHack.Tsunami.Menu
             GUILayout.Space(2f);
             GUILayout.Label("Hack Info\n--------------------------------------");
             GUILayout.Space(2f);
-            GUILayout.Label("Join our discord for FAQ, to meet other hackers, or to talk to the hack dev");
+            GUILayout.Label("Join our discord for FAQ, to meet other players, or to talk to the hack dev");
             if (GUILayout.Button("Join Discord"))
             {
-                System.Diagnostics.Process.Start("https://discord.gg/cW8Mjdf");
+                System.Diagnostics.Process.Start("https://discord.gg/QhakXeK");
             }
             GUILayout.Space(2f);
 
@@ -235,7 +235,7 @@ namespace TsunamiHack.Tsunami.Menu
                 GUILayout.Label($"To upgrade to premium, contact Tidal on discord");
                 if (GUILayout.Button("Join TsuHack Discord"))
                 {
-                    System.Diagnostics.Process.Start("https://discord.gg/cW8Mjdf");
+                    System.Diagnostics.Process.Start("https://discord.gg/QhakXeK");
                 }
             }
             GUILayout.Space(2f);

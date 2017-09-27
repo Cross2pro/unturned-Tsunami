@@ -12,7 +12,7 @@ namespace TsunamiHack.Tsunami.Util
         
         private HackController _ctrl;
 
-        internal bool BlockerEnabled;
+        internal static  bool BlockerEnabled;
         internal Rect WindowRect;
         internal bool Banned;
         internal static Type DisabledType;
