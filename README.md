@@ -48,75 +48,7 @@ already, but most of the method names are verbose enough to get an idea of whats
 
 Tree:
 
-Tsunami
-|
-|-> Lib
-|   |
-|   |-> Aim.cs**
-|   |-> AimV2.cs
-|   |-> Keybind.cs
-|   |-> Main.cs
-|   |-> Visuals.cs**
-|   |-> VisualsV2.cs
-|
-|-> Manager
-|   |
-|   |-> Hook.cs
-|   |-> Loader.cs
-|   |-> Quake.cs
-|   |-> WaveMaker.cs
-|
-|-> Menu
-|   |
-|   |-> Aim.cs
-|   |-> Keybind.cs
-|   |-> Main.cs
-|   |-> Visuals.cs
-|
-|-> Types
-|   |
-|   |-> Configs
-|   |   |
-|   |   |-> KeybindConfig.cs
-|   |   |-> Setting.cs**
-|   | 
-|   |-> Lists
-|   |   |
-|   |   |-> BanList.cs
-|   |   |-> BetaList.cs
-|   |   |-> FriendsList.cs
-|   |   |-> InfoList.cs**
-|   |   |-> PremiumList.cs
-|   | 
-|   |-> ColorChangeType.cs
-|   |-> Exceptions.cs
-|   |-> Friend.cs
-|   |-> GlowItem.cs
-|   |-> GunAsset.cs
-|   |-> HackController.cs
-|   |-> Keybind.cs
-|   |-> NvType.cs
-|   |-> Popup.cs
-|   |-> Setting.cs
-|   |-> TargetLimb.cs
-|   |-> TsuColor.cs
-|   |-> UnableToMatchPlayerException.cs
-|
-|-> Util
-|   |
-|   |-> Blocker.cs
-|   |-> DataCollector.cs
-|   |-> Db.cs
-|   |-> FileIo.cs
-|   |-> Logging.cs
-|   |-> MenuTools.cs
-|   |-> PlayerTools.cs
-|   |-> PopupController.cs
-|   |-> WebAccess.cs
-|
-|-> Identifier.cs**
-|-> ILibParent.cs**
-|-> IMenuParent.cs**
+![Tree](https://i.imgur.com/ALOeoAk.png)
 
 (Files with ** are either depreciated, or no longer used)
 
@@ -126,3 +58,22 @@ call this your own, just leave now! I made this as a project to further my own s
 you do the same!
 
 I might add a short description of each of the (main) classes in the future who knows.
+
+Screenshots!
+
+![Main Menu](https://i.imgur.com/HMwTWAN.png "Main menu of V1.0")
+![Visuals Menu](https://i.imgur.com/iYJdjFh.png "Visuals menu of V1.0")
+![Visuals Cont](http://i.imgur.com/K7gtzl9.png "Visuals Menu of V1.0")
+![Aim Menu](http://i.imgur.com/AsfsgzV.png "Aim Menu of V1.0")
+![Keybinds Menu](http://i.imgur.com/fNtIZue.png "Keybinds Menu of V1.0")
+![Gameplay example](http://i.imgur.com/ybpk6hl.png "Gameplay using V1.0")
+![Gameplay example](http://i.imgur.com/7wSonVO.png "Gameplay using V1.0")
+
+In conclusion, I hope that this helps out some dev out there looking to get into programming or creating cheats, and 
+it has been awfully fun developing this and interacting with everyone! ***I might create a private cheat in the
+future, but no promises. Id like to focus on other languages now that this project is over. Cheers!***
+
+If youve got a question about any of the classes, just let me know on discord or steam...
+www.steamcommunity.com/id/tidall
+https://discord.gg/QhakXeK
+... Ill try to help!
