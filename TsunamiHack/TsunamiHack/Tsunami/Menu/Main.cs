@@ -232,11 +232,14 @@ namespace TsunamiHack.Tsunami.Menu
             else
             {
                 GUILayout.Label($"You are: {local.playerID.playerName}, Free user");
+                
                 GUILayout.Label($"To upgrade to premium, contact Tidal on discord");
+                
                 if (GUILayout.Button("Join TsuHack Discord"))
                 {
                     System.Diagnostics.Process.Start("https://discord.gg/QhakXeK");
                 }
+                
             }
             GUILayout.Space(2f);
             GUILayout.Label("INFO\n--------------------------------------");

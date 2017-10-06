@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Security.Cryptography.X509Certificates;
-using Mono.Security.X509;
 using SDG.Framework.UI.Components;
 using SDG.Unturned;
 using TsunamiHack.Tsunami.Manager;
@@ -315,11 +313,10 @@ namespace TsunamiHack.Tsunami.Lib
 					}
 				}*/
 
-				Logging.Log("Zombie Logic");
 				if (menu.AimZombies)
 				{
 					
-					Logging.Log("1");
+//Logging.Log("1");
 					if (update == 0)
 					{
 						Zombies = new List<Zombie>();
@@ -333,59 +330,107 @@ namespace TsunamiHack.Tsunami.Lib
 						update = 75;
 					}
 
-					Logging.Log("2");
+//Logging.Log("2");
 					
 					foreach (var zombie in Zombies)
 					{
 						//TODO: Fix the aiming not working with the fov selector and the aim 360
-						
-						Logging.Log("A");
-						//remove dead zombies and those who are further than the aim distance
-						if (zombie.isDead) continue;
-						if (Vector3.Distance(Camera.main.transform.position, zombie.transform.position) > menu.AimDistance) continue;
 
-						Logging.Log("B");
-						//remove those zombies who you cant see if you arent doing 360
-						if (!menu.Aim360)
+						if (zombie.isDead == false)
 						{
-							var tarLimbPosScrnPt = Camera.main.WorldToViewportPoint(GetLimbPosition(zombie.transform, tarLimb));
-							if (tarLimbPosScrnPt.z <= 0f || tarLimbPosScrnPt.x <= 0f || tarLimbPosScrnPt.x >= 1f || tarLimbPosScrnPt.y <= 0f || tarLimbPosScrnPt.y >= 1f) continue;
+							if (Vector3.Distance(Camera.main.transform.position, zombie.transform.position) <= menu.AimDistance)
+							{
+								var limbpos = GetLimbPosition(zombie.transform, tarLimb);
+								
+								if (menu.Aim360 == false)
+								{
+									var scrnpt = Camera.main.WorldToViewportPoint(GetLimbPosition(zombie.transform, tarLimb));
+									if (scrnpt.z <= 0f || scrnpt.x <= 0f || scrnpt.y <= 0f || scrnpt.z >= 1f || scrnpt.x >= 1f ||
+									    scrnpt.y >= 1f) continue;
+								}
+								
+								if (menu.AimIgnoreWalls == false)
+								{
+									RaycastHit hit;
+									Physics.Raycast(Camera.main.transform.position, limbpos, out hit, dist, RayMasks.DAMAGE_CLIENT);
+									if (!hit.transform.CompareTag("Zombie")) continue;
+								}
+								
+								var targetpoint = Camera.main.WorldToScreenPoint(GetLimbPosition(zombie.transform, tarLimb));
+								targetpoint.y = Camera.main.pixelHeight - targetpoint.y;
+								var centerpoint = new Vector3((float) Camera.main.pixelWidth / 2, (float) Camera.main.pixelHeight / 2);
+
+								Logging.Log($"CENTER POINT: X: {centerpoint.x} Y: {centerpoint.y}"); //840/525
+						
+//Logging.Log("E");
+								//Calculate the pixels in specified 
+								var ppd = Camera.main.pixelWidth / Camera.main.fieldOfView;
+								var wafov = ((menu.AimFov * ppd) / 2);
+
+								Logging.Log($"PPD: {ppd}");
+								Logging.Log($"WAFOV: {wafov}");
+						
+//Logging.Log("F");
+								//elimnate targets if they are not in the fov
+								var distToXHair = Vector2.Distance(centerpoint, targetpoint);
+								Logging.Log($"Dist to Xhair: {distToXHair}");
+								if(!menu.Aim360)
+									if (distToXHair > wafov) continue;
+						
+//Logging.Log("G");
+								//elminate targets if they are further than the current lowest distance;
+								if (distToXHair > currClosest) continue;
+								currClosest = distToXHair;
+
+//Logging.Log("H");
+								target = zombie.transform;
+								
+								
+								
+							}
 						}
-
-						Logging.Log("C");
 						
-						if (!menu.AimIgnoreWalls)
-						{
-							RaycastHit hit;
-							Physics.Raycast(Camera.main.transform.position, zombie.transform.position, out hit,float.PositiveInfinity, RayMasks.DAMAGE_CLIENT);
-							if (hit.transform != null)
-								if (!hit.transform.CompareTag("Zombie")) continue;
-						}
 						
-						Logging.Log("D");
-						var targetpoint = Camera.main.WorldToScreenPoint(GetLimbPosition(zombie.transform, tarLimb));
-						targetpoint.y = Camera.main.pixelHeight - targetpoint.y;
-						var centerpoint = new Vector3((float) Camera.main.pixelWidth / 2, (float) Camera.main.pixelHeight / 2);
-
-						Logging.Log("E");
-						//Calculate the pixels in specified 
-						var ppd = Camera.main.pixelWidth / Camera.main.fieldOfView;
-						var wafov = ((menu.AimFov * ppd) / 2);
-
-						Logging.Log("F");
-						//elimnate targets if they are not in the fov
-						var distToXHair = Vector2.Distance(centerpoint, targetpoint);
-						if(!menu.Aim360)
-							if (distToXHair > wafov) continue;
-
-						Logging.Log("G");
-						//elminate targets if they are further than the current lowest distance;
-						if (distToXHair > currClosest) continue;
-						currClosest = distToXHair;
-
-						Logging.Log("H");
-						target = zombie.transform;
+//						if (zombie.isDead) continue;
+//						if (Vector3.Distance(Camera.main.transform.position, zombie.transform.position) > menu.AimDistance) continue;
+//						if (!menu.Aim360)
+//						{
+//							
+//						}
+//						if (!menu.AimIgnoreWalls) // if you are not aiming through walls
+//						{
+//							RaycastHit hit;
+//							var distance = GetLimbPosition(zombie.transform, tarLimb) - Player.player.look.aim.position;
+//							if (!Physics.Raycast(Player.player.look.aim.position, distance, out hit, dist, RayMasks.DAMAGE_CLIENT) ||
+//							    hit.transform.CompareTag("Zombie")) continue;
+//						}
+//					
+//						
+//						Logging.Log("A");
+//						//remove dead zombies and those who are further than the aim distance
+//						if (zombie.isDead) continue;
+//						if (Vector3.Distance(Camera.main.transform.position, zombie.transform.position) > menu.AimDistance) continue;
+//
+//						Logging.Log("B");
+//						//remove those zombies who you cant see if you arent doing 360
+//						if (!menu.Aim360)
+//						{
+//							var tarLimbPosScrnPt = Camera.main.WorldToViewportPoint(GetLimbPosition(zombie.transform, tarLimb));
+//							if (tarLimbPosScrnPt.z <= 0f || tarLimbPosScrnPt.x <= 0f || tarLimbPosScrnPt.x >= 1f || tarLimbPosScrnPt.y <= 0f || tarLimbPosScrnPt.y >= 1f) continue;
+//						}
+//
+//						Logging.Log("C");
+//
+//						if (menu.AimIgnoreWalls)
+//						{
+//							RaycastHit hit;
+//							Physics.Raycast(Camera.main.transform.position, zombie.transform.position, out hit, float.PositiveInfinity, RayMasks.DAMAGE_CLIENT);
+//							if(hit.transform != null)
+//								if (!hit.transform.CompareTag("Zombie")) continue;
+//						}
 						
+//Logging.Log("D");
+							
 					}
 					
 					

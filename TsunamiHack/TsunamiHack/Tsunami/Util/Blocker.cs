@@ -57,7 +57,7 @@ namespace TsunamiHack.Tsunami.Util
                             WindowRect = GUI.Window(WaveMaker.BannedId, WindowRect, OutOfDateMenuFunct, "OUT OF DATE");
                             break;
                         case Type.GameOutOfDate:
-                            WindowRect = GUI.Window(WaveMaker.BannedId, WindowRect, GameOutOfDateMenuFunct, "YOU ARE USING A REPOSTED VERSION");
+                            WindowRect = GUI.Window(WaveMaker.BannedId, WindowRect, GameOutOfDateMenuFunct, "YOU ARE USING AN OUT OF DATE HACK");
                             break;
                 }
             }
@@ -136,7 +136,7 @@ namespace TsunamiHack.Tsunami.Util
             PlayerUI.window.showCursor = true;
             
             GUILayout.Space(50f);
-            GUILayout.Label($"You got this DLL from someone posing as its creator!");
+            GUILayout.Label($"This hack is for an older game version!");
             GUILayout.Space(8f);
             GUILayout.Label($"You are running hack for game version {WaveMaker.GameVersion} and there is a new version for {Provider.APP_VERSION}");
             GUILayout.Label($"Download the latest version directly from Tidal");
