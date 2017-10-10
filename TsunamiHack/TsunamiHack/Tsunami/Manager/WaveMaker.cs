@@ -53,7 +53,7 @@ namespace TsunamiHack.Tsunami.Manager
         public static ulong LocalSteamId;
 
         public static readonly string Version = "1.1.2";
-        public static readonly string GameVersion = "3.20.7.0";
+        public static readonly string GameVersion = "3.20.8.0";
 
         private string messagetoanyone =
                 "If you are reading this, youve obviously had to use some modified tool to open it. If you are really that desperate " +

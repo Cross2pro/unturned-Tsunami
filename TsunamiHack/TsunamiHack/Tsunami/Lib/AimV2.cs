@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using SDG.Framework.UI.Components;
 using SDG.Unturned;
 using TsunamiHack.Tsunami.Manager;
 using TsunamiHack.Tsunami.Types;
 using TsunamiHack.Tsunami.Util;
 using UnityEngine;
-using UnityEngine.Networking;
+// ReSharper disable InconsistentNaming
+// ReSharper disable EmptyGeneralCatchClause
 
 namespace TsunamiHack.Tsunami.Lib
 {
@@ -27,7 +26,7 @@ namespace TsunamiHack.Tsunami.Lib
 
 		private static Transform target;
 
-		private static System.Collections.Generic.List<Zombie> Zombies;
+		private static List<Zombie> Zombies;
 		private static int update;
 
 		internal static void Start()
@@ -56,7 +55,6 @@ namespace TsunamiHack.Tsunami.Lib
 			{
 				UpdateLock();
 				UpdateTb();
-				
 
 				lastLock = DateTime.Now;
 			}
@@ -235,14 +233,14 @@ namespace TsunamiHack.Tsunami.Lib
 
 		private static float preaimyaw;
 		private static float preaimpitch;
-		
+
 
 		internal static void UpdateAimbot()
 		{
 			var tarLimb = menu.Limb == 1 ? "Skull" : "Spine";
 			var currClosest = menu.AimDistance;
 			target = null;
-			
+
 			if (menu.EnableAimbot)
 			{
 				var dist = menu.AimDistance;
@@ -315,7 +313,7 @@ namespace TsunamiHack.Tsunami.Lib
 
 				if (menu.AimZombies)
 				{
-					
+
 //Logging.Log("1");
 					if (update == 0)
 					{
@@ -331,7 +329,7 @@ namespace TsunamiHack.Tsunami.Lib
 					}
 
 //Logging.Log("2");
-					
+
 					foreach (var zombie in Zombies)
 					{
 						//TODO: Fix the aiming not working with the fov selector and the aim 360
@@ -341,27 +339,27 @@ namespace TsunamiHack.Tsunami.Lib
 							if (Vector3.Distance(Camera.main.transform.position, zombie.transform.position) <= menu.AimDistance)
 							{
 								var limbpos = GetLimbPosition(zombie.transform, tarLimb);
-								
+
 								if (menu.Aim360 == false)
 								{
 									var scrnpt = Camera.main.WorldToViewportPoint(GetLimbPosition(zombie.transform, tarLimb));
 									if (scrnpt.z <= 0f || scrnpt.x <= 0f || scrnpt.y <= 0f || scrnpt.z >= 1f || scrnpt.x >= 1f ||
 									    scrnpt.y >= 1f) continue;
 								}
-								
+
 								if (menu.AimIgnoreWalls == false)
 								{
 									RaycastHit hit;
 									Physics.Raycast(Camera.main.transform.position, limbpos, out hit, dist, RayMasks.DAMAGE_CLIENT);
 									if (!hit.transform.CompareTag("Zombie")) continue;
 								}
-								
+
 								var targetpoint = Camera.main.WorldToScreenPoint(GetLimbPosition(zombie.transform, tarLimb));
 								targetpoint.y = Camera.main.pixelHeight - targetpoint.y;
 								var centerpoint = new Vector3((float) Camera.main.pixelWidth / 2, (float) Camera.main.pixelHeight / 2);
 
 								Logging.Log($"CENTER POINT: X: {centerpoint.x} Y: {centerpoint.y}"); //840/525
-						
+
 //Logging.Log("E");
 								//Calculate the pixels in specified 
 								var ppd = Camera.main.pixelWidth / Camera.main.fieldOfView;
@@ -369,14 +367,14 @@ namespace TsunamiHack.Tsunami.Lib
 
 								Logging.Log($"PPD: {ppd}");
 								Logging.Log($"WAFOV: {wafov}");
-						
+
 //Logging.Log("F");
 								//elimnate targets if they are not in the fov
 								var distToXHair = Vector2.Distance(centerpoint, targetpoint);
 								Logging.Log($"Dist to Xhair: {distToXHair}");
-								if(!menu.Aim360)
+								if (!menu.Aim360)
 									if (distToXHair > wafov) continue;
-						
+
 //Logging.Log("G");
 								//elminate targets if they are further than the current lowest distance;
 								if (distToXHair > currClosest) continue;
@@ -384,13 +382,13 @@ namespace TsunamiHack.Tsunami.Lib
 
 //Logging.Log("H");
 								target = zombie.transform;
-								
-								
-								
+
+
+
 							}
 						}
-						
-						
+
+
 //						if (zombie.isDead) continue;
 //						if (Vector3.Distance(Camera.main.transform.position, zombie.transform.position) > menu.AimDistance) continue;
 //						if (!menu.Aim360)
@@ -428,12 +426,12 @@ namespace TsunamiHack.Tsunami.Lib
 //							if(hit.transform != null)
 //								if (!hit.transform.CompareTag("Zombie")) continue;
 //						}
-						
+
 //Logging.Log("D");
-							
+
 					}
-					
-					
+
+
 				}
 
 				if (target != null)
@@ -443,7 +441,7 @@ namespace TsunamiHack.Tsunami.Lib
 					var quaternion = Quaternion.LookRotation(targetVector - Player.player.look.aim.position);
 					var quaternion2 = Quaternion.RotateTowards(Camera.main.transform.rotation, quaternion, speed);
 					var xVal = quaternion2.eulerAngles.x;
-					
+
 					if (xVal <= 90f)
 					{
 						xVal += 90f;
@@ -451,14 +449,14 @@ namespace TsunamiHack.Tsunami.Lib
 					if (xVal > 180f)
 					{
 						xVal -= 270f;
-					}	
-					
+					}
+
 					yaw.SetValue(Player.player.look, quaternion2.eulerAngles.y);
 					pitch.SetValue(Player.player.look, xVal);
-					
+
 				}
-				
-				
+
+
 //			var tarLimb = menu.Limb == 1 ? "Skull" : "Spine";
 //
 //			if (menu.EnableAimbot)
@@ -702,15 +700,19 @@ namespace TsunamiHack.Tsunami.Lib
 //				else if(!menu.AimSilent)
 //				{
 //					Logging.Log("Using Normal Aimbot");
-					
-					
+
+
 //				}
-				
-				
+
+
 			}
 
 
 		}
+
+
+
+
 
 		public static Vector3 GetLimbPosition(Transform target, string objName)
 		{

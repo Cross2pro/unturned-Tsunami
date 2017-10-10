@@ -155,6 +155,7 @@
     <Compile Include="Tsunami\ILibParent.cs" />
     <Compile Include="Tsunami\IMenuParent.cs" />
     <Compile Include="Tsunami\Lib\AimV2.cs" />
+    <Compile Include="Tsunami\Lib\AimV3.cs" />
     <Compile Include="Tsunami\Lib\Keybind.cs" />
     <Compile Include="Tsunami\Lib\Main.cs" />
     <Compile Include="Tsunami\Lib\VisualsV2.cs" />

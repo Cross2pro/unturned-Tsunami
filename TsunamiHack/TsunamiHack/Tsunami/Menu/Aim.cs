@@ -23,6 +23,7 @@ namespace TsunamiHack.Tsunami.Menu
         internal bool AimVehicles;//
         
         internal float AimUpdateRate;//
+        internal float AimListUpdateRate;
         
         internal bool AimClosest;//
         internal bool AimManualChangeTarget;//
@@ -71,7 +72,7 @@ namespace TsunamiHack.Tsunami.Menu
         
         public void Start()
         {
-            Lib.AimV2.Start();
+            Lib.AimV3.Start();
             
             var size = new Vector2(200,700);
             BotRect = MenuTools.GetRectAtLoc(size, MenuTools.Horizontal.Center, MenuTools.Vertical.Center, false);
@@ -91,6 +92,7 @@ namespace TsunamiHack.Tsunami.Menu
             AimSpeed = 5f;
             AimDistance = 200f;
             AimUpdateRate = 5f;
+            AimListUpdateRate = 100f;
 
             LockSensitivity = 5f;
             LockDistance = 200f;
@@ -103,7 +105,7 @@ namespace TsunamiHack.Tsunami.Menu
         
         public void Update()
         {
-            Lib.AimV2.Update();
+            Lib.AimV3.Update();
         }
 
         public void OnGUI()
@@ -156,7 +158,7 @@ namespace TsunamiHack.Tsunami.Menu
             AimFov = GUILayout.HorizontalSlider((float) Math.Round(AimFov, 0), 1f, Camera.main.fieldOfView);
             GUILayout.Space(2f);
             GUILayout.Label($"Aim Speed : {AimSpeed}");
-            AimSpeed = GUILayout.HorizontalSlider((float) Math.Round(AimSpeed, 0), 1f, 10f);
+            AimSpeed = GUILayout.HorizontalSlider((float) Math.Round(AimSpeed, 0), 1f, 30f);
             GUILayout.Space(2f);     
             if (GUILayout.Button($"Target Limb : {AimTargetLimb}"))
             {
@@ -175,6 +177,9 @@ namespace TsunamiHack.Tsunami.Menu
             GUILayout.Space(2f);
             GUILayout.Label($"Aim Update Rate: {AimUpdateRate}");
             AimUpdateRate = GUILayout.HorizontalSlider((float) Math.Round(AimUpdateRate, 0), 10f, 100f);
+            GUILayout.Space(2f);
+            GUILayout.Label($"Aim List Update Rate: {AimListUpdateRate}");
+            AimListUpdateRate = GUILayout.HorizontalSlider((float) Math.Round(AimListUpdateRate, 0), 10f, 200f);
             GUILayout.Label("* Features Coming Soon");
         }
 
@@ -223,7 +228,7 @@ namespace TsunamiHack.Tsunami.Menu
             GUILayout.Label("----------------------------------------\nTrigger Selection\n----------------------------------------");
             GUILayout.Space(2f);
             TriggerPlayers = GUILayout.Toggle(TriggerPlayers, " Trigger Players");
-            TriggerZombies = GUILayout.Toggle(TriggerZombies, " Trigger Zombies");
+            TriggerZombies = GUILayout.Toggle(TriggerZombies, " Trigger Zombies"); 
             TriggerAnimals = GUILayout.Toggle(TriggerAnimals, " Trigger Animals");
             TriggerVehicles = GUILayout.Toggle(TriggerVehicles, " Trigger Vehicles");
             GUILayout.Space(2f);
