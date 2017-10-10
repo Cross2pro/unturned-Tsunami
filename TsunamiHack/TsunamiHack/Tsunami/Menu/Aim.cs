@@ -154,7 +154,7 @@ namespace TsunamiHack.Tsunami.Menu
             AimIgnoreWalls = GUILayout.Toggle(AimIgnoreWalls, " Ignore Walls");
             GUILayout.Space(2f);
             Aim360 = GUILayout.Toggle(Aim360, " 360 Aim FOV");
-            GUILayout.Label($"Visible Aim FOV : {AimFov}");
+            GUILayout.Label($"Aim FOV : {AimFov}");
             AimFov = GUILayout.HorizontalSlider((float) Math.Round(AimFov, 0), 1f, Camera.main.fieldOfView);
             GUILayout.Space(2f);
             GUILayout.Label($"Aim Speed : {AimSpeed}");

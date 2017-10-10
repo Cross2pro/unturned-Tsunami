@@ -67,16 +67,8 @@ namespace TsunamiHack.Tsunami.Lib
         public static void Update()
         {
 	        UpdateAimbot();
-	        
-	        //Update Lock and Triggerbot on delay
-	        if ((LastLock - DateTime.Now).TotalMilliseconds > Menu.AimUpdateRate)
-	        {
-			    UpdateLock();
-			    UpdateTb();
-
-		        LastLock = DateTime.Now;
-	        }
-	        
+	        UpdateLock();
+	        UpdateTb();	        
 	        
         }
 
@@ -98,7 +90,7 @@ namespace TsunamiHack.Tsunami.Lib
 		    UpdateAimLists();
 		    
 		    if (Menu.EnableAimbot)
-		    {
+		    {			    
 			    //set target limb
 			    var limb = Menu.AimTargetLimb == TargetLimb.Head ? "Skull" : "Spine";
 			    var currClosest = float.PositiveInfinity;
@@ -165,14 +157,14 @@ namespace TsunamiHack.Tsunami.Lib
 
 			    if (Menu.AimPlayers)
 			    {
-				    foreach (var player in Players)
+				    foreach (var player in Provider.clients)
 				    {
 					    var id = player.playerID.steamID.m_SteamID;
 					    
 					    if (player.player != Player.player)
 					    {
-//						    if (WaveMaker.Friends.Contains(id) && Menu.AimWhitelistFriends) continue;
-//						    if (player.isAdmin && Menu.AimWhitelistAdmins) continue;
+						    if (WaveMaker.Friends.Contains(id) && Menu.AimWhitelistFriends) continue;
+						    if (player.isAdmin && Menu.AimWhitelistAdmins) continue;
 						    
 						    if (Vector3.Distance(Camera.main.transform.position, player.player.transform.position) <= distance)
 						    {
@@ -234,11 +226,6 @@ namespace TsunamiHack.Tsunami.Lib
 		    
 		    }
 		    
-		    
-	    }
-
-	    public static void UpdateAim()
-	    {
 		    
 	    }
 	    
@@ -308,50 +295,50 @@ namespace TsunamiHack.Tsunami.Lib
 			    }
 		    }
 
-		    if (Menu.AimPlayers)
-		    {
-			    if (PlayerUpdate > Menu.AimListUpdateRate)
-			    {
-
-				    if (Players.Count == 0)
-				    {
-					    Players = Provider.clients;
-				    }
-				    else
-				    {
-					    //Add players that are in new list but not in old
-					    foreach (var client in Provider.clients)
-					    {
-						    var index = Players.IndexOf(client);
-						    if (index == -1)
-							    Players.Add(client);
-					    }
-
-					    //remove players that are in active list but arent in new list
-					    foreach (var player in Players)
-					    {
-						    var index = Provider.clients.IndexOf(player);
-						    if(index == -1)
-							    Players.Remove(player);
-					    }
-
-				    }
-				    
-				    ZombieUpdate = 0;
-			    }
-			    else
-				    ZombieUpdate++;
-		    }
-		    else if (!Menu.AimPlayers && Players.Count > 0)
-		    {
-			    if (!PlayerFlag)
-				    PlayerFlag = true;
-			    else if (PlayerFlag)
-			    {
-				    Players = new List<SteamPlayer>();
-				    PlayerFlag = false;
-			    }
-		    }
+//		    if (Menu.AimPlayers)
+//		    {
+//			    if (PlayerUpdate > Menu.AimListUpdateRate)
+//			    {
+//
+//				    if (Players.Count == 0)
+//				    {
+//					    Players = Provider.clients;
+//				    }
+//				    else
+//				    {
+//					    //Add players that are in new list but not in old
+//					    foreach (var client in Provider.clients)
+//					    {
+//						    var index = Players.IndexOf(client);
+//						    if (index == -1)
+//							    Players.Add(client);
+//					    }
+//
+//					    //remove players that are in active list but arent in new list
+//					    foreach (var player in Players)
+//					    {
+//						    var index = Provider.clients.IndexOf(player);
+//						    if(index == -1)
+//							    Players.Remove(player);
+//					    }
+//
+//				    }
+//				    
+//				    ZombieUpdate = 0;
+//			    }
+//			    else
+//				    ZombieUpdate++;
+//		    }
+//		    else if (!Menu.AimPlayers && Players.Count > 0)
+//		    {
+//			    if (!PlayerFlag)
+//				    PlayerFlag = true;
+//			    else if (PlayerFlag)
+//			    {
+//				    Players = new List<SteamPlayer>();
+//				    PlayerFlag = false;
+//			    }
+//		    }
 
 
 	    }

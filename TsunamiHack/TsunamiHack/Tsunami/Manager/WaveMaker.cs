@@ -98,9 +98,6 @@ namespace TsunamiHack.Tsunami.Manager
                 PopupController.EnableFirstTime = true;
             }
 
-            Logging.Log($"CURRENT VERSION NUMBER: {Controller.Version}");
-            Logging.Log($"CURRENT DLL VERSION NUMBER: {Version}");
-
             if (Controller.Version != Version)
             {
                 Logging.Log("Setting Disabled Type");

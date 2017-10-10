@@ -1616,11 +1616,6 @@ namespace TsunamiHack.Tsunami.Lib
             
         }
 
-        internal static void RefreshLists()
-        {
-            
-        }
-
         public static void EnableGlowGeneric(List<GlowItem> list, Color glowColor)
         {
             foreach (var go in list)
@@ -1665,52 +1660,57 @@ namespace TsunamiHack.Tsunami.Lib
         
         internal static void CheckBoxes()
         {
-            if (Menu.PlayerBox && Menu.EnableEsp)
+            if (Menu.EnableEsp)
             {
+                if (Menu.PlayerBox && Menu.EnableEsp)
+                {
                 
-                foreach (var client in Provider.clients)
-                {
-                    if (client.player == Player.player) continue;
-                    
-                    var dist = Vector3.Distance(Camera.main.transform.position, client.player.transform.position);
-                    if (dist <= Menu.Distance || Menu.InfDistance)
+                    foreach (var client in Provider.clients)
                     {
-                        var scrnpt = Camera.main.WorldToScreenPoint(client.player.transform.position);
-                        if (scrnpt.z >= 0)
-                        {
-                            scrnpt.y = Screen.height - scrnpt.y;
-                            var color = WaveMaker.Friends.Contains(client.playerID.steamID.m_SteamID)
-                                ? Menu.BoxPlayerFriendly
-                                : Menu.BoxPlayerEnemy;
-                            DrawBox(client.player.transform, scrnpt, color);
-                        }
-                    }
+                        if (client.player == Player.player) continue;
+                        if (client.player.life.isDead) continue;
                     
-                }
-            }    
-
-            if (Menu.ZombieBox && Menu.EnableEsp)
-            {
-
-                foreach (var zombie in Zombies)
-                {
-                    if (!zombie.isDead)
-                    {
-                        var dist = Vector3.Distance(Camera.main.transform.position, zombie.transform.position);
+                        var dist = Vector3.Distance(Camera.main.transform.position, client.player.transform.position);
                         if (dist <= Menu.Distance || Menu.InfDistance)
                         {
-                            var pos = Camera.main.WorldToScreenPoint(zombie.transform.position);
-
-                            if (pos.z >= 0)
+                            var scrnpt = Camera.main.WorldToScreenPoint(client.player.transform.position);
+                            if (scrnpt.z >= 0)
                             {
-                                pos.y = Screen.height - pos.y;
-                                DrawBox(zombie.transform, pos, Menu.BoxZombie);
+                                scrnpt.y = Screen.height - scrnpt.y;
+                                var color = WaveMaker.Friends.Contains(client.playerID.steamID.m_SteamID)
+                                    ? Menu.BoxPlayerFriendly
+                                    : Menu.BoxPlayerEnemy;
+                                DrawBox(client.player.transform, scrnpt, color);
                             }
-                        }         
-                    }   
+                        }
+                    
+                    }
                 }    
+
+                if (Menu.ZombieBox && Menu.EnableEsp)
+                {
+
+                    foreach (var zombie in Zombies)
+                    {
+                        if (!zombie.isDead)
+                        {
+                            var dist = Vector3.Distance(Camera.main.transform.position, zombie.transform.position);
+                            if (dist <= Menu.Distance || Menu.InfDistance)
+                            {
+                                var pos = Camera.main.WorldToScreenPoint(zombie.transform.position);
+
+                                if (pos.z >= 0)
+                                {
+                                    pos.y = Screen.height - pos.y;
+                                    DrawBox(zombie.transform, pos, Menu.BoxZombie);
+                                }
+                            }         
+                        }   
+                    }    
             
+                }    
             }
+            
         }
 
         internal static void CheckLabels()
@@ -1830,27 +1830,22 @@ namespace TsunamiHack.Tsunami.Lib
 
                             if (Menu.PlayerWeapon)
                             {
-                                if (text.Length > 0)
-                                    text += "\n";
-                                
                                 if (player.player.equipment.asset != null)
                                 {
+                                    if (text.Length > 0 && player.player.equipment.asset.type == EItemType.GUN || player.player.equipment.asset.type == EItemType.MELEE)
+                                        text += "\n";
+
                                     if (player.player.equipment.asset.type == EItemType.GUN || player.player.equipment.asset.type == EItemType.MELEE)
-                                        text += $"Weapon: {player.player.equipment.asset.name}";
-                                    else
-                                        text += $"Weapon: None";
+                                        text += player.player.equipment.asset.name.Replace("_", " ");
                                 }
-                                else
-                                    text += "Weapon: None";
-                                 
                             }
 
                             if (Menu.PlayerDistance)
                             {
                                 if (text.Length > 0)
-                                    text += $"\nDistance: {Math.Round(dist, 0)}";
-                                else
-                                    text += $"Distance: {Math.Round(dist, 0)}";
+                                    text += "\n";
+
+                                text += $"[{Math.Round(dist, 0)}]";
                             }
                             
                             
@@ -1864,8 +1859,13 @@ namespace TsunamiHack.Tsunami.Lib
                             var color = WaveMaker.Friends.Contains(player.playerID.steamID.m_SteamID)
                                 ? Menu.FriendlyPlayerGlow
                                 : Menu.EnemyPlayerGlow;
-                        
-                            GUI.Label(new Rect(scrnpt + new Vector3(0,6f,0), new Vector2(170,70)), $"<color={color}><size={size}>{text}</size></color>" );
+
+                            var friend = WaveMaker.Friends.Contains(player.playerID.steamID.m_SteamID);
+                            
+                            if(friend)
+                                GUI.Label(new Rect(scrnpt + new Vector3(0,6f,0), new Vector2(170,70)), $"<color=#00ffff><size={size}>{text}</size></color>" );
+                            else
+                                GUI.Label(new Rect(scrnpt + new Vector3(0,6f,0), new Vector2(170,70)), $"<color=#ff0000><size={size}>{text}</size></color>" );
                         }
       
                     }
@@ -1903,67 +1903,116 @@ namespace TsunamiHack.Tsunami.Lib
                                 if (Menu.ZombieDistance)
                                 {
                                     if (text.Length > 0)
-                                    {
-                                        text += $"\nDistance: {Math.Round(dist, 0)}";
-                                    }
-                                    else
-                                    {
-                                        text += $"Distance: {Math.Round(dist, 0)}";
-                                    }
+                                        text += "\n";
+
+                                    text += $"[{Math.Round(dist, 0)}]";
+                                    
                                 }
-    
+
                                 if (Menu.ZombieSpecialty)
                                 {
                                     var str = "";
-    
-                                    if (text.Length > 0)
-                                        str += "\n";
-    
-                                    switch (zombie.speciality)
+
+                                    if (Menu.ZombieDistance)
                                     {
+                                        str = " || ";
+
+                                        switch (zombie.speciality)
+                                        {
                                             case EZombieSpeciality.NONE:
-                                                str += "Specialty: None";
+                                                str += "Normal";
                                                 break;
                                             case EZombieSpeciality.NORMAL:
-                                                str += "Specialty: None";
+                                                str += "Normal";
                                                 break;
                                             case EZombieSpeciality.MEGA:
-                                                str += "Specialty: Mega";
+                                                str += "Mega";
                                                 break;
                                             case EZombieSpeciality.CRAWLER:
-                                                str += "Specialty: Crawler";
+                                                str += "Crawler";
                                                 break;
                                             case EZombieSpeciality.SPRINTER:
-                                                str += "Specialty: Sprinter";
+                                                str += "Sprinter";
                                                 break;
                                             case EZombieSpeciality.FLANKER_FRIENDLY:
-                                                str += "Specialty: Friendly Flanker";
+                                                str += "Friendly Flanker";
                                                 break;
                                             case EZombieSpeciality.FLANKER_STALK:
-                                                str += "Specialty: Stalking Flanker";
+                                                str += "Stalking Flanker";
                                                 break;
                                             case EZombieSpeciality.BURNER:
-                                                str += "Specialty: Burner";
+                                                str += "Burner";
                                                 break;
                                             case EZombieSpeciality.ACID:
-                                                str += "Specialty: Acid";
+                                                str += "Acid";
                                                 break;
                                             case EZombieSpeciality.BOSS_ELECTRIC:
-                                                str += "Specialty: Electric (Boss)";
+                                                str += "Electric (Boss)";
                                                 break;
                                             case EZombieSpeciality.BOSS_WIND:
-                                                str += "Specialty: Wind (Boss)";
+                                                str += "Wind (Boss)";
                                                 break;
                                             case EZombieSpeciality.BOSS_FIRE:
-                                                str += "Specialty: Fire (Boss)";
+                                                str += "Fire (Boss)";
                                                 break;
                                             case EZombieSpeciality.BOSS_ALL:
-                                                str += "Specialty: All (Boss)";
+                                                str += "All (Boss)";
                                                 break;
                                             case EZombieSpeciality.BOSS_MAGMA:
-                                                str += "Specialty: Magma (Boss)";
+                                                str += "Magma (Boss)";
                                                 break;
-                                    } 
+                                        }
+                                    }
+                                    else
+                                    {
+                                        text += "\n";
+                                        
+                                        switch (zombie.speciality)
+                                        {
+                                            case EZombieSpeciality.NONE:
+                                                str += "Normal";
+                                                break;
+                                            case EZombieSpeciality.NORMAL:
+                                                str += "Normal";
+                                                break;
+                                            case EZombieSpeciality.MEGA:
+                                                str += "Mega";
+                                                break;
+                                            case EZombieSpeciality.CRAWLER:
+                                                str += "Crawler";
+                                                break;
+                                            case EZombieSpeciality.SPRINTER:
+                                                str += "Sprinter";
+                                                break;
+                                            case EZombieSpeciality.FLANKER_FRIENDLY:
+                                                str += "Friendly Flanker";
+                                                break;
+                                            case EZombieSpeciality.FLANKER_STALK:
+                                                str += "Stalking Flanker";
+                                                break;
+                                            case EZombieSpeciality.BURNER:
+                                                str += "Burner";
+                                                break;
+                                            case EZombieSpeciality.ACID:
+                                                str += "Acid";
+                                                break;
+                                            case EZombieSpeciality.BOSS_ELECTRIC:
+                                                str += "Electric (Boss)";
+                                                break;
+                                            case EZombieSpeciality.BOSS_WIND:
+                                                str += "Wind (Boss)";
+                                                break;
+                                            case EZombieSpeciality.BOSS_FIRE:
+                                                str += "Fire (Boss)";
+                                                break;
+                                            case EZombieSpeciality.BOSS_ALL:
+                                                str += "All (Boss)";
+                                                break;
+                                            case EZombieSpeciality.BOSS_MAGMA:
+                                                str += "Magma (Boss)";
+                                                break;
+                                        }
+                                    }
                                     text += str;
                                 }
 
@@ -1980,7 +2029,7 @@ namespace TsunamiHack.Tsunami.Lib
                                 
                                  
                                 
-                                GUI.Label(new Rect(scrnPt + new Vector3(0,4f,0), new Vector2(170,50)), $"<size={size}>{text}</size>" );        
+                                GUI.Label(new Rect(scrnPt + new Vector3(0,4f,0), new Vector2(170,50)), $"<color=#00ff00><size={size}>{text}</size></color>" );        
                             }
                         }
                     }
@@ -2064,7 +2113,7 @@ namespace TsunamiHack.Tsunami.Lib
                         
                         var size = Menu.ScaleText ? dist <= Menu.Dropoff ? Menu.CloseSize : Menu.FarSize : 10f;
                             
-                        GUI.Label(new Rect(scrnpt + new Vector3(0,4f,0), new Vector2(170,50)), $"<color={Menu.InteractableGlow}><size={size}>{text}</size></color>" );
+                        GUI.Label(new Rect(scrnpt + new Vector3(0,4f,0), new Vector2(170,50)), $"<color=#ffff00><size={size}>{text}</size></color>" );
                         
                     }
 
@@ -2101,7 +2150,7 @@ namespace TsunamiHack.Tsunami.Lib
                             if (name.Contains("Police"))
                                 name = "Police Car";
                             
-                            text += $"Vehicle: {name}";
+                            text += $"{name}";
                         }
 
                         if (Menu.VehicleDistance)
@@ -2109,12 +2158,12 @@ namespace TsunamiHack.Tsunami.Lib
                             if (text.Length > 0)
                                 text += "\n";
                             
-                            text += $"Distance: {Math.Round(dist,0)}";
+                            text += $"[{Math.Round(dist,0)}]";
                         }
 
                         var size = Menu.ScaleText ? dist <= Menu.Dropoff ? Menu.CloseSize : Menu.FarSize : 10f;
                         
-                        GUI.Label(new Rect(scrnpt + new Vector3(0,4f,0), new Vector2(170,50)), $"<color={Menu.InteractableGlow}><size={size}>{text}</size></color>" );
+                        GUI.Label(new Rect(scrnpt + new Vector3(0,4f,0), new Vector2(170,50)), $"<color=#ff00ff><size={size}>{text}</size></color>" );
                     }
                 }
             }
@@ -2140,7 +2189,7 @@ namespace TsunamiHack.Tsunami.Lib
 
                         if (Menu.ItemName)
                         {
-                            text += $"Item: {item.asset.itemName}";
+                            text += $"{item.asset.itemName}";
                         }
 
                         if (Menu.ItemDistance)
@@ -2148,13 +2197,13 @@ namespace TsunamiHack.Tsunami.Lib
                             if (text.Length > 0)
                                 text += "\n";
 
-                            text += $"Distance: {Math.Round(dist, 0)}";
+                            text += $"[{Math.Round(dist, 0)}]";
                             
                         }
                         
                         var size = Menu.ScaleText ? dist <= Menu.Dropoff ? Menu.CloseSize : Menu.FarSize : 10f;
                         
-                        GUI.Label(new Rect(scrnpt + new Vector3(0,4f,0), new Vector2(170,50)), $"<color={Menu.InteractableGlow}><size={size}>{text}</size></color>" );
+                        GUI.Label(new Rect(scrnpt + new Vector3(0,4f,0), new Vector2(170,50)), $"<color=#ffff00><size={size}>{text}</size></color>" );
                     }
                 }
             }

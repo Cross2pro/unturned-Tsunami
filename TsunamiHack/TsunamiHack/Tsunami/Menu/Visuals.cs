@@ -174,7 +174,7 @@ namespace TsunamiHack.Tsunami.Menu
             Changing = (ColorChangeType) ChangeInt;
 
             Distance = 200f;
-            UpdateRate = 10f;
+            UpdateRate = 10000f;
 
             CloseSize = 5f;
             FarSize = 3f;
@@ -213,8 +213,9 @@ namespace TsunamiHack.Tsunami.Menu
         {
 //            if(Provider.isConnected)
 //                Lib.Visuals.Update();
-                
-            Lib.VisualsV2.Update();
+             
+            if(Provider.isConnected)
+                Lib.VisualsV2.Update();
         }
 
         public void OnGUI()
@@ -470,7 +471,6 @@ namespace TsunamiHack.Tsunami.Menu
             }
             
             GUILayout.Space(10f);
-            GUILayout.Label("Having too many categories selected at once will cause you to lag. For the best experience only select \"Show\" for those items you are specifically looking for");
             GUILayout.EndScrollView();
         }
 
@@ -486,8 +486,8 @@ namespace TsunamiHack.Tsunami.Menu
             GUILayout.Label($"ESP Distance : {Distance}");
             Distance = GUILayout.HorizontalSlider((float) Math.Round(Distance, 0), 0f, 1000f);
             GUILayout.Space(1f);
-            GUILayout.Label($"Update Rate : {UpdateRate}");
-            UpdateRate = GUILayout.HorizontalSlider((float) Math.Round(UpdateRate, 0), 1f, 100f);
+            GUILayout.Label($"Update Rate (milliseconds): {UpdateRate}");
+            UpdateRate = GUILayout.HorizontalSlider((float) Math.Round(UpdateRate, 0), 1f, 10000f);
             
             GUILayout.Space(2f);
             GUILayout.Label("ESP Colors\n--------------------------------------");
