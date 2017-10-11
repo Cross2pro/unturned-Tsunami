@@ -141,11 +141,12 @@ namespace TsunamiHack.Tsunami.Menu
         internal Vector2 ScrollPos2;
         internal Vector2 ScrollPos3;
         
+        
         public void Start()
         {
 //            Lib.Visuals.Start(this);
             Lib.VisualsV2.Start();
-            
+
             var size = new Vector2(203,815);
             SelectionRect =
                 MenuTools.GetRectAtLoc(size, MenuTools.Horizontal.Center, MenuTools.Vertical.Center, false);
@@ -235,17 +236,15 @@ namespace TsunamiHack.Tsunami.Menu
             {
                 Lib.VisualsV2.CheckBoxes();
                 Lib.VisualsV2.CheckLabels();
+                Lib.VisualsV2.CheckSkeleton();
+                Lib.VisualsV2.CheckTracers();
             }
               
+            //TODO: Make sure that i check if I can see the player or zombie, so it doesnt do the skybox thing       
             
-            Lib.VisualsV2.CheckSkeleton();
         }
 
-        public void OnPostRender()
-        {
-                  
-             
-        }
+
 
         public void MenuFunct(int id)
         {

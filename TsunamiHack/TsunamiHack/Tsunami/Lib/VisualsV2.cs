@@ -1606,8 +1606,6 @@ namespace TsunamiHack.Tsunami.Lib
 
         internal static void OnGUI()
         {
-            if(Menu.ShowSkeleton)
-                GLTest();
             
             if ((DateTime.Now - guiLastUpdate).TotalMilliseconds >= Menu.UpdateRate)
             {
@@ -2536,6 +2534,57 @@ namespace TsunamiHack.Tsunami.Lib
 
         #endregion
 
+		internal static void CheckTracers()
+		{
+		    
+		    if (Menu.Tracers)
+		    {
+		        var zoms = new List<Zombie>();
+		        foreach (var region in ZombieManager.regions)
+		        {
+		            foreach (var zombie in region.zombies)
+		            {
+		                zoms.Add(zombie);
+		            }
+		        }
+
+		        foreach (var zombie in zoms)
+		        {
+		            var centerpt = new Vector2(Screen.width / 2, Screen.height /2);
+		            Vector3 spinepos = Vector3.zero;
+		            Vector3 skullpos = Vector3.zero;
+		            
+		            var components = zombie.transform.GetComponentsInChildren<Transform>();
+		            foreach (var comp in components)
+		            {
+		                if (comp.name.Trim() == "Spine")
+		                    spinepos = comp.position;
+//		                if (comp.name.Trim() == "Skull")
+//		                    skullpos = comp.position;
+		            }
+
+//		            var vp = Camera.main.WorldToViewportPoint(skullpos);
+//		            if (vp.z <= 0f || vp.x <= 0f || vp.x >= 1f || vp.y <= 0f || vp.y >= 1f) continue;
+		            
+//		            spinepos.y = skullpos.y - spinepos.y;
+		            
+		            var spinescreenpos = Camera.main.WorldToScreenPoint(spinepos);
+		            spinescreenpos.y = Screen.height - spinescreenpos.y;
+		            
+		            GL.PushMatrix();
+		            GL.Begin(1);
+		            BoxMaterial.SetPass(0);
+		            GL.Color(Color.red);
+		            
+		            GL.Vertex3(centerpt.x, centerpt.y, 0f);
+		            GL.Vertex3(spinescreenpos.x, spinescreenpos.y, 0f);
+		            
+		            GL.End();
+		            GL.PopMatrix();
+		        }		        
+		    }
+		}
+
         internal static void CheckSkeleton()
         {
             var zoms = new List<Zombie>();
@@ -2619,11 +2668,17 @@ namespace TsunamiHack.Tsunami.Lib
                         }
                     }
 
+                    var vp = Camera.main.WorldToViewportPoint(skull.position);
+                    if (vp.z <= 0f || vp.x <= 0f || vp.x >= 1f || vp.y <= 0f || vp.y >= 1f) continue;
+                    
+                    
                     var skullpos = Camera.main.WorldToScreenPoint(skull.position);
-                     skullpos.y = Screen.height - skullpos.y;
+                    skullpos.y = Screen.height - skullpos.y;
 
+                    
+                    
                     var skullelevatedpos =
-                        Camera.main.WorldToScreenPoint(new Vector3(skull.position.x, skull.position.y + (float)0.5,
+                        Camera.main.WorldToScreenPoint(new Vector3(skull.position.x, skull.position.y + (float)0.25,
                             skull.position.z));
                     skullelevatedpos.y = Screen.height - skullelevatedpos.y;
 
@@ -2699,9 +2754,13 @@ namespace TsunamiHack.Tsunami.Lib
                     GL.Vertex3(larmpos.x, larmpos.y, 0f);
                     GL.Vertex3(lhandpos.x, lhandpos.y, 0f);
                     
-                    //spine to left hip
+                    //spine to left leg
                     GL.Vertex3(spinepos.x, spinepos.y, 0f);
                     GL.Vertex3(llegpos.x, llegpos.y, 0f);
+                    
+                    //left leg to left foot
+                    GL.Vertex3(llegpos.x, llegpos.y, 0f);
+                    GL.Vertex3(lfootpos.x, lfootpos.y, 0f);
                     
                     //spine to right leg
                     GL.Vertex3(spinepos.x, spinepos.y, 0f);
@@ -2713,9 +2772,7 @@ namespace TsunamiHack.Tsunami.Lib
                     
 
                     
-                    //left leg to left foot
-                    GL.Vertex3(llegpos.x, llegpos.y, 0f);
-                    GL.Vertex3(lfootpos.x, lfootpos.y, 0f);
+                    
                 
                     //skull to elevated skull
                     
@@ -2826,26 +2883,116 @@ namespace TsunamiHack.Tsunami.Lib
             GL.PopMatrix();
         }
 
-        internal static void GLTest()
+        internal static void DrawSkeleton(Transform input, Color color)
         {
-            Logging.Log("In GLTEST");
-            var center = new Vector2(Screen.width / 2, Screen.height / 2);
-            var left = new Vector2(5, 5);
-            var right = new Vector2( Screen.width - 5, Screen.height - 5);
+            var visible = Camera.main.WorldToViewportPoint(input.position);
+            if (visible.z <= 0f || visible.x <= 0f || visible.x >= 1f || visible.y <= 0f || visible.y >= 1f) return;
             
-            GL.PushMatrix();
-            GL.Begin(1);
-            BoxMaterial.SetPass(0);
-            GL.Color(Color.red);
+            Transform skull = null;
+            Transform spine = null;
+            
+            Transform left_shoulder = null;
+            Transform right_shoulder = null;
+            
+            Transform left_arm = null;
+            Transform right_arm = null;
+            
+            Transform left_hand = null;
+            Transform right_hand = null;
 
-            GL.Vertex3(center.x, center.y, 0f);
-            GL.Vertex3(left.x, left.y, 0f);
+            Transform left_leg = null;
+            Transform right_leg = null;
+
+            Transform left_foot = null;
+            Transform right_foot = null;
+
+            var bones = new List<Transform>()
+            {
+                skull,
+                null,
+                spine,
+                left_shoulder,
+                right_shoulder,
+                left_arm,
+                right_arm,
+                left_hand,
+                right_hand,
+                left_leg,
+                right_leg,
+                left_foot,
+                right_foot
+            };
             
-            GL.Vertex3(center.x, center.y, 0f);
-            GL.Vertex3(right.x, right.y, 0f);
+            var components = input.GetComponentsInChildren<Transform>();
+            foreach (var co in components)
+            {
+                switch (co.name.Trim())
+                {
+                    case "Skull":
+                        skull = co;
+                        bones[0] = skull;
+                        break;
+                        
+                    case "Spine":
+                        spine = co;
+                        bones[2] = spine;
+                        break;
+                        
+                    case "Left_Shoulder":
+                        left_shoulder = co;
+                        bones[3] = left_shoulder;
+                        break;
+                        
+                    case "Right_Shoulder":
+                        right_shoulder = co;
+                        bones[4] = right_shoulder;
+                        break;
+                        
+                    case "Left_Arm":
+                        left_arm = co;
+                        bones[5] = left_arm;
+                        break;
+                        
+                    case "Right_Arm":
+                        right_arm = co;
+                        bones[6] = right_arm;
+                        break;
+                        
+                    case "Left_Hand":
+                        left_hand = co;
+                        bones[7] = left_hand;
+                        break;
+                        
+                    case "Right_Hand":
+                        right_hand = co;
+                        bones[8] = right_hand;
+                        break;
+                        
+                    case "Left_Leg":
+                        left_leg = co;
+                        bones[9] = left_leg;
+                        break;
+                        
+                    case "Right_Leg":
+                        right_leg = co;
+                        bones[10] = right_leg;
+                        break;
+                        
+                    case "Left_Foot":
+                        left_foot = co;
+                        bones[11] = left_foot;
+                        break;
+                        
+                    case "Right_Foot":
+                        right_foot = co;
+                        bones[12] = right_foot;
+                        break;
+                }
+            }
             
-            GL.End();
-            GL.PopMatrix();
+            
+            
         }
+        
     }
 }
