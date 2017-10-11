@@ -1362,6 +1362,7 @@ using UnityEngine;
 using SDG.Unturned;
 using TsunamiHack.Tsunami.Manager;
 using TsunamiHack.Tsunami.Types;
+using TsunamiHack.Tsunami.Util;
 using Object = UnityEngine.Object;
 
 namespace TsunamiHack.Tsunami.Lib
@@ -1605,17 +1606,23 @@ namespace TsunamiHack.Tsunami.Lib
 
         internal static void OnGUI()
         {
+            if(Menu.ShowSkeleton)
+                GLTest();
+            
             if ((DateTime.Now - guiLastUpdate).TotalMilliseconds >= Menu.UpdateRate)
             {
                 if (Provider.isConnected)
                 {
                     CheckLabels();
-                    CheckBoxes();        
+                    CheckBoxes();
+                    
                 }
             }
             
         }
 
+        #region other esp
+        
         public static void EnableGlowGeneric(List<GlowItem> list, Color glowColor)
         {
             foreach (var go in list)
@@ -2527,6 +2534,201 @@ namespace TsunamiHack.Tsunami.Lib
             }
         }
 
+        #endregion
+
+        internal static void CheckSkeleton()
+        {
+            var zoms = new List<Zombie>();
+            foreach (var region in ZombieManager.regions)
+            {
+                foreach (var zombie in region.zombies)
+                {
+                    zoms.Add(zombie);
+                }
+            }
+
+            if (Menu.ShowSkeleton)
+            {
+                foreach (var zombie in zoms)
+                {
+
+                    Transform skull = null;
+                    Transform spine = null;
+                    Transform lshoulder = null;
+                    Transform rshoulder = null;
+                    Transform rarm = null;
+                    Transform rhand = null;
+                    Transform larm = null;
+                    Transform lhand = null;
+                    Transform lhip = null;
+                    Transform rhip = null;
+                    Transform lleg = null;
+                    Transform rleg = null;
+                    Transform rfoot = null;
+                    Transform lfoot = null;
+                    
+                    
+                    
+                    var components = zombie.transform.GetComponentsInChildren<Transform>();
+                    foreach (var co in components)
+                    {
+                        switch (co.name.Trim())
+                        {
+                                case "Skull":
+                                    skull = co;
+                                    break;
+                                case "Spine":
+                                    spine = co;
+                                    break;
+                                case "Left_Shoulder":
+                                    lshoulder = co;
+                                    break;
+                                case "Right_Shoulder":
+                                    rshoulder = co;
+                                    break;
+                                case "Right_Arm":
+                                    rarm = co;
+                                    break;
+                                case "Right_Hand":
+                                    rhand = co;
+                                    break;
+                                case "Left_Arm":
+                                    larm = co;
+                                    break;
+                                case "Left_Hand":
+                                    lhand = co;
+                                    break;
+                                case "Left_Hip":
+                                    lhip = co;
+                                    break;
+                                case "Right_Hip":
+                                    rhip = co;
+                                    break;
+                                case "Left_Leg":
+                                    lleg = co;
+                                    break;
+                                case "Right_Leg":
+                                    rleg = co;
+                                    break;
+                                case "Right_Foot":
+                                    rfoot = co;
+                                    break;
+                                case "Left_Foot":
+                                    lfoot = co;
+                                    break;
+                        }
+                    }
+
+                    var skullpos = Camera.main.WorldToScreenPoint(skull.position);
+                     skullpos.y = Screen.height - skullpos.y;
+
+                    var skullelevatedpos =
+                        Camera.main.WorldToScreenPoint(new Vector3(skull.position.x, skull.position.y + (float)0.5,
+                            skull.position.z));
+                    skullelevatedpos.y = Screen.height - skullelevatedpos.y;
+
+                    var spinepos = Camera.main.WorldToScreenPoint(spine.position);
+                    spinepos.y = Screen.height - spinepos.y;
+
+                    var rshoulderpos = Camera.main.WorldToScreenPoint(rshoulder.position);
+                    rshoulderpos.y = Screen.height - rshoulderpos.y;
+
+                    var lshoulderpos = Camera.main.WorldToScreenPoint(lshoulder.position);
+                    lshoulderpos.y = Screen.height - lshoulderpos.y;
+                    
+                    var rarmpos = Camera.main.WorldToScreenPoint(rarm.position);
+                    rarmpos.y = Screen.height - rarmpos.y;
+                    
+                    var rhandpos = Camera.main.WorldToScreenPoint(rhand.position);
+                    rhandpos.y = Screen.height - rhandpos.y;
+                    
+                    var lhandpos = Camera.main.WorldToScreenPoint(lhand.position);
+                    lhandpos.y = Screen.height - lhandpos.y;
+                    
+                    var larmpos = Camera.main.WorldToScreenPoint(larm.position);
+                    larmpos.y = Screen.height - larmpos.y;
+                    
+                    var lhippos = Camera.main.WorldToScreenPoint(lhip.position);
+                    lhippos.y = Screen.height - lhippos.y;
+                    
+                    var llegpos = Camera.main.WorldToScreenPoint(lleg.position);
+                    llegpos.y = Screen.height - llegpos.y;
+                    
+                    var rhippos = Camera.main.WorldToScreenPoint(rhip.position);
+                    rhippos.y = Screen.height - rhippos.y;
+                    
+                    var rlegpos = Camera.main.WorldToScreenPoint(rleg.position);
+                    rlegpos.y = Screen.height - rlegpos.y;
+                    
+                    var rfootpos = Camera.main.WorldToScreenPoint(rfoot.position);
+                    rfootpos.y = Screen.height - rfootpos.y;
+                    
+                    var lfootpos = Camera.main.WorldToScreenPoint(lfoot.position);
+                    lfootpos.y = Screen.height - lfootpos.y;
+                    
+                    GL.PushMatrix();
+                    GL.Begin(1);
+                    BoxMaterial.SetPass(0);
+                    GL.Color(new Color(0,255,255));
+
+                    //skull to spine
+                    GL.Vertex3(skullpos.x, skullpos.y, 0f);
+                    GL.Vertex3(spinepos.x, spinepos.y, 0f);
+
+                    //skull to right shoulder
+                    GL.Vertex3(skullpos.x, skullpos.y, 0f);
+                    GL.Vertex3(rshoulderpos.x, rshoulderpos.y, 0f);
+                    
+                    //skull to left shoulder
+                    GL.Vertex3(skullpos.x, skullpos.y, 0f);
+                    GL.Vertex3(lshoulderpos.x, lshoulderpos.y, 0f);
+                    
+                    //right shoulder to right arm
+                    GL.Vertex3(rshoulderpos.x, rshoulderpos.y, 0f);
+                    GL.Vertex3(rarmpos.x, rarmpos.y, 0f);
+                    
+                    //right arm to right hand
+                    GL.Vertex3(rarmpos.x, rarmpos.y, 0f);
+                    GL.Vertex3(rhandpos.x, rhandpos.y, 0f);
+                    
+                    //left shoulder to left arm
+                    GL.Vertex3(lshoulderpos.x, lshoulderpos.y, 0f);
+                    GL.Vertex3(larmpos.x, larmpos.y, 0f);
+                    
+                    //left arm to left hand
+                    GL.Vertex3(larmpos.x, larmpos.y, 0f);
+                    GL.Vertex3(lhandpos.x, lhandpos.y, 0f);
+                    
+                    //spine to left hip
+                    GL.Vertex3(spinepos.x, spinepos.y, 0f);
+                    GL.Vertex3(llegpos.x, llegpos.y, 0f);
+                    
+                    //spine to right leg
+                    GL.Vertex3(spinepos.x, spinepos.y, 0f);
+                    GL.Vertex3(rlegpos.x, rlegpos.y, 0f);
+                    
+                    //right leg to right foot
+                    GL.Vertex3(rlegpos.x, rlegpos.y, 0f);
+                    GL.Vertex3(rfootpos.x, rfootpos.y, 0f);
+                    
+
+                    
+                    //left leg to left foot
+                    GL.Vertex3(llegpos.x, llegpos.y, 0f);
+                    GL.Vertex3(lfootpos.x, lfootpos.y, 0f);
+                
+                    //skull to elevated skull
+                    
+                    GL.Vertex3(skullpos.x, skullpos.y, 0f);
+                    GL.Vertex3(skullelevatedpos.x, skullelevatedpos.y, 0f);
+                    
+                    
+                    GL.End();
+                    GL.PopMatrix();
+                }
+            }
+        }
+        
         internal static void GenerateDicts()
         {
             StorageIds = new Dictionary<int, string>
@@ -2619,6 +2821,28 @@ namespace TsunamiHack.Tsunami.Lib
             GL.Vertex3(xVal + hlfDist, yVal + dist, 0f);
             GL.Vertex3(xVal, yVal + dist, 0f);
             GL.Vertex3(xVal + hlfDist, yVal + dist, 0f);
+            
+            GL.End();
+            GL.PopMatrix();
+        }
+
+        internal static void GLTest()
+        {
+            Logging.Log("In GLTEST");
+            var center = new Vector2(Screen.width / 2, Screen.height / 2);
+            var left = new Vector2(5, 5);
+            var right = new Vector2( Screen.width - 5, Screen.height - 5);
+            
+            GL.PushMatrix();
+            GL.Begin(1);
+            BoxMaterial.SetPass(0);
+            GL.Color(Color.red);
+
+            GL.Vertex3(center.x, center.y, 0f);
+            GL.Vertex3(left.x, left.y, 0f);
+            
+            GL.Vertex3(center.x, center.y, 0f);
+            GL.Vertex3(right.x, right.y, 0f);
             
             GL.End();
             GL.PopMatrix();

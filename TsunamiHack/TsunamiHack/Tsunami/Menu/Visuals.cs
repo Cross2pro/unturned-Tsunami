@@ -18,6 +18,8 @@ namespace TsunamiHack.Tsunami.Menu
         
         //Selections
 
+        internal bool ShowSkeleton;
+
         internal bool Esp;
 
         internal bool EnableEsp;
@@ -234,9 +236,15 @@ namespace TsunamiHack.Tsunami.Menu
                 Lib.VisualsV2.CheckBoxes();
                 Lib.VisualsV2.CheckLabels();
             }
-                
+              
             
-            
+            Lib.VisualsV2.CheckSkeleton();
+        }
+
+        public void OnPostRender()
+        {
+                  
+             
         }
 
         public void MenuFunct(int id)
@@ -377,7 +385,7 @@ namespace TsunamiHack.Tsunami.Menu
             GUILayout.Space(2f);
             GUILayout.Label("Other Visuals\n--------------------------------------");
             GUILayout.Space(2f);
-            Chams = GUILayout.Toggle(Chams, " Chams (Coming soon)");
+            ShowSkeleton = GUILayout.Toggle(ShowSkeleton, " Show Skeleton");
             Tracers = GUILayout.Toggle(Tracers, " Tracers (Coming soon)");
         }
 
