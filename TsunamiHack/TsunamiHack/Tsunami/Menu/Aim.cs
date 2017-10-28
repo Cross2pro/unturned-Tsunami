@@ -149,8 +149,8 @@ namespace TsunamiHack.Tsunami.Menu
             GUILayout.Space(2f);
             GUILayout.Label("----------------------------------------\nAimbot Settings\n----------------------------------------");
             GUILayout.Space(2f);
-            AimSilent = GUILayout.Toggle(AimSilent, " Enable Silent Aim");
-            GUILayout.Space(2f);
+//            AimSilent = GUILayout.Toggle(AimSilent, " Enable Silent Aim");
+//            GUILayout.Space(2f);
             AimIgnoreWalls = GUILayout.Toggle(AimIgnoreWalls, " Ignore Walls");
             GUILayout.Space(2f);
             Aim360 = GUILayout.Toggle(Aim360, " 360 Aim FOV");
@@ -158,7 +158,7 @@ namespace TsunamiHack.Tsunami.Menu
             AimFov = GUILayout.HorizontalSlider((float) Math.Round(AimFov, 0), 1f, Camera.main.fieldOfView);
             GUILayout.Space(2f);
             GUILayout.Label($"Aim Speed : {AimSpeed}");
-            AimSpeed = GUILayout.HorizontalSlider((float) Math.Round(AimSpeed, 0), 1f, 30f);
+            AimSpeed = GUILayout.HorizontalSlider((float) Math.Round(AimSpeed, 0), 1f, 50f);
             GUILayout.Space(2f);     
             if (GUILayout.Button($"Target Limb : {AimTargetLimb}"))
             {

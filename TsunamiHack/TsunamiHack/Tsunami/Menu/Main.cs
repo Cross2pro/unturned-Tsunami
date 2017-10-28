@@ -50,6 +50,8 @@ namespace TsunamiHack.Tsunami.Menu
 
         internal FieldInfo VehicleLocked;
 
+        internal bool TidalInServer;
+
         public void Start()
         {
             Lib.Main.Start();
@@ -100,7 +102,6 @@ namespace TsunamiHack.Tsunami.Menu
 
             Playerfocus = 0;
             Friendfocus = 0;
-
 
         }
 
@@ -154,12 +155,8 @@ namespace TsunamiHack.Tsunami.Menu
         {
             if (Provider.isConnected)
             {
-                if (WaveMaker.ShowEula)
-                {
 
-                }
-
-                if (WaveMaker.MenuOpened == WaveMaker.MainId)
+                if (WaveMaker.MenuOpened == WaveMaker.MainId && !WaveMaker.SoftDisable)
                 {
                     PlayerRect = GUI.Window(2009, PlayerRect, PlayerFunct, "Player List");
                     FriendsRect = GUI.Window(2010, FriendsRect, FriendFucnt, "Friends List");
@@ -177,6 +174,8 @@ namespace TsunamiHack.Tsunami.Menu
                 var rect = MenuTools.GetRectAtLoc(size, MenuTools.Horizontal.Right, MenuTools.Vertical.Top, true, 5f);
                 GUI.Label(rect,
                     $"Tsunami Hack (V {WaveMaker.Version}) By <size=15><b>Tidal</b></size>\n               Featuring <b>Deus Myke</b>");
+                
+                    
             }
 
         }
@@ -314,52 +313,55 @@ namespace TsunamiHack.Tsunami.Menu
 
         public void PlayerFunct(int id)
         {
-            Playerscroll = GUILayout.BeginScrollView(Playerscroll, false, true);
-
-            if (Provider.clients.Count == 0)
+            if (Provider.clients.Count == 1 && Provider.clients[0].player == Player.player)
             {
-                GUILayout.Button("No Players Present On Server");
-                return;
+                GUILayout.Space(15f);
+                GUILayout.Button("No Players On Server");
             }
-
-            foreach (var client in Provider.clients)
+            else
             {
-                if (!WaveMaker.Friends.Contains(client.playerID.steamID.m_SteamID) && client.player != Player.player)
+                Playerscroll = GUILayout.BeginScrollView(Playerscroll, false, true);
+
+                foreach (var client in Provider.clients)
                 {
-
-                    if (GUILayout.Button(client.playerID.nickName))
+                    if (!WaveMaker.Friends.Contains(client.playerID.steamID.m_SteamID) && client.player != Player.player)
                     {
+
+                        if (GUILayout.Button(client.playerID.nickName))
+                        {
+                            if (Playerfocus == client.playerID.steamID.m_SteamID)
+                                Playerfocus = 0;
+                            else
+                                Playerfocus = client.playerID.steamID.m_SteamID;
+                        }
+
                         if (Playerfocus == client.playerID.steamID.m_SteamID)
-                            Playerfocus = 0;
-                        else
-                            Playerfocus = client.playerID.steamID.m_SteamID;
-                    }
-
-                    if (Playerfocus == client.playerID.steamID.m_SteamID)
-                    {
-                        GUILayout.Label("--------------------------------------");
-                        GUILayout.Label($"Steam Name: {client.playerID.playerName}");
-                        GUILayout.Label($"IGN: {client.playerID.nickName}");
-                        GUILayout.Label($"Admin: {client.isAdmin}");
-                        GUILayout.Label($"Pro: {client.isPro}");
-                        if (GUILayout.Button("Add to friends"))
                         {
-                            Playerfocus = 0;
-                            Addlist.Add(new Friend(client.playerID.playerName, client.playerID.steamID.m_SteamID));
+                            GUILayout.Label("--------------------------------------");
+                            GUILayout.Label($"Steam Name: {client.playerID.playerName}");
+                            GUILayout.Label($"IGN: {client.playerID.nickName}");
+                            GUILayout.Label($"Admin: {client.isAdmin}");
+                            GUILayout.Label($"Pro: {client.isPro}");
+                            if (GUILayout.Button("Add to friends"))
+                            {
+                                Playerfocus = 0;
+                                Addlist.Add(new Friend(client.playerID.playerName, client.playerID.steamID.m_SteamID));
+                            }
+                            if (GUILayout.Button("View Steam Profile"))
+                            {
+                                Provider.provider.browserService.open(
+                                    $"www.steamcommunity.com/profiles/{client.playerID.steamID.m_SteamID}");
+                            }
+                            GUILayout.Label("--------------------------------------");
+                            GUILayout.Space(5f);
                         }
-                        if (GUILayout.Button("View Steam Profile"))
-                        {
-                            Provider.provider.browserService.open(
-                                $"www.steamcommunity.com/profiles/{client.playerID.steamID.m_SteamID}");
-                        }
-                        GUILayout.Label("--------------------------------------");
-                        GUILayout.Space(5f);
                     }
                 }
+
+                GUILayout.EndScrollView();
             }
-
-
-            GUILayout.EndScrollView();
+            
+            
 
         }
 
@@ -374,6 +376,7 @@ namespace TsunamiHack.Tsunami.Menu
         {
             GUILayout.Label("Developed By Tidal");
             GUILayout.Label("Powerd By GNU Emacs, the editor that can do anything");
+            GUILayout.Label("Praise lord ic3 for enlightening me, may he forever be divine");
             GUILayout.Space(2f);
             GUILayout.Label("A completely custom framework and cheat");
             GUILayout.Label("Special thanks to c0nd for testing");
@@ -415,12 +418,12 @@ namespace TsunamiHack.Tsunami.Menu
                 foreach (var comp in compintrans)
                 {
                     Logging.Log(comp.name.Trim());
-                }    
+                }
             }
-            
-            
 
-            GUI.DragWindow();
+
+            
+        GUI.DragWindow();
         
         }
     }

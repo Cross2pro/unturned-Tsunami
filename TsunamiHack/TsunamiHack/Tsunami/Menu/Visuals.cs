@@ -18,11 +18,12 @@ namespace TsunamiHack.Tsunami.Menu
         
         //Selections
 
-        internal bool ShowSkeleton;
-
         internal bool Esp;
 
         internal bool EnableEsp;
+
+        internal bool EnablePlayerSkeleton;
+        internal bool EnableZombieSkeleton;
         
         internal bool PlayerName;
         internal bool PlayerWeapon;//
@@ -232,12 +233,13 @@ namespace TsunamiHack.Tsunami.Menu
                 SettingsRect = GUI.Window(2007, SettingsRect, SetFunct, "Settings");
             }
 
-            if (Provider.isConnected)
+            if (Provider.isConnected && Event.current.type == EventType.repaint)
             {
                 Lib.VisualsV2.CheckBoxes();
                 Lib.VisualsV2.CheckLabels();
                 Lib.VisualsV2.CheckSkeleton();
-                Lib.VisualsV2.CheckTracers();
+                if(WaveMaker.isBeta)
+                    Lib.VisualsV2.CheckTracers();
             }
               
             //TODO: Make sure that i check if I can see the player or zombie, so it doesnt do the skybox thing       
@@ -384,8 +386,9 @@ namespace TsunamiHack.Tsunami.Menu
             GUILayout.Space(2f);
             GUILayout.Label("Other Visuals\n--------------------------------------");
             GUILayout.Space(2f);
-            ShowSkeleton = GUILayout.Toggle(ShowSkeleton, " Show Skeleton");
-            Tracers = GUILayout.Toggle(Tracers, " Tracers (Coming soon)");
+            EnablePlayerSkeleton = GUILayout.Toggle(EnablePlayerSkeleton, " Show Player Skeleton");
+            EnableZombieSkeleton = GUILayout.Toggle(EnableZombieSkeleton, " Show Zombie Skeleton");
+            Tracers = GUILayout.Toggle(Tracers, " Tracers (Beta Testers only)");
         }
 
         public void EnvFunct(int id)
@@ -446,8 +449,7 @@ namespace TsunamiHack.Tsunami.Menu
 
             if (GUILayout.Button("Military"))
             {
-                if(Nv != NvType.Military)
-                    Nv = NvType.Military;
+                Nv = NvType.Military;
                 
                 LevelLighting.vision = ELightingVision.MILITARY;
                 LevelLighting.updateLighting();
@@ -457,8 +459,7 @@ namespace TsunamiHack.Tsunami.Menu
 
             if (GUILayout.Button("Civilian"))
             {
-                if(Nv != NvType.Civilian)
-                    Nv = NvType.Civilian;
+                Nv = NvType.Civilian;
                 
                 LevelLighting.vision = ELightingVision.CIVILIAN;
                 LevelLighting.updateLighting();
@@ -468,8 +469,7 @@ namespace TsunamiHack.Tsunami.Menu
             
             if (GUILayout.Button("None"))
             {
-                if(Nv != NvType.None)
-                    Nv = NvType.None;
+                Nv = NvType.None;
                 
                 LevelLighting.vision = ELightingVision.NONE;
                 LevelLighting.updateLighting();
@@ -478,6 +478,12 @@ namespace TsunamiHack.Tsunami.Menu
             }
             
             GUILayout.Space(10f);
+
+            if (GUILayout.Button("Get High"))
+            {
+                Player.player.life.askView(20);
+            }
+            
             GUILayout.EndScrollView();
         }
 
@@ -494,7 +500,7 @@ namespace TsunamiHack.Tsunami.Menu
             Distance = GUILayout.HorizontalSlider((float) Math.Round(Distance, 0), 0f, 1000f);
             GUILayout.Space(1f);
             GUILayout.Label($"Update Rate (milliseconds): {UpdateRate}");
-            UpdateRate = GUILayout.HorizontalSlider((float) Math.Round(UpdateRate, 0), 1f, 10000f);
+            UpdateRate = GUILayout.HorizontalSlider((float) Math.Round(UpdateRate, 0), 1f, 20000f);
             
             GUILayout.Space(2f);
             GUILayout.Label("ESP Colors\n--------------------------------------");

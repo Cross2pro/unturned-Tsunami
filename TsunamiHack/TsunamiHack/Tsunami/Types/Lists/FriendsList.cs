@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using SDG.Unturned;
 using TsunamiHack.Tsunami.Util;
 
 namespace TsunamiHack.Tsunami.Types.Lists
@@ -66,6 +67,11 @@ namespace TsunamiHack.Tsunami.Types.Lists
             Userlist.Add(fr);
         }
 
+        public bool IsFriend(SteamPlayer client)
+        {
+            return Contains(client.playerID.steamID.m_SteamID);
+        }
+        
         public bool Contains(ulong id)
         {
             return Array.Exists(Userlist.ToArray(), user => user.SteamId == id);

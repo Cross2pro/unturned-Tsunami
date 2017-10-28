@@ -1,13 +1,15 @@
-﻿/*using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using HighlightingSystem;
 using UnityEngine;
 using SDG.Unturned;
+using Steamworks;
 using TsunamiHack.Tsunami.Manager;
 using TsunamiHack.Tsunami.Types;
 using TsunamiHack.Tsunami.Util;
 using Object = UnityEngine.Object;
+// ReSharper disable InconsistentNaming
 
 namespace TsunamiHack.Tsunami.Lib
 {
@@ -17,1386 +19,30 @@ namespace TsunamiHack.Tsunami.Lib
         {
             public GameObject value;
             public ulong steamID;
-            
-            internal ESPObject(GameObject go)
-            {
-                value = go;
-                steamID = 0L;
-            }
-            
-            internal ESPObject(GameObject go, ulong id)
-            {
-                value = new GameObject();
-                steamID = id;
-            }
-        }
-         
-        internal static Menu.Visuals Menu;
-        internal static float updateInterval;
-        internal static DateTime updateLastUpdate;
-        internal static DateTime guiLastUpdate;
-        internal static DateTime listLastUpdate;
 
-        internal static float listupdateInterval = 5000f;
-        
-        internal static Dictionary<int, string> StorageIds;
-        internal static Dictionary<int, string> DoorIds;
-        
-        internal static List<ESPObject> Players;
-        internal static bool PlayerMark;
-        internal static List<ESPObject> Zombies;
-        internal static bool ZombieMark;
-        internal static List<ESPObject> Vehicles;
-        internal static bool VehicleMark;
-        internal static List<ESPObject> Items;
-        internal static bool ItemMark;
-        internal static List<ESPObject> Animals;
-        internal static bool AnimalMark;
-        internal static List<ESPObject> Storages;
-        internal static bool StorageMark;
-        internal static List<ESPObject> Forages;
-        internal static bool ForageMark;
-        internal static List<ESPObject> Beds;
-        internal static bool BedMark;
-        internal static List<ESPObject> Doors;
-        internal static bool DoorMark;
-        internal static List<ESPObject> Traps;
-        internal static bool TrapMark;
-        internal static List<ESPObject> Claims;
-        internal static bool ClaimMark;
-        internal static List<ESPObject> Sentries;
-        internal static bool SentryMark;
-        internal static List<ESPObject> Npcs;
-        internal static bool NpcMark;
-        
-        internal static Material BoxMaterial;
-        
-        public static void Start()
-        {
-            Menu = WaveMaker.MenuVisuals;
-            
-            var material = new Material(Shader.Find("Hidden/Internal-Colored"));
-            material.hideFlags = (HideFlags) 61;
-            BoxMaterial = material;
-            BoxMaterial.SetInt("_SrcBlend", 5);
-            BoxMaterial.SetInt("_DstBlend", 10);
-            BoxMaterial.SetInt("_Cull", 0);
-            BoxMaterial.SetInt("_ZWrite", 0);
-            
-            GenerateDicts();
-            updateLastUpdate = DateTime.Now;
-            guiLastUpdate = DateTime.Now;
-        }
-        
-        public static void Update() 
-        {
-            if ((DateTime.Now - updateLastUpdate).TotalMilliseconds >= Menu.UpdateRate)
-            {
-                if (Provider.isConnected)
-                {
-
-                    if (Menu.GlowPlayers && Menu.EnableEsp)
-                    {
-                        var friends = new List<ESPObject>();
-                        var enemies = new List<ESPObject>();
-
-                        foreach (var user in Players)
-                        {
-                            if (WaveMaker.Friends.Contains(user.steamID))
-                                friends.Add(user);
-                            else
-                                enemies.Add(user);
-                        }
-
-                        EnableGlowGeneric(GlowItem.GetListPlayer(friends), Menu.FriendlyPlayerGlow);
-                        EnableGlowGeneric(GlowItem.GetListPlayer(enemies), Menu.EnemyPlayerGlow);
-                    }
-                    else
-                    {
-                        DisableGlowGeneric(GlowItem.GetListPlayer(Players));
-                    }
-
-                    if (Menu.GlowZombies && Menu.EnableEsp)
-                    { 
-                        EnableGlowGeneric(GlowItem.GetListZombie(Zombies), Menu.ZombieGlow);
-                    }
-                    else
-                    {
-                        DisableGlowGeneric(GlowItem.GetListZombie(Zombies));
-                    }
-
-                    if (Menu.GlowVehicles && Menu.EnableEsp)
-                    {
-                        Vehicles = new List<InteractableVehicle>();
-                        Vehicles = VehicleManager.vehicles;
-
-                        EnableGlowGeneric(GlowItem.GetListVehicle(Vehicles), Menu.VehicleGlow);
-                    }
-                    else
-                    {
-                        DisableGlowGeneric(GlowItem.GetListVehicle(Vehicles));
-                    }
-
-
-                    if (Menu.GlowItems && Menu.EnableEsp)
-                    {
-                        Items = new List<InteractableItem>();
-                        Items = Object.FindObjectsOfType<InteractableItem>().ToList();
-
-                        EnableGlowGeneric(GlowItem.GetListItem(Items), Menu.ItemGlow);
-                    }
-                    else
-                    {
-                        DisableGlowGeneric(GlowItem.GetListItem(Items));
-                    }
-
-                    if (Menu.Animals && Menu.EnableEsp)
-                    {
-                        Animals = new List<Animal>();
-                        Animals = AnimalManager.animals;
-
-                        EnableGlowGeneric(GlowItem.GetListAnimal(Animals), Menu.InteractableGlow);
-                    }
-                    else
-                    {
-                        DisableGlowGeneric(GlowItem.GetListAnimal(Animals));
-                    }
-
-                    if (Menu.Storages && Menu.EnableEsp)
-                    {
-                        Storages = new List<InteractableStorage>();
-                        Storages = Object.FindObjectsOfType<InteractableStorage>().ToList();
-
-                        EnableGlowGeneric(GlowItem.GetListStorage(Storages), Menu.InteractableGlow);
-                    }
-                    else
-                    {
-                        DisableGlowGeneric(GlowItem.GetListStorage(Storages));
-                    }
-
-                    if (Menu.Bed && Menu.EnableEsp)
-                    {
-                        Beds = new List<InteractableBed>();
-                        Beds = Object.FindObjectsOfType<InteractableBed>().ToList();
-
-                        EnableGlowGeneric(GlowItem.GetListBed(Beds), Menu.InteractableGlow);
-                    }
-                    else
-                    {
-                        DisableGlowGeneric(GlowItem.GetListBed(Beds));
-                    }
-
-                    if (Menu.Doors && Menu.EnableEsp)
-                    {
-                        Doors = new List<InteractableDoor>();
-                        Doors = Object.FindObjectsOfType<InteractableDoor>().ToList();
-
-                        EnableGlowGeneric(GlowItem.GetListDoor(Doors), Menu.InteractableGlow);
-                    }
-                    else
-                    {
-                        DisableGlowGeneric(GlowItem.GetListDoor(Doors));
-                    }
-
-                    if (Menu.Flag && Menu.EnableEsp)
-                    {
-                        Claims = new List<InteractableClaim>();
-                        Claims = Object.FindObjectsOfType<InteractableClaim>().ToList();
-
-                        EnableGlowGeneric(GlowItem.GetListFlag(Claims), Menu.InteractableGlow);
-                    }
-                    else
-                    {
-                        DisableGlowGeneric(GlowItem.GetListFlag(Claims));
-                    }
-
-                    if (Menu.Sentries && Menu.EnableEsp)
-                    {
-                        Sentries = new List<InteractableSentry>();
-                        Sentries = Object.FindObjectsOfType<InteractableSentry>().ToList();
-
-                        EnableGlowGeneric(GlowItem.GetListSentry(Sentries), Menu.InteractableGlow);
-                    }
-                    else
-                    {
-                        DisableGlowGeneric(GlowItem.GetListSentry(Sentries));
-                    }
-
-                    if (Menu.Npc && Menu.EnableEsp)
-                    {
-                        Npcs = new List<InteractableObjectNPC>();
-                        Npcs = Object.FindObjectsOfType<InteractableObjectNPC>().ToList();
-
-                        EnableGlowGeneric(GlowItem.GetListNpc(Npcs), Menu.InteractableGlow);
-                    }
-                    else
-                    {
-                        DisableGlowGeneric(GlowItem.GetListNpc(Npcs));
-                    }
-                }
-                
-            }
-
-        }
-
-        internal static void OnGUI()
-        {
-            if ((DateTime.Now - guiLastUpdate).TotalMilliseconds >= Menu.UpdateRate)
-            {
-                if (Provider.isConnected)
-                {
-                    CheckLabels();
-                    CheckBoxes();        
-                }
-            }
-            
-        }
-
-        internal static bool ContainsGO(List<ESPObject> list, GameObject input)
-        {
-            foreach (var obj in list)
-            {
-                if (obj.value == input)
-                    return true;
-            }
-
-            return false;
-        }
-
-        internal static List<ESPObject> toEspList(List<SteamPlayer> iList)
-        {
-            var list = new List<ESPObject>();
-            foreach (var user in iList)
-            {
-                list.Add(new ESPObject(user.player.gameObject, user.playerID.steamID.m_SteamID));
-            }
-            return list;
-        }
-        
-        internal static List<ESPObject> toEspList(List<Zombie> iList)
-        {
-            var list = new List<ESPObject>();
-            foreach (var zombie in iList)
-            {
-                list.Add(new ESPObject(zombie.gameObject));
-            }
-            return list;
-        }
-
-        internal static List<ESPObject> toEspList(List<Interactable> iList)
-        {
-            var list = new List<ESPObject>();
-            foreach (var inter in iList)
-            {
-                list.Add(new ESPObject(inter.gameObject));
-            }
-            return list;
-        }
-        
-        internal static void RefreshLists()
-        {
-            if ((DateTime.Now - listLastUpdate).TotalMilliseconds >= listupdateInterval)
-            {
-                
-                //If list is enabled - go through update loop for that list
-                //If list is disabled, but contains things, mark for deletion
-                
-                //update loop:
-                //get list of objects in game currently.
-                //check to see what objects are in my list but not in new list
-                //remove those objects
-                //check to see what objects arent in my list
-                //add those objects
-
-                if (Menu.GlowPlayers && Menu.EnableEsp)
-                {
-                    var newObjs = toEspList(Provider.clients);
-                    var oldObjs = Players;
-
-                    var inOld = oldObjs.Except(newObjs);
-                    foreach (var obj in inOld)
-                    {
-                        Players.Remove(obj);
-                    }
-
-                    var inNew = newObjs.Except(oldObjs);
-                    foreach (var obj in inNew)
-                    {
-                        Players.Add(obj);
-                    }
-                }
-                else
-                {
-                    if (!PlayerMark && Players.Count > 0)
-                        PlayerMark = true;
-
-                    if (PlayerMark)
-                    {
-                        Players = null;
-                        PlayerMark = false;
-                    }          
-                }
-                
-                
-                
-                if (Menu.GlowZombies && Menu.EnableEsp)
-                {
-                    var temp = new List<Zombie>();
-                    foreach (var region in ZombieManager.regions)
-                    {
-                        foreach (var list in region.zombies)
-                        {
-                            temp.Add(list);
-                        }
-                    }
-                    
-                    var newObjs = toEspList(temp);
-                    var oldObjs = Players;
-
-                    var inOld = oldObjs.Except(newObjs);
-                    foreach (var obj in inOld)
-                    {
-                        Zombies.Remove(obj);
-                    }
-
-                    var inNew = newObjs.Except(oldObjs);
-                    foreach (var obj in inNew)
-                    {
-                        Zombies.Add(obj);
-                    }
-                }
-                else
-                {
-                    if (!ZombieMark && Zombies.Count > 0)
-                        ZombieMark = true;
-
-                    if (ZombieMark)
-                    {
-                        Zombies = null;
-                        ZombieMark = false;
-                    }          
-                }
-                
-                
-                if (Menu.GlowVehicles && Menu.EnableEsp)
-                {
-
-                    var newObjs = toEspList(VehicleManager.vehicles.Cast<Interactable>().ToList());
-                    var oldObjs = Players;
-
-                    var inOld = oldObjs.Except(newObjs);
-                    foreach (var obj in inOld)
-                    {
-                        Vehicles.Remove(obj);
-                    }
-
-                    var inNew = newObjs.Except(oldObjs);
-                    foreach (var obj in inNew)
-                    {
-                        Vehicles.Add(obj);
-                    }
-                }
-                else
-                {
-                    if (!VehicleMark && Vehicles.Count > 0)
-                        VehicleMark = true;
-
-                    if (VehicleMark)
-                    {
-                        Vehicles = null;
-                        VehicleMark = false;
-                    }          
-                }
-
-               
-                
-                
-            }
-            
-        }
-
-        public static void EnableGlowGeneric(List<GlowItem> list, Color glowColor)
-        {
-            foreach (var go in list)
-            {
-                if (Camera.main != null && go.GameObject != null)
-                {
-                    var mypos = Camera.main.gameObject.transform.position;
-                    var targetpos = go.GameObject.transform.position;
-
-                    if (Vector3.Distance(mypos, targetpos) <= Menu.Distance || Menu.InfDistance)
-                    {
-                        var highlighter = go.GameObject.GetComponent<Highlighter>() ??
-                                          go.GameObject.AddComponent<Highlighter>();
-                        
-                        highlighter.ConstantParams(glowColor);
-                        highlighter.OccluderOn();
-                        highlighter.SeeThroughOn();
-                        highlighter.ConstantOn();
-                    }
-                    else
-                    {
-                        if(go.GameObject.GetComponent<Highlighter>() != null)
-                        {
-                            var highlighter = go.GameObject.GetComponent<Highlighter>();
-                            
-                            highlighter.ConstantOffImmediate();
-                        }
-                    }
-                }
-            }
-        }
-
-        public static void DisableGlowGeneric(List<GlowItem> list)
-        {
-            foreach (var go in list)
-            {
-                if(go.GameObject.GetComponent<Highlighter>() != null)
-                    go.GameObject.GetComponent<Highlighter>().ConstantOffImmediate();
-                    
-            }
-        }
-        
-        internal static void CheckBoxes()
-        {
-            if (Menu.PlayerBox && Menu.EnableEsp)
-            {
-                
-                foreach (var client in Provider.clients)
-                {
-                    if (client.player == Player.player) continue;
-                    
-                    var dist = Vector3.Distance(Camera.main.transform.position, client.player.transform.position);
-                    if (dist <= Menu.Distance || Menu.InfDistance)
-                    {
-                        var scrnpt = Camera.main.WorldToScreenPoint(client.player.transform.position);
-                        if (scrnpt.z >= 0)
-                        {
-                            scrnpt.y = Screen.height - scrnpt.y;
-                            var color = WaveMaker.Friends.Contains(client.playerID.steamID.m_SteamID)
-                                ? Menu.BoxPlayerFriendly
-                                : Menu.BoxPlayerEnemy;
-                            DrawBox(client.player.transform, scrnpt, color);
-                        }
-                    }
-                    
-                }
-            }    
-
-            if (Menu.ZombieBox && Menu.EnableEsp)
-            {
-
-                foreach (var zombie in Zombies)
-                {
-                    var dist = Vector3.Distance(Camera.main.transform.position, zombie.value.transform.position);
-                    if (dist <= Menu.Distance || Menu.InfDistance)
-                    {
-                        var pos = Camera.main.WorldToScreenPoint(zombie.value.transform.position);
-                        if (pos.z >= 0)
-                        {
-                            pos.y = Screen.height - pos.y;
-                            DrawBox(zombie.value.transform, pos, Menu.BoxZombie);
-                        }
-                    }         
-                     
-                }    
-            
-            }
-        }
-
-        internal static void CheckLabels()
-        {
-            if (Menu.EnableEsp)
-            {
-                if (Menu.PlayerName || Menu.PlayerWeapon || Menu.PlayerDistance)
-                {
-                    UpdatePlayerLabels();
-                }
-                    
-                if (Menu.ZombieName || Menu.ZombieDistance || Menu.ZombieSpecialty)
-                {
-
-                    UpdateZombieLabels();
-                }
-    
-                if (Menu.AnimalName || Menu.AnimalDistance)
-                {
-                    UpdateAnimalLabels();
-                }
-    
-                if (Menu.StorageType || Menu.StorageDistance)
-                {
-                    UpdateStorageLabels();
-                }
-    
-                if (Menu.VehicleName || Menu.VehicleDistance)
-                {
-                    UpdateVehicleLabels();
-                }
-    
-                if (Menu.ItemName || Menu.ItemDistance)
-                {
-                    UpdateItemLabels();
-                }
-    
-                if (Menu.NpcName || Menu.NpcDistance /*|| menu.NpcWeapon)
-                {
-                    UpdateNpcLabels();
-                }
-    
-                if (Menu.ForageType || Menu.ForageDistance)
-                {
-                    UpdateForageLabels();
-                }
-    
-                if (Menu.BedType || Menu.BedDistance)
-                {
-                    UpdateBedLabels();
-                }
-    
-                if (Menu.FlagType || Menu.FlagDistance)
-                {
-                    UpdateFlagLabels();
-                }
-    
-                if (Menu.SentryType || Menu.SentryWeapon || Menu.SentryState || Menu.SentryDistance)
-                {
-                    UpdateSentryLabels();
-                }
-    
-                if (Menu.Admins)
-                {
-                    UpdateAdminLabels();
-                }    
-            }
-            
-            //Add airdrops and traps once glow is fixed and labels are created
-        }
-
-        internal static void UpdatePlayerLabels()
-        {   
-            foreach (var player in Players)
-            {
-
-                var gameplayer = PlayerTools.GetSteamPlayer(player.value);
-                
-                if (!gameplayer.player.life.isDead && gameplayer.player != Player.player)
-                {
-                    var myPos = Camera.main.transform.position;
-                    var targetpos = gameplayer.player.transform.position;
-                    var dist = Vector3.Distance(myPos, targetpos);
-
-                    if (dist <= Menu.Distance || Menu.InfDistance)
-                    {
-                        targetpos += new Vector3(0f,3f,0f);
-                        var scrnpt = Camera.main.WorldToScreenPoint(targetpos);
-
-                        if (scrnpt.z >= 0)
-                        {
-                            scrnpt.y = Screen.height - scrnpt.y;
-                            var text = "";
-
-                            if (Menu.PlayerName)
-                            {
-                                text += $"{gameplayer.playerID.nickName}";
-                            }
-
-                            if (Menu.PlayerWeapon)
-                            {
-                                if (text.Length > 0)
-                                    text += "\n";
-                                
-                                if (gameplayer.player.equipment.asset != null)
-                                {
-                                    if (gameplayer.player.equipment.asset.type == EItemType.GUN || gameplayer.player.equipment.asset.type == EItemType.MELEE)
-                                        text += $"Weapon: {gameplayer.player.equipment.asset.name}";
-                                    else
-                                        text += $"Weapon: None";
-                                }
-                                else
-                                    text += "Weapon: None";
-                                 
-                            }
-
-                            if (Menu.PlayerDistance)
-                            {
-                                if (text.Length > 0)
-                                    text += $"\nDistance: {Math.Round(dist, 0)}";
-                                else
-                                    text += $"Distance: {Math.Round(dist, 0)}";
-                            }
-                            
-                            
-                            float size;
-
-                            if (Menu.ScaleText)
-                                size = dist <= Menu.Dropoff ? Menu.CloseSize : Menu.FarSize;
-                            else
-                                size = 10f;
-
-                            var color = WaveMaker.Friends.Contains(gameplayer.playerID.steamID.m_SteamID)
-                                ? Menu.FriendlyPlayerGlow
-                                : Menu.EnemyPlayerGlow;
-                        
-                            GUI.Label(new Rect(scrnpt + new Vector3(0,6f,0), new Vector2(170,70)), $"<color={color}><size={size}>{text}</size></color>" );
-                        }
-      
-                    }
-                }
-            }
-        }
-
-        internal static void UpdateZombieLabels()
-        {
-            foreach (var zombie in Zombies)
-                {
-                    
-                    
-                    
-                    if (zombie.isDead == false)
-                    {
-                        var myPos = Camera.main.transform.position;
-                        var targetPos = zombie.transform.position;
-                        var dist = Vector3.Distance(myPos, targetPos);
-    
-                        if (dist <= Menu.Distance || Menu.InfDistance)
-                        {
-                            targetPos += new Vector3(0f,3f, 0f);
-                            var scrnPt = Camera.main.WorldToScreenPoint(targetPos);
-    
-                            if (scrnPt.z >= 0)
-                            {
-    
-                                scrnPt.y = Screen.height - scrnPt.y;
-    
-                                var text = "";
-    
-                                if (Menu.ZombieName)
-                                {
-                                    text += $"{zombie.gameObject.name}";
-                                }
-    
-                                if (Menu.ZombieDistance)
-                                {
-                                    if (text.Length > 0)
-                                    {
-                                        text += $"\nDistance: {Math.Round(dist, 0)}";
-                                    }
-                                    else
-                                    {
-                                        text += $"Distance: {Math.Round(dist, 0)}";
-                                    }
-                                }
-    
-                                if (Menu.ZombieSpecialty)
-                                {
-                                    var str = "";
-    
-                                    if (text.Length > 0)
-                                        str += "\n";
-    
-                                    switch (zombie.speciality)
-                                    {
-                                            case EZombieSpeciality.NONE:
-                                                str += "Specialty: None";
-                                                break;
-                                            case EZombieSpeciality.NORMAL:
-                                                str += "Specialty: None";
-                                                break;
-                                            case EZombieSpeciality.MEGA:
-                                                str += "Specialty: Mega";
-                                                break;
-                                            case EZombieSpeciality.CRAWLER:
-                                                str += "Specialty: Crawler";
-                                                break;
-                                            case EZombieSpeciality.SPRINTER:
-                                                str += "Specialty: Sprinter";
-                                                break;
-                                            case EZombieSpeciality.FLANKER_FRIENDLY:
-                                                str += "Specialty: Friendly Flanker";
-                                                break;
-                                            case EZombieSpeciality.FLANKER_STALK:
-                                                str += "Specialty: Stalking Flanker";
-                                                break;
-                                            case EZombieSpeciality.BURNER:
-                                                str += "Specialty: Burner";
-                                                break;
-                                            case EZombieSpeciality.ACID:
-                                                str += "Specialty: Acid";
-                                                break;
-                                            case EZombieSpeciality.BOSS_ELECTRIC:
-                                                str += "Specialty: Electric (Boss)";
-                                                break;
-                                            case EZombieSpeciality.BOSS_WIND:
-                                                str += "Specialty: Wind (Boss)";
-                                                break;
-                                            case EZombieSpeciality.BOSS_FIRE:
-                                                str += "Specialty: Fire (Boss)";
-                                                break;
-                                            case EZombieSpeciality.BOSS_ALL:
-                                                str += "Specialty: All (Boss)";
-                                                break;
-                                            case EZombieSpeciality.BOSS_MAGMA:
-                                                str += "Specialty: Magma (Boss)";
-                                                break;
-                                    } 
-                                    text += str;
-                                }
-
-                                float size;
-                                
-                                if (Menu.ScaleText)
-                                {
-                                    size = dist <= Menu.Dropoff ? Menu.CloseSize : Menu.FarSize;
-                                }
-                                else
-                                {                                    
-                                    size = 10;
-                                }
-                                
-                                 
-                                
-                                GUI.Label(new Rect(scrnPt + new Vector3(0,4f,0), new Vector2(170,50)), $"<size={size}>{text}</size>" );        
-                            }
-//                        }
-                    }
-                      
-                }
-        }
-
-        internal static void UpdateAnimalLabels()
-        {
-            foreach (var animal in Animals)
-            {
-                if (!animal.isDead)
-                {
-                    var mypos = Camera.main.transform.position;
-                    var targetpos = animal.transform.position;
-                    var dist = Vector3.Distance(mypos, targetpos);
-
-                    if (dist <= Menu.Distance || Menu.InfDistance)
-                    {
-                        targetpos += new Vector3(0f,3f,0f);
-                        var scrnpt = Camera.main.WorldToScreenPoint(targetpos);
-
-                        if (scrnpt.z >= 0f)
-                        {
-                            scrnpt.y = Screen.height - scrnpt.y;
-
-                            var text = "";
-
-                            if (Menu.AnimalName)
-                            {
-                                text += $"{animal.asset.animalName}";
-                            }
-
-                            if (Menu.AnimalDistance)
-                            {
-                                if (text.Length > 0)
-                                    text += $"\nDistance: {Math.Round(dist, 0)}";
-                                else
-                                    text += $"Distance: {Math.Round(dist, 0)}"; 
-                            }
-
-                            var size = Menu.ScaleText ? dist <= Menu.Dropoff ? Menu.CloseSize : Menu.FarSize : 10f;
-                            
-                            GUI.Label(new Rect(scrnpt + new Vector3(0,4f,0), new Vector2(170,50)), $"<color={Menu.InteractableGlow}><size={size}>{text}</size></color>" );
-                        }
-                    }
-                }
-            }
-        }
-
-        internal static void UpdateStorageLabels()
-        {
-            foreach (var storage in Storages)
-            {
-                var mypos = Camera.main.transform.position;
-                var targetpos = storage.transform.position;
-                var dist = Vector3.Distance(mypos, targetpos);
-
-                if (dist <= Menu.Distance || Menu.InfDistance)
-                {
-                    targetpos += new Vector3(0f,1.5f,0f);
-                    var scrnpt = Camera.main.WorldToScreenPoint(targetpos);
-
-                    if (scrnpt.z >= 0)
-                    {
-                        scrnpt.y = Screen.height - scrnpt.y;
-                        var text = "";
-
-                        if (Menu.StorageType)
-                        {
-                            text += $"Storage: {StorageIds[int.Parse(storage.name)]}";
-                        }
-
-                        if (Menu.StorageDistance)
-                        {
-                            text += text.Length > 0
-                                ? $"\nDistance: {Math.Round(dist, 0)}"
-                                : $"Distance: {Math.Round(dist, 0)}";
-                        }
-
-                        
-                        var size = Menu.ScaleText ? dist <= Menu.Dropoff ? Menu.CloseSize : Menu.FarSize : 10f;
-                            
-                        GUI.Label(new Rect(scrnpt + new Vector3(0,4f,0), new Vector2(170,50)), $"<color={Menu.InteractableGlow}><size={size}>{text}</size></color>" );
-                        
-                    }
-
-                }
-                
-            }
-        }
-
-        internal static void UpdateVehicleLabels()
-        {
-            foreach (var vehicle in Vehicles)
-            {
-                var mypos = Camera.main.transform.position;
-                var targetpos = vehicle.transform.position;
-                var dist = Vector3.Distance(mypos, targetpos);
-
-                if (dist <= Menu.Distance || Menu.InfDistance)
-                {
-                    targetpos += new Vector3(0f,1.5f,0f);
-                    var scrnpt = Camera.main.WorldToScreenPoint(targetpos);
-
-                    if (scrnpt.z >= 0)
-                    {
-                        scrnpt.y = Screen.height - scrnpt.y;
-                        var text = "";
-
-                        if (Menu.VehicleName)
-                        {
-                            var name = vehicle.asset.name.Replace("_", " ");
-
-                            if (name.Contains("Tractor"))
-                                name = "Tractor";
-
-                            if (name.Contains("Police"))
-                                name = "Police Car";
-                            
-                            text += $"Vehicle: {name}";
-                        }
-
-                        if (Menu.VehicleDistance)
-                        {
-                            if (text.Length > 0)
-                                text += "\n";
-                            
-                            text += $"Distance: {Math.Round(dist,0)}";
-                        }
-
-                        var size = Menu.ScaleText ? dist <= Menu.Dropoff ? Menu.CloseSize : Menu.FarSize : 10f;
-                        
-                        GUI.Label(new Rect(scrnpt + new Vector3(0,4f,0), new Vector2(170,50)), $"<color={Menu.InteractableGlow}><size={size}>{text}</size></color>" );
-                    }
-                }
-            }
-        }
-
-        internal static void UpdateItemLabels()
-        {
-            foreach (var item in Items)
-            {
-                var mypos = Camera.main.transform.position;
-                var targetpos = item.transform.position;
-                var dist = Vector3.Distance(mypos, targetpos);
-
-                if (dist <= Menu.Distance || Menu.InfDistance)
-                {
-                    targetpos += new Vector3(0f,1.5f, 0f);
-                    var scrnpt = Camera.main.WorldToScreenPoint(targetpos);
-
-                    if (scrnpt.z >= 0f)
-                    {
-                        scrnpt.y = Screen.height - scrnpt.y;
-                        var text = "";
-
-                        if (Menu.ItemName)
-                        {
-                            text += $"Item: {item.asset.itemName}";
-                        }
-
-                        if (Menu.ItemDistance)
-                        {
-                            if (text.Length > 0)
-                                text += "\n";
-
-                            text += $"Distance: {Math.Round(dist, 0)}";
-                            
-                        }
-                        
-                        var size = Menu.ScaleText ? dist <= Menu.Dropoff ? Menu.CloseSize : Menu.FarSize : 10f;
-                        
-                        GUI.Label(new Rect(scrnpt + new Vector3(0,4f,0), new Vector2(170,50)), $"<color={Menu.InteractableGlow}><size={size}>{text}</size></color>" );
-                    }
-                }
-            }
-        }
-
-        internal static void UpdateAirdropLabels() //FIX ONCE GLOW IS FIXED
-        {
-            
-        }
-
-        internal static void UpdateTrapLabels() //FIX ONCE GLOW IS FIXED
-        {
-            
-        }
-
-        internal static void UpdateNpcLabels()
-        {
-            foreach (var npc in Npcs)
-            {
-                var mypos = Camera.main.transform.position;
-                var targetpos = npc.transform.position;
-                var dist = Vector3.Distance(mypos, targetpos);
-
-                if (dist <= Menu.Distance || Menu.InfDistance)
-                {
-                    targetpos += new Vector3(0f,1.5f,0f);
-                    var scrnpt = Camera.main.WorldToScreenPoint(targetpos);
-
-                    if (scrnpt.z >= 0f)
-                    {
-                        scrnpt.y = Screen.height - scrnpt.y;
-                        var text = "";
-
-                        if (Menu.NpcName)
-                        {
-                            text += $"NPC: {npc.npcAsset.name}";
-                        }
-
-//                        if (menu.NpcWeapon)     FIND WAY TO DETERMINE PRIMARY WEAPON
-//                        {
-//                            if (text.Length > 0)
-//                                text += "\n";
-//                            
-//                            text += $"Weapon: {npc.}"
-//                        }
-
-                        if (Menu.NpcDistance)
-                        {
-                            if (text.Length > 0)
-                                text += "\n";
-
-                            text += $"Distance: {Math.Round(dist, 0)}";
-                        }
-
-                        var size = Menu.ScaleText ? dist <= Menu.Dropoff ? Menu.CloseSize : Menu.FarSize : 10f;
-                        
-                        GUI.Label(new Rect(scrnpt + new Vector3(0,4f,0), new Vector2(170,50)), $"<color={Menu.InteractableGlow}><size={size}>{text}</size></color>" );
-
-                    }
-                }
-            }
-        }
-
-        internal static void UpdateForageLabels()
-        {
-            foreach (var forage in Forages)
-            {
-                var mypos = Camera.main.transform.position;
-                var targetpos = forage.transform.position;
-                var dist = Vector3.Distance(mypos, targetpos);
-
-                if (dist <= Menu.Distance || Menu.InfDistance)
-                {
-                    targetpos += new Vector3(0f, 1.5f, 0f);
-                    var scrnpt = Camera.main.WorldToScreenPoint(targetpos);
-
-                    if (scrnpt.z >= 0f)
-                    {
-                        scrnpt.y = Screen.height - scrnpt.y;
-                        var text = "";
-
-                        if (Menu.ForageType)
-                        {
-                            text += "Forage";
-                        }
-
-                        if (Menu.ForageDistance)
-                        {
-                            if (text.Length > 0)
-                                text += "\n";
-
-                            text += $"Distance: {Math.Round(dist, 0)}";
-                        }
-                        
-                        var size = Menu.ScaleText ? dist <= Menu.Dropoff ? Menu.CloseSize : Menu.FarSize : 10f;
-                        
-                        if(text.Length > 0)
-                            GUI.Label(new Rect(scrnpt + new Vector3(0,4f,0), new Vector2(170,50)), $"<color={ColorUtility.ToHtmlStringRGBA(Menu.InteractableGlow)}><size={size}>{text}</size></color>" );
-                    }
-                }
-
-            }
-        }
-
-        //Possibly add owner of bed?
-        internal static void UpdateBedLabels()
-        {
-            foreach (var bed in Beds)
-            {
-                var mypos = Camera.main.transform.position;
-                var targetpos = bed.transform.position;
-                var dist = Vector3.Distance(mypos, targetpos);
-
-                if (dist <= Menu.Distance || Menu.InfDistance)
-                {
-                    targetpos += new Vector3(0f, 1.5f, 0f);
-                    var scrnpt = Camera.main.WorldToScreenPoint(targetpos);
-
-                    if (scrnpt.z >= 0f)
-                    {
-                        scrnpt.y = Screen.height - scrnpt.y;
-                        var text = "";
-
-                        if (Menu.BedType)
-                        {
-                            text += "Bed";
-                        }
-
-                        if (Menu.BedDistance)
-                        {
-                            if (text.Length > 0)
-                                text += "\n";
-
-                            text += $"Distance: {Math.Round(dist, 0)}";
-                        }
-                        
-                        var size = Menu.ScaleText ? dist <= Menu.Dropoff ? Menu.CloseSize : Menu.FarSize : 10f;
-                        
-                        if(text.Length > 0)
-                            GUI.Label(new Rect(scrnpt + new Vector3(0,4f,0), new Vector2(170,50)), $"<color={ColorUtility.ToHtmlStringRGBA(Menu.InteractableGlow)}><size={size}>{text}</size></color>" );
-                    }
-                }
-
-            }
-        }
-
-        internal static void UpdateDoorLabels()
-        {
-            foreach (var door in Doors)
-            {
-                var mypos = Camera.main.transform.position;
-                var targetpos = door.transform.position;
-                var dist = Vector3.Distance(mypos, targetpos);
-
-                if (dist <= Menu.Distance || Menu.InfDistance)
-                {
-                    targetpos += new Vector3(0f, 1.5f, 0f);
-                    var scrnpt = Camera.main.WorldToScreenPoint(targetpos);
-
-                    if (scrnpt.z >= 0f)
-                    {
-                        scrnpt.y = Screen.height - scrnpt.y;
-                        var text = "";
-
-                        if (Menu.DoorType)
-                        {
-                            text += $"Door: {DoorIds[int.Parse(door.name)]}";
-                        }
-
-                        if (Menu.BedDistance)
-                        {
-                            if (text.Length > 0)
-                                text += "\n";
-
-                            text += $"Distance: {Math.Round(dist, 0)}";
-                        }
-
-                        var size = Menu.ScaleText ? dist <= Menu.Dropoff ? Menu.CloseSize : Menu.FarSize : 10f;
-
-                        if(text.Length > 0)
-                            GUI.Label(new Rect(scrnpt + new Vector3(0, 4f, 0), new Vector2(170, 50)),
-                            $"<color={ColorUtility.ToHtmlStringRGBA(Menu.InteractableGlow)}><size={size}>{text}</size></color>");
-                    }
-                }
-            }
-        }
-
-        internal static void UpdateFlagLabels()
-        {
-            foreach (var flag in Claims)
-            {
-                var mypos = Camera.main.transform.position;
-                var targetpos = flag.transform.position;
-                var dist = Vector3.Distance(mypos, targetpos);
-
-                if (dist <= Menu.Distance || Menu.InfDistance)
-                {
-                    targetpos += new Vector3(0f, 1.5f, 0f);
-                    var scrnpt = Camera.main.WorldToScreenPoint(targetpos);
-
-                    if (scrnpt.z >= 0f)
-                    {
-                        scrnpt.y = Screen.height - scrnpt.y;
-                        var text = "";
-
-                        if (Menu.FlagType)
-                        {
-                            text += "Claim Flag";
-                        }
-
-                        if (Menu.FlagDistance)
-                        {
-                            if (text.Length > 0)
-                                text += "\n";
-
-                            text += $"Distance: {Math.Round(dist, 0)}";
-                        }
-
-                        var size = Menu.ScaleText ? dist <= Menu.Dropoff ? Menu.CloseSize : Menu.FarSize : 10f;
-
-                        if(text.Length > 0)
-                            GUI.Label(new Rect(scrnpt + new Vector3(0, 4f, 0), new Vector2(170, 50)),
-                            $"<color={ColorUtility.ToHtmlStringRGBA(Menu.InteractableGlow)}><size={size}>{text}</size></color>");
-                    }
-                }
-            }
-        }
-
-        internal static void UpdateSentryLabels()
-        {
-            foreach (var sentry in Sentries)
-            {
-                var mypos = Camera.main.transform.position;
-                var targetpos = sentry.transform.position;
-                var dist = Vector3.Distance(mypos, targetpos);
-
-                if (dist <= Menu.Distance || Menu.InfDistance)
-                {
-                    targetpos += new Vector3(0f, 1.5f, 0f);
-                    var scrnpt = Camera.main.WorldToScreenPoint(targetpos);
-
-                    if (scrnpt.z >= 0f)
-                    {
-                        scrnpt.y = Screen.height - scrnpt.y;
-                        var text = "";
-
-                        if (Menu.SentryType)
-                        {
-                            text += "Sentry";
-                        }
-
-//                        if (menu.SentryWeapon)        FIX NULLCHECK
-//                        {
-//                            if (text.Length > 0)
-//                                text += "\n";
-//
-//                            if(sentry.displayItem.id != null) 
-//                               text += $"Weapon: {sentry.displayItem.id}";
-//                        }
-
-                        if (Menu.SentryState)
-                        {
-                            if (text.Length > 0)
-                                text += "\n";
-
-                            var state = sentry.enabled ? "On" : "Off";
-                            text += $"State: {state}";
-                        }
-                        
-                        if (Menu.SentryDistance)
-                        {
-                            if (text.Length > 0)
-                                text += "\n";
-
-                            text += $"Distance: {Math.Round(dist, 0)}";
-                        }
-
-                        var size = Menu.ScaleText ? dist <= Menu.Dropoff ? Menu.CloseSize : Menu.FarSize : 10f;
-
-                        if(text.Length > 0)
-                            GUI.Label(new Rect(scrnpt + new Vector3(0, 4f, 0), new Vector2(170, 70)),
-                            $"<color={ColorUtility.ToHtmlStringRGBA(Menu.InteractableGlow)}><size={size}>{text}</size></color>");
-                    }
-                }
-            }
-        }
-
-        internal static void UpdateAdminLabels()
-        {
-            foreach (var player in Players)
-            {
-                if (player.isAdmin && player.player != Player.player)
-                {
-                    var mypos = Camera.main.transform.position;
-                    var targetpos = player.player.transform.position;
-                    var dist = Vector3.Distance(mypos, targetpos);
-
-                    if (dist <= Menu.Distance || Menu.InfDistance)
-                    {
-                        targetpos += new Vector3(0f, 3f, 0f);
-                        var scrnpt = Camera.main.WorldToScreenPoint(targetpos);
-
-                        if (scrnpt.z >= 0f)
-                        {
-                            scrnpt.y = Screen.height - scrnpt.y;
-                            var text = "";
-
-                            if (Menu.Admins)
-                            {
-                                text += "ADMIN";
-                            }
-
-                            var size = Menu.ScaleText ? dist <= Menu.Dropoff ? Menu.CloseSize : Menu.FarSize : 10f;
-
-                            if(text.Length > 0)
-                                GUI.Label(new Rect(scrnpt - new Vector3(0, 5.3f, 0), new Vector2(170, 50)),
-                                $"<color=#FF0000><size={size}>{text}</size></color>");
-                        }
-                    }
-                }  
-            }
-        }
-
-        internal static void GenerateDicts()
-        {
-            StorageIds = new Dictionary<int, string>
-            {
-                {367, "Birch Crate"},
-                {366, "Maple Crate"},
-                {368, "Pine Crate"},
-                {328, "Locker"},
-                {1246, "Birch Counter"},
-                {1245, "Maple Counter"},
-                {1247, "Pine Counter"},
-                {1248, "Metal Counter"},
-                {1279, "Birch Wardrobe"},
-                {1278, "Maple Wardrobe"},
-                {1280, "Pine Wardrobe"},
-                {1281, "Metal Wardrobe"},
-                {1206, "Birch Trophy Case"},
-                {1205, "Maple Trophy Case"},
-                {1207, "Pine Trophy Case"},
-                {1221, "Metal Trophy Case"},
-                {1203, "Birch Rifle Rack"},
-                {1202, "Maple Rifle Rack"},
-                {1204, "Pine Rifle Rack"},
-                {1220, "Metal Rifle Rack"},
-                {1283, "Cooler"},
-                {1249, "Fridge"}
-            };
-
-            DoorIds = new Dictionary<int, string>
-            {
-                {282, "Birch Door"},
-                {281, "Maple Door"},
-                {283, "Pine Door"},
-                {378, "Metal Door"},
-                {284, "Jail Door"},
-                {286, "Vault Door"},
-                {1236, "Birch Double Doors"},
-                {1235, "Maple Double Doors"},
-                {1237, "Pine Double Doors"},
-                {1238, "Metal Double Doors"},
-                {1330, "Birch Hatch"},
-                {1331, "Pine Hatch"},
-                {1332, "Metal Hatch"},
-                {1329, "Maple Hatch"}
-            };
-
-        }
-
-        internal static Vector3 GetTargetVector(Transform target, string objName)
-        {
-            var componentsInChildren = target.transform.GetComponentsInChildren<Transform>();
-            var result = Vector3.zero;
-
-            if (componentsInChildren != null)
-            {
-                var array = componentsInChildren;
-                foreach (var transform in array)
-                {
-                    if (transform.name.Trim() == objName)
-                    {
-                        result = transform.position + new Vector3(0f, 0.4f, 0f);
-                        break;
-                    }
-                }
-            }
-            return result;
-        }
-        
-        internal static void DrawBox(Transform target, Vector3 position, Color color)
-        {
-            var  targetPos = GetTargetVector(target, "Skull");
-            var  scrnPt = Camera.main.WorldToScreenPoint(targetPos);
-            scrnPt.y = Screen.height - scrnPt.y;
-            
-            var  dist = Math.Abs(position.y - scrnPt.y);
-            var  hlfDist = dist / 2f;
-            var  xVal = position.x - hlfDist / 2f;
-            var  yVal = position.y - dist;
-            
-            GL.PushMatrix();
-            GL.Begin(1);
-            BoxMaterial.SetPass(0);
-            GL.Color(color);
-            
-            GL.Vertex3(xVal, yVal, 0f);
-            GL.Vertex3(xVal, yVal + dist, 0f);
-            GL.Vertex3(xVal, yVal, 0f);
-            GL.Vertex3(xVal + hlfDist, yVal, 0f);
-            GL.Vertex3(xVal + hlfDist, yVal, 0f);
-            GL.Vertex3(xVal + hlfDist, yVal + dist, 0f);
-            GL.Vertex3(xVal, yVal + dist, 0f);
-            GL.Vertex3(xVal + hlfDist, yVal + dist, 0f);
-            
-            GL.End();
-            GL.PopMatrix();
-        }
-    }
-}
-*/
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using HighlightingSystem;
-using UnityEngine;
-using SDG.Unturned;
-using TsunamiHack.Tsunami.Manager;
-using TsunamiHack.Tsunami.Types;
-using TsunamiHack.Tsunami.Util;
-using Object = UnityEngine.Object;
-
-namespace TsunamiHack.Tsunami.Lib
-{
-    internal class VisualsV2
-    {
-        internal struct ESPObject
-        {
-            public GameObject value;
-            public ulong steamID;
-            
             internal ESPObject(ref GameObject go)
             {
                 value = go;
                 steamID = 0L;
             }
-            
+
             internal ESPObject(ref GameObject go, ulong id)
             {
                 value = new GameObject();
                 steamID = id;
             }
         }
-         
+
         internal static Menu.Visuals Menu;
         internal static float updateInterval;
         internal static DateTime updateLastUpdate;
         internal static DateTime guiLastUpdate;
 
         internal static float listupdateInterval = 5000f;
-        
+
         internal static Dictionary<int, string> StorageIds;
         internal static Dictionary<int, string> DoorIds;
-        
+
         internal static List<SteamPlayer> Players;
         internal static List<Zombie> Zombies;
         internal static List<InteractableVehicle> Vehicles;
@@ -1411,28 +57,30 @@ namespace TsunamiHack.Tsunami.Lib
         internal static List<InteractableSentry> Sentries;
         internal static List<InteractableObjectNPC> Npcs;
 
-        internal static Material BoxMaterial;
-        
+        internal static Material DrawingMaterial;
+
         public static void Start()
         {
             Menu = WaveMaker.MenuVisuals;
-            
+
             var material = new Material(Shader.Find("Hidden/Internal-Colored"));
             material.hideFlags = (HideFlags) 61;
-            BoxMaterial = material;
-            BoxMaterial.SetInt("_SrcBlend", 5);
-            BoxMaterial.SetInt("_DstBlend", 10);
-            BoxMaterial.SetInt("_Cull", 0);
-            BoxMaterial.SetInt("_ZWrite", 0);
-            
+            DrawingMaterial = material;
+            DrawingMaterial.SetInt("_SrcBlend", 5);
+            DrawingMaterial.SetInt("_DstBlend", 10);
+            DrawingMaterial.SetInt("_Cull", 0);
+            DrawingMaterial.SetInt("_ZWrite", 0);
+
             GenerateDicts();
             updateLastUpdate = DateTime.Now;
             guiLastUpdate = DateTime.Now;
+            zomskeleint = 55;
         }
-        
-        public static void Update() 
+
+        public static void Update()
         {
-            if ((DateTime.Now - updateLastUpdate).TotalMilliseconds >= Menu.UpdateRate)
+            if (Event.current.type == EventType.repaint &&
+                (DateTime.Now - updateLastUpdate).TotalMilliseconds >= Menu.UpdateRate)
             {
                 if (Provider.isConnected)
                 {
@@ -1599,28 +247,28 @@ namespace TsunamiHack.Tsunami.Lib
                         Npcs = new List<InteractableObjectNPC>();
                     }
                 }
-                
+
             }
 
         }
 
         internal static void OnGUI()
         {
-            
+
             if ((DateTime.Now - guiLastUpdate).TotalMilliseconds >= Menu.UpdateRate)
             {
                 if (Provider.isConnected)
                 {
                     CheckLabels();
                     CheckBoxes();
-                    
+
                 }
             }
-            
+
         }
 
         #region other esp
-        
+
         public static void EnableGlowGeneric(List<GlowItem> list, Color glowColor)
         {
             foreach (var go in list)
@@ -1634,7 +282,7 @@ namespace TsunamiHack.Tsunami.Lib
                     {
                         var highlighter = go.GameObject.GetComponent<Highlighter>() ??
                                           go.GameObject.AddComponent<Highlighter>();
-                        
+
                         highlighter.ConstantParams(glowColor);
                         highlighter.OccluderOn();
                         highlighter.SeeThroughOn();
@@ -1642,10 +290,10 @@ namespace TsunamiHack.Tsunami.Lib
                     }
                     else
                     {
-                        if(go.GameObject.GetComponent<Highlighter>() != null)
+                        if (go.GameObject.GetComponent<Highlighter>() != null)
                         {
                             var highlighter = go.GameObject.GetComponent<Highlighter>();
-                            
+
                             highlighter.ConstantOffImmediate();
                         }
                     }
@@ -1657,24 +305,24 @@ namespace TsunamiHack.Tsunami.Lib
         {
             foreach (var go in list)
             {
-                if(go.GameObject.GetComponent<Highlighter>() != null)
+                if (go.GameObject.GetComponent<Highlighter>() != null)
                     go.GameObject.GetComponent<Highlighter>().ConstantOffImmediate();
-                    
+
             }
         }
-        
+
         internal static void CheckBoxes()
         {
             if (Menu.EnableEsp)
             {
                 if (Menu.PlayerBox && Menu.EnableEsp)
                 {
-                
+
                     foreach (var client in Provider.clients)
                     {
                         if (client.player == Player.player) continue;
                         if (client.player.life.isDead) continue;
-                    
+
                         var dist = Vector3.Distance(Camera.main.transform.position, client.player.transform.position);
                         if (dist <= Menu.Distance || Menu.InfDistance)
                         {
@@ -1686,11 +334,13 @@ namespace TsunamiHack.Tsunami.Lib
                                     ? Menu.BoxPlayerFriendly
                                     : Menu.BoxPlayerEnemy;
                                 DrawBox(client.player.transform, scrnpt, color);
+
+
                             }
                         }
-                    
+
                     }
-                }    
+                }
 
                 if (Menu.ZombieBox && Menu.EnableEsp)
                 {
@@ -1709,13 +359,13 @@ namespace TsunamiHack.Tsunami.Lib
                                     pos.y = Screen.height - pos.y;
                                     DrawBox(zombie.transform, pos, Menu.BoxZombie);
                                 }
-                            }         
-                        }   
-                    }    
-            
-                }    
+                            }
+                        }
+                    }
+
+                }
             }
-            
+
         }
 
         internal static void CheckLabels()
@@ -1729,7 +379,7 @@ namespace TsunamiHack.Tsunami.Lib
                 }
                 else
                     Players = null;
-                    
+
                 if (Menu.ZombieName || Menu.ZombieDistance || Menu.ZombieSpecialty)
                 {
                     Zombies = new List<Zombie>();
@@ -1742,76 +392,76 @@ namespace TsunamiHack.Tsunami.Lib
                     }
                     UpdateZombieLabels();
                 }
-    
+
                 if (Menu.AnimalName || Menu.AnimalDistance)
                 {
                     Animals = AnimalManager.animals;
                     UpdateAnimalLabels();
                 }
-    
+
                 if (Menu.StorageType || Menu.StorageDistance)
                 {
-                    Storages = Object.FindObjectsOfType<InteractableStorage>().ToList(); 
+                    Storages = Object.FindObjectsOfType<InteractableStorage>().ToList();
                     UpdateStorageLabels();
                 }
-    
+
                 if (Menu.VehicleName || Menu.VehicleDistance)
                 {
                     Vehicles = VehicleManager.vehicles;
                     UpdateVehicleLabels();
                 }
-    
+
                 if (Menu.ItemName || Menu.ItemDistance)
                 {
                     Items = Object.FindObjectsOfType<InteractableItem>().ToList();
                     UpdateItemLabels();
                 }
-    
+
                 if (Menu.NpcName || Menu.NpcDistance /*|| menu.NpcWeapon*/)
                 {
                     Npcs = Object.FindObjectsOfType<InteractableObjectNPC>().ToList();
                     UpdateNpcLabels();
                 }
-    
+
                 if (Menu.ForageType || Menu.ForageDistance)
                 {
                     Forages = Object.FindObjectsOfType<InteractableForage>().ToList();
                     UpdateForageLabels();
                 }
-    
+
                 if (Menu.BedType || Menu.BedDistance)
                 {
                     Beds = Object.FindObjectsOfType<InteractableBed>().ToList();
                     UpdateBedLabels();
                 }
-    
+
                 if (Menu.FlagType || Menu.FlagDistance)
                 {
                     Claims = Object.FindObjectsOfType<InteractableClaim>().ToList();
                     UpdateFlagLabels();
                 }
-    
+
                 if (Menu.SentryType || Menu.SentryWeapon || Menu.SentryState || Menu.SentryDistance)
                 {
                     Sentries = Object.FindObjectsOfType<InteractableSentry>().ToList();
                     UpdateSentryLabels();
                 }
-    
+
                 if (Menu.Admins)
                 {
                     Players = Provider.clients;
                     UpdateAdminLabels();
-                }    
                 }
-            
+            }
+
             //Add airdrops and traps once glow is fixed and labels are created
         }
 
         internal static void UpdatePlayerLabels()
-        {   
+        {
             foreach (var player in Players)
             {
-                                   
+
                 if (!player.player.life.isDead && player.player != Player.player)
                 {
                     var myPos = Camera.main.transform.position;
@@ -1820,7 +470,7 @@ namespace TsunamiHack.Tsunami.Lib
 
                     if (dist <= Menu.Distance || Menu.InfDistance)
                     {
-                        targetpos += new Vector3(0f,3f,0f);
+                        targetpos += new Vector3(0f, 3f, 0f);
                         var scrnpt = Camera.main.WorldToScreenPoint(targetpos);
 
                         if (scrnpt.z >= 0)
@@ -1837,10 +487,12 @@ namespace TsunamiHack.Tsunami.Lib
                             {
                                 if (player.player.equipment.asset != null)
                                 {
-                                    if (text.Length > 0 && player.player.equipment.asset.type == EItemType.GUN || player.player.equipment.asset.type == EItemType.MELEE)
+                                    if (text.Length > 0 && player.player.equipment.asset.type == EItemType.GUN ||
+                                        player.player.equipment.asset.type == EItemType.MELEE)
                                         text += "\n";
 
-                                    if (player.player.equipment.asset.type == EItemType.GUN || player.player.equipment.asset.type == EItemType.MELEE)
+                                    if (player.player.equipment.asset.type == EItemType.GUN ||
+                                        player.player.equipment.asset.type == EItemType.MELEE)
                                         text += player.player.equipment.asset.name.Replace("_", " ");
                                 }
                             }
@@ -1852,8 +504,8 @@ namespace TsunamiHack.Tsunami.Lib
 
                                 text += $"[{Math.Round(dist, 0)}]";
                             }
-                            
-                            
+
+
                             float size;
 
                             if (Menu.ScaleText)
@@ -1866,13 +518,15 @@ namespace TsunamiHack.Tsunami.Lib
                                 : Menu.EnemyPlayerGlow;
 
                             var friend = WaveMaker.Friends.Contains(player.playerID.steamID.m_SteamID);
-                            
-                            if(friend)
-                                GUI.Label(new Rect(scrnpt + new Vector3(0,6f,0), new Vector2(170,70)), $"<color=#00ffff><size={size}>{text}</size></color>" );
+
+                            if (friend)
+                                GUI.Label(new Rect(scrnpt + new Vector3(0, 6f, 0), new Vector2(170, 70)),
+                                    $"<color=#00ffff><size={size}>{text}</size></color>");
                             else
-                                GUI.Label(new Rect(scrnpt + new Vector3(0,6f,0), new Vector2(170,70)), $"<color=#ff0000><size={size}>{text}</size></color>" );
+                                GUI.Label(new Rect(scrnpt + new Vector3(0, 6f, 0), new Vector2(170, 70)),
+                                    $"<color=#ff0000><size={size}>{text}</size></color>");
                         }
-      
+
                     }
                 }
             }
@@ -1881,165 +535,166 @@ namespace TsunamiHack.Tsunami.Lib
         internal static void UpdateZombieLabels()
         {
             foreach (var zombie in Zombies)
+            {
+                if (zombie.isDead == false)
                 {
-                    if (zombie.isDead == false)
+                    var myPos = Camera.main.transform.position;
+                    var targetPos = zombie.transform.position;
+                    var dist = Vector3.Distance(myPos, targetPos);
+
+                    if (dist <= Menu.Distance || Menu.InfDistance)
                     {
-                        var myPos = Camera.main.transform.position;
-                        var targetPos = zombie.transform.position;
-                        var dist = Vector3.Distance(myPos, targetPos);
-    
-                        if (dist <= Menu.Distance || Menu.InfDistance)
+                        targetPos += new Vector3(0f, 3f, 0f);
+                        var scrnPt = Camera.main.WorldToScreenPoint(targetPos);
+
+                        if (scrnPt.z >= 0)
                         {
-                            targetPos += new Vector3(0f,3f, 0f);
-                            var scrnPt = Camera.main.WorldToScreenPoint(targetPos);
-    
-                            if (scrnPt.z >= 0)
+
+                            scrnPt.y = Screen.height - scrnPt.y;
+
+                            var text = "";
+
+                            if (Menu.ZombieName)
                             {
-    
-                                scrnPt.y = Screen.height - scrnPt.y;
-    
-                                var text = "";
-    
-                                if (Menu.ZombieName)
-                                {
-                                    text += $"{zombie.gameObject.name}";
-                                }
-    
+                                text += $"{zombie.gameObject.name}";
+                            }
+
+                            if (Menu.ZombieDistance)
+                            {
+                                if (text.Length > 0)
+                                    text += "\n";
+
+                                text += $"[{Math.Round(dist, 0)}]";
+
+                            }
+
+                            if (Menu.ZombieSpecialty)
+                            {
+                                var str = "";
+
                                 if (Menu.ZombieDistance)
                                 {
-                                    if (text.Length > 0)
-                                        text += "\n";
+                                    str = " || ";
 
-                                    text += $"[{Math.Round(dist, 0)}]";
-                                    
-                                }
-
-                                if (Menu.ZombieSpecialty)
-                                {
-                                    var str = "";
-
-                                    if (Menu.ZombieDistance)
+                                    switch (zombie.speciality)
                                     {
-                                        str = " || ";
-
-                                        switch (zombie.speciality)
-                                        {
-                                            case EZombieSpeciality.NONE:
-                                                str += "Normal";
-                                                break;
-                                            case EZombieSpeciality.NORMAL:
-                                                str += "Normal";
-                                                break;
-                                            case EZombieSpeciality.MEGA:
-                                                str += "Mega";
-                                                break;
-                                            case EZombieSpeciality.CRAWLER:
-                                                str += "Crawler";
-                                                break;
-                                            case EZombieSpeciality.SPRINTER:
-                                                str += "Sprinter";
-                                                break;
-                                            case EZombieSpeciality.FLANKER_FRIENDLY:
-                                                str += "Friendly Flanker";
-                                                break;
-                                            case EZombieSpeciality.FLANKER_STALK:
-                                                str += "Stalking Flanker";
-                                                break;
-                                            case EZombieSpeciality.BURNER:
-                                                str += "Burner";
-                                                break;
-                                            case EZombieSpeciality.ACID:
-                                                str += "Acid";
-                                                break;
-                                            case EZombieSpeciality.BOSS_ELECTRIC:
-                                                str += "Electric (Boss)";
-                                                break;
-                                            case EZombieSpeciality.BOSS_WIND:
-                                                str += "Wind (Boss)";
-                                                break;
-                                            case EZombieSpeciality.BOSS_FIRE:
-                                                str += "Fire (Boss)";
-                                                break;
-                                            case EZombieSpeciality.BOSS_ALL:
-                                                str += "All (Boss)";
-                                                break;
-                                            case EZombieSpeciality.BOSS_MAGMA:
-                                                str += "Magma (Boss)";
-                                                break;
-                                        }
+                                        case EZombieSpeciality.NONE:
+                                            str += "Normal";
+                                            break;
+                                        case EZombieSpeciality.NORMAL:
+                                            str += "Normal";
+                                            break;
+                                        case EZombieSpeciality.MEGA:
+                                            str += "Mega";
+                                            break;
+                                        case EZombieSpeciality.CRAWLER:
+                                            str += "Crawler";
+                                            break;
+                                        case EZombieSpeciality.SPRINTER:
+                                            str += "Sprinter";
+                                            break;
+                                        case EZombieSpeciality.FLANKER_FRIENDLY:
+                                            str += "Friendly Flanker";
+                                            break;
+                                        case EZombieSpeciality.FLANKER_STALK:
+                                            str += "Stalking Flanker";
+                                            break;
+                                        case EZombieSpeciality.BURNER:
+                                            str += "Burner";
+                                            break;
+                                        case EZombieSpeciality.ACID:
+                                            str += "Acid";
+                                            break;
+                                        case EZombieSpeciality.BOSS_ELECTRIC:
+                                            str += "Electric (Boss)";
+                                            break;
+                                        case EZombieSpeciality.BOSS_WIND:
+                                            str += "Wind (Boss)";
+                                            break;
+                                        case EZombieSpeciality.BOSS_FIRE:
+                                            str += "Fire (Boss)";
+                                            break;
+                                        case EZombieSpeciality.BOSS_ALL:
+                                            str += "All (Boss)";
+                                            break;
+                                        case EZombieSpeciality.BOSS_MAGMA:
+                                            str += "Magma (Boss)";
+                                            break;
                                     }
-                                    else
-                                    {
-                                        text += "\n";
-                                        
-                                        switch (zombie.speciality)
-                                        {
-                                            case EZombieSpeciality.NONE:
-                                                str += "Normal";
-                                                break;
-                                            case EZombieSpeciality.NORMAL:
-                                                str += "Normal";
-                                                break;
-                                            case EZombieSpeciality.MEGA:
-                                                str += "Mega";
-                                                break;
-                                            case EZombieSpeciality.CRAWLER:
-                                                str += "Crawler";
-                                                break;
-                                            case EZombieSpeciality.SPRINTER:
-                                                str += "Sprinter";
-                                                break;
-                                            case EZombieSpeciality.FLANKER_FRIENDLY:
-                                                str += "Friendly Flanker";
-                                                break;
-                                            case EZombieSpeciality.FLANKER_STALK:
-                                                str += "Stalking Flanker";
-                                                break;
-                                            case EZombieSpeciality.BURNER:
-                                                str += "Burner";
-                                                break;
-                                            case EZombieSpeciality.ACID:
-                                                str += "Acid";
-                                                break;
-                                            case EZombieSpeciality.BOSS_ELECTRIC:
-                                                str += "Electric (Boss)";
-                                                break;
-                                            case EZombieSpeciality.BOSS_WIND:
-                                                str += "Wind (Boss)";
-                                                break;
-                                            case EZombieSpeciality.BOSS_FIRE:
-                                                str += "Fire (Boss)";
-                                                break;
-                                            case EZombieSpeciality.BOSS_ALL:
-                                                str += "All (Boss)";
-                                                break;
-                                            case EZombieSpeciality.BOSS_MAGMA:
-                                                str += "Magma (Boss)";
-                                                break;
-                                        }
-                                    }
-                                    text += str;
-                                }
-
-                                float size;
-                                
-                                if (Menu.ScaleText)
-                                {
-                                    size = dist <= Menu.Dropoff ? Menu.CloseSize : Menu.FarSize;
                                 }
                                 else
-                                {                                    
-                                    size = 10;
+                                {
+                                    text += "\n";
+
+                                    switch (zombie.speciality)
+                                    {
+                                        case EZombieSpeciality.NONE:
+                                            str += "Normal";
+                                            break;
+                                        case EZombieSpeciality.NORMAL:
+                                            str += "Normal";
+                                            break;
+                                        case EZombieSpeciality.MEGA:
+                                            str += "Mega";
+                                            break;
+                                        case EZombieSpeciality.CRAWLER:
+                                            str += "Crawler";
+                                            break;
+                                        case EZombieSpeciality.SPRINTER:
+                                            str += "Sprinter";
+                                            break;
+                                        case EZombieSpeciality.FLANKER_FRIENDLY:
+                                            str += "Friendly Flanker";
+                                            break;
+                                        case EZombieSpeciality.FLANKER_STALK:
+                                            str += "Stalking Flanker";
+                                            break;
+                                        case EZombieSpeciality.BURNER:
+                                            str += "Burner";
+                                            break;
+                                        case EZombieSpeciality.ACID:
+                                            str += "Acid";
+                                            break;
+                                        case EZombieSpeciality.BOSS_ELECTRIC:
+                                            str += "Electric (Boss)";
+                                            break;
+                                        case EZombieSpeciality.BOSS_WIND:
+                                            str += "Wind (Boss)";
+                                            break;
+                                        case EZombieSpeciality.BOSS_FIRE:
+                                            str += "Fire (Boss)";
+                                            break;
+                                        case EZombieSpeciality.BOSS_ALL:
+                                            str += "All (Boss)";
+                                            break;
+                                        case EZombieSpeciality.BOSS_MAGMA:
+                                            str += "Magma (Boss)";
+                                            break;
+                                    }
                                 }
-                                
-                                 
-                                
-                                GUI.Label(new Rect(scrnPt + new Vector3(0,4f,0), new Vector2(170,50)), $"<color=#00ff00><size={size}>{text}</size></color>" );        
+                                text += str;
                             }
+
+                            float size;
+
+                            if (Menu.ScaleText)
+                            {
+                                size = dist <= Menu.Dropoff ? Menu.CloseSize : Menu.FarSize;
+                            }
+                            else
+                            {
+                                size = 10;
+                            }
+
+
+
+                            GUI.Label(new Rect(scrnPt + new Vector3(0, 4f, 0), new Vector2(170, 50)),
+                                $"<color=#00ff00><size={size}>{text}</size></color>");
                         }
                     }
-                      
                 }
+
+            }
         }
 
         internal static void UpdateAnimalLabels()
@@ -2054,7 +709,7 @@ namespace TsunamiHack.Tsunami.Lib
 
                     if (dist <= Menu.Distance || Menu.InfDistance)
                     {
-                        targetpos += new Vector3(0f,3f,0f);
+                        targetpos += new Vector3(0f, 3f, 0f);
                         var scrnpt = Camera.main.WorldToScreenPoint(targetpos);
 
                         if (scrnpt.z >= 0f)
@@ -2073,12 +728,13 @@ namespace TsunamiHack.Tsunami.Lib
                                 if (text.Length > 0)
                                     text += $"\nDistance: {Math.Round(dist, 0)}";
                                 else
-                                    text += $"Distance: {Math.Round(dist, 0)}"; 
+                                    text += $"Distance: {Math.Round(dist, 0)}";
                             }
 
                             var size = Menu.ScaleText ? dist <= Menu.Dropoff ? Menu.CloseSize : Menu.FarSize : 10f;
-                            
-                            GUI.Label(new Rect(scrnpt + new Vector3(0,4f,0), new Vector2(170,50)), $"<color={Menu.InteractableGlow}><size={size}>{text}</size></color>" );
+
+                            GUI.Label(new Rect(scrnpt + new Vector3(0, 4f, 0), new Vector2(170, 50)),
+                                $"<color={Menu.InteractableGlow}><size={size}>{text}</size></color>");
                         }
                     }
                 }
@@ -2095,7 +751,7 @@ namespace TsunamiHack.Tsunami.Lib
 
                 if (dist <= Menu.Distance || Menu.InfDistance)
                 {
-                    targetpos += new Vector3(0f,1.5f,0f);
+                    targetpos += new Vector3(0f, 1.5f, 0f);
                     var scrnpt = Camera.main.WorldToScreenPoint(targetpos);
 
                     if (scrnpt.z >= 0)
@@ -2115,15 +771,16 @@ namespace TsunamiHack.Tsunami.Lib
                                 : $"Distance: {Math.Round(dist, 0)}";
                         }
 
-                        
+
                         var size = Menu.ScaleText ? dist <= Menu.Dropoff ? Menu.CloseSize : Menu.FarSize : 10f;
-                            
-                        GUI.Label(new Rect(scrnpt + new Vector3(0,4f,0), new Vector2(170,50)), $"<color=#ffff00><size={size}>{text}</size></color>" );
-                        
+
+                        GUI.Label(new Rect(scrnpt + new Vector3(0, 4f, 0), new Vector2(170, 50)),
+                            $"<color=#ffff00><size={size}>{text}</size></color>");
+
                     }
 
                 }
-                
+
             }
         }
 
@@ -2137,7 +794,7 @@ namespace TsunamiHack.Tsunami.Lib
 
                 if (dist <= Menu.Distance || Menu.InfDistance)
                 {
-                    targetpos += new Vector3(0f,1.5f,0f);
+                    targetpos += new Vector3(0f, 1.5f, 0f);
                     var scrnpt = Camera.main.WorldToScreenPoint(targetpos);
 
                     if (scrnpt.z >= 0)
@@ -2154,7 +811,7 @@ namespace TsunamiHack.Tsunami.Lib
 
                             if (name.Contains("Police"))
                                 name = "Police Car";
-                            
+
                             text += $"{name}";
                         }
 
@@ -2162,13 +819,14 @@ namespace TsunamiHack.Tsunami.Lib
                         {
                             if (text.Length > 0)
                                 text += "\n";
-                            
-                            text += $"[{Math.Round(dist,0)}]";
+
+                            text += $"[{Math.Round(dist, 0)}]";
                         }
 
                         var size = Menu.ScaleText ? dist <= Menu.Dropoff ? Menu.CloseSize : Menu.FarSize : 10f;
-                        
-                        GUI.Label(new Rect(scrnpt + new Vector3(0,4f,0), new Vector2(170,50)), $"<color=#ff00ff><size={size}>{text}</size></color>" );
+
+                        GUI.Label(new Rect(scrnpt + new Vector3(0, 4f, 0), new Vector2(170, 50)),
+                            $"<color=#ff00ff><size={size}>{text}</size></color>");
                     }
                 }
             }
@@ -2184,7 +842,7 @@ namespace TsunamiHack.Tsunami.Lib
 
                 if (dist <= Menu.Distance || Menu.InfDistance)
                 {
-                    targetpos += new Vector3(0f,1.5f, 0f);
+                    targetpos += new Vector3(0f, 1.5f, 0f);
                     var scrnpt = Camera.main.WorldToScreenPoint(targetpos);
 
                     if (scrnpt.z >= 0f)
@@ -2203,12 +861,13 @@ namespace TsunamiHack.Tsunami.Lib
                                 text += "\n";
 
                             text += $"[{Math.Round(dist, 0)}]";
-                            
+
                         }
-                        
+
                         var size = Menu.ScaleText ? dist <= Menu.Dropoff ? Menu.CloseSize : Menu.FarSize : 10f;
-                        
-                        GUI.Label(new Rect(scrnpt + new Vector3(0,4f,0), new Vector2(170,50)), $"<color=#ffff00><size={size}>{text}</size></color>" );
+
+                        GUI.Label(new Rect(scrnpt + new Vector3(0, 4f, 0), new Vector2(170, 50)),
+                            $"<color=#ffff00><size={size}>{text}</size></color>");
                     }
                 }
             }
@@ -2216,12 +875,12 @@ namespace TsunamiHack.Tsunami.Lib
 
         internal static void UpdateAirdropLabels() //FIX ONCE GLOW IS FIXED
         {
-            
+
         }
 
         internal static void UpdateTrapLabels() //FIX ONCE GLOW IS FIXED
         {
-            
+
         }
 
         internal static void UpdateNpcLabels()
@@ -2234,7 +893,7 @@ namespace TsunamiHack.Tsunami.Lib
 
                 if (dist <= Menu.Distance || Menu.InfDistance)
                 {
-                    targetpos += new Vector3(0f,1.5f,0f);
+                    targetpos += new Vector3(0f, 1.5f, 0f);
                     var scrnpt = Camera.main.WorldToScreenPoint(targetpos);
 
                     if (scrnpt.z >= 0f)
@@ -2264,8 +923,9 @@ namespace TsunamiHack.Tsunami.Lib
                         }
 
                         var size = Menu.ScaleText ? dist <= Menu.Dropoff ? Menu.CloseSize : Menu.FarSize : 10f;
-                        
-                        GUI.Label(new Rect(scrnpt + new Vector3(0,4f,0), new Vector2(170,50)), $"<color={Menu.InteractableGlow}><size={size}>{text}</size></color>" );
+
+                        GUI.Label(new Rect(scrnpt + new Vector3(0, 4f, 0), new Vector2(170, 50)),
+                            $"<color={Menu.InteractableGlow}><size={size}>{text}</size></color>");
 
                     }
                 }
@@ -2302,11 +962,12 @@ namespace TsunamiHack.Tsunami.Lib
 
                             text += $"Distance: {Math.Round(dist, 0)}";
                         }
-                        
+
                         var size = Menu.ScaleText ? dist <= Menu.Dropoff ? Menu.CloseSize : Menu.FarSize : 10f;
-                        
-                        if(text.Length > 0)
-                            GUI.Label(new Rect(scrnpt + new Vector3(0,4f,0), new Vector2(170,50)), $"<color={ColorUtility.ToHtmlStringRGBA(Menu.InteractableGlow)}><size={size}>{text}</size></color>" );
+
+                        if (text.Length > 0)
+                            GUI.Label(new Rect(scrnpt + new Vector3(0, 4f, 0), new Vector2(170, 50)),
+                                $"<color={ColorUtility.ToHtmlStringRGBA(Menu.InteractableGlow)}><size={size}>{text}</size></color>");
                     }
                 }
 
@@ -2344,11 +1005,12 @@ namespace TsunamiHack.Tsunami.Lib
 
                             text += $"Distance: {Math.Round(dist, 0)}";
                         }
-                        
+
                         var size = Menu.ScaleText ? dist <= Menu.Dropoff ? Menu.CloseSize : Menu.FarSize : 10f;
-                        
-                        if(text.Length > 0)
-                            GUI.Label(new Rect(scrnpt + new Vector3(0,4f,0), new Vector2(170,50)), $"<color={ColorUtility.ToHtmlStringRGBA(Menu.InteractableGlow)}><size={size}>{text}</size></color>" );
+
+                        if (text.Length > 0)
+                            GUI.Label(new Rect(scrnpt + new Vector3(0, 4f, 0), new Vector2(170, 50)),
+                                $"<color={ColorUtility.ToHtmlStringRGBA(Menu.InteractableGlow)}><size={size}>{text}</size></color>");
                     }
                 }
 
@@ -2388,9 +1050,9 @@ namespace TsunamiHack.Tsunami.Lib
 
                         var size = Menu.ScaleText ? dist <= Menu.Dropoff ? Menu.CloseSize : Menu.FarSize : 10f;
 
-                        if(text.Length > 0)
+                        if (text.Length > 0)
                             GUI.Label(new Rect(scrnpt + new Vector3(0, 4f, 0), new Vector2(170, 50)),
-                            $"<color={ColorUtility.ToHtmlStringRGBA(Menu.InteractableGlow)}><size={size}>{text}</size></color>");
+                                $"<color={ColorUtility.ToHtmlStringRGBA(Menu.InteractableGlow)}><size={size}>{text}</size></color>");
                     }
                 }
             }
@@ -2429,9 +1091,9 @@ namespace TsunamiHack.Tsunami.Lib
 
                         var size = Menu.ScaleText ? dist <= Menu.Dropoff ? Menu.CloseSize : Menu.FarSize : 10f;
 
-                        if(text.Length > 0)
+                        if (text.Length > 0)
                             GUI.Label(new Rect(scrnpt + new Vector3(0, 4f, 0), new Vector2(170, 50)),
-                            $"<color={ColorUtility.ToHtmlStringRGBA(Menu.InteractableGlow)}><size={size}>{text}</size></color>");
+                                $"<color={ColorUtility.ToHtmlStringRGBA(Menu.InteractableGlow)}><size={size}>{text}</size></color>");
                     }
                 }
             }
@@ -2477,7 +1139,7 @@ namespace TsunamiHack.Tsunami.Lib
                             var state = sentry.enabled ? "On" : "Off";
                             text += $"State: {state}";
                         }
-                        
+
                         if (Menu.SentryDistance)
                         {
                             if (text.Length > 0)
@@ -2488,9 +1150,9 @@ namespace TsunamiHack.Tsunami.Lib
 
                         var size = Menu.ScaleText ? dist <= Menu.Dropoff ? Menu.CloseSize : Menu.FarSize : 10f;
 
-                        if(text.Length > 0)
+                        if (text.Length > 0)
                             GUI.Label(new Rect(scrnpt + new Vector3(0, 4f, 0), new Vector2(170, 70)),
-                            $"<color={ColorUtility.ToHtmlStringRGBA(Menu.InteractableGlow)}><size={size}>{text}</size></color>");
+                                $"<color={ColorUtility.ToHtmlStringRGBA(Menu.InteractableGlow)}><size={size}>{text}</size></color>");
                     }
                 }
             }
@@ -2523,269 +1185,130 @@ namespace TsunamiHack.Tsunami.Lib
 
                             var size = Menu.ScaleText ? dist <= Menu.Dropoff ? Menu.CloseSize : Menu.FarSize : 10f;
 
-                            if(text.Length > 0)
+                            if (text.Length > 0)
                                 GUI.Label(new Rect(scrnpt - new Vector3(0, 5.3f, 0), new Vector2(170, 50)),
-                                $"<color=#FF0000><size={size}>{text}</size></color>");
+                                    $"<color=#FF0000><size={size}>{text}</size></color>");
                         }
                     }
-                }  
+                }
             }
         }
 
         #endregion
 
-		internal static void CheckTracers()
-		{
-		    
-		    if (Menu.Tracers)
-		    {
-		        var zoms = new List<Zombie>();
-		        foreach (var region in ZombieManager.regions)
-		        {
-		            foreach (var zombie in region.zombies)
-		            {
-		                zoms.Add(zombie);
-		            }
-		        }
 
-		        foreach (var zombie in zoms)
-		        {
-		            var centerpt = new Vector2(Screen.width / 2, Screen.height /2);
-		            Vector3 spinepos = Vector3.zero;
-		            Vector3 skullpos = Vector3.zero;
-		            
-		            var components = zombie.transform.GetComponentsInChildren<Transform>();
-		            foreach (var comp in components)
-		            {
-		                if (comp.name.Trim() == "Spine")
-		                    spinepos = comp.position;
+        internal static void CheckTracers()
+        {
+
+            if (Menu.Tracers)
+            {
+                var zoms = new List<Zombie>();
+                foreach (var region in ZombieManager.regions)
+                {
+                    foreach (var zombie in region.zombies)
+                    {
+                        zoms.Add(zombie);
+                    }
+                }
+
+                foreach (var zombie in zoms)
+                {
+                    if (Vector3.Distance(zombie.transform.position, Camera.main.transform.position) >= 150) continue;
+
+                    var centerpt = new Vector2(Screen.width / 2, Screen.height / 2);
+                    Vector3 spinepos = Vector3.zero;
+                    Vector3 skullpos = Vector3.zero;
+
+                    var components = zombie.transform.GetComponentsInChildren<Transform>();
+                    foreach (var comp in components)
+                    {
+                        if (comp.name.Trim() == "Spine")
+                            spinepos = comp.position;
 //		                if (comp.name.Trim() == "Skull")
 //		                    skullpos = comp.position;
-		            }
+                    }
 
 //		            var vp = Camera.main.WorldToViewportPoint(skullpos);
 //		            if (vp.z <= 0f || vp.x <= 0f || vp.x >= 1f || vp.y <= 0f || vp.y >= 1f) continue;
-		            
+
 //		            spinepos.y = skullpos.y - spinepos.y;
-		            
-		            var spinescreenpos = Camera.main.WorldToScreenPoint(spinepos);
-		            spinescreenpos.y = Screen.height - spinescreenpos.y;
-		            
-		            GL.PushMatrix();
-		            GL.Begin(1);
-		            BoxMaterial.SetPass(0);
-		            GL.Color(Color.red);
-		            
-		            GL.Vertex3(centerpt.x, centerpt.y, 0f);
-		            GL.Vertex3(spinescreenpos.x, spinescreenpos.y, 0f);
-		            
-		            GL.End();
-		            GL.PopMatrix();
-		        }		        
-		    }
-		}
 
-        internal static void CheckSkeleton()
-        {
-            var zoms = new List<Zombie>();
-            foreach (var region in ZombieManager.regions)
-            {
-                foreach (var zombie in region.zombies)
-                {
-                    zoms.Add(zombie);
-                }
-            }
+                    var spinescreenpos = Camera.main.WorldToScreenPoint(spinepos);
+                    spinescreenpos.y = Screen.height - spinescreenpos.y;
 
-            if (Menu.ShowSkeleton)
-            {
-                foreach (var zombie in zoms)
-                {
-
-                    Transform skull = null;
-                    Transform spine = null;
-                    Transform lshoulder = null;
-                    Transform rshoulder = null;
-                    Transform rarm = null;
-                    Transform rhand = null;
-                    Transform larm = null;
-                    Transform lhand = null;
-                    Transform lhip = null;
-                    Transform rhip = null;
-                    Transform lleg = null;
-                    Transform rleg = null;
-                    Transform rfoot = null;
-                    Transform lfoot = null;
-                    
-                    
-                    
-                    var components = zombie.transform.GetComponentsInChildren<Transform>();
-                    foreach (var co in components)
-                    {
-                        switch (co.name.Trim())
-                        {
-                                case "Skull":
-                                    skull = co;
-                                    break;
-                                case "Spine":
-                                    spine = co;
-                                    break;
-                                case "Left_Shoulder":
-                                    lshoulder = co;
-                                    break;
-                                case "Right_Shoulder":
-                                    rshoulder = co;
-                                    break;
-                                case "Right_Arm":
-                                    rarm = co;
-                                    break;
-                                case "Right_Hand":
-                                    rhand = co;
-                                    break;
-                                case "Left_Arm":
-                                    larm = co;
-                                    break;
-                                case "Left_Hand":
-                                    lhand = co;
-                                    break;
-                                case "Left_Hip":
-                                    lhip = co;
-                                    break;
-                                case "Right_Hip":
-                                    rhip = co;
-                                    break;
-                                case "Left_Leg":
-                                    lleg = co;
-                                    break;
-                                case "Right_Leg":
-                                    rleg = co;
-                                    break;
-                                case "Right_Foot":
-                                    rfoot = co;
-                                    break;
-                                case "Left_Foot":
-                                    lfoot = co;
-                                    break;
-                        }
-                    }
-
-                    var vp = Camera.main.WorldToViewportPoint(skull.position);
-                    if (vp.z <= 0f || vp.x <= 0f || vp.x >= 1f || vp.y <= 0f || vp.y >= 1f) continue;
-                    
-                    
-                    var skullpos = Camera.main.WorldToScreenPoint(skull.position);
-                    skullpos.y = Screen.height - skullpos.y;
-
-                    
-                    
-                    var skullelevatedpos =
-                        Camera.main.WorldToScreenPoint(new Vector3(skull.position.x, skull.position.y + (float)0.25,
-                            skull.position.z));
-                    skullelevatedpos.y = Screen.height - skullelevatedpos.y;
-
-                    var spinepos = Camera.main.WorldToScreenPoint(spine.position);
-                    spinepos.y = Screen.height - spinepos.y;
-
-                    var rshoulderpos = Camera.main.WorldToScreenPoint(rshoulder.position);
-                    rshoulderpos.y = Screen.height - rshoulderpos.y;
-
-                    var lshoulderpos = Camera.main.WorldToScreenPoint(lshoulder.position);
-                    lshoulderpos.y = Screen.height - lshoulderpos.y;
-                    
-                    var rarmpos = Camera.main.WorldToScreenPoint(rarm.position);
-                    rarmpos.y = Screen.height - rarmpos.y;
-                    
-                    var rhandpos = Camera.main.WorldToScreenPoint(rhand.position);
-                    rhandpos.y = Screen.height - rhandpos.y;
-                    
-                    var lhandpos = Camera.main.WorldToScreenPoint(lhand.position);
-                    lhandpos.y = Screen.height - lhandpos.y;
-                    
-                    var larmpos = Camera.main.WorldToScreenPoint(larm.position);
-                    larmpos.y = Screen.height - larmpos.y;
-                    
-                    var lhippos = Camera.main.WorldToScreenPoint(lhip.position);
-                    lhippos.y = Screen.height - lhippos.y;
-                    
-                    var llegpos = Camera.main.WorldToScreenPoint(lleg.position);
-                    llegpos.y = Screen.height - llegpos.y;
-                    
-                    var rhippos = Camera.main.WorldToScreenPoint(rhip.position);
-                    rhippos.y = Screen.height - rhippos.y;
-                    
-                    var rlegpos = Camera.main.WorldToScreenPoint(rleg.position);
-                    rlegpos.y = Screen.height - rlegpos.y;
-                    
-                    var rfootpos = Camera.main.WorldToScreenPoint(rfoot.position);
-                    rfootpos.y = Screen.height - rfootpos.y;
-                    
-                    var lfootpos = Camera.main.WorldToScreenPoint(lfoot.position);
-                    lfootpos.y = Screen.height - lfootpos.y;
-                    
                     GL.PushMatrix();
                     GL.Begin(1);
-                    BoxMaterial.SetPass(0);
-                    GL.Color(new Color(0,255,255));
+                    DrawingMaterial.SetPass(0);
+                    GL.Color(Color.red);
 
-                    //skull to spine
-                    GL.Vertex3(skullpos.x, skullpos.y, 0f);
-                    GL.Vertex3(spinepos.x, spinepos.y, 0f);
+                    GL.Vertex3(centerpt.x, centerpt.y, 0f);
+                    GL.Vertex3(spinescreenpos.x, spinescreenpos.y, 0f);
 
-                    //skull to right shoulder
-                    GL.Vertex3(skullpos.x, skullpos.y, 0f);
-                    GL.Vertex3(rshoulderpos.x, rshoulderpos.y, 0f);
-                    
-                    //skull to left shoulder
-                    GL.Vertex3(skullpos.x, skullpos.y, 0f);
-                    GL.Vertex3(lshoulderpos.x, lshoulderpos.y, 0f);
-                    
-                    //right shoulder to right arm
-                    GL.Vertex3(rshoulderpos.x, rshoulderpos.y, 0f);
-                    GL.Vertex3(rarmpos.x, rarmpos.y, 0f);
-                    
-                    //right arm to right hand
-                    GL.Vertex3(rarmpos.x, rarmpos.y, 0f);
-                    GL.Vertex3(rhandpos.x, rhandpos.y, 0f);
-                    
-                    //left shoulder to left arm
-                    GL.Vertex3(lshoulderpos.x, lshoulderpos.y, 0f);
-                    GL.Vertex3(larmpos.x, larmpos.y, 0f);
-                    
-                    //left arm to left hand
-                    GL.Vertex3(larmpos.x, larmpos.y, 0f);
-                    GL.Vertex3(lhandpos.x, lhandpos.y, 0f);
-                    
-                    //spine to left leg
-                    GL.Vertex3(spinepos.x, spinepos.y, 0f);
-                    GL.Vertex3(llegpos.x, llegpos.y, 0f);
-                    
-                    //left leg to left foot
-                    GL.Vertex3(llegpos.x, llegpos.y, 0f);
-                    GL.Vertex3(lfootpos.x, lfootpos.y, 0f);
-                    
-                    //spine to right leg
-                    GL.Vertex3(spinepos.x, spinepos.y, 0f);
-                    GL.Vertex3(rlegpos.x, rlegpos.y, 0f);
-                    
-                    //right leg to right foot
-                    GL.Vertex3(rlegpos.x, rlegpos.y, 0f);
-                    GL.Vertex3(rfootpos.x, rfootpos.y, 0f);
-                    
-
-                    
-                    
-                
-                    //skull to elevated skull
-                    
-                    GL.Vertex3(skullpos.x, skullpos.y, 0f);
-                    GL.Vertex3(skullelevatedpos.x, skullelevatedpos.y, 0f);
-                    
-                    
                     GL.End();
                     GL.PopMatrix();
                 }
             }
         }
-        
+
+
+        private static int zomskeleint;
+
+        internal static void CheckSkeleton()
+        {
+
+            if (Menu.EnablePlayerSkeleton && (DateTime.Now - guiLastUpdate).TotalMilliseconds > 200)
+            {
+
+                foreach (var player in Provider.clients)
+                {
+                    if (!player.player.life.isDead)
+                    {
+                        if (Vector3.Distance(Camera.main.transform.position, player.player.transform.position) <=
+                            Menu.Distance)
+                        {
+                            var color = WaveMaker.Friends.IsFriend(player)
+                                ? new Color(0, 255, 255)
+                                : new Color(255, 0, 0);
+
+                            DrawSkeleton(player.player.transform, color);
+                        }
+                    }
+                }
+
+            }
+
+            if (Menu.EnableZombieSkeleton && (DateTime.Now - guiLastUpdate).TotalMilliseconds > 200)
+            {
+                if (zomskeleint > 50)
+                {
+                    Zombies = new List<Zombie>();
+                    foreach (var region in ZombieManager.regions)
+                    {
+                        foreach (var zombie in region.zombies)
+                        {
+                            Zombies.Add(zombie);
+                        }
+                    }
+                    zomskeleint = 0;
+                }
+                else
+                    zomskeleint++;
+
+                foreach (var zombie in Zombies)
+                {
+                    if (!zombie.isDead)
+                    {
+                        if (Vector3.Distance(Camera.main.transform.position, zombie.transform.position) <=
+                            Menu.Distance)
+                        {
+                            DrawSkeleton(zombie.transform, new Color(0, 255, 0));
+                        }
+                    }
+                }
+            }
+
+        }
+
         internal static void GenerateDicts()
         {
             StorageIds = new Dictionary<int, string>
@@ -2853,23 +1376,23 @@ namespace TsunamiHack.Tsunami.Lib
             }
             return result;
         }
-        
+
         internal static void DrawBox(Transform target, Vector3 position, Color color)
         {
-            var  targetPos = GetTargetVector(target, "Skull");
-            var  scrnPt = Camera.main.WorldToScreenPoint(targetPos);
+            var targetPos = GetTargetVector(target, "Skull");
+            var scrnPt = Camera.main.WorldToScreenPoint(targetPos);
             scrnPt.y = Screen.height - scrnPt.y;
-            
-            var  dist = Math.Abs(position.y - scrnPt.y);
-            var  hlfDist = dist / 2f;
-            var  xVal = position.x - hlfDist / 2f;
-            var  yVal = position.y - dist;
-            
+
+            var dist = Math.Abs(position.y - scrnPt.y);
+            var hlfDist = dist / 2f;
+            var xVal = position.x - hlfDist / 2f;
+            var yVal = position.y - dist;
+
             GL.PushMatrix();
             GL.Begin(1);
-            BoxMaterial.SetPass(0);
+            DrawingMaterial.SetPass(0);
             GL.Color(color);
-            
+
             GL.Vertex3(xVal, yVal, 0f);
             GL.Vertex3(xVal, yVal + dist, 0f);
             GL.Vertex3(xVal, yVal, 0f);
@@ -2878,25 +1401,27 @@ namespace TsunamiHack.Tsunami.Lib
             GL.Vertex3(xVal + hlfDist, yVal + dist, 0f);
             GL.Vertex3(xVal, yVal + dist, 0f);
             GL.Vertex3(xVal + hlfDist, yVal + dist, 0f);
-            
+
             GL.End();
             GL.PopMatrix();
         }
 
         internal static void DrawSkeleton(Transform input, Color color)
         {
+            //Insure that people who arent on the visible screen arent shown
             var visible = Camera.main.WorldToViewportPoint(input.position);
             if (visible.z <= 0f || visible.x <= 0f || visible.x >= 1f || visible.y <= 0f || visible.y >= 1f) return;
-            
+
+            //Set up all the transforms
             Transform skull = null;
             Transform spine = null;
-            
+
             Transform left_shoulder = null;
             Transform right_shoulder = null;
-            
+
             Transform left_arm = null;
             Transform right_arm = null;
-            
+
             Transform left_hand = null;
             Transform right_hand = null;
 
@@ -2906,23 +1431,7 @@ namespace TsunamiHack.Tsunami.Lib
             Transform left_foot = null;
             Transform right_foot = null;
 
-            var bones = new List<Transform>()
-            {
-                skull,
-                null,
-                spine,
-                left_shoulder,
-                right_shoulder,
-                left_arm,
-                right_arm,
-                left_hand,
-                right_hand,
-                left_leg,
-                right_leg,
-                left_foot,
-                right_foot
-            };
-            
+            //Get components and assign each to their respective variables
             var components = input.GetComponentsInChildren<Transform>();
             foreach (var co in components)
             {
@@ -2930,69 +1439,157 @@ namespace TsunamiHack.Tsunami.Lib
                 {
                     case "Skull":
                         skull = co;
-                        bones[0] = skull;
                         break;
-                        
+
                     case "Spine":
                         spine = co;
-                        bones[2] = spine;
                         break;
-                        
+
                     case "Left_Shoulder":
                         left_shoulder = co;
-                        bones[3] = left_shoulder;
                         break;
-                        
+
                     case "Right_Shoulder":
                         right_shoulder = co;
-                        bones[4] = right_shoulder;
                         break;
-                        
+
                     case "Left_Arm":
                         left_arm = co;
-                        bones[5] = left_arm;
                         break;
-                        
+
                     case "Right_Arm":
                         right_arm = co;
-                        bones[6] = right_arm;
                         break;
-                        
+
                     case "Left_Hand":
                         left_hand = co;
-                        bones[7] = left_hand;
                         break;
-                        
+
                     case "Right_Hand":
                         right_hand = co;
-                        bones[8] = right_hand;
                         break;
-                        
+
                     case "Left_Leg":
                         left_leg = co;
-                        bones[9] = left_leg;
                         break;
-                        
+
                     case "Right_Leg":
                         right_leg = co;
-                        bones[10] = right_leg;
                         break;
-                        
+
                     case "Left_Foot":
                         left_foot = co;
-                        bones[11] = left_foot;
                         break;
-                        
+
                     case "Right_Foot":
                         right_foot = co;
-                        bones[12] = right_foot;
                         break;
                 }
             }
-            
-            
-            
+
+
+            //Setup the screen positions
+            var skullpos = Camera.main.WorldToScreenPoint(skull.position);
+            skullpos.y = Screen.height - skullpos.y;
+
+
+            var skullelevatedpos =
+                Camera.main.WorldToScreenPoint(new Vector3(skull.position.x, skull.position.y + (float) 0.25,
+                    skull.position.z));
+            skullelevatedpos.y = Screen.height - skullelevatedpos.y;
+
+            var spinepos = Camera.main.WorldToScreenPoint(spine.position);
+            spinepos.y = Screen.height - spinepos.y;
+
+            var rshoulderpos = Camera.main.WorldToScreenPoint(right_shoulder.position);
+            rshoulderpos.y = Screen.height - rshoulderpos.y;
+
+            var lshoulderpos = Camera.main.WorldToScreenPoint(left_shoulder.position);
+            lshoulderpos.y = Screen.height - lshoulderpos.y;
+
+            var rarmpos = Camera.main.WorldToScreenPoint(right_arm.position);
+            rarmpos.y = Screen.height - rarmpos.y;
+
+            var rhandpos = Camera.main.WorldToScreenPoint(right_hand.position);
+            rhandpos.y = Screen.height - rhandpos.y;
+
+            var lhandpos = Camera.main.WorldToScreenPoint(left_hand.position);
+            lhandpos.y = Screen.height - lhandpos.y;
+
+            var larmpos = Camera.main.WorldToScreenPoint(left_arm.position);
+            larmpos.y = Screen.height - larmpos.y;
+
+
+            var llegpos = Camera.main.WorldToScreenPoint(left_leg.position);
+            llegpos.y = Screen.height - llegpos.y;
+
+
+            var rlegpos = Camera.main.WorldToScreenPoint(right_leg.position);
+            rlegpos.y = Screen.height - rlegpos.y;
+
+            var rfootpos = Camera.main.WorldToScreenPoint(right_foot.position);
+            rfootpos.y = Screen.height - rfootpos.y;
+
+            var lfootpos = Camera.main.WorldToScreenPoint(left_foot.position);
+            lfootpos.y = Screen.height - lfootpos.y;
+
+            //Draw it
+            GL.PushMatrix();
+            GL.Begin(1);
+            DrawingMaterial.SetPass(0);
+            GL.Color(color);
+
+            //skull to spine
+            GL.Vertex3(skullpos.x, skullpos.y, 0f);
+            GL.Vertex3(spinepos.x, spinepos.y, 0f);
+
+            //skull to right shoulder
+            GL.Vertex3(skullpos.x, skullpos.y, 0f);
+            GL.Vertex3(rshoulderpos.x, rshoulderpos.y, 0f);
+
+            //skull to left shoulder
+            GL.Vertex3(skullpos.x, skullpos.y, 0f);
+            GL.Vertex3(lshoulderpos.x, lshoulderpos.y, 0f);
+
+            //right shoulder to right arm
+            GL.Vertex3(rshoulderpos.x, rshoulderpos.y, 0f);
+            GL.Vertex3(rarmpos.x, rarmpos.y, 0f);
+
+            //right arm to right hand
+            GL.Vertex3(rarmpos.x, rarmpos.y, 0f);
+            GL.Vertex3(rhandpos.x, rhandpos.y, 0f);
+
+            //left shoulder to left arm
+            GL.Vertex3(lshoulderpos.x, lshoulderpos.y, 0f);
+            GL.Vertex3(larmpos.x, larmpos.y, 0f);
+
+            //left arm to left hand
+            GL.Vertex3(larmpos.x, larmpos.y, 0f);
+            GL.Vertex3(lhandpos.x, lhandpos.y, 0f);
+
+            //spine to left leg
+            GL.Vertex3(spinepos.x, spinepos.y, 0f);
+            GL.Vertex3(llegpos.x, llegpos.y, 0f);
+
+            //left leg to left foot
+            GL.Vertex3(llegpos.x, llegpos.y, 0f);
+            GL.Vertex3(lfootpos.x, lfootpos.y, 0f);
+
+            //spine to right leg
+            GL.Vertex3(spinepos.x, spinepos.y, 0f);
+            GL.Vertex3(rlegpos.x, rlegpos.y, 0f);
+
+            //right leg to right foot
+            GL.Vertex3(rlegpos.x, rlegpos.y, 0f);
+            GL.Vertex3(rfootpos.x, rfootpos.y, 0f);
+
+            //skull to elevated skull 
+            GL.Vertex3(skullpos.x, skullpos.y, 0f);
+            GL.Vertex3(skullelevatedpos.x, skullelevatedpos.y, 0f);
+
+            GL.End();
+            GL.PopMatrix();
         }
-        
+
     }
 }
