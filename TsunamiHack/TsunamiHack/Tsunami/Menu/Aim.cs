@@ -68,7 +68,8 @@ namespace TsunamiHack.Tsunami.Menu
         internal bool TriggerWhiteListPlayers;
         internal float TriggerDistance;//
         internal bool TriggerGunRange;//
-        
+
+        internal static Camera mainCamera;
         
         public void Start()
         {
@@ -105,6 +106,8 @@ namespace TsunamiHack.Tsunami.Menu
         
         public void Update()
         {
+            mainCamera = Camera.main;
+            
             Lib.AimV3.Update();
         }
 
@@ -155,10 +158,10 @@ namespace TsunamiHack.Tsunami.Menu
             GUILayout.Space(2f);
             Aim360 = GUILayout.Toggle(Aim360, " 360 Aim FOV");
             GUILayout.Label($"Aim FOV : {AimFov}");
-            AimFov = GUILayout.HorizontalSlider((float) Math.Round(AimFov, 0), 1f, Camera.main.fieldOfView);
+            AimFov = GUILayout.HorizontalSlider((int)AimFov, 1, (int)Camera.main.fieldOfView);
             GUILayout.Space(2f);
             GUILayout.Label($"Aim Speed : {AimSpeed}");
-            AimSpeed = GUILayout.HorizontalSlider((float) Math.Round(AimSpeed, 0), 1f, 50f);
+            AimSpeed = GUILayout.HorizontalSlider((int)AimSpeed , 1, 50);
             GUILayout.Space(2f);     
             if (GUILayout.Button($"Target Limb : {AimTargetLimb}"))
             {

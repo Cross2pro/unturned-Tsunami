@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using SDG.Unturned;
 using TsunamiHack.Tsunami.Util;
 
@@ -14,67 +15,20 @@ namespace TsunamiHack.Tsunami.Types.Lists
             Userlist = new List<Friend>();
         }
 
-        public void RemoveFriend(ulong id)
+        public void AddFriend(Friend newFriend)
         {
-           if(Array.Exists(Userlist.ToArray(), friend => friend.SteamId == id ))
-           {
-
-               foreach (var friend in Userlist)
-               {
-                   if (friend.SteamId == id)
-                   {
-                       Userlist.Remove(friend);
-                   }
-               }
-           }
+            Userlist.Add(newFriend);
         }
 
-        internal void RemoveFriend(string name)
+        public void RemoveFriend(Friend oldFriend)
         {
-            if (Array.Exists(Userlist.ToArray(), friend => friend.Name == name))
-            {
-                foreach (var friend in Userlist)
-                {
-                    if (friend.Name == name)
-                    {
-                        Userlist.Remove(friend);
-                    }
-                }
-            }
+            if (Userlist.Any(friend => friend == oldFriend))
+                Userlist.Remove(oldFriend);
         }
 
-        internal void AddFriend(Friend user)
+        public bool IsFriend(ulong steamid)
         {
-            if (Array.Exists(Userlist.ToArray(), friend => friend.SteamId == user.SteamId))
-            {
-                return;
-            }
-            
-            Userlist.Add(user);
-        }
-
-        public void AddFriend(string name, ulong id)
-        {
-            if (Array.Exists(Userlist.ToArray(), friend => friend.SteamId == id))
-            {
-                return;
-            }
-            
-            var fr = new Friend();
-            fr.Name = name;
-            fr.SteamId = id;
-            
-            Userlist.Add(fr);
-        }
-
-        public bool IsFriend(SteamPlayer client)
-        {
-            return Contains(client.playerID.steamID.m_SteamID);
-        }
-        
-        public bool Contains(ulong id)
-        {
-            return Array.Exists(Userlist.ToArray(), user => user.SteamId == id);
+            return Userlist.Any(friend => friend.SteamId == steamid);
         }
 
         public void SaveFriends()

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using HighlightingSystem;
 using UnityEngine;
 using SDG.Unturned;
@@ -10,6 +11,7 @@ using TsunamiHack.Tsunami.Types;
 using TsunamiHack.Tsunami.Util;
 using Object = UnityEngine.Object;
 // ReSharper disable InconsistentNaming
+// ReSharper disable MemberCanBePrivate.Global
 
 namespace TsunamiHack.Tsunami.Lib
 {
@@ -59,6 +61,8 @@ namespace TsunamiHack.Tsunami.Lib
 
         internal static Material DrawingMaterial;
 
+//        internal static Camera Camera.main;
+
         public static void Start()
         {
             Menu = WaveMaker.MenuVisuals;
@@ -79,12 +83,11 @@ namespace TsunamiHack.Tsunami.Lib
 
         public static void Update()
         {
-            if (Event.current.type == EventType.repaint &&
-                (DateTime.Now - updateLastUpdate).TotalMilliseconds >= Menu.UpdateRate)
+            if (Event.current.type == EventType.repaint && (DateTime.Now - updateLastUpdate).TotalMilliseconds >= Menu.UpdateRate)
             {
                 if (Provider.isConnected)
                 {
-
+                    
                     if (Menu.GlowPlayers && Menu.EnableEsp)
                     {
                         Players = new List<SteamPlayer>();
@@ -95,7 +98,7 @@ namespace TsunamiHack.Tsunami.Lib
 
                         foreach (var user in Players)
                         {
-                            if (WaveMaker.Friends.Contains(user.playerID.steamID.m_SteamID))
+                            if (WaveMaker.Friends.IsFriend(user.playerID.steamID.m_SteamID))
                                 friends.Add(user);
                             else
                                 enemies.Add(user);
@@ -142,13 +145,33 @@ namespace TsunamiHack.Tsunami.Lib
                         Vehicles = new List<InteractableVehicle>();
                     }
 
+                    //Type:
+                    /*
+                    1- clothing
+                    2- ammo
+                    3- guns
+                    4- attachments
+                    5- food
+                    6- medical
+                    7- weapons
+                    8- misc
+                    9- backpack
+                    */
 
                     if (Menu.GlowItems && Menu.EnableEsp)
                     {
                         Items = new List<InteractableItem>();
                         Items = Object.FindObjectsOfType<InteractableItem>().ToList();
 
-                        EnableGlowGeneric(GlowItem.GetListItem(Items), Menu.ItemGlow);
+                        var filterList = new List<InteractableItem>();
+                        
+                        foreach (var item in Items)
+                        {
+                            if( (Menu.FilterClothing && isOfType(1, item)) || (Menu.FilterAmmo && isOfType(2, item)) || (Menu.FilterGuns && isOfType(3, item)) || (Menu.FilterAttach && isOfType(4, item)) || (Menu.FilterFood && isOfType(5, item)) || (Menu.FilterMedical && isOfType(6, item)) || (Menu.FilterWeapons && isOfType(7, item)) || (Menu.FilterMisc && isOfType(8, item) || (Menu.FilterBackpacks && isOfType(9, item))))
+                                filterList.Add(item);
+                        }
+                        
+                        EnableGlowGeneric(GlowItem.GetListItem(filterList), Menu.ItemGlow);
                     }
                     else
                     {
@@ -255,9 +278,11 @@ namespace TsunamiHack.Tsunami.Lib
         internal static void OnGUI()
         {
 
+
+            
             if ((DateTime.Now - guiLastUpdate).TotalMilliseconds >= Menu.UpdateRate)
             {
-                if (Provider.isConnected)
+                if (Provider.isConnected && Event.current.type == EventType.repaint)
                 {
                     CheckLabels();
                     CheckBoxes();
@@ -313,7 +338,7 @@ namespace TsunamiHack.Tsunami.Lib
 
         internal static void CheckBoxes()
         {
-            if (Menu.EnableEsp)
+            if (Menu.EnableEsp && Provider.isConnected)
             {
                 if (Menu.PlayerBox && Menu.EnableEsp)
                 {
@@ -330,7 +355,7 @@ namespace TsunamiHack.Tsunami.Lib
                             if (scrnpt.z >= 0)
                             {
                                 scrnpt.y = Screen.height - scrnpt.y;
-                                var color = WaveMaker.Friends.Contains(client.playerID.steamID.m_SteamID)
+                                var color = WaveMaker.Friends.IsFriend(client.playerID.steamID.m_SteamID)
                                     ? Menu.BoxPlayerFriendly
                                     : Menu.BoxPlayerEnemy;
                                 DrawBox(client.player.transform, scrnpt, color);
@@ -341,19 +366,25 @@ namespace TsunamiHack.Tsunami.Lib
 
                     }
                 }
-
+    
+                Logging.Log("3");
                 if (Menu.ZombieBox && Menu.EnableEsp)
                 {
-
+                    Logging.Log("2");
                     foreach (var zombie in Zombies)
                     {
+                        Logging.Log("1");
                         if (!zombie.isDead)
                         {
+                            Logging.Log("A");
                             var dist = Vector3.Distance(Camera.main.transform.position, zombie.transform.position);
+                            Logging.Log("B");
                             if (dist <= Menu.Distance || Menu.InfDistance)
                             {
+                                Logging.Log("C");
                                 var pos = Camera.main.WorldToScreenPoint(zombie.transform.position);
 
+                                Logging.Log("D");
                                 if (pos.z >= 0)
                                 {
                                     pos.y = Screen.height - pos.y;
@@ -413,8 +444,18 @@ namespace TsunamiHack.Tsunami.Lib
 
                 if (Menu.ItemName || Menu.ItemDistance)
                 {
+                    
                     Items = Object.FindObjectsOfType<InteractableItem>().ToList();
-                    UpdateItemLabels();
+                    
+                    var filterList = new List<InteractableItem>();
+                        
+                    foreach (var item in Items)
+                    {
+                        if( (Menu.FilterClothing && isOfType(1, item)) || (Menu.FilterAmmo && isOfType(2, item)) || (Menu.FilterGuns && isOfType(3, item)) || (Menu.FilterAttach && isOfType(4, item)) || (Menu.FilterFood && isOfType(5, item)) || (Menu.FilterMedical && isOfType(6, item)) || (Menu.FilterWeapons && isOfType(7, item)) || (Menu.FilterMisc && isOfType(8, item) || (Menu.FilterBackpacks && isOfType(9, item)) ))
+                        filterList.Add(item);
+                    }
+                    
+                    UpdateItemLabels(filterList);
                 }
 
                 if (Menu.NpcName || Menu.NpcDistance /*|| menu.NpcWeapon*/)
@@ -464,6 +505,7 @@ namespace TsunamiHack.Tsunami.Lib
 
                 if (!player.player.life.isDead && player.player != Player.player)
                 {
+                    Logging.Log("Camera use 1");
                     var myPos = Camera.main.transform.position;
                     var targetpos = player.player.transform.position;
                     var dist = Vector3.Distance(myPos, targetpos);
@@ -471,6 +513,7 @@ namespace TsunamiHack.Tsunami.Lib
                     if (dist <= Menu.Distance || Menu.InfDistance)
                     {
                         targetpos += new Vector3(0f, 3f, 0f);
+                        Logging.Log("Camera use 2");
                         var scrnpt = Camera.main.WorldToScreenPoint(targetpos);
 
                         if (scrnpt.z >= 0)
@@ -513,11 +556,11 @@ namespace TsunamiHack.Tsunami.Lib
                             else
                                 size = 10f;
 
-                            var color = WaveMaker.Friends.Contains(player.playerID.steamID.m_SteamID)
+                            var color = WaveMaker.Friends.IsFriend(player.playerID.steamID.m_SteamID)
                                 ? Menu.FriendlyPlayerGlow
                                 : Menu.EnemyPlayerGlow;
 
-                            var friend = WaveMaker.Friends.Contains(player.playerID.steamID.m_SteamID);
+                            var friend = WaveMaker.Friends.IsFriend(player.playerID.steamID.m_SteamID);
 
                             if (friend)
                                 GUI.Label(new Rect(scrnpt + new Vector3(0, 6f, 0), new Vector2(170, 70)),
@@ -832,9 +875,9 @@ namespace TsunamiHack.Tsunami.Lib
             }
         }
 
-        internal static void UpdateItemLabels()
+        internal static void UpdateItemLabels(List<InteractableItem> inputlist)
         {
-            foreach (var item in Items)
+            foreach (var item in inputlist)
             {
                 var mypos = Camera.main.transform.position;
                 var targetpos = item.transform.position;
@@ -1266,7 +1309,7 @@ namespace TsunamiHack.Tsunami.Lib
                         if (Vector3.Distance(Camera.main.transform.position, player.player.transform.position) <=
                             Menu.Distance)
                         {
-                            var color = WaveMaker.Friends.IsFriend(player)
+                            var color = WaveMaker.Friends.IsFriend(player.playerID.steamID.m_SteamID)
                                 ? new Color(0, 255, 255)
                                 : new Color(255, 0, 0);
 
@@ -1589,6 +1632,84 @@ namespace TsunamiHack.Tsunami.Lib
 
             GL.End();
             GL.PopMatrix();
+        }
+
+        //Type:
+        /*
+        1- clothing
+        2- ammo
+        3- guns
+        4- attachments
+        5- food
+        6- medical
+        7- weapons
+        8- misc
+        9- backpack
+        */
+        
+        public static  bool isOfType(int type, InteractableItem input)
+        {
+            if (type == 1)
+            {
+                if (input.asset.type == EItemType.HAT || input.asset.type == EItemType.PANTS ||
+                    input.asset.type == EItemType.SHIRT || input.asset.type == EItemType.MASK || input.asset.type == EItemType.VEST ||
+                    input.asset.type == EItemType.GLASSES)
+                {
+                    return true;
+                }
+            }
+            else if (type == 2)
+            {
+                if (input.asset.type == EItemType.MAGAZINE || input.asset.type == EItemType.REFILL)
+                {
+                    return true;
+                }
+            }
+            else if (type == 3)
+            {
+                if (input.asset.type == EItemType.GUN)
+                {
+                    return true;
+                }
+            }
+            else if (type == 4)
+            {
+                if (input.asset.type == EItemType.SIGHT || input.asset.type == EItemType.TACTICAL ||
+                    input.asset.type == EItemType.GRIP || input.asset.type == EItemType.BARREL || input.asset.type == EItemType.OPTIC)
+                {
+                    return true;
+                }
+            }
+            else if (type == 5)
+            {
+                if (input.asset.type == EItemType.FOOD || input.asset.type == EItemType.WATER)
+                {
+                    return true;
+                }
+            }
+            else if (type == 6)
+            {
+                if (input.asset.type == EItemType.MEDICAL)
+                    return true;
+            }
+            else if (type == 7)
+            {
+                if (input.asset.type == EItemType.MELEE || input.asset.type == EItemType.THROWABLE ||
+                    input.asset.type == EItemType.DETONATOR || input.asset.type == EItemType.CHARGE ||
+                    input.asset.type == EItemType.TRAP)
+                {
+                    return true;
+                }
+            }
+            else if (type == 9)
+            {
+                if (input.asset.type == EItemType.BACKPACK)
+                    return true;
+            }
+            else if (type == 8)
+                return true;
+
+            return false;
         }
 
     }

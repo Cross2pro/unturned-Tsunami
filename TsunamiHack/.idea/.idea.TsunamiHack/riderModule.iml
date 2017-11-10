@@ -2,13 +2,9 @@
 <module type="RIDER_MODULE" version="4">
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$/../..">
-      <sourceFolder url="file://$MODULE_DIR$/../../JsonEditor" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/../../TsuManager" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../JsonEditor/JsonEditor.csproj" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../TsuManager/TsuManager.csproj" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/../../TsunamiHack" isTestSource="false" />
-      <excludeFolder url="file://$MODULE_DIR$/../../JsonEditor/bin" />
-      <excludeFolder url="file://$MODULE_DIR$/../../JsonEditor/obj" />
-      <excludeFolder url="file://$MODULE_DIR$/../../TsuManager/bin" />
-      <excludeFolder url="file://$MODULE_DIR$/../../TsuManager/obj" />
       <excludeFolder url="file://$MODULE_DIR$/../../TsunamiHack/bin" />
       <excludeFolder url="file://$MODULE_DIR$/../../TsunamiHack/obj" />
       <excludeFolder url="file://$MODULE_DIR$/../../packages" />

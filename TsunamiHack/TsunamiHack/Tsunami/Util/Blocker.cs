@@ -119,7 +119,7 @@ namespace TsunamiHack.Tsunami.Util
             GUILayout.Label("You can get the latest game version by visiting the link below");
             if(GUILayout.Button("Join Discord and get latest version"))
             {
-                System.Diagnostics.Process.Start("https://discord.gg/cW8Mjdf");
+                System.Diagnostics.Process.Start("https://discord.gg/QhakXeK");
             }
             
             GUILayout.Space(20f);
@@ -145,7 +145,7 @@ namespace TsunamiHack.Tsunami.Util
             GUILayout.Label("You can get the latest game version by visiting the link below");
             if(GUILayout.Button("Join Discord and get latest version"))
             {
-                System.Diagnostics.Process.Start("https://discord.gg/cW8Mjdf");
+                System.Diagnostics.Process.Start("https://discord.gg/QhakXeK");
             }
             
             GUILayout.Space(20f);

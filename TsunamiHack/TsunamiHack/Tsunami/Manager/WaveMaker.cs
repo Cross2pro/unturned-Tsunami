@@ -40,6 +40,7 @@ namespace TsunamiHack.Tsunami.Manager
         public static Menu.Aim MenuAim;
         public static PopupController PopupController;
         public static Blocker Blocker;
+        public static ShowEnabled Enabler;
         public static readonly int MainId = 1; 
         public static readonly int VisualsId = 2;
         public static readonly int AimId = 3;
@@ -53,8 +54,8 @@ namespace TsunamiHack.Tsunami.Manager
 
         public static ulong LocalSteamId;
 
-        public static readonly string Version = "1.3";
-        public static readonly string GameVersion = "3.21.0.0";
+        public static readonly string Version = "1.4";
+        public static readonly string GameVersion = "3.21.2.0";
 
         private string messagetoanyone =
                 "If you are reading this, youve obviously had to use some modified tool to open it. If you are really that desperate " +
@@ -65,9 +66,7 @@ namespace TsunamiHack.Tsunami.Manager
         private GameObject _blockerObj;
 
         public void Start()
-        {            
-            
-            
+        {                     
             
             if (ShowEula)
             {
@@ -158,12 +157,15 @@ namespace TsunamiHack.Tsunami.Manager
                     MenuVisuals = _obj.AddComponent<Menu.Visuals>();
                     PopupController = _obj.AddComponent<PopupController>();
                     MenuAim = _obj.AddComponent<Menu.Aim>();
+                    Enabler = _obj.AddComponent<ShowEnabled>();
+                    
 
                     Object.DontDestroyOnLoad(MenuMain);
                     Object.DontDestroyOnLoad(MenuKeybind);
                     Object.DontDestroyOnLoad(PopupController);
                     Object.DontDestroyOnLoad(MenuVisuals);
                     Object.DontDestroyOnLoad(MenuAim);
+                    Object.DontDestroyOnLoad(Enabler);
 
                     //TODO: add other hack objects
                 }
@@ -178,6 +180,7 @@ namespace TsunamiHack.Tsunami.Manager
                     Object.Destroy(PopupController);
                     Object.Destroy(MenuVisuals);
                     Object.Destroy(MenuAim);
+                    Object.Destroy(Enabler);
                     
                     _obj = null;
                     MenuMain = null;
@@ -185,7 +188,8 @@ namespace TsunamiHack.Tsunami.Manager
                     PopupController = null;
                     MenuVisuals = null;
                     MenuAim = null;
-                
+                    Enabler = null;
+
                 }
             }
             

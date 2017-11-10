@@ -35,7 +35,7 @@ namespace TsunamiHack.Tsunami.Menu
         internal bool IncreaseInteractRange; //
         internal bool Zoom20; //
         internal bool QuickSalvage; //
-        internal bool CameraFreeFlight; //
+        internal bool CameraFreeFlight = false; //
 
         internal bool InfoWin;
 
@@ -49,8 +49,6 @@ namespace TsunamiHack.Tsunami.Menu
         internal Vector2 Friendscroll;
 
         internal FieldInfo VehicleLocked;
-
-        internal bool TidalInServer;
 
         public void Start()
         {
@@ -107,48 +105,35 @@ namespace TsunamiHack.Tsunami.Menu
 
         public void Update()
         {
-            if (Remlist.Count != 0)
+            if (Provider.isConnected)
             {
-                foreach (var rem in Remlist)
+                if (Remlist.Count != 0)
                 {
-                    WaveMaker.Friends.Userlist.Remove(rem);
-                }
-
-                Remlist = new List<Friend>();
-                WaveMaker.Friends.SaveFriends();
-            }
-
-            if (Addlist.Count != 0)
-            {
-                foreach (var add in Addlist)
-                {
-                    WaveMaker.Friends.Userlist.Add(add);
-                }
-
-                Addlist = new List<Friend>();
-                WaveMaker.Friends.SaveFriends();
-            }
-
-            Player.player.look.isOrbiting = CameraFreeFlight;
-
-            if (UnlockCar)
-            {
-                RaycastHit hit;
-                Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit,
-                    float.PositiveInfinity, RayMasks.DAMAGE_CLIENT);
-
-                if (hit.transform != null)
-                {
-                    if (hit.transform.CompareTag("Vehicle"))
+                    foreach (var rem in Remlist)
                     {
-                        TargetCar = PlayerTools.GetVehicle(hit.transform);
+                        WaveMaker.Friends.Userlist.Remove(rem);
                     }
 
+                    Remlist = new List<Friend>();
+                    WaveMaker.Friends.SaveFriends();
                 }
-            }
 
-            Lib.Main.Update();
+                if (Addlist.Count != 0)
+                {
+                    foreach (var add in Addlist)
+                    {
+                        WaveMaker.Friends.Userlist.Add(add);
+                    }
 
+                    Addlist = new List<Friend>();
+                    WaveMaker.Friends.SaveFriends();
+                }
+
+                Player.player.look.isOrbiting = CameraFreeFlight;
+
+                Lib.Main.Update();
+
+            }    
         }
 
         public void OnGUI()
@@ -173,7 +158,7 @@ namespace TsunamiHack.Tsunami.Menu
                 var size = new Vector2(200, 60);
                 var rect = MenuTools.GetRectAtLoc(size, MenuTools.Horizontal.Right, MenuTools.Vertical.Top, true, 5f);
                 GUI.Label(rect,
-                    $"Tsunami Hack (V {WaveMaker.Version}) By <size=15><b>Tidal</b></size>\n               Featuring <b>Deus Myke</b>");
+                    $"<b><color=#00ffffff>Tsunami Hack <color=#c0c0c0ff>(V {WaveMaker.Version})</color> By <color=#0000a0ff><size=15><i>Tidal</i></size></color>\n               Featuring <i>Deus Myke</i></color></b>");
                 
                     
             }
@@ -184,13 +169,13 @@ namespace TsunamiHack.Tsunami.Menu
         {
             var bsbool = false;
             var bsbool2 = false;
-            /*RangeFinder =*/
+//            /*RangeFinder =*/
             GUILayout.Toggle(bsbool, " Advanced Rangefinder\n(Coming Soon)");
-            //ShootThroughWalls = GUILayout.Toggle(ShootThroughWalls, " Shoot Through Walls");
-            //IncreaseInteractRange = GUILayout.Toggle(IncreaseInteractRange, " Increase Interact Range");
-            //QuickSalvage = GUILayout.Toggle(QuickSalvage, " Quick Salvage");
+//            ShootThroughWalls = GUILayout.Toggle(ShootThroughWalls, " Shoot Through Walls");
+//            IncreaseInteractRange = GUILayout.Toggle(IncreaseInteractRange, " Increase Interact Range");
+//            QuickSalvage = GUILayout.Toggle(QuickSalvage, " Quick Salvage");
             CameraFreeFlight = GUILayout.Toggle(CameraFreeFlight, " Camera Freeflight");
-            //Zoom20 = GUILayout.Toggle(Zoom20, " 20x Zoom");
+//            Zoom20 = GUILayout.Toggle(Zoom20, " 20x Zoom");
 
 //            GUILayout.Space(2f);
 //            GUILayout.Label($"FOV : {Fov} ");
@@ -322,42 +307,37 @@ namespace TsunamiHack.Tsunami.Menu
             {
                 Playerscroll = GUILayout.BeginScrollView(Playerscroll, false, true);
 
-                foreach (var client in Provider.clients)
+                foreach (var player in Provider.clients)
                 {
-                    if (!WaveMaker.Friends.Contains(client.playerID.steamID.m_SteamID) && client.player != Player.player)
+                    if (WaveMaker.Friends.IsFriend(player.playerID.steamID.m_SteamID) && player.player != Player.player)
                     {
-
-                        if (GUILayout.Button(client.playerID.nickName))
+                        if (GUILayout.Button(player.playerID.playerName))
                         {
-                            if (Playerfocus == client.playerID.steamID.m_SteamID)
-                                Playerfocus = 0;
-                            else
-                                Playerfocus = client.playerID.steamID.m_SteamID;
+                            Playerfocus = player.playerID.steamID.m_SteamID;
                         }
 
-                        if (Playerfocus == client.playerID.steamID.m_SteamID)
+                        if (Playerfocus == player.playerID.steamID.m_SteamID)
                         {
                             GUILayout.Label("--------------------------------------");
-                            GUILayout.Label($"Steam Name: {client.playerID.playerName}");
-                            GUILayout.Label($"IGN: {client.playerID.nickName}");
-                            GUILayout.Label($"Admin: {client.isAdmin}");
-                            GUILayout.Label($"Pro: {client.isPro}");
+                            GUILayout.Label($"Steam Name: {player.playerID.playerName}");
+                            GUILayout.Label($"IGN: {player.playerID.nickName}");
+                            GUILayout.Label($"Admin: {player.isAdmin}");
+                            GUILayout.Label($"Pro: {player.isPro}");
                             if (GUILayout.Button("Add to friends"))
                             {
                                 Playerfocus = 0;
-                                Addlist.Add(new Friend(client.playerID.playerName, client.playerID.steamID.m_SteamID));
+                                Addlist.Add(new Friend(player.playerID.playerName, player.playerID.steamID.m_SteamID));                         //todo: redo this part
                             }
                             if (GUILayout.Button("View Steam Profile"))
                             {
-                                Provider.provider.browserService.open(
-                                    $"www.steamcommunity.com/profiles/{client.playerID.steamID.m_SteamID}");
+                                Provider.provider.browserService.open(  $"www.steamcommunity.com/profiles/{player.playerID.steamID.m_SteamID}");
                             }
                             GUILayout.Label("--------------------------------------");
                             GUILayout.Space(5f);
                         }
                     }
                 }
-
+                
                 GUILayout.EndScrollView();
             }
             

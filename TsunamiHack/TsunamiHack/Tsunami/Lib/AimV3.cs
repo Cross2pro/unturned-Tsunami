@@ -1,21 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Security.Cryptography.X509Certificates;
 using SDG.Unturned;
 using TsunamiHack.Tsunami.Manager;
 using TsunamiHack.Tsunami.Types;
 using TsunamiHack.Tsunami.Util;
 using UnityEngine;
+// ReSharper disable MemberCanBePrivate.Global
 
 namespace TsunamiHack.Tsunami.Lib
 {
-    internal class AimV3
+    internal static class AimV3
     {
         public static Menu.Aim Menu;
 	    
 	    public static DateTime LastLock;
+	    public static Camera mainCamera;
         
 	    //aimlock
 	    public static float Defsense;    
@@ -66,6 +66,8 @@ namespace TsunamiHack.Tsunami.Lib
 
         public static void Update()
         {
+	        mainCamera = Camera.main;
+	        
 	        UpdateAimbot();
 	        UpdateLock();
 	        UpdateTb();	        
@@ -76,7 +78,7 @@ namespace TsunamiHack.Tsunami.Lib
 
 	    public static bool CanSee(Transform transform)
 	    {
-		    var scrnpt = Camera.main.WorldToViewportPoint(transform.position);
+		    var scrnpt = mainCamera.WorldToViewportPoint(transform.position);
 
 		    if (scrnpt.z <= 0f || scrnpt.x <= 0f || scrnpt.x >= 1f || scrnpt.y <= 0f || scrnpt.y >= 1f)
 			    return false;
@@ -112,7 +114,7 @@ namespace TsunamiHack.Tsunami.Lib
 				    {
 					    if (zombie.isDead == false)
 					    {
-						    if (Vector3.Distance(Camera.main.transform.position, zombie.transform.position) <= distance)
+						    if (Vector3.Distance(mainCamera.transform.position, zombie.transform.position) <= distance)
 						    {
 							    //if I can see the player, or if 360 is enabled and I cant see the player
 							    if (CanSee(zombie.transform) || Menu.Aim360 && !CanSee(zombie.transform))
@@ -129,11 +131,11 @@ namespace TsunamiHack.Tsunami.Lib
 									    if (hit.transform.CompareTag("Zombie") || (Menu.AimIgnoreWalls && !hit.transform.CompareTag("Zombie")))
 									    {
 
-										    var targetpoint = Camera.main.WorldToScreenPoint(GetLimbPosition(zombie.transform, limb));
-										    targetpoint.y = Camera.main.pixelHeight - targetpoint.y;
-										    var centerpoint = new Vector3((float) Camera.main.pixelWidth / 2, (float) Camera.main.pixelHeight / 2);
+										    var targetpoint = mainCamera.WorldToScreenPoint(GetLimbPosition(zombie.transform, limb));
+										    targetpoint.y = mainCamera.pixelHeight - targetpoint.y;
+										    var centerpoint = new Vector3((float) mainCamera.pixelWidth / 2, (float) mainCamera.pixelHeight / 2);
 
-										    var ppd = Camera.main.pixelWidth / Camera.main.fieldOfView;
+										    var ppd = mainCamera.pixelWidth / mainCamera.fieldOfView;
 										    var wafov = ((Menu.AimFov * ppd) / 2);
 
 										    var distToXHair = Vector2.Distance(centerpoint, targetpoint);
@@ -163,10 +165,10 @@ namespace TsunamiHack.Tsunami.Lib
 					    
 					    if (player.player != Player.player)
 					    {
-						    if (WaveMaker.Friends.Contains(id) && Menu.AimWhitelistFriends) continue;
+						    if (WaveMaker.Friends.IsFriend(player.playerID.steamID.m_SteamID) && Menu.AimWhitelistFriends) continue;
 						    if (player.isAdmin && Menu.AimWhitelistAdmins) continue;
 						    
-						    if (Vector3.Distance(Camera.main.transform.position, player.player.transform.position) <= distance)
+						    if (Vector3.Distance(mainCamera.transform.position, player.player.transform.position) <= distance)
 						    {
 							    if (CanSee(player.player.transform) || Menu.Aim360 && !CanSee(player.player.transform))
 							    {
@@ -179,11 +181,11 @@ namespace TsunamiHack.Tsunami.Lib
 								    {
 									    if (hit.transform.CompareTag("Enemy") || (Menu.AimIgnoreWalls && !hit.transform.CompareTag("Enemy")))
 									    {
-										    var targetpoint = Camera.main.WorldToScreenPoint(GetLimbPosition(player.player.transform, limb));
-										    targetpoint.y = Camera.main.pixelHeight - targetpoint.y;		    
-										    var centerpoint = new Vector3((float) Camera.main.pixelWidth / 2, (float) Camera.main.pixelHeight / 2);
+										    var targetpoint = mainCamera.WorldToScreenPoint(GetLimbPosition(player.player.transform, limb));
+										    targetpoint.y = mainCamera.pixelHeight - targetpoint.y;		    
+										    var centerpoint = new Vector3((float) mainCamera.pixelWidth / 2, (float) mainCamera.pixelHeight / 2);
 										    
-										    var ppd = Camera.main.pixelWidth / Camera.main.fieldOfView;
+										    var ppd = mainCamera.pixelWidth / mainCamera.fieldOfView;
 										    var wafov = ((Menu.AimFov * ppd) / 2);
 										    
 										    var distToXHair = Vector2.Distance(centerpoint, targetpoint);
@@ -207,7 +209,7 @@ namespace TsunamiHack.Tsunami.Lib
 			    var speed = Menu.AimSpeed / 4;
 			    var targetVector = GetLimbPosition(target.transform, limb);
 			    var quaternion = Quaternion.LookRotation(targetVector - Player.player.look.aim.position);
-			    var quaternion2 = Quaternion.RotateTowards(Camera.main.transform.rotation, quaternion, speed);
+			    var quaternion2 = Quaternion.RotateTowards(mainCamera.transform.rotation, quaternion, speed);
 			    var xVal = quaternion2.eulerAngles.x;
 					
 			    if (xVal <= 90f)
@@ -359,7 +361,7 @@ namespace TsunamiHack.Tsunami.Lib
 				}
 
 				RaycastHit hit;
-				Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, range,
+				Physics.Raycast(mainCamera.transform.position, mainCamera.transform.forward, out hit, range,
 					RayMasks.DAMAGE_CLIENT);
 
 				if (hit.transform != null)
@@ -418,7 +420,7 @@ namespace TsunamiHack.Tsunami.Lib
 					if (ply != null)
 					{
 						//if the player is in the friends return true
-						if (WaveMaker.Friends.Contains(ply.playerID.steamID.m_SteamID))
+						if (WaveMaker.Friends.IsFriend(ply.playerID.steamID.m_SteamID))
 							return true;
 
 						//if the player isnt a friend, but admin && admins are whitelisted return true
@@ -473,7 +475,7 @@ namespace TsunamiHack.Tsunami.Lib
 
 
 			    RaycastHit hit;
-			    Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, range,
+			    Physics.Raycast(mainCamera.transform.position, mainCamera.transform.forward, out hit, range,
 				    RayMasks.DAMAGE_CLIENT);
 
 			    bool fire = false;

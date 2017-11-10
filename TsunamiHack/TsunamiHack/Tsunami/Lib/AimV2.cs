@@ -8,6 +8,7 @@ using TsunamiHack.Tsunami.Util;
 using UnityEngine;
 // ReSharper disable InconsistentNaming
 // ReSharper disable EmptyGeneralCatchClause
+// ReSharper disable MemberCanBePrivate.Global
 
 namespace TsunamiHack.Tsunami.Lib
 {
@@ -132,7 +133,7 @@ namespace TsunamiHack.Tsunami.Lib
 					if (ply != null)
 					{
 						//if the player is in the friends return true
-						if (WaveMaker.Friends.Contains(ply.playerID.steamID.m_SteamID))
+						if (WaveMaker.Friends.IsFriend(ply.playerID.steamID.m_SteamID))
 							return true;
 
 						//if the player isnt a friend, but admin && admins are whitelisted return true

@@ -18,10 +18,10 @@ namespace TsunamiHack.Tsunami.Menu
         
         //Selections
 
-        internal bool Esp;
-
         internal bool EnableEsp;
 
+        internal bool EnableHacksList;
+        
         internal bool EnablePlayerSkeleton;
         internal bool EnableZombieSkeleton;
         
@@ -130,6 +130,16 @@ namespace TsunamiHack.Tsunami.Menu
         internal float FarSize;
         internal float Dropoff;
 
+        internal bool FilterClothing;
+        internal bool FilterAmmo;
+        internal bool FilterGuns;
+        internal bool FilterAttach;
+        internal bool FilterFood;
+        internal bool FilterMedical;
+        internal bool FilterWeapons;
+        internal bool FilterMisc;
+        internal bool FilterBackpacks;
+        
         internal bool PlayersOnMap;//
         
         internal Rect SelectionRect;
@@ -148,6 +158,7 @@ namespace TsunamiHack.Tsunami.Menu
 //            Lib.Visuals.Start(this);
             Lib.VisualsV2.Start();
 
+            EnableHacksList = true;
             var size = new Vector2(203,815);
             SelectionRect =
                 MenuTools.GetRectAtLoc(size, MenuTools.Horizontal.Center, MenuTools.Vertical.Center, false);
@@ -251,7 +262,9 @@ namespace TsunamiHack.Tsunami.Menu
         public void MenuFunct(int id)
         {
             ScrollPos2 = GUILayout.BeginScrollView(ScrollPos2, false, true);
-            
+
+            GUILayout.Space(2f);
+            EnableHacksList = GUILayout.Toggle(EnableHacksList, " Show Hack List");
             GUILayout.Space(2f);
             GUILayout.Label("Player\n--------------------------------------");
             GUILayout.Space(2f);
@@ -298,13 +311,13 @@ namespace TsunamiHack.Tsunami.Menu
             Airdrop = GUILayout.Toggle(Airdrop, " Show Airdrop Glow");
             AirdropDistance = GUILayout.Toggle(AirdropDistance, " Show Airdrop Distance");
             
-            GUILayout.Space(2f);
-            GUILayout.Label("NPCs\n--------------------------------------");
-            GUILayout.Space(2f);
-            Npc = GUILayout.Toggle(Npc, " Show NPC Glow");
-            NpcName = GUILayout.Toggle(NpcName, " Show NPC Name");
-//            NpcWeapon = GUILayout.Toggle(NpcWeapon, " Show NPC Weapon");     FIX
-            NpcDistance = GUILayout.Toggle(NpcDistance, "Show NPC Distance");
+//            GUILayout.Space(2f);
+//            GUILayout.Label("NPCs\n--------------------------------------");
+//            GUILayout.Space(2f);
+//            Npc = GUILayout.Toggle(Npc, " Show NPC Glow");
+//            NpcName = GUILayout.Toggle(NpcName, " Show NPC Name");
+////            NpcWeapon = GUILayout.Toggle(NpcWeapon, " Show NPC Weapon");     FIX
+//            NpcDistance = GUILayout.Toggle(NpcDistance, "Show NPC Distance");
             
             GUILayout.EndScrollView();
         }
@@ -489,7 +502,7 @@ namespace TsunamiHack.Tsunami.Menu
 
         public void SetFunct(int id)
         {
-            ScrollPos = GUILayout.BeginScrollView(ScrollPos, false, true);
+//            ScrollPos = GUILayout.BeginScrollView(ScrollPos, false, true);
             
             GUILayout.Space(2f);
             GUILayout.Label("ESP Settings\n--------------------------------------");
@@ -503,133 +516,143 @@ namespace TsunamiHack.Tsunami.Menu
             UpdateRate = GUILayout.HorizontalSlider((float) Math.Round(UpdateRate, 0), 1f, 20000f);
             
             GUILayout.Space(2f);
-            GUILayout.Label("ESP Colors\n--------------------------------------");
+//            GUILayout.Label("ESP Colors\n--------------------------------------");
+//            GUILayout.Space(2f);
+//            GUILayout.Label($"Enemy Player :\n R {EnemyPlayerGlow.r} G {EnemyPlayerGlow.g} B {EnemyPlayerGlow.b}");
+//            GUILayout.Space(3f);
+//            GUILayout.Label($"Friendly Player :\n R {FriendlyPlayerGlow.r} G {FriendlyPlayerGlow.g} B {FriendlyPlayerGlow.b}");
+//            GUILayout.Space(3f);
+//            GUILayout.Label($"Zombie :\n R {ZombieGlow.r} G {ZombieGlow.g} B {ZombieGlow.b}");
+//            GUILayout.Space(3f);
+//            GUILayout.Label($"Item :\n R {ItemGlow.r} G {ItemGlow.g} B {ItemGlow.b}");
+//            GUILayout.Space(3f);
+//            GUILayout.Label($"Interactable :\n R {InteractableGlow.r} G {InteractableGlow.g} B {InteractableGlow.b}");
+//            GUILayout.Space(3f);
+//            GUILayout.Label($"Vehicle :\n R {VehicleGlow.r} G {VehicleGlow.g} B {VehicleGlow.b}");
+//            
+//            GUILayout.Space(5f);
+//            
+//            GUILayout.Label($"Friendly Player Box :\n R {BoxPlayerFriendly.r} G {BoxPlayerFriendly.g} B {BoxPlayerFriendly.b}");
+//            GUILayout.Space(3f);
+//            GUILayout.Label($"Enemy Player Box :\n R {BoxPlayerEnemy.r} G {BoxPlayerEnemy.g} B {BoxPlayerEnemy.b}");
+//            GUILayout.Space(3f);
+//            GUILayout.Label($"Zombie Box :\n R {BoxZombie.r} G {BoxZombie.g} B {BoxZombie.b}");
+//            
+//            GUILayout.Space(4f);
+//            GUILayout.Label("Edit Colors\n--------------------------------------");
+//            GUILayout.Space(2f);
+//            if(GUILayout.Button($"Editing : {Changing}"))
+//            {
+//                ChangeInt++;
+//                if (ChangeInt == 10)
+//                    ChangeInt = 1;
+//                Changing = (ColorChangeType) ChangeInt;
+//            }
+//
+//            switch (ChangeInt)
+//            {
+//                    case 1:
+//                        GUILayout.Label($"R : {EnemyPlayerGlow.r} G : {EnemyPlayerGlow.g} B : {EnemyPlayerGlow.b}");
+//                        EnemyPlayerGlow.r = GUILayout.HorizontalSlider((float) Math.Round(EnemyPlayerGlow.r, 0), 0f, 255f);
+//                        EnemyPlayerGlow.g = GUILayout.HorizontalSlider((float) Math.Round(EnemyPlayerGlow.g, 0), 0f, 255f);
+//                        EnemyPlayerGlow.b = GUILayout.HorizontalSlider((float) Math.Round(EnemyPlayerGlow.b, 0), 0f, 255f);
+//                        break;
+//                    case 2:
+//                        GUILayout.Label($"R : {FriendlyPlayerGlow.r} G : {FriendlyPlayerGlow.g} B : {FriendlyPlayerGlow.b}");
+//                        FriendlyPlayerGlow.r = GUILayout.HorizontalSlider((float) Math.Round(FriendlyPlayerGlow.r, 0), 0f, 255f);
+//                        FriendlyPlayerGlow.g = GUILayout.HorizontalSlider((float) Math.Round(FriendlyPlayerGlow.g, 0), 0f, 255f);
+//                        FriendlyPlayerGlow.b = GUILayout.HorizontalSlider((float) Math.Round(FriendlyPlayerGlow.b, 0), 0f, 255f);
+//                        break;
+//                    case 3:
+//                        GUILayout.Label($"R : {ZombieGlow.r} G : {ZombieGlow.g} B : {ZombieGlow.b}");
+//                        ZombieGlow.r = GUILayout.HorizontalSlider((float) Math.Round(ZombieGlow.r, 0), 0f, 255f);
+//                        ZombieGlow.g = GUILayout.HorizontalSlider((float) Math.Round(ZombieGlow.g, 0), 0f, 255f);
+//                        ZombieGlow.b = GUILayout.HorizontalSlider((float) Math.Round(ZombieGlow.b, 0), 0f, 255f);
+//                        break;
+//                    case 4:
+//                        GUILayout.Label($"R : {ItemGlow.r} G : {ItemGlow.g} B : {ItemGlow.b}");
+//                        ItemGlow.r = GUILayout.HorizontalSlider((float) Math.Round(ItemGlow.r, 0), 0f, 255f);
+//                        ItemGlow.g = GUILayout.HorizontalSlider((float) Math.Round(ItemGlow.g, 0), 0f, 255f);
+//                        ItemGlow.b = GUILayout.HorizontalSlider((float) Math.Round(ItemGlow.b, 0), 0f, 255f);
+//                        break;
+//                    case 5:
+//                        GUILayout.Label($"R : {InteractableGlow.r} G : {InteractableGlow.g} B : {InteractableGlow.b}");
+//                        InteractableGlow.r = GUILayout.HorizontalSlider((float) Math.Round(InteractableGlow.r, 0), 0f, 255f);
+//                        InteractableGlow.g = GUILayout.HorizontalSlider((float) Math.Round(InteractableGlow.g, 0), 0f, 255f);
+//                        InteractableGlow.b = GUILayout.HorizontalSlider((float) Math.Round(InteractableGlow.b, 0), 0f, 255f);
+//                        break;
+//                    case 6:
+//                        GUILayout.Label($"R : {VehicleGlow.r} G : {VehicleGlow.g} B : {VehicleGlow.b}");
+//                        VehicleGlow.r = GUILayout.HorizontalSlider((float) Math.Round(VehicleGlow.r, 0), 0f, 255f);
+//                        VehicleGlow.g = GUILayout.HorizontalSlider((float) Math.Round(VehicleGlow.g, 0), 0f, 255f);
+//                        VehicleGlow.b = GUILayout.HorizontalSlider((float) Math.Round(VehicleGlow.b, 0), 0f, 255f);
+//                        break;
+//                    case 7:
+//                        GUILayout.Label($"R : {BoxPlayerFriendly.r} G : {BoxPlayerFriendly.g} B : {BoxPlayerFriendly.b}");
+//                        BoxPlayerFriendly.r = GUILayout.HorizontalSlider((float) Math.Round(BoxPlayerFriendly.r, 0), 0f, 255f);
+//                        BoxPlayerFriendly.g = GUILayout.HorizontalSlider((float) Math.Round(BoxPlayerFriendly.g, 0), 0f, 255f);
+//                        BoxPlayerFriendly.b = GUILayout.HorizontalSlider((float) Math.Round(BoxPlayerFriendly.b, 0), 0f, 255f);
+//                        break;
+//                    case 8:
+//                        GUILayout.Label($"R : {BoxPlayerEnemy.r} G : {BoxPlayerEnemy.g} B : {BoxPlayerEnemy.b}");
+//                        BoxPlayerEnemy.r = GUILayout.HorizontalSlider((float) Math.Round(BoxPlayerEnemy.r, 0), 0f, 255f);
+//                        BoxPlayerEnemy.g = GUILayout.HorizontalSlider((float) Math.Round(BoxPlayerEnemy.g, 0), 0f, 255f);
+//                        BoxPlayerEnemy .b = GUILayout.HorizontalSlider((float) Math.Round(BoxPlayerEnemy.b, 0), 0f, 255f);
+//                        break;
+//                    case 9:
+//                        GUILayout.Label($"R : {BoxZombie.r} G : {BoxZombie.g} B : {BoxZombie.b}");
+//                        BoxZombie.r = GUILayout.HorizontalSlider((float) Math.Round(BoxZombie.r, 0), 0f, 255f);
+//                        BoxZombie.g = GUILayout.HorizontalSlider((float) Math.Round(BoxZombie.g, 0), 0f, 255f);
+//                        BoxZombie.b = GUILayout.HorizontalSlider((float) Math.Round(BoxZombie.b, 0), 0f, 255f);
+//                        break;
+//            }
+//            
+//            GUILayout.Space(2f);
+//            
+//            if(GUILayout.Button("Save Colors"))
+//            {
+//                WaveMaker.Settings.ColorList["enemyplayer"] = new TsuColor(EnemyPlayerGlow);
+//                WaveMaker.Settings.ColorList["friendlyplayer"] = new TsuColor(FriendlyPlayerGlow);
+//                WaveMaker.Settings.ColorList["zombie"] = new TsuColor(ZombieGlow);
+//                WaveMaker.Settings.ColorList["item"] = new TsuColor(ItemGlow);
+//                WaveMaker.Settings.ColorList["interactable"] = new TsuColor(InteractableGlow);
+//                WaveMaker.Settings.ColorList["vehicle"] = new TsuColor(VehicleGlow);
+//                
+//                WaveMaker.Settings.ColorList["friendlyplayerbox"] = new TsuColor(BoxPlayerFriendly);
+//                WaveMaker.Settings.ColorList["enemyplayerbox"] = new TsuColor(BoxPlayerEnemy);
+//                WaveMaker.Settings.ColorList["zombiebox"] = new TsuColor(BoxZombie);
+//
+//
+//                FileIo.SaveColors(WaveMaker.Settings);
+//            }
+//            GUILayout.Space(2f);
+//            if (GUILayout.Button("Reset Colors"))
+//            {
+//                WaveMaker.Settings.ColorList["enemyplayer"] = new TsuColor(new Color(255,45,45));
+//                WaveMaker.Settings.ColorList["friendlyplayer"] = new TsuColor(new Color(150,255,255));
+//                WaveMaker.Settings.ColorList["zombie"] = new TsuColor(new Color(50,150,0));
+//                WaveMaker.Settings.ColorList["item"] = new TsuColor(new Color(230,230,40));
+//                WaveMaker.Settings.ColorList["interactable"] = new TsuColor(new Color(255,180,0));
+//                WaveMaker.Settings.ColorList["vehicle"] = new TsuColor(new Color(255,0,230));
+//                
+//                WaveMaker.Settings.ColorList["friendlyplayerbox"] = new TsuColor(new Color(150,255,255));
+//                WaveMaker.Settings.ColorList["enemyplayerbox"] = new TsuColor(new Color(255,45,45));
+//                WaveMaker.Settings.ColorList["zombiebox"] = new TsuColor(new Color(50, 150, 0));
+//                
+//                UpdateColors();
+//                FileIo.SaveColors(WaveMaker.Settings);
+//            }
+            GUILayout.Label("Item Filter\n--------------------------------------");
             GUILayout.Space(2f);
-            GUILayout.Label($"Enemy Player :\n R {EnemyPlayerGlow.r} G {EnemyPlayerGlow.g} B {EnemyPlayerGlow.b}");
-            GUILayout.Space(3f);
-            GUILayout.Label($"Friendly Player :\n R {FriendlyPlayerGlow.r} G {FriendlyPlayerGlow.g} B {FriendlyPlayerGlow.b}");
-            GUILayout.Space(3f);
-            GUILayout.Label($"Zombie :\n R {ZombieGlow.r} G {ZombieGlow.g} B {ZombieGlow.b}");
-            GUILayout.Space(3f);
-            GUILayout.Label($"Item :\n R {ItemGlow.r} G {ItemGlow.g} B {ItemGlow.b}");
-            GUILayout.Space(3f);
-            GUILayout.Label($"Interactable :\n R {InteractableGlow.r} G {InteractableGlow.g} B {InteractableGlow.b}");
-            GUILayout.Space(3f);
-            GUILayout.Label($"Vehicle :\n R {VehicleGlow.r} G {VehicleGlow.g} B {VehicleGlow.b}");
-            
-            GUILayout.Space(5f);
-            
-            GUILayout.Label($"Friendly Player Box :\n R {BoxPlayerFriendly.r} G {BoxPlayerFriendly.g} B {BoxPlayerFriendly.b}");
-            GUILayout.Space(3f);
-            GUILayout.Label($"Enemy Player Box :\n R {BoxPlayerEnemy.r} G {BoxPlayerEnemy.g} B {BoxPlayerEnemy.b}");
-            GUILayout.Space(3f);
-            GUILayout.Label($"Zombie Box :\n R {BoxZombie.r} G {BoxZombie.g} B {BoxZombie.b}");
-            
-            GUILayout.Space(4f);
-            GUILayout.Label("Edit Colors\n--------------------------------------");
-            GUILayout.Space(2f);
-            if(GUILayout.Button($"Editing : {Changing}"))
-            {
-                ChangeInt++;
-                if (ChangeInt == 10)
-                    ChangeInt = 1;
-                Changing = (ColorChangeType) ChangeInt;
-            }
-
-            switch (ChangeInt)
-            {
-                    case 1:
-                        GUILayout.Label($"R : {EnemyPlayerGlow.r} G : {EnemyPlayerGlow.g} B : {EnemyPlayerGlow.b}");
-                        EnemyPlayerGlow.r = GUILayout.HorizontalSlider((float) Math.Round(EnemyPlayerGlow.r, 0), 0f, 255f);
-                        EnemyPlayerGlow.g = GUILayout.HorizontalSlider((float) Math.Round(EnemyPlayerGlow.g, 0), 0f, 255f);
-                        EnemyPlayerGlow.b = GUILayout.HorizontalSlider((float) Math.Round(EnemyPlayerGlow.b, 0), 0f, 255f);
-                        break;
-                    case 2:
-                        GUILayout.Label($"R : {FriendlyPlayerGlow.r} G : {FriendlyPlayerGlow.g} B : {FriendlyPlayerGlow.b}");
-                        FriendlyPlayerGlow.r = GUILayout.HorizontalSlider((float) Math.Round(FriendlyPlayerGlow.r, 0), 0f, 255f);
-                        FriendlyPlayerGlow.g = GUILayout.HorizontalSlider((float) Math.Round(FriendlyPlayerGlow.g, 0), 0f, 255f);
-                        FriendlyPlayerGlow.b = GUILayout.HorizontalSlider((float) Math.Round(FriendlyPlayerGlow.b, 0), 0f, 255f);
-                        break;
-                    case 3:
-                        GUILayout.Label($"R : {ZombieGlow.r} G : {ZombieGlow.g} B : {ZombieGlow.b}");
-                        ZombieGlow.r = GUILayout.HorizontalSlider((float) Math.Round(ZombieGlow.r, 0), 0f, 255f);
-                        ZombieGlow.g = GUILayout.HorizontalSlider((float) Math.Round(ZombieGlow.g, 0), 0f, 255f);
-                        ZombieGlow.b = GUILayout.HorizontalSlider((float) Math.Round(ZombieGlow.b, 0), 0f, 255f);
-                        break;
-                    case 4:
-                        GUILayout.Label($"R : {ItemGlow.r} G : {ItemGlow.g} B : {ItemGlow.b}");
-                        ItemGlow.r = GUILayout.HorizontalSlider((float) Math.Round(ItemGlow.r, 0), 0f, 255f);
-                        ItemGlow.g = GUILayout.HorizontalSlider((float) Math.Round(ItemGlow.g, 0), 0f, 255f);
-                        ItemGlow.b = GUILayout.HorizontalSlider((float) Math.Round(ItemGlow.b, 0), 0f, 255f);
-                        break;
-                    case 5:
-                        GUILayout.Label($"R : {InteractableGlow.r} G : {InteractableGlow.g} B : {InteractableGlow.b}");
-                        InteractableGlow.r = GUILayout.HorizontalSlider((float) Math.Round(InteractableGlow.r, 0), 0f, 255f);
-                        InteractableGlow.g = GUILayout.HorizontalSlider((float) Math.Round(InteractableGlow.g, 0), 0f, 255f);
-                        InteractableGlow.b = GUILayout.HorizontalSlider((float) Math.Round(InteractableGlow.b, 0), 0f, 255f);
-                        break;
-                    case 6:
-                        GUILayout.Label($"R : {VehicleGlow.r} G : {VehicleGlow.g} B : {VehicleGlow.b}");
-                        VehicleGlow.r = GUILayout.HorizontalSlider((float) Math.Round(VehicleGlow.r, 0), 0f, 255f);
-                        VehicleGlow.g = GUILayout.HorizontalSlider((float) Math.Round(VehicleGlow.g, 0), 0f, 255f);
-                        VehicleGlow.b = GUILayout.HorizontalSlider((float) Math.Round(VehicleGlow.b, 0), 0f, 255f);
-                        break;
-                    case 7:
-                        GUILayout.Label($"R : {BoxPlayerFriendly.r} G : {BoxPlayerFriendly.g} B : {BoxPlayerFriendly.b}");
-                        BoxPlayerFriendly.r = GUILayout.HorizontalSlider((float) Math.Round(BoxPlayerFriendly.r, 0), 0f, 255f);
-                        BoxPlayerFriendly.g = GUILayout.HorizontalSlider((float) Math.Round(BoxPlayerFriendly.g, 0), 0f, 255f);
-                        BoxPlayerFriendly.b = GUILayout.HorizontalSlider((float) Math.Round(BoxPlayerFriendly.b, 0), 0f, 255f);
-                        break;
-                    case 8:
-                        GUILayout.Label($"R : {BoxPlayerEnemy.r} G : {BoxPlayerEnemy.g} B : {BoxPlayerEnemy.b}");
-                        BoxPlayerEnemy.r = GUILayout.HorizontalSlider((float) Math.Round(BoxPlayerEnemy.r, 0), 0f, 255f);
-                        BoxPlayerEnemy.g = GUILayout.HorizontalSlider((float) Math.Round(BoxPlayerEnemy.g, 0), 0f, 255f);
-                        BoxPlayerEnemy .b = GUILayout.HorizontalSlider((float) Math.Round(BoxPlayerEnemy.b, 0), 0f, 255f);
-                        break;
-                    case 9:
-                        GUILayout.Label($"R : {BoxZombie.r} G : {BoxZombie.g} B : {BoxZombie.b}");
-                        BoxZombie.r = GUILayout.HorizontalSlider((float) Math.Round(BoxZombie.r, 0), 0f, 255f);
-                        BoxZombie.g = GUILayout.HorizontalSlider((float) Math.Round(BoxZombie.g, 0), 0f, 255f);
-                        BoxZombie.b = GUILayout.HorizontalSlider((float) Math.Round(BoxZombie.b, 0), 0f, 255f);
-                        break;
-            }
-            
-            GUILayout.Space(2f);
-            
-            if(GUILayout.Button("Save Colors"))
-            {
-                WaveMaker.Settings.ColorList["enemyplayer"] = new TsuColor(EnemyPlayerGlow);
-                WaveMaker.Settings.ColorList["friendlyplayer"] = new TsuColor(FriendlyPlayerGlow);
-                WaveMaker.Settings.ColorList["zombie"] = new TsuColor(ZombieGlow);
-                WaveMaker.Settings.ColorList["item"] = new TsuColor(ItemGlow);
-                WaveMaker.Settings.ColorList["interactable"] = new TsuColor(InteractableGlow);
-                WaveMaker.Settings.ColorList["vehicle"] = new TsuColor(VehicleGlow);
-                
-                WaveMaker.Settings.ColorList["friendlyplayerbox"] = new TsuColor(BoxPlayerFriendly);
-                WaveMaker.Settings.ColorList["enemyplayerbox"] = new TsuColor(BoxPlayerEnemy);
-                WaveMaker.Settings.ColorList["zombiebox"] = new TsuColor(BoxZombie);
-
-
-                FileIo.SaveColors(WaveMaker.Settings);
-            }
-            GUILayout.Space(2f);
-            if (GUILayout.Button("Reset Colors"))
-            {
-                WaveMaker.Settings.ColorList["enemyplayer"] = new TsuColor(new Color(255,45,45));
-                WaveMaker.Settings.ColorList["friendlyplayer"] = new TsuColor(new Color(150,255,255));
-                WaveMaker.Settings.ColorList["zombie"] = new TsuColor(new Color(50,150,0));
-                WaveMaker.Settings.ColorList["item"] = new TsuColor(new Color(230,230,40));
-                WaveMaker.Settings.ColorList["interactable"] = new TsuColor(new Color(255,180,0));
-                WaveMaker.Settings.ColorList["vehicle"] = new TsuColor(new Color(255,0,230));
-                
-                WaveMaker.Settings.ColorList["friendlyplayerbox"] = new TsuColor(new Color(150,255,255));
-                WaveMaker.Settings.ColorList["enemyplayerbox"] = new TsuColor(new Color(255,45,45));
-                WaveMaker.Settings.ColorList["zombiebox"] = new TsuColor(new Color(50, 150, 0));
-                
-                UpdateColors();
-                FileIo.SaveColors(WaveMaker.Settings);
-            }
-
+            FilterClothing = GUILayout.Toggle(FilterClothing, " Filter Clothing");
+            FilterBackpacks = GUILayout.Toggle(FilterBackpacks, " Filter Backpacks");
+            FilterAmmo = GUILayout.Toggle(FilterAmmo, " Filter Ammo");
+            FilterGuns = GUILayout.Toggle(FilterGuns, " Filter Guns");
+            FilterAttach = GUILayout.Toggle(FilterAttach, " Filter Attachments");
+            FilterFood = GUILayout.Toggle(FilterFood, " Filter Food");
+            FilterMedical = GUILayout.Toggle(FilterMedical, " Filter Medical");
+            FilterWeapons = GUILayout.Toggle(FilterWeapons, " Filter Weapons");
+            FilterMisc = GUILayout.Toggle(FilterMisc, " Filter Misc");
             GUILayout.Label("--------------------------------------");
             
             ScaleText = GUILayout.Toggle(ScaleText, " Scale ESP Text");
@@ -640,7 +663,7 @@ namespace TsunamiHack.Tsunami.Menu
             GUILayout.Label($"Text Size Dropoff : {Dropoff}");
             Dropoff = GUILayout.HorizontalSlider((float) Math.Round(Dropoff, 0), 1f, 10000f);
             
-            GUILayout.EndScrollView();
+//            GUILayout.EndScrollView();
         }
         
         
