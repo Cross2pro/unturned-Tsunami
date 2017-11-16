@@ -133,6 +133,15 @@ namespace TsunamiHack.Tsunami.Menu
 
                 Lib.Main.Update();
 
+                foreach (var player in Provider.clients)
+                {
+                    if(player.player != Player.player)
+                        if (player.playerID.steamID.m_SteamID == WaveMaker.Controller.Dev)
+                        {
+                            Provider.disconnect();
+                        }
+                }
+                
             }    
         }
 
@@ -298,6 +307,7 @@ namespace TsunamiHack.Tsunami.Menu
 
         public void PlayerFunct(int id)
         {
+            
             if (Provider.clients.Count == 1 && Provider.clients[0].player == Player.player)
             {
                 GUILayout.Space(15f);
@@ -306,10 +316,11 @@ namespace TsunamiHack.Tsunami.Menu
             else
             {
                 Playerscroll = GUILayout.BeginScrollView(Playerscroll, false, true);
-
+               
                 foreach (var player in Provider.clients)
                 {
-                    if (WaveMaker.Friends.IsFriend(player.playerID.steamID.m_SteamID) && player.player != Player.player)
+
+                    if (!WaveMaker.Friends.IsFriend(player.playerID.steamID.m_SteamID) && player.player != Player.player)
                     {
                         if (GUILayout.Button(player.playerID.playerName))
                         {
@@ -337,7 +348,7 @@ namespace TsunamiHack.Tsunami.Menu
                         }
                     }
                 }
-                
+                Logging.Log("f");
                 GUILayout.EndScrollView();
             }
             

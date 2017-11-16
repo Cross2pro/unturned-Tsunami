@@ -1,413 +1,652 @@
 ﻿using System;
+using System.Collections;
+using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using SDG.Unturned;
+using TsunamiHack.Tsunami.Lib;
 using TsunamiHack.Tsunami.Manager;
 using TsunamiHack.Tsunami.Types;
 using TsunamiHack.Tsunami.Util;
 using UnityEngine;
-// ReSharper disable CompareOfFloatsByEqualityOperator
+using UnityEngine.UI;
+// ReSharper disable InconsistentNaming
 
 namespace TsunamiHack.Tsunami.Menu
 {
-    internal class Visuals : MonoBehaviour
+    internal partial class Visuals : MonoBehaviour
     {
-        internal bool MenuOpened { get; private set; }
+
+        public VisualsV2 VisualsLib;
+        public VisualsPage CurrentPage;
+        public IEnumerator CR_ESP;
         
-        
-        
-        //TODO: Add item id selection
-        
-        //Selections
+        public enum VisualsPage
+        {
+            Player,
+            Zombie,
+            Item,
+            Vehicle,
+            Animal,
+            Storages,
+            Environment,
+            Filter
+        }
+    
+        public enum ColorOptions
+        {
+            aqua,
+            black,
+            blue,
+            darkblue,
+            magenta,
+            green,
+            lime,
+            maroon,
+            navy,
+            olive,
+            purple,
+            red,
+            silver,
+            teal,
+            white,
+            yellow
+        }
 
-        internal bool EnableEsp;
+        public Rect MenuBar;
+        public Rect CenterMenu;
+        public Rect SettingsBar;
 
-        internal bool EnableHacksList;
-        
-        internal bool EnablePlayerSkeleton;
-        internal bool EnableZombieSkeleton;
-        
-        internal bool PlayerName;
-        internal bool PlayerWeapon;//
-        internal bool PlayerDistance;
 
-        internal bool ZombieName;
-        internal bool ZombieDistance;//
-        internal bool ZombieSpecialty;
 
-        internal bool ItemName;//
-        internal bool ItemDistance;
-        
-        internal bool VehicleName;//
-        internal bool VehicleDistance;
 
-        internal bool Animals;
-        internal bool AnimalName;//
-        internal bool AnimalDistance;
+        public bool EnableEsp;
+        public bool EnableHacksList;
 
-        internal bool Storages;
-        internal bool StorageType;//
-        internal bool StorageDistance;
+        //Player Page
 
-        internal bool Forages;
-        internal bool ForageType;//
-        internal bool ForageDistance;
+        public bool Player2DBoxes;
+        public bool Player3DBoxes;
+        public bool PlayerGlow;
+        public bool PlayerSkeleton;
+        public bool PlayerTracers;
 
-        internal bool Bed;//
-        internal bool BedType;
-        internal bool BedDistance;
+        public bool PlayerName;
+        public bool PlayerWeapon;
+        public bool PlayerDistance;
+        public bool AdminWarn;
 
-        internal bool Doors;
-        internal bool DoorType;//
-        internal bool DoorDistance;
+        public ColorOptions FriendlyPlayerColor;
+        public ColorOptions EnemyPlayerColor;
+        public int FPlayerColorIndex;
+        public int EPlayerColorIndex;
+        public bool PlayerOverrideDistance;
+        public int PlayerEspDistance;
+        public bool PlayerInfDistance;
 
-        internal bool Traps;
-        internal bool TrapType;//
-        internal bool TrapDistance;
+        //Zombie Page
 
-        internal bool Flag;
-        internal bool FlagType;
-        internal bool FlagDistance;//
+        public bool ZombieBoxes;
+        public bool ZombieGlow;
+        public bool ZombieSkeleton;
+        public bool ZombieTracers;
 
-        internal bool Sentries;
-        internal bool SentryType;
-        internal bool SentryDistance;//
-        internal bool SentryWeapon;
-        internal bool SentryState;
+        public bool ZombieName;
+        public bool ZombieType;
+        public bool ZombieDistance;
 
-        internal bool Airdrop;
-        internal bool AirdropDistance;//
+        public ColorOptions ZombieColor;
+        public int ZombieColorIndex;
+        public bool ZombieOverrideDistance;
+        public int ZombieEspDistance;
+        public bool ZombieInfDistance;
 
-        internal bool Npc;
-        internal bool NpcDistance;
-        internal bool NpcWeapon;//
-        internal bool NpcName;
+        //Item Page
 
-        internal bool Admins;//
-        
-        
-        //Type
-        internal bool PlayerBox;//
-        internal bool ZombieBox;
+        public bool ItemGlow;
 
-        internal bool GlowPlayers;
-        internal bool GlowZombies;
-        internal bool GlowItems;
-        internal bool GlowInteractables;
-        internal bool GlowVehicles;
+        public bool ItemName;
+        public bool ItemDistance;
+        public bool ItemFilter;
 
-        internal bool Chams;
-        internal bool Tracers;
-        //Env
+        public ColorOptions ItemColor;
+        public int ItemColorIndex;
+        public bool ItemOverrideDistance;
+        public int ItemEspDistance;
+        public bool ItemInfDistance;
 
-        internal bool NoRain;//
-        internal bool NoSnow;
-        internal bool NoFog;
-        internal bool NoWater;
-        internal NvType Nv;
-        internal int NvInt;
-        internal float Altitude;
-        
-        //settings
-        internal bool InfDistance;
-        internal float Distance;
-        internal float UpdateRate;
+        //Item Filter
 
-        internal Color EnemyPlayerGlow;
-        internal Color FriendlyPlayerGlow;
-        internal Color ZombieGlow;
-        internal Color ItemGlow;
-        internal Color InteractableGlow;
-        internal Color VehicleGlow;
+        public bool FilterClothes;
+        public bool FilterPacks;
+        public bool FilterAmmo;
+        public bool FilterGuns;
+        public bool FilterAttach;
+        public bool FilterFood;
+        public bool FilterMed;
+        public bool FilterWeapons;
+        public bool FilterMisc;
 
-        internal Color BoxPlayerFriendly;
-        internal Color BoxPlayerEnemy;
-        internal Color BoxZombie;
+        //Vehicle Page
 
-        internal ColorChangeType Changing;
-        internal int ChangeInt;
+        public bool VehicleGlow;
 
-        internal bool ScaleText;
-        internal float CloseSize;
-        internal float FarSize;
-        internal float Dropoff;
+        public bool VehicleName;
+        public bool VehicleFilterLocked;
+        public bool VehicleGas;
+        public bool VehicleHealth;
+        public bool VehicleDistance;
 
-        internal bool FilterClothing;
-        internal bool FilterAmmo;
-        internal bool FilterGuns;
-        internal bool FilterAttach;
-        internal bool FilterFood;
-        internal bool FilterMedical;
-        internal bool FilterWeapons;
-        internal bool FilterMisc;
-        internal bool FilterBackpacks;
-        
-        internal bool PlayersOnMap;//
-        
-        internal Rect SelectionRect;
-        internal Rect Selection2Rect;
-        internal Rect TypeRect;
-        internal Rect EnvRect;
-        internal Rect SettingsRect;
+        public ColorOptions VehicleColor;
+        public int VehicleColorIndex;
 
-        internal Vector2 ScrollPos;
-        internal Vector2 ScrollPos2;
-        internal Vector2 ScrollPos3;
-        
-        
+        //Animal Page
+
+        public bool AnimalGlow;
+
+        public bool AnimalName;
+        public bool AnimalDistance;
+
+        public ColorOptions AnimalColor;
+        public int AnimalColorIndex;
+
+        //Storage Page
+
+        public bool StorageGlow;
+
+        public bool StorageName;
+        public bool StorageDistance;
+        public bool StorageFilterLocked;
+        public bool StorageFilterInUse;
+
+        public ColorOptions StorageColor;
+        public int StorageColorIndex;
+
+        //Environment Page
+
+        public float Altitude;
+        public NvType Nv;
+        // Rain, Fog, Water, nv, getting high
+
+        //Settings 
+
+        public bool InfiniteDistance;
+        public int EspDistance;
+        public int UpdateRate;
+
+        public bool ScaleText;
+        public int CloseSize;
+        public int FarSize;
+        public int Dropoff;
+
+
         public void Start()
         {
-//            Lib.Visuals.Start(this);
-            Lib.VisualsV2.Start();
+            //Call Start of lib
+            OnStart();
+            
+            //Set the first page
+            CurrentPage = VisualsPage.Player;
 
+            //Enable Hack List by default
             EnableHacksList = true;
-            var size = new Vector2(203,815);
-            SelectionRect =
-                MenuTools.GetRectAtLoc(size, MenuTools.Horizontal.Center, MenuTools.Vertical.Center, false);
-            SelectionRect.x -= 106;
 
-            Selection2Rect =
-                MenuTools.GetRectAtLoc(size, MenuTools.Horizontal.Center, MenuTools.Vertical.Center, false);
-            Selection2Rect.x += 106;
-            
-            size = new Vector2(215,815);
+            //Set Distances and update rates
+            EspDistance = 200;
+            UpdateRate = 10;
 
-            SettingsRect = MenuTools.GetRectAtLoc(size, MenuTools.Horizontal.Center, MenuTools.Vertical.Center, false);
-            SettingsRect.x = Selection2Rect.x + 203 + 5;
-            
-            size = new Vector2(200,398);
-            TypeRect = MenuTools.GetRectAtLoc(size, MenuTools.Horizontal.Center, MenuTools.Vertical.Center, false);
-            TypeRect.y -= 206;
-            TypeRect.x = SelectionRect.x - 207;
+            //Set Distances for overrides
+            PlayerEspDistance = 200;
+            ZombieEspDistance = 200;
+            ItemEspDistance = 200;
 
-            EnvRect = MenuTools.GetRectAtLoc(size, MenuTools.Horizontal.Center, MenuTools.Vertical.Center, false);
-            EnvRect.y += 206;
-            EnvRect.x = SelectionRect.x - 207;
+            //Set Text sizes for scale
+            CloseSize = 7;
+            FarSize = 5;
+            Dropoff = 350;
 
-            NvInt = 4;
-            Nv = (NvType) NvInt;
+            //Set Sizes and positions of menus
+            var size = new Vector2(450, 500);
+            CenterMenu = MenuTools.GetRectAtLoc(size, MenuTools.Horizontal.Center, MenuTools.Vertical.Center, false);
 
-            ChangeInt = 1;
-            Changing = (ColorChangeType) ChangeInt;
+            size = new Vector2(200, 500);
+            MenuBar = new Rect(CenterMenu.x - 210, CenterMenu.y, size.x, size.y);
+            SettingsBar = new Rect(CenterMenu.x + 460, CenterMenu.y, size.x, size.y);
 
-            Distance = 200f;
-            UpdateRate = 10000f;
-
-            CloseSize = 5f;
-            FarSize = 3f;
-            Dropoff = 500f;
-
-            ScrollPos = new Vector2();
-
-            EnemyPlayerGlow = WaveMaker.Settings.ColorList["enemyplayer"].Convert();
-            FriendlyPlayerGlow = WaveMaker.Settings.ColorList["friendlyplayer"].Convert();
-            ZombieGlow = WaveMaker.Settings.ColorList["zombie"].Convert();
-            ItemGlow = WaveMaker.Settings.ColorList["item"].Convert();
-            InteractableGlow = WaveMaker.Settings.ColorList["interactable"].Convert();
-            VehicleGlow = WaveMaker.Settings.ColorList["vehicle"].Convert(); 
-
-            BoxPlayerFriendly = WaveMaker.Settings.ColorList["friendlyplayerbox"].Convert();
-            BoxPlayerEnemy = WaveMaker.Settings.ColorList["enemyplayerbox"].Convert();
-            BoxZombie = WaveMaker.Settings.ColorList["zombiebox"].Convert();
-            
+            //set starting color indexs for colors
+            FPlayerColorIndex = 0;
+            EPlayerColorIndex = 15;
+            ZombieColorIndex = 6;
+            ItemColorIndex = 2;
+            VehicleColorIndex = 14;
+            AnimalColorIndex = 19;
+            StorageColorIndex = 5;
         }
 
-        public void UpdateColors()
-        {
-            EnemyPlayerGlow = WaveMaker.Settings.ColorList["enemyplayer"].Convert();
-            FriendlyPlayerGlow = WaveMaker.Settings.ColorList["friendlyplayer"].Convert();
-            ZombieGlow = WaveMaker.Settings.ColorList["zombie"].Convert();
-            ItemGlow = WaveMaker.Settings.ColorList["item"].Convert();
-            InteractableGlow = WaveMaker.Settings.ColorList["interactable"].Convert();
-            VehicleGlow = WaveMaker.Settings.ColorList["vehicle"].Convert(); 
-
-            BoxPlayerFriendly = WaveMaker.Settings.ColorList["friendlyplayerbox"].Convert();
-            BoxPlayerEnemy = WaveMaker.Settings.ColorList["enemyplayerbox"].Convert();
-            BoxZombie = WaveMaker.Settings.ColorList["zombiebox"].Convert();
-        }
-        
         public void Update()
         {
-//            if(Provider.isConnected)
-//                Lib.Visuals.Update();
-             
-            if(Provider.isConnected)
-                Lib.VisualsV2.Update();
+             OnUpdate();
+            
         }
 
         public void OnGUI()
         {
-            if (WaveMaker.MenuOpened == WaveMaker.VisualsId)
+            if (Provider.isConnected && WaveMaker.MenuOpened == WaveMaker.VisualsId)
             {
-                SelectionRect = GUI.Window(2004, SelectionRect, MenuFunct, "");
-                Selection2Rect = GUI.Window(2008, Selection2Rect, Menu2Funct, "");
-                TypeRect = GUI.Window(2005, TypeRect, TypeFunct, "Visuals");
-                EnvRect = GUI.Window(2006, EnvRect, EnvFunct, "Environment Hacks");
-                SettingsRect = GUI.Window(2007, SettingsRect, SetFunct, "Settings");
+                MenuBar = GUI.Window(2001, MenuBar, MenuBarFunct, "Visuals");
+                CenterMenu = GUI.Window(2002, CenterMenu, CenterMenuFunct, $"{CurrentPage}");
+                SettingsBar = GUI.Window(2003, SettingsBar, SettingsBarFunct, "Settings");
             }
-
-            if (Provider.isConnected && Event.current.type == EventType.repaint)
-            {
-                Lib.VisualsV2.CheckBoxes();
-                Lib.VisualsV2.CheckLabels();
-                Lib.VisualsV2.CheckSkeleton();
-                if(WaveMaker.isBeta)
-                    Lib.VisualsV2.CheckTracers();
-            }
-              
-            //TODO: Make sure that i check if I can see the player or zombie, so it doesnt do the skybox thing       
             
+            OnGUIUpdate();
         }
 
-
-
-        public void MenuFunct(int id)
-        {
-            ScrollPos2 = GUILayout.BeginScrollView(ScrollPos2, false, true);
-
-            GUILayout.Space(2f);
-            EnableHacksList = GUILayout.Toggle(EnableHacksList, " Show Hack List");
-            GUILayout.Space(2f);
-            GUILayout.Label("Player\n--------------------------------------");
-            GUILayout.Space(2f);
-            PlayerName = GUILayout.Toggle(PlayerName, " Show Player Name");
-            PlayerWeapon = GUILayout.Toggle(PlayerWeapon, " Show Player Weapon");
-            PlayerDistance = GUILayout.Toggle(PlayerDistance, " Show Player Distance");
-            
-            GUILayout.Space(2f);
-            GUILayout.Label("Zombie\n--------------------------------------");
-            GUILayout.Space(2f);
-            ZombieName = GUILayout.Toggle(ZombieName, " Show Zombie Name");
-            ZombieSpecialty = GUILayout.Toggle(ZombieSpecialty, " Show Zombie Specialty");
-            ZombieDistance = GUILayout.Toggle(ZombieDistance, " Show Zombie Distance");
-            
-            GUILayout.Space(2f);
-            GUILayout.Label("Item\n--------------------------------------");
-            GUILayout.Space(2f);
-            ItemName = GUILayout.Toggle(ItemName, " Show Item Name");
-            ItemDistance = GUILayout.Toggle(ItemDistance, " Show Item Distance");
-            
-            GUILayout.Space(2f);
-            GUILayout.Label("Vehicles\n--------------------------------------");
-            GUILayout.Space(2f);
-            VehicleName = GUILayout.Toggle(VehicleName, " Show Vehicle Name");
-            VehicleDistance = GUILayout.Toggle(VehicleDistance, " Show Vehicle Distance");
-            
-            GUILayout.Space(2f);
-            GUILayout.Label("Animals\n--------------------------------------");
-            GUILayout.Space(2f);
-            Animals = GUILayout.Toggle(Animals, " Show Animal Glow");
-            AnimalName = GUILayout.Toggle(AnimalName, " Show Animal Name");
-            AnimalDistance = GUILayout.Toggle(AnimalDistance, " Show Animal Distance");
-            
-            GUILayout.Space(2f);
-            GUILayout.Label("Forages\n--------------------------------------");
-            GUILayout.Space(2f);
-            Forages = GUILayout.Toggle(Forages, " Show Forage Glow");
-//            ForageType = GUILayout.Toggle(ForageType, " Show Forage Type");                //FIX
-//            ForageDistance = GUILayout.Toggle(ForageDistance, " Show Forage Distance");    //FIX
-
-            GUILayout.Space(2f);
-            GUILayout.Label("Airdrops\n--------------------------------------");
-            GUILayout.Space(2f);
-            Airdrop = GUILayout.Toggle(Airdrop, " Show Airdrop Glow");
-            AirdropDistance = GUILayout.Toggle(AirdropDistance, " Show Airdrop Distance");
-            
-//            GUILayout.Space(2f);
-//            GUILayout.Label("NPCs\n--------------------------------------");
-//            GUILayout.Space(2f);
-//            Npc = GUILayout.Toggle(Npc, " Show NPC Glow");
-//            NpcName = GUILayout.Toggle(NpcName, " Show NPC Name");
-////            NpcWeapon = GUILayout.Toggle(NpcWeapon, " Show NPC Weapon");     FIX
-//            NpcDistance = GUILayout.Toggle(NpcDistance, "Show NPC Distance");
-            
-            GUILayout.EndScrollView();
-        }
-
-        public void Menu2Funct(int id)
+        private void MenuBarFunct(int id)
         {
             GUILayout.Space(2f);
-            GUILayout.Label("Beds\n--------------------------------------");
-            GUILayout.Space(2f);
-            Bed = GUILayout.Toggle(Bed, " Show Bed Glow");
-            BedType = GUILayout.Toggle(BedType, " Show Bed Name");
-            BedDistance = GUILayout.Toggle(BedDistance, " Show Bed Distance");
-            
-            GUILayout.Space(2f);
-            GUILayout.Label("Doors\n--------------------------------------");
-            GUILayout.Space(2f);
-            Doors = GUILayout.Toggle(Doors, " Show Door Glow");
-            DoorType = GUILayout.Toggle(DoorType, " Show Door Type");
-            DoorDistance = GUILayout.Toggle(DoorDistance, " Show Door Distance");
-            
-            GUILayout.Space(2f);
-            GUILayout.Label("Traps\n--------------------------------------");
-            GUILayout.Space(2f);
-            Traps = GUILayout.Toggle(Traps, " Show Trap Glow");
-            TrapType = GUILayout.Toggle(TrapType, " Show Trap Type");
-            TrapDistance = GUILayout.Toggle(TrapDistance, " Show Trap Distance");
-            
-            GUILayout.Space(2f);
-            GUILayout.Label("Claim Flags\n--------------------------------------");
-            GUILayout.Space(2f);
-            Flag = GUILayout.Toggle(Flag, " Show Flag Glow");
-            FlagType = GUILayout.Toggle(FlagType, " Show Flag Type");
-            FlagDistance = GUILayout.Toggle(FlagDistance, "Show Flag Distance");
-            
-            GUILayout.Space(2f);
-            GUILayout.Label("Sentries\n--------------------------------------");
-            GUILayout.Space(2f);
-            Sentries = GUILayout.Toggle(Sentries, " Show Sentry Glow");
-            SentryType = GUILayout.Toggle(SentryType, " Show Sentry Type");
-//            SentryWeapon = GUILayout.Toggle(SentryWeapon, " Show Sentry Weapon"); //FIX
-            SentryState = GUILayout.Toggle(SentryState, " Show Sentry State");
-            SentryDistance = GUILayout.Toggle(SentryDistance, " Show Sentry Distance");
-            
-            GUILayout.Space(2f);
-            GUILayout.Label("Storages\n--------------------------------------");
-            GUILayout.Space(2f);
-            Storages = GUILayout.Toggle(Storages, " Show Storage Glow");
-            StorageType = GUILayout.Toggle(StorageType, " Show Storage Type");
-            StorageDistance = GUILayout.Toggle(StorageDistance, " Show Storage Distance");
-            
-            
-            GUILayout.Space(2f);
-            GUILayout.Label("Admins\n--------------------------------------");
-            GUILayout.Space(2f);
-            Admins = GUILayout.Toggle(Admins, " Show Admins");
-        }
-
-        public void TypeFunct(int id)
-        {
-            GUILayout.Space(2f);
-
             EnableEsp = GUILayout.Toggle(EnableEsp, " Enable Esp");
-            
+            GUILayout.Space(1f);
+            EnableHacksList = GUILayout.Toggle(EnableHacksList, " Enable Hack List");
+
+            GUILayout.Space(4f);
+            GUILayout.Label(" Categories\n --------------------------------------");
             GUILayout.Space(2f);
-            GUILayout.Label("Draw Boxes\n--------------------------------------");
-            GUILayout.Space(2f);
-            PlayerBox = GUILayout.Toggle(PlayerBox, " Show Player Boxes");
-            ZombieBox = GUILayout.Toggle(ZombieBox, " Show Zombie Boxes");
-            
-            GUILayout.Space(2f);
-            GUILayout.Label("Glow ESP\n--------------------------------------");
-            GUILayout.Space(2f);
-            GlowPlayers = GUILayout.Toggle(GlowPlayers, " Show Player Glow");
-            GlowZombies = GUILayout.Toggle(GlowZombies, " Show Zombie Glow");
-            GlowItems = GUILayout.Toggle(GlowItems, " Show Item Glow");
-//            GlowInteractables = GUILayout.Toggle(GlowInteractables, " Show Interactables Glow");
-            GlowVehicles = GUILayout.Toggle(GlowVehicles, " Show Vehicle Glow");
-            
-            GUILayout.Space(2f);
-            GUILayout.Label("Other Visuals\n--------------------------------------");
-            GUILayout.Space(2f);
-            EnablePlayerSkeleton = GUILayout.Toggle(EnablePlayerSkeleton, " Show Player Skeleton");
-            EnableZombieSkeleton = GUILayout.Toggle(EnableZombieSkeleton, " Show Zombie Skeleton");
-            Tracers = GUILayout.Toggle(Tracers, " Tracers (Beta Testers only)");
+
+            if (GUILayout.Button(" Player"))
+                CurrentPage = VisualsPage.Player;
+            GUILayout.Space(1f);
+
+            if (GUILayout.Button(" Zombie"))
+                CurrentPage = VisualsPage.Zombie;
+            GUILayout.Space(1f);
+
+            if (GUILayout.Button(" Item"))
+                CurrentPage = VisualsPage.Item;
+            GUILayout.Space(1f);
+
+            if (GUILayout.Button(" Item Filter"))
+                CurrentPage = VisualsPage.Filter;
+            GUILayout.Space(1f);
+
+            if (GUILayout.Button(" Vehicle"))
+                CurrentPage = VisualsPage.Vehicle;
+            GUILayout.Space(1f);
+
+            if (GUILayout.Button(" Animal"))
+                CurrentPage = VisualsPage.Animal;
+            GUILayout.Space(1f);
+
+            if (GUILayout.Button(" Storages"))
+                CurrentPage = VisualsPage.Storages;
+            GUILayout.Space(1f);
+
+            if (GUILayout.Button(" Environment"))
+                CurrentPage = VisualsPage.Environment;
+            GUILayout.Space(1f);
+
         }
 
-        public void EnvFunct(int id)
+        private void CenterMenuFunct(int id)
         {
+            switch (CurrentPage)
+            {
+                case VisualsPage.Player:
+                    PlayerPage();
+                    break;
+                case VisualsPage.Zombie:
+                    ZombiePage();
+                    break;
+                case VisualsPage.Item:
+                    ItemPage();
+                    break;
+                case VisualsPage.Filter:
+                    ItemFilterPage();
+                    break;
+                case VisualsPage.Vehicle:
+                    VehiclePage();
+                    break;
+                case VisualsPage.Animal:
+                    AnimalPage(id);
+                    break;
+                case VisualsPage.Storages:
+                    StoragePage(id);
+                    break;
+                case VisualsPage.Environment:
+                    EnvironmentPage(id);
+                    break;
+                
+            }
+        }
+
+        private void SettingsBarFunct(int id)
+        {
+            GUILayout.Space(2f);
+            GUILayout.Label($" Esp Distance: {EspDistance}");
+            EspDistance = (int) GUILayout.HorizontalSlider(EspDistance, 50f, 10000f);
+
+            InfiniteDistance = GUILayout.Toggle(InfiniteDistance, " Infinite Esp Distance");
+
+            GUILayout.Space(2f);
+            GUILayout.Label($" Update Rate : {UpdateRate} ms");
+            UpdateRate = (int) GUILayout.HorizontalSlider(UpdateRate, 1f, 15f);
+
+            GUILayout.Space(3f);
+            GUILayout.Label(" Text Scale\n --------------------------------------");
+
+            GUILayout.Space(3f);
+            ScaleText = GUILayout.Toggle(ScaleText, " Scale Esp Text");
+
+            GUILayout.Space(1f);
+            GUILayout.Label($" Close Size: {CloseSize}");
+            CloseSize = (int) GUILayout.HorizontalSlider(CloseSize, 1f, 24f);
+
+            GUILayout.Space(1f);
+            GUILayout.Label($" Far Size: {FarSize}");
+            FarSize = (int) GUILayout.HorizontalSlider(FarSize, 1f, 24f);
+
+            GUILayout.Space(1f);
+            GUILayout.Label($" Dropoff: {Dropoff}");
+            Dropoff = (int) GUILayout.HorizontalSlider(Dropoff, 50f, 10000f);
+        }
+
+        #region pages
+
+        private void PlayerPage()
+        {
+            GUILayout.BeginHorizontal();
+            GUILayout.Space(3f);
+
+            GUILayout.BeginVertical();
+            GUILayout.Space(2f);
+            GUILayout.Label(" Box\n --------------------------------------");
+            Player2DBoxes = GUILayout.Toggle(Player2DBoxes, " 2D Boxes");
+            Player3DBoxes = GUILayout.Toggle(Player3DBoxes, " 3D Boxes");
             
-            ScrollPos3 = GUILayout.BeginScrollView(ScrollPos3, false, true);
+            GUILayout.Label(" Glow\n --------------------------------------");
+            PlayerGlow = GUILayout.Toggle(PlayerGlow, " Glow ESP");
+
+            GUILayout.Space(2f);
+            GUILayout.Label(" Labels\n --------------------------------------");
+            PlayerName = GUILayout.Toggle(PlayerName, " Show Name");
+            PlayerWeapon = GUILayout.Toggle(PlayerWeapon, " Show Weapon");
+            PlayerDistance = GUILayout.Toggle(PlayerDistance, " Show Distance");
+
+            GUILayout.Space(2f);
+            GUILayout.Label(" Other\n --------------------------------------");
+            PlayerSkeleton = GUILayout.Toggle(PlayerSkeleton, " Skeleton ESP");
+            PlayerTracers = GUILayout.Toggle(PlayerTracers, " Tracers (Beta Only)");
+            AdminWarn = GUILayout.Toggle(AdminWarn, " Show Admin Warning");
+            GUILayout.EndVertical();
+
+            GUILayout.BeginVertical();
+            GUILayout.Space(2f);
+            GUILayout.Label(" Player Colors\n --------------------------------------");
+            GUILayout.Space(2f);
+            if (GUILayout.Button($" Friendly: {FriendlyPlayerColor.ToString().First().ToString().ToUpper() + FriendlyPlayerColor.ToString().Substring(1)}"))
+            {
+                FPlayerColorIndex++;
+                if (FPlayerColorIndex > 16)
+                    FPlayerColorIndex = 0;
+                FriendlyPlayerColor = (ColorOptions) FPlayerColorIndex;
+            }
+            if (GUILayout.Button($" Enemy: {EnemyPlayerColor.ToString().First().ToString().ToUpper() + EnemyPlayerColor.ToString().Substring(1)}"))
+            {
+                EPlayerColorIndex++;
+                if (EPlayerColorIndex > 16)
+                    EPlayerColorIndex = 0;
+                EnemyPlayerColor = (ColorOptions) EPlayerColorIndex;
+            }
+
+            GUILayout.Label(" Override Dist\n --------------------------------------");
+            GUILayout.Space(2f);
+            PlayerOverrideDistance = GUILayout.Toggle(PlayerOverrideDistance, " Enable Override");
+            GUILayout.Space(1f);
+            PlayerInfDistance = GUILayout.Toggle(PlayerInfDistance, " Infinite Player Dist");
+            GUILayout.Label($" Player Esp Distance: {PlayerEspDistance}");
+            PlayerEspDistance = (int) GUILayout.HorizontalSlider(PlayerEspDistance, 50f, 10000f);
+            GUILayout.EndVertical();
+
+
+            GUILayout.Space(3f);
+            GUILayout.EndHorizontal();
+        }
+
+        private void ZombiePage()
+        {
+            GUILayout.BeginHorizontal();
+            GUILayout.Space(3f);
+
+            GUILayout.BeginVertical();
+            GUILayout.Space(2f);
+            GUILayout.Label(" Box\n --------------------------------------");
+            ZombieBoxes = GUILayout.Toggle(ZombieBoxes, " 2D Boxes");
+            
+            
+            GUILayout.Label(" Glow\n --------------------------------------");
+            ZombieGlow = GUILayout.Toggle(ZombieGlow, " Glow ESP");
+
+            GUILayout.Space(2f);
+            GUILayout.Label(" Labels\n --------------------------------------");
+            ZombieName = GUILayout.Toggle(ZombieName, " Show Name");
+            ZombieType = GUILayout.Toggle(ZombieType, " Show Type");
+            ZombieDistance = GUILayout.Toggle(ZombieDistance, " Show Distance");
+
+            GUILayout.Space(2f);
+            GUILayout.Label(" Other\n --------------------------------------");
+            ZombieSkeleton = GUILayout.Toggle(ZombieSkeleton, " Skeleton ESP");
+            ZombieTracers = GUILayout.Toggle(ZombieTracers, " Tracers (Beta Only)");
+            GUILayout.EndVertical();
+
+            GUILayout.BeginVertical();
+            GUILayout.Space(2f);
+            GUILayout.Label(" Zombie Colors\n --------------------------------------");
+            GUILayout.Space(2f);
+            if (GUILayout.Button($" Zombies: {ZombieColor.ToString().First().ToString().ToUpper() + ZombieColor.ToString().Substring(1)}"))
+            {
+                ZombieColorIndex++;
+                if (ZombieColorIndex > 19)
+                    ZombieColorIndex = 0;
+                ZombieColor = (ColorOptions) ZombieColorIndex;
+            }
+
+
+            GUILayout.Label(" Override Dist\n --------------------------------------");
+            GUILayout.Space(2f);
+            ZombieOverrideDistance = GUILayout.Toggle(ZombieOverrideDistance, " Enable Override");
+            GUILayout.Space(1f);
+            ZombieInfDistance = GUILayout.Toggle(ZombieInfDistance, " Infinite Zombie Dist");
+            GUILayout.Label($" Zombie Esp Distance: {ZombieEspDistance}");
+            ZombieEspDistance = (int) GUILayout.HorizontalSlider(ZombieEspDistance, 50f, 10000f);
+            GUILayout.EndVertical();
+
+
+            GUILayout.Space(3f);
+            GUILayout.EndHorizontal();
+        }
+
+        private void ItemPage()
+        {
+            GUILayout.BeginHorizontal();
+            GUILayout.Space(3f);
+
+            GUILayout.BeginVertical();
+            GUILayout.Space(2f);
+            GUILayout.Label(" Glow\n --------------------------------------");
+            ItemGlow = GUILayout.Toggle(ItemGlow, " Glow ESP");
+
+            GUILayout.Space(2f);
+            GUILayout.Label(" Labels\n --------------------------------------");
+            ItemName = GUILayout.Toggle(ItemName, " Show Name");
+            ItemDistance = GUILayout.Toggle(ItemDistance, " Show Distance");
+
+            GUILayout.Space(2f);
+            GUILayout.Label(" Other\n --------------------------------------");
+            ItemFilter = GUILayout.Toggle(ItemFilter, " Enable Item Filter");
+
+            GUILayout.EndVertical();
+
+            GUILayout.BeginVertical();
+            GUILayout.Space(2f);
+            GUILayout.Label(" Item Colors\n --------------------------------------");
+            GUILayout.Space(2f);
+            if (GUILayout.Button($" Items: {ItemColor.ToString().First().ToString().ToUpper() + ItemColor.ToString().Substring(1)}"))
+            {
+                ItemColorIndex++;
+                if (ItemColorIndex > 19)
+                    ItemColorIndex = 0;
+                ItemColor = (ColorOptions) ItemColorIndex;
+            }
+
+
+            GUILayout.Label(" Override Dist\n --------------------------------------");
+            GUILayout.Space(2f);
+            ItemOverrideDistance = GUILayout.Toggle(ItemOverrideDistance, " Enable Override");
+            GUILayout.Space(1f);
+            ItemInfDistance = GUILayout.Toggle(ItemInfDistance, " Infinite Item Dist");
+            GUILayout.Label($" Item Esp Distance: {ItemEspDistance}");
+            ItemEspDistance = (int) GUILayout.HorizontalSlider(ItemEspDistance, 50f, 10000f);
+            GUILayout.EndVertical();
+
+
+            GUILayout.Space(3f);
+            GUILayout.EndHorizontal();
+        }
+
+        private void ItemFilterPage()
+        {
+            GUILayout.Space(2f);
+            ItemFilter = GUILayout.Toggle(ItemFilter, " Enable Item Filter");
+            GUILayout.Space(2f);
+            GUILayout.Label(" Filter Options\n --------------------------------------");
+            GUILayout.Space(2f);
+            FilterClothes = GUILayout.Toggle(FilterClothes, " Filter Clothes");
+            FilterPacks = GUILayout.Toggle(FilterPacks, " Filter Backpacks");
+            FilterAmmo = GUILayout.Toggle(FilterAmmo, " Filter Ammunition");
+            FilterGuns = GUILayout.Toggle(FilterGuns, " Filter Guns");
+            FilterAttach = GUILayout.Toggle(FilterAttach, " Filter Attachments");
+            FilterFood = GUILayout.Toggle(FilterFood, " Filter Food");
+            FilterMed = GUILayout.Toggle(FilterMed, " Filter Medical");
+            FilterWeapons = GUILayout.Toggle(FilterWeapons, " Filter Weapons");
+            FilterMisc = GUILayout.Toggle(FilterMisc, " Filter Misc");
+        }
+
+        private void VehiclePage()
+        {
+            GUILayout.BeginHorizontal();
+            GUILayout.Space(3f);
+
+            GUILayout.BeginVertical();
+            GUILayout.Space(2f);   
+            GUILayout.Label(" Glow\n --------------------------------------");
+            VehicleGlow = GUILayout.Toggle(VehicleGlow, " Glow ESP");
+
+            GUILayout.Space(2f);
+            GUILayout.Label(" Labels\n --------------------------------------");
+            VehicleName = GUILayout.Toggle(VehicleName, " Show Name");
+            VehicleDistance = GUILayout.Toggle(VehicleDistance, " Show Distance");
+            VehicleGas = GUILayout.Toggle(VehicleGas, " Show Gas");
+            VehicleHealth = GUILayout.Toggle(VehicleHealth, " Show Health");
+
+            GUILayout.Space(2f);
+            GUILayout.Label(" Other\n --------------------------------------");
+            VehicleFilterLocked = GUILayout.Toggle(VehicleFilterLocked, " Show Only Unlocked");
+
+            GUILayout.EndVertical();
+
+            GUILayout.BeginVertical();
+            GUILayout.Space(2f);
+            GUILayout.Label(" Vehicle Colors\n --------------------------------------");
+            GUILayout.Space(2f);
+            if (GUILayout.Button($" Vehicles: {VehicleColor.ToString().First().ToString().ToUpper() + VehicleColor.ToString().Substring(1)}"))
+            {
+                VehicleColorIndex++;
+                if (VehicleColorIndex > 19)
+                    VehicleColorIndex = 0;
+                VehicleColor = (ColorOptions) VehicleColorIndex;
+            }
+            GUILayout.EndVertical();
+
+
+            GUILayout.Space(3f);
+            GUILayout.EndHorizontal();
+        }
+
+        private void AnimalPage(int id)
+        {
+            GUILayout.BeginHorizontal();
+            GUILayout.Space(3f);
+
+            GUILayout.BeginVertical();
+            GUILayout.Space(2f);   
+            GUILayout.Label(" Glow\n --------------------------------------");
+            AnimalGlow = GUILayout.Toggle(AnimalGlow, " Glow ESP");
+
+            GUILayout.Space(2f);
+            GUILayout.Label(" Labels\n --------------------------------------");
+            AnimalName = GUILayout.Toggle(AnimalName, " Show Name");
+            AnimalDistance = GUILayout.Toggle(AnimalDistance, " Show Distance");
+
+            GUILayout.EndVertical();
+
+            GUILayout.BeginVertical();
+            GUILayout.Space(2f);
+            GUILayout.Label(" Animal Colors\n --------------------------------------");
+            GUILayout.Space(2f);
+            if (GUILayout.Button($" Animals: {AnimalColor.ToString().First().ToString().ToUpper() + AnimalColor.ToString().Substring(1)}"))
+            {
+                AnimalColorIndex++;
+                if (AnimalColorIndex > 19)
+                    AnimalColorIndex = 0;
+                AnimalColor = (ColorOptions) AnimalColorIndex;
+            }
+            GUILayout.EndVertical();
+
+
+            GUILayout.Space(3f);
+            GUILayout.EndHorizontal();
+        }
+
+        private void StoragePage(int id)
+        {
+            GUILayout.BeginHorizontal();
+            GUILayout.Space(3f);
+
+            GUILayout.BeginVertical();
+            GUILayout.Space(2f);   
+            GUILayout.Label(" Glow\n --------------------------------------");
+            StorageGlow = GUILayout.Toggle(StorageGlow, " Glow ESP");
+
+            GUILayout.Space(2f);
+            GUILayout.Label(" Labels\n --------------------------------------");
+            StorageName = GUILayout.Toggle(StorageName, " Show Name");
+            StorageDistance = GUILayout.Toggle(StorageDistance, " Show Distance");
+
+            GUILayout.Space(2f);
+            GUILayout.Label(" Other\n --------------------------------------");
+            StorageFilterLocked = GUILayout.Toggle(StorageFilterLocked, " Show Only Unlocked");
+            StorageFilterInUse = GUILayout.Toggle(StorageFilterInUse, " Show Only With Items");
+
+            GUILayout.EndVertical();
+
+            GUILayout.BeginVertical();
+            GUILayout.Space(2f);
+            GUILayout.Label(" Storage Colors\n --------------------------------------");
+            GUILayout.Space(2f);
+            if (GUILayout.Button($" Storages: {StorageColor.ToString().First().ToString().ToUpper() + StorageColor.ToString().Substring(1)}"))
+            {
+                StorageColorIndex++;
+                if (StorageColorIndex > 19)
+                    StorageColorIndex = 0;
+                StorageColor = (ColorOptions) StorageColorIndex;
+            }
+            GUILayout.EndVertical();
+
+
+            GUILayout.Space(3f);
+            GUILayout.EndHorizontal();
+        }
+
+        private void EnvironmentPage(int id)
+        {
             GUILayout.Space(2f);
             GUILayout.Label("Weather\n--------------------------------------");
             GUILayout.Space(2f);
@@ -416,23 +655,6 @@ namespace TsunamiHack.Tsunami.Menu
             {
                 LevelLighting.rainyness = ELightingRain.NONE;
             }
-
-//            if (GUILayout.Button("No Snow"))
-//            {
-//                LevelLighting.snowLevel = 0f;
-//                RenderSettings.fogDensity = 0f;
-//                FieldInfo issnow = typeof(LevelLighting).GetField("isSnow", BindingFlags.Static | BindingFlags.NonPublic);
-//                if (issnow != null)
-//                {
-//                    issnow.SetValue(null, false);
-//                }
-//                FieldInfo snowy = typeof(LevelLighting).GetField("snownyess", BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
-//                if (snowy == null)
-//                {
-//                    return;
-//                }
-//                snowy.SetValue(null, 0f);
-//            }
 
             if (GUILayout.Button("No Fog"))
             {
@@ -451,7 +673,6 @@ namespace TsunamiHack.Tsunami.Menu
             GUILayout.Label("--------------------------------------");
             GUILayout.Space(2f);
 
-//            PlayersOnMap = GUILayout.Toggle(PlayersOnMap, " Show Players On Map");
             
             GUILayout.Space(4f);
 
@@ -491,198 +712,28 @@ namespace TsunamiHack.Tsunami.Menu
             }
             
             GUILayout.Space(10f);
-
-            if (GUILayout.Button("Get High"))
+            GUILayout.Label(" Get High\n --------------------------------------");
+            GUILayout.Space(2f);
+            
+            if (GUILayout.Button("Get High (10 sec)"))
             {
-                Player.player.life.askView(20);
+                Player.player.life.askView(10);
+            }
+            if (GUILayout.Button("Get High (30 Sec)"))
+            {
+                Player.player.life.askView(30);
+            }
+            if (GUILayout.Button("Get High (1 min)"))
+            {
+                Player.player.life.askView(60);
+            }
+            if (GUILayout.Button("Get High (5 mins"))
+            {
+                Player.player.life.askView(255);
             }
             
-            GUILayout.EndScrollView();
-        }
-
-        public void SetFunct(int id)
-        {
-//            ScrollPos = GUILayout.BeginScrollView(ScrollPos, false, true);
-            
-            GUILayout.Space(2f);
-            GUILayout.Label("ESP Settings\n--------------------------------------");
-            GUILayout.Space(2f);
-            InfDistance = GUILayout.Toggle(InfDistance, " Infinite Distance");
-            GUILayout.Space(1f);
-            GUILayout.Label($"ESP Distance : {Distance}");
-            Distance = GUILayout.HorizontalSlider((float) Math.Round(Distance, 0), 0f, 1000f);
-            GUILayout.Space(1f);
-            GUILayout.Label($"Update Rate (milliseconds): {UpdateRate}");
-            UpdateRate = GUILayout.HorizontalSlider((float) Math.Round(UpdateRate, 0), 1f, 20000f);
-            
-            GUILayout.Space(2f);
-//            GUILayout.Label("ESP Colors\n--------------------------------------");
-//            GUILayout.Space(2f);
-//            GUILayout.Label($"Enemy Player :\n R {EnemyPlayerGlow.r} G {EnemyPlayerGlow.g} B {EnemyPlayerGlow.b}");
-//            GUILayout.Space(3f);
-//            GUILayout.Label($"Friendly Player :\n R {FriendlyPlayerGlow.r} G {FriendlyPlayerGlow.g} B {FriendlyPlayerGlow.b}");
-//            GUILayout.Space(3f);
-//            GUILayout.Label($"Zombie :\n R {ZombieGlow.r} G {ZombieGlow.g} B {ZombieGlow.b}");
-//            GUILayout.Space(3f);
-//            GUILayout.Label($"Item :\n R {ItemGlow.r} G {ItemGlow.g} B {ItemGlow.b}");
-//            GUILayout.Space(3f);
-//            GUILayout.Label($"Interactable :\n R {InteractableGlow.r} G {InteractableGlow.g} B {InteractableGlow.b}");
-//            GUILayout.Space(3f);
-//            GUILayout.Label($"Vehicle :\n R {VehicleGlow.r} G {VehicleGlow.g} B {VehicleGlow.b}");
-//            
-//            GUILayout.Space(5f);
-//            
-//            GUILayout.Label($"Friendly Player Box :\n R {BoxPlayerFriendly.r} G {BoxPlayerFriendly.g} B {BoxPlayerFriendly.b}");
-//            GUILayout.Space(3f);
-//            GUILayout.Label($"Enemy Player Box :\n R {BoxPlayerEnemy.r} G {BoxPlayerEnemy.g} B {BoxPlayerEnemy.b}");
-//            GUILayout.Space(3f);
-//            GUILayout.Label($"Zombie Box :\n R {BoxZombie.r} G {BoxZombie.g} B {BoxZombie.b}");
-//            
-//            GUILayout.Space(4f);
-//            GUILayout.Label("Edit Colors\n--------------------------------------");
-//            GUILayout.Space(2f);
-//            if(GUILayout.Button($"Editing : {Changing}"))
-//            {
-//                ChangeInt++;
-//                if (ChangeInt == 10)
-//                    ChangeInt = 1;
-//                Changing = (ColorChangeType) ChangeInt;
-//            }
-//
-//            switch (ChangeInt)
-//            {
-//                    case 1:
-//                        GUILayout.Label($"R : {EnemyPlayerGlow.r} G : {EnemyPlayerGlow.g} B : {EnemyPlayerGlow.b}");
-//                        EnemyPlayerGlow.r = GUILayout.HorizontalSlider((float) Math.Round(EnemyPlayerGlow.r, 0), 0f, 255f);
-//                        EnemyPlayerGlow.g = GUILayout.HorizontalSlider((float) Math.Round(EnemyPlayerGlow.g, 0), 0f, 255f);
-//                        EnemyPlayerGlow.b = GUILayout.HorizontalSlider((float) Math.Round(EnemyPlayerGlow.b, 0), 0f, 255f);
-//                        break;
-//                    case 2:
-//                        GUILayout.Label($"R : {FriendlyPlayerGlow.r} G : {FriendlyPlayerGlow.g} B : {FriendlyPlayerGlow.b}");
-//                        FriendlyPlayerGlow.r = GUILayout.HorizontalSlider((float) Math.Round(FriendlyPlayerGlow.r, 0), 0f, 255f);
-//                        FriendlyPlayerGlow.g = GUILayout.HorizontalSlider((float) Math.Round(FriendlyPlayerGlow.g, 0), 0f, 255f);
-//                        FriendlyPlayerGlow.b = GUILayout.HorizontalSlider((float) Math.Round(FriendlyPlayerGlow.b, 0), 0f, 255f);
-//                        break;
-//                    case 3:
-//                        GUILayout.Label($"R : {ZombieGlow.r} G : {ZombieGlow.g} B : {ZombieGlow.b}");
-//                        ZombieGlow.r = GUILayout.HorizontalSlider((float) Math.Round(ZombieGlow.r, 0), 0f, 255f);
-//                        ZombieGlow.g = GUILayout.HorizontalSlider((float) Math.Round(ZombieGlow.g, 0), 0f, 255f);
-//                        ZombieGlow.b = GUILayout.HorizontalSlider((float) Math.Round(ZombieGlow.b, 0), 0f, 255f);
-//                        break;
-//                    case 4:
-//                        GUILayout.Label($"R : {ItemGlow.r} G : {ItemGlow.g} B : {ItemGlow.b}");
-//                        ItemGlow.r = GUILayout.HorizontalSlider((float) Math.Round(ItemGlow.r, 0), 0f, 255f);
-//                        ItemGlow.g = GUILayout.HorizontalSlider((float) Math.Round(ItemGlow.g, 0), 0f, 255f);
-//                        ItemGlow.b = GUILayout.HorizontalSlider((float) Math.Round(ItemGlow.b, 0), 0f, 255f);
-//                        break;
-//                    case 5:
-//                        GUILayout.Label($"R : {InteractableGlow.r} G : {InteractableGlow.g} B : {InteractableGlow.b}");
-//                        InteractableGlow.r = GUILayout.HorizontalSlider((float) Math.Round(InteractableGlow.r, 0), 0f, 255f);
-//                        InteractableGlow.g = GUILayout.HorizontalSlider((float) Math.Round(InteractableGlow.g, 0), 0f, 255f);
-//                        InteractableGlow.b = GUILayout.HorizontalSlider((float) Math.Round(InteractableGlow.b, 0), 0f, 255f);
-//                        break;
-//                    case 6:
-//                        GUILayout.Label($"R : {VehicleGlow.r} G : {VehicleGlow.g} B : {VehicleGlow.b}");
-//                        VehicleGlow.r = GUILayout.HorizontalSlider((float) Math.Round(VehicleGlow.r, 0), 0f, 255f);
-//                        VehicleGlow.g = GUILayout.HorizontalSlider((float) Math.Round(VehicleGlow.g, 0), 0f, 255f);
-//                        VehicleGlow.b = GUILayout.HorizontalSlider((float) Math.Round(VehicleGlow.b, 0), 0f, 255f);
-//                        break;
-//                    case 7:
-//                        GUILayout.Label($"R : {BoxPlayerFriendly.r} G : {BoxPlayerFriendly.g} B : {BoxPlayerFriendly.b}");
-//                        BoxPlayerFriendly.r = GUILayout.HorizontalSlider((float) Math.Round(BoxPlayerFriendly.r, 0), 0f, 255f);
-//                        BoxPlayerFriendly.g = GUILayout.HorizontalSlider((float) Math.Round(BoxPlayerFriendly.g, 0), 0f, 255f);
-//                        BoxPlayerFriendly.b = GUILayout.HorizontalSlider((float) Math.Round(BoxPlayerFriendly.b, 0), 0f, 255f);
-//                        break;
-//                    case 8:
-//                        GUILayout.Label($"R : {BoxPlayerEnemy.r} G : {BoxPlayerEnemy.g} B : {BoxPlayerEnemy.b}");
-//                        BoxPlayerEnemy.r = GUILayout.HorizontalSlider((float) Math.Round(BoxPlayerEnemy.r, 0), 0f, 255f);
-//                        BoxPlayerEnemy.g = GUILayout.HorizontalSlider((float) Math.Round(BoxPlayerEnemy.g, 0), 0f, 255f);
-//                        BoxPlayerEnemy .b = GUILayout.HorizontalSlider((float) Math.Round(BoxPlayerEnemy.b, 0), 0f, 255f);
-//                        break;
-//                    case 9:
-//                        GUILayout.Label($"R : {BoxZombie.r} G : {BoxZombie.g} B : {BoxZombie.b}");
-//                        BoxZombie.r = GUILayout.HorizontalSlider((float) Math.Round(BoxZombie.r, 0), 0f, 255f);
-//                        BoxZombie.g = GUILayout.HorizontalSlider((float) Math.Round(BoxZombie.g, 0), 0f, 255f);
-//                        BoxZombie.b = GUILayout.HorizontalSlider((float) Math.Round(BoxZombie.b, 0), 0f, 255f);
-//                        break;
-//            }
-//            
-//            GUILayout.Space(2f);
-//            
-//            if(GUILayout.Button("Save Colors"))
-//            {
-//                WaveMaker.Settings.ColorList["enemyplayer"] = new TsuColor(EnemyPlayerGlow);
-//                WaveMaker.Settings.ColorList["friendlyplayer"] = new TsuColor(FriendlyPlayerGlow);
-//                WaveMaker.Settings.ColorList["zombie"] = new TsuColor(ZombieGlow);
-//                WaveMaker.Settings.ColorList["item"] = new TsuColor(ItemGlow);
-//                WaveMaker.Settings.ColorList["interactable"] = new TsuColor(InteractableGlow);
-//                WaveMaker.Settings.ColorList["vehicle"] = new TsuColor(VehicleGlow);
-//                
-//                WaveMaker.Settings.ColorList["friendlyplayerbox"] = new TsuColor(BoxPlayerFriendly);
-//                WaveMaker.Settings.ColorList["enemyplayerbox"] = new TsuColor(BoxPlayerEnemy);
-//                WaveMaker.Settings.ColorList["zombiebox"] = new TsuColor(BoxZombie);
-//
-//
-//                FileIo.SaveColors(WaveMaker.Settings);
-//            }
-//            GUILayout.Space(2f);
-//            if (GUILayout.Button("Reset Colors"))
-//            {
-//                WaveMaker.Settings.ColorList["enemyplayer"] = new TsuColor(new Color(255,45,45));
-//                WaveMaker.Settings.ColorList["friendlyplayer"] = new TsuColor(new Color(150,255,255));
-//                WaveMaker.Settings.ColorList["zombie"] = new TsuColor(new Color(50,150,0));
-//                WaveMaker.Settings.ColorList["item"] = new TsuColor(new Color(230,230,40));
-//                WaveMaker.Settings.ColorList["interactable"] = new TsuColor(new Color(255,180,0));
-//                WaveMaker.Settings.ColorList["vehicle"] = new TsuColor(new Color(255,0,230));
-//                
-//                WaveMaker.Settings.ColorList["friendlyplayerbox"] = new TsuColor(new Color(150,255,255));
-//                WaveMaker.Settings.ColorList["enemyplayerbox"] = new TsuColor(new Color(255,45,45));
-//                WaveMaker.Settings.ColorList["zombiebox"] = new TsuColor(new Color(50, 150, 0));
-//                
-//                UpdateColors();
-//                FileIo.SaveColors(WaveMaker.Settings);
-//            }
-            GUILayout.Label("Item Filter\n--------------------------------------");
-            GUILayout.Space(2f);
-            FilterClothing = GUILayout.Toggle(FilterClothing, " Filter Clothing");
-            FilterBackpacks = GUILayout.Toggle(FilterBackpacks, " Filter Backpacks");
-            FilterAmmo = GUILayout.Toggle(FilterAmmo, " Filter Ammo");
-            FilterGuns = GUILayout.Toggle(FilterGuns, " Filter Guns");
-            FilterAttach = GUILayout.Toggle(FilterAttach, " Filter Attachments");
-            FilterFood = GUILayout.Toggle(FilterFood, " Filter Food");
-            FilterMedical = GUILayout.Toggle(FilterMedical, " Filter Medical");
-            FilterWeapons = GUILayout.Toggle(FilterWeapons, " Filter Weapons");
-            FilterMisc = GUILayout.Toggle(FilterMisc, " Filter Misc");
-            GUILayout.Label("--------------------------------------");
-            
-            ScaleText = GUILayout.Toggle(ScaleText, " Scale ESP Text");
-            GUILayout.Label($"Close Text Size : {CloseSize}");
-            CloseSize = GUILayout.HorizontalSlider((float) Math.Round(CloseSize, 0), 1f, 12f);
-            GUILayout.Label($"Far Text Size : {FarSize}");
-            FarSize = GUILayout.HorizontalSlider((float) Math.Round(FarSize, 0), 1f, 12f);
-            GUILayout.Label($"Text Size Dropoff : {Dropoff}");
-            Dropoff = GUILayout.HorizontalSlider((float) Math.Round(Dropoff, 0), 1f, 10000f);
-            
-//            GUILayout.EndScrollView();
         }
         
-        
-        
-        
-    
-        public void SetMenuStatus(bool setting)
-        {
-            MenuOpened = setting;
-        }
-
-        public void ToggleMenuStatus()
-        {
-            MenuOpened = !MenuOpened;
-        }
-
-        public bool GetMenuStatus()
-        {
-            return MenuOpened;
-        }
+        #endregion
     }
 }

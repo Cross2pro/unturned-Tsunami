@@ -1,1718 +1,415 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using HighlightingSystem;
-using UnityEngine;
 using SDG.Unturned;
 using TsunamiHack.Tsunami.Manager;
+using TsunamiHack.Tsunami.Types;
 using TsunamiHack.Tsunami.Util;
+using UnityEngine;
 using Object = UnityEngine.Object;
+// ReSharper disable MemberCanBePrivate.Global
+// ReSharper disable ArrangeRedundantParentheses
 
-namespace TsunamiHack.Tsunami.Lib
+// ReSharper disable once CheckNamespace
+namespace TsunamiHack.Tsunami.Menu
 {
-    internal class Visuals 
+    internal partial class Visuals : MonoBehaviour
     {
-        //TODO: fix positioning of labels
-        //TODO: maybe add other boxes
-        //TODO: create a maximum zombies to show value
-        //TODO: change menu sizes to a proportion and add scrollbars into all menus
-        //TODO: Fix admin label positioning 
+
+        public IEnumerator CR_ZombieGlow;
+        public IEnumerator CR_PlayerGlow;
+        public IEnumerator CR_ItemGlow;
+        public IEnumerator CR_VehicleGlow;
+        public IEnumerator CR_StorageGlow;
+        public IEnumerator CR_AnimalGlow;
+
+        public Camera Main;
         
-        internal static Menu.Visuals Menu;
+        public List<Zombie> Zombielist;
+        public List<SteamPlayer> Playerlist;
+        public List<InteractableItem> Itemlist;
 
-        internal static SteamPlayer[] Players;
-        internal static Zombie[] Zombies;
-        internal static InteractableItem[] Items;
-        internal static InteractableVehicle[] Vehicles;
-        internal static Animal[] Animals;
-        internal static InteractableStorage[] Storages;
-        internal static InteractableForage[] Forages;
-        internal static InteractableBed[] Beds;
-        internal static InteractableDoor[] Doors;
-        internal static InteractableTrap[] Traps;
-        internal static InteractableClaim[] Flags;
-        internal static InteractableSentry[] Sentries;
-        internal static Carepackage[] Airdrops;
-        internal static InteractableObjectNPC[] Npcs;
-
-        internal static DateTime Last;
-
-        internal static float Altitiude;
+        public DateTime LastUpdate;
+        public bool ForceUpdate;
         
-        internal static Color EnemyPlayerGlow;
-        internal static Color FriendlyPlayerGlow;
-        internal static Color ZombieGlow;
-        internal static Color ItemGlow;
-        internal static Color InteractableGlow;
-        internal static Color VehicleGlow;
-
-        internal static Color BoxPlayerFriendly;
-        internal static Color BoxPlayerEnemy;
-        internal static Color BoxZombie;
-
-        internal static Dictionary<int, string> StorageIds;
-        internal static Dictionary<int, string> DoorIds;
-        
-        internal static Material BoxMaterial;
-        
-        internal static void Start(Menu.Visuals parent)
+        public void OnStart()
         {
-            var material = new Material(Shader.Find("Hidden/Internal-Colored"));
-            material.hideFlags = (HideFlags) 61;
-            BoxMaterial = material;
-            BoxMaterial.SetInt("_SrcBlend", 5);
-            BoxMaterial.SetInt("_DstBlend", 10);
-            BoxMaterial.SetInt("_Cull", 0);
-            BoxMaterial.SetInt("_ZWrite", 0);
+            Main = Camera.main;
+            LastUpdate = DateTime.Now;
 
-            GenerateDicts();
-            
-            Menu = WaveMaker.MenuVisuals;
-            Last = DateTime.Now;
-            
-            Players = Provider.clients.ToArray();
-            Zombies = Object.FindObjectsOfType<Zombie>();
-            Items = Object.FindObjectsOfType<InteractableItem>();
-            Vehicles = Object.FindObjectsOfType<InteractableVehicle>();
-            
-            Animals = Object.FindObjectsOfType<Animal>();
-            Storages = Object.FindObjectsOfType<InteractableStorage>();
-            Forages = Object.FindObjectsOfType<InteractableForage>();
-            Beds = Object.FindObjectsOfType<InteractableBed>();
-            Doors = Object.FindObjectsOfType<InteractableDoor>();
-            Traps = Object.FindObjectsOfType<InteractableTrap>();
-            Flags = Object.FindObjectsOfType<InteractableClaim>();
-            Sentries = Object.FindObjectsOfType<InteractableSentry>();
-            Airdrops = Object.FindObjectsOfType<Carepackage>();
-            Npcs = Object.FindObjectsOfType<InteractableObjectNPC>();
+            Zombielist = new List<Zombie>();
+            Playerlist = new List<SteamPlayer>();
+            Itemlist = new List<InteractableItem>();
         }
-
-        internal static void Update()
-        {
-            UpdateLists();  
-            UpdateColors();
-            
-            if ((DateTime.Now - Last).TotalMilliseconds >= Menu.UpdateRate)
-            {
-
-                CheckGlows();                     
-                Last = DateTime.Now;
-            }      
-        }
-
-        // ReSharper disable once InconsistentNaming
-        internal static void OnGUI()
-        {
-            CheckLabels();
-            CheckBoxes();
-        }
-
-        //----------------------Labels/boxes---------------------------------------------------------------------
         
-        internal static void CheckBoxes()
+        public void OnUpdate()
         {
-            if (Menu.PlayerBox)
-            {
-                foreach (var player in Players)
-                {
-                    if (!player.player.life.isDead && player.player != Player.player)
-                    {
-                        var mypos = Camera.main.transform.position;
-                        var targetpos = player.player.transform.position;
-                        var dist = Vector3.Distance(mypos, targetpos);
-
-                        if (dist <= Menu.Distance || Menu.InfDistance)
-                        {
-                            var pos = Camera.main.WorldToScreenPoint(targetpos);
-
-                            if (pos.z >= 0)
-                            {
-                                pos.y = Screen.height - pos.y;
-                                
-                                var color = WaveMaker.Friends.Contains(player.playerID.steamID.m_SteamID) ? Menu.BoxPlayerFriendly : Menu.BoxPlayerEnemy;
-                                
-                                DrawBox(player.player.transform, pos, color);
-                            }
-                        }
-                    }
-                }           
-            }
-
-            if (Menu.ZombieBox)
-            {
-                foreach (var zombie in Zombies)
-                {
-                    if (!zombie.isDead)
-                    {
-                        var mypos = Camera.main.transform.position;
-                        var targetpos = zombie.transform.position;
-                        var dist = Vector3.Distance(mypos, targetpos);
-
-                        if (dist <= Menu.Distance || Menu.InfDistance)
-                        {
-                            var pos = zombie.transform.position;
-                            pos = Camera.main.WorldToScreenPoint(pos);
-
-                            if (pos.z >= 0)
-                            {
-                                pos.y = Screen.height - pos.y;
-
-                                DrawBox(zombie.transform, pos, Menu.BoxZombie);
-                            }
-                        }         
-                    }   
-                }
-            }
-        }
-
-        internal static void CheckLabels()
-        {
-             
-            if (Menu.PlayerName || Menu.PlayerWeapon || Menu.PlayerDistance)
-            {
-                UpdatePlayerLabels();
-            }
+            Main = Camera.main;
                 
-            if (Menu.ZombieName || Menu.ZombieDistance || Menu.ZombieSpecialty)
+            if (Event.current.type == EventType.Repaint && (DateTime.Now - LastUpdate).TotalMilliseconds >= UpdateRate && Provider.isConnected) 
             {
-                UpdateZombieLabels();
+                CheckGlow();
             }
 
-            if (Menu.AnimalName || Menu.AnimalDistance)
-            {
-                UpdateAnimalLabels();
-            }
-
-            if (Menu.StorageType || Menu.StorageDistance)
-            {
-                UpdateStorageLabels();
-            }
-
-            if (Menu.VehicleName || Menu.VehicleDistance)
-            {
-                UpdateVehicleLabels();
-            }
-
-            if (Menu.ItemName || Menu.ItemDistance)
-            {
-                UpdateItemLabels();
-            }
-
-            if (Menu.NpcName || Menu.NpcDistance /*|| menu.NpcWeapon*/)
-            {
-                UpdateNpcLabels();
-            }
-
-            if (Menu.ForageType || Menu.ForageDistance)
-            {
-                UpdateForageLabels();
-            }
-
-            if (Menu.BedType || Menu.BedDistance)
-            {
-                UpdateBedLabels();
-            }
-
-            if (Menu.FlagType || Menu.FlagDistance)
-            {
-                UpdateFlagLabels();
-            }
-
-            if (Menu.SentryType || Menu.SentryWeapon || Menu.SentryState || Menu.SentryDistance)
-            {
-                UpdateSentryLabels();
-            }
-
-            if (Menu.Admins)
-            {
-                UpdateAdminLabels();
-            }
-            
-            //Add airdrops and traps once glow is fixed and labels are created
-        }
-
-        internal static void UpdatePlayerLabels()
-        {   
-            foreach (var player in Players)
-            {
-                                   
-                if (!player.player.life.isDead && player.player != Player.player)
-                {
-                    var myPos = Camera.main.transform.position;
-                    var targetpos = player.player.transform.position;
-                    var dist = Vector3.Distance(myPos, targetpos);
-
-                    if (dist <= Menu.Distance || Menu.InfDistance)
-                    {
-                        targetpos += new Vector3(0f,3f,0f);
-                        var scrnpt = Camera.main.WorldToScreenPoint(targetpos);
-
-                        if (scrnpt.z >= 0)
-                        {
-                            scrnpt.y = Screen.height - scrnpt.y;
-                            var text = "";
-
-                            if (Menu.PlayerName)
-                            {
-                                text += $"{player.playerID.nickName}";
-                            }
-
-                            if (Menu.PlayerWeapon)
-                            {
-                                if (text.Length > 0)
-                                    text += "\n";
-                                
-                                if (player.player.equipment.asset != null)
-                                {
-                                    if (player.player.equipment.asset.type == EItemType.GUN || player.player.equipment.asset.type == EItemType.MELEE)
-                                        text += $"Weapon: {player.player.equipment.asset.name}";
-                                    else
-                                        text += $"Weapon: None";
-                                }
-                                else
-                                    text += "Weapon: None";
-                                 
-                            }
-
-                            if (Menu.PlayerDistance)
-                            {
-                                if (text.Length > 0)
-                                    text += $"\nDistance: {Math.Round(dist, 0)}";
-                                else
-                                    text += $"Distance: {Math.Round(dist, 0)}";
-                            }
-                            
-                            
-                            float size;
-
-                            if (Menu.ScaleText)
-                                size = dist <= Menu.Dropoff ? Menu.CloseSize : Menu.FarSize;
-                            else
-                                size = 10f;
-
-                            var color = WaveMaker.Friends.Contains(player.playerID.steamID.m_SteamID)
-                                ? Menu.FriendlyPlayerGlow
-                                : Menu.EnemyPlayerGlow;
-                        
-                            GUI.Label(new Rect(scrnpt + new Vector3(0,6f,0), new Vector2(170,70)), $"<color={color}><size={size}>{text}</size></color>" );
-                        }
-      
-                    }
-                }
-            }
-        }
-
-        internal static void UpdateZombieLabels()
-        {
-            foreach (var zombie in Zombies)
-                {
-                    if (zombie.isDead == false)
-                    {
-                        var myPos = Camera.main.transform.position;
-                        var targetPos = zombie.transform.position;
-                        var dist = Vector3.Distance(myPos, targetPos);
-    
-                        if (dist <= Menu.Distance || Menu.InfDistance)
-                        {
-                            targetPos += new Vector3(0f,3f, 0f);
-                            var scrnPt = Camera.main.WorldToScreenPoint(targetPos);
-    
-                            if (scrnPt.z >= 0)
-                            {
-    
-                                scrnPt.y = Screen.height - scrnPt.y;
-    
-                                var text = "";
-    
-                                if (Menu.ZombieName)
-                                {
-                                    text += $"{zombie.gameObject.name}";
-                                }
-    
-                                if (Menu.ZombieDistance)
-                                {
-                                    if (text.Length > 0)
-                                    {
-                                        text += $"\nDistance: {Math.Round(dist, 0)}";
-                                    }
-                                    else
-                                    {
-                                        text += $"Distance: {Math.Round(dist, 0)}";
-                                    }
-                                }
-    
-                                if (Menu.ZombieSpecialty)
-                                {
-                                    var str = "";
-    
-                                    if (text.Length > 0)
-                                        str += "\n";
-    
-                                    switch (zombie.speciality)
-                                    {
-                                            case EZombieSpeciality.NONE:
-                                                str += "Specialty: None";
-                                                break;
-                                            case EZombieSpeciality.NORMAL:
-                                                str += "Specialty: None";
-                                                break;
-                                            case EZombieSpeciality.MEGA:
-                                                str += "Specialty: Mega";
-                                                break;
-                                            case EZombieSpeciality.CRAWLER:
-                                                str += "Specialty: Crawler";
-                                                break;
-                                            case EZombieSpeciality.SPRINTER:
-                                                str += "Specialty: Sprinter";
-                                                break;
-                                            case EZombieSpeciality.FLANKER_FRIENDLY:
-                                                str += "Specialty: Friendly Flanker";
-                                                break;
-                                            case EZombieSpeciality.FLANKER_STALK:
-                                                str += "Specialty: Stalking Flanker";
-                                                break;
-                                            case EZombieSpeciality.BURNER:
-                                                str += "Specialty: Burner";
-                                                break;
-                                            case EZombieSpeciality.ACID:
-                                                str += "Specialty: Acid";
-                                                break;
-                                            case EZombieSpeciality.BOSS_ELECTRIC:
-                                                str += "Specialty: Electric (Boss)";
-                                                break;
-                                            case EZombieSpeciality.BOSS_WIND:
-                                                str += "Specialty: Wind (Boss)";
-                                                break;
-                                            case EZombieSpeciality.BOSS_FIRE:
-                                                str += "Specialty: Fire (Boss)";
-                                                break;
-                                            case EZombieSpeciality.BOSS_ALL:
-                                                str += "Specialty: All (Boss)";
-                                                break;
-                                            case EZombieSpeciality.BOSS_MAGMA:
-                                                str += "Specialty: Magma (Boss)";
-                                                break;
-                                    } 
-                                    text += str;
-                                }
-
-                                float size;
-                                
-                                if (Menu.ScaleText)
-                                {
-                                    size = dist <= Menu.Dropoff ? Menu.CloseSize : Menu.FarSize;
-                                }
-                                else
-                                {                                    
-                                    size = 10;
-                                }
-                                
-                                 
-                                
-                                GUI.Label(new Rect(scrnPt + new Vector3(0,4f,0), new Vector2(170,50)), $"<color={ColorUtility.ToHtmlStringRGBA(Menu.BoxZombie)}><size={size}>{text}</size></color>" );        
-                            }
-                        }
-                    }
-                      
-                }
-        }
-
-        internal static void UpdateAnimalLabels()
-        {
-            foreach (var animal in Animals)
-            {
-                if (!animal.isDead)
-                {
-                    var mypos = Camera.main.transform.position;
-                    var targetpos = animal.transform.position;
-                    var dist = Vector3.Distance(mypos, targetpos);
-
-                    if (dist <= Menu.Distance || Menu.InfDistance)
-                    {
-                        targetpos += new Vector3(0f,3f,0f);
-                        var scrnpt = Camera.main.WorldToScreenPoint(targetpos);
-
-                        if (scrnpt.z >= 0f)
-                        {
-                            scrnpt.y = Screen.height - scrnpt.y;
-
-                            var text = "";
-
-                            if (Menu.AnimalName)
-                            {
-                                text += $"{animal.asset.animalName}";
-                            }
-
-                            if (Menu.AnimalDistance)
-                            {
-                                if (text.Length > 0)
-                                    text += $"\nDistance: {Math.Round(dist, 0)}";
-                                else
-                                    text += $"Distance: {Math.Round(dist, 0)}"; 
-                            }
-
-                            var size = Menu.ScaleText ? dist <= Menu.Dropoff ? Menu.CloseSize : Menu.FarSize : 10f;
-                            
-                            GUI.Label(new Rect(scrnpt + new Vector3(0,4f,0), new Vector2(170,50)), $"<color={Menu.InteractableGlow}><size={size}>{text}</size></color>" );
-                        }
-                    }
-                }
-            }
-        }
-
-        internal static void UpdateStorageLabels()
-        {
-            foreach (var storage in Storages)
-            {
-                var mypos = Camera.main.transform.position;
-                var targetpos = storage.transform.position;
-                var dist = Vector3.Distance(mypos, targetpos);
-
-                if (dist <= Menu.Distance || Menu.InfDistance)
-                {
-                    targetpos += new Vector3(0f,1.5f,0f);
-                    var scrnpt = Camera.main.WorldToScreenPoint(targetpos);
-
-                    if (scrnpt.z >= 0)
-                    {
-                        scrnpt.y = Screen.height - scrnpt.y;
-                        var text = "";
-
-                        if (Menu.StorageType)
-                        {
-                            text += $"Storage: {StorageIds[int.Parse(storage.name)]}";
-                        }
-
-                        if (Menu.StorageDistance)
-                        {
-                            text += text.Length > 0
-                                ? $"\nDistance: {Math.Round(dist, 0)}"
-                                : $"Distance: {Math.Round(dist, 0)}";
-                        }
-
-                        
-                        var size = Menu.ScaleText ? dist <= Menu.Dropoff ? Menu.CloseSize : Menu.FarSize : 10f;
-                            
-                        GUI.Label(new Rect(scrnpt + new Vector3(0,4f,0), new Vector2(170,50)), $"<color={Menu.InteractableGlow}><size={size}>{text}</size></color>" );
-                        
-                    }
-
-                }
-                
-            }
-        }
-
-        internal static void UpdateVehicleLabels()
-        {
-            foreach (var vehicle in Vehicles)
-            {
-                var mypos = Camera.main.transform.position;
-                var targetpos = vehicle.transform.position;
-                var dist = Vector3.Distance(mypos, targetpos);
-
-                if (dist <= Menu.Distance || Menu.InfDistance)
-                {
-                    targetpos += new Vector3(0f,1.5f,0f);
-                    var scrnpt = Camera.main.WorldToScreenPoint(targetpos);
-
-                    if (scrnpt.z >= 0)
-                    {
-                        scrnpt.y = Screen.height - scrnpt.y;
-                        var text = "";
-
-                        if (Menu.VehicleName)
-                        {
-                            var name = vehicle.asset.name.Replace("_", " ");
-
-                            if (name.Contains("Tractor"))
-                                name = "Tractor";
-
-                            if (name.Contains("Police"))
-                                name = "Police Car";
-                            
-                            text += $"Vehicle: {name}";
-                        }
-
-                        if (Menu.VehicleDistance)
-                        {
-                            if (text.Length > 0)
-                                text += "\n";
-                            
-                            text += $"Distance: {Math.Round(dist,0)}";
-                        }
-
-                        var size = Menu.ScaleText ? dist <= Menu.Dropoff ? Menu.CloseSize : Menu.FarSize : 10f;
-                        
-                        GUI.Label(new Rect(scrnpt + new Vector3(0,4f,0), new Vector2(170,50)), $"<color={Menu.InteractableGlow}><size={size}>{text}</size></color>" );
-                    }
-                }
-            }
-        }
-
-        internal static void UpdateItemLabels()
-        {
-            foreach (var item in Items)
-            {
-                var mypos = Camera.main.transform.position;
-                var targetpos = item.transform.position;
-                var dist = Vector3.Distance(mypos, targetpos);
-
-                if (dist <= Menu.Distance || Menu.InfDistance)
-                {
-                    targetpos += new Vector3(0f,1.5f, 0f);
-                    var scrnpt = Camera.main.WorldToScreenPoint(targetpos);
-
-                    if (scrnpt.z >= 0f)
-                    {
-                        scrnpt.y = Screen.height - scrnpt.y;
-                        var text = "";
-
-                        if (Menu.ItemName)
-                        {
-                            text += $"Item: {item.asset.itemName}";
-                        }
-
-                        if (Menu.ItemDistance)
-                        {
-                            if (text.Length > 0)
-                                text += "\n";
-
-                            text += $"Distance: {Math.Round(dist, 0)}";
-                            
-                        }
-                        
-                        var size = Menu.ScaleText ? dist <= Menu.Dropoff ? Menu.CloseSize : Menu.FarSize : 10f;
-                        
-                        GUI.Label(new Rect(scrnpt + new Vector3(0,4f,0), new Vector2(170,50)), $"<color={Menu.InteractableGlow}><size={size}>{text}</size></color>" );
-                    }
-                }
-            }
-        }
-
-        internal static void UpdateAirdropLabels() //FIX ONCE GLOW IS FIXED
-        {
-            
-        }
-
-        internal static void UpdateTrapLabels() //FIX ONCE GLOW IS FIXED
-        {
-            
-        }
-
-        internal static void UpdateNpcLabels()
-        {
-            foreach (var npc in Npcs)
-            {
-                var mypos = Camera.main.transform.position;
-                var targetpos = npc.transform.position;
-                var dist = Vector3.Distance(mypos, targetpos);
-
-                if (dist <= Menu.Distance || Menu.InfDistance)
-                {
-                    targetpos += new Vector3(0f,1.5f,0f);
-                    var scrnpt = Camera.main.WorldToScreenPoint(targetpos);
-
-                    if (scrnpt.z >= 0f)
-                    {
-                        scrnpt.y = Screen.height - scrnpt.y;
-                        var text = "";
-
-                        if (Menu.NpcName)
-                        {
-                            text += $"NPC: {npc.npcAsset.name}";
-                        }
-
-//                        if (menu.NpcWeapon)     FIND WAY TO DETERMINE PRIMARY WEAPON
-//                        {
-//                            if (text.Length > 0)
-//                                text += "\n";
-//                            
-//                            text += $"Weapon: {npc.}"
-//                        }
-
-                        if (Menu.NpcDistance)
-                        {
-                            if (text.Length > 0)
-                                text += "\n";
-
-                            text += $"Distance: {Math.Round(dist, 0)}";
-                        }
-
-                        var size = Menu.ScaleText ? dist <= Menu.Dropoff ? Menu.CloseSize : Menu.FarSize : 10f;
-                        
-                        GUI.Label(new Rect(scrnpt + new Vector3(0,4f,0), new Vector2(170,50)), $"<color={Menu.InteractableGlow}><size={size}>{text}</size></color>" );
-
-                    }
-                }
-            }
-        }
-
-        internal static void UpdateForageLabels()
-        {
-            foreach (var forage in Forages)
-            {
-                var mypos = Camera.main.transform.position;
-                var targetpos = forage.transform.position;
-                var dist = Vector3.Distance(mypos, targetpos);
-
-                if (dist <= Menu.Distance || Menu.InfDistance)
-                {
-                    targetpos += new Vector3(0f, 1.5f, 0f);
-                    var scrnpt = Camera.main.WorldToScreenPoint(targetpos);
-
-                    if (scrnpt.z >= 0f)
-                    {
-                        scrnpt.y = Screen.height - scrnpt.y;
-                        var text = "";
-
-                        if (Menu.ForageType)
-                        {
-                            text += "Forage";
-                        }
-
-                        if (Menu.ForageDistance)
-                        {
-                            if (text.Length > 0)
-                                text += "\n";
-
-                            text += $"Distance: {Math.Round(dist, 0)}";
-                        }
-                        
-                        var size = Menu.ScaleText ? dist <= Menu.Dropoff ? Menu.CloseSize : Menu.FarSize : 10f;
-                        
-                        if(text.Length > 0)
-                            GUI.Label(new Rect(scrnpt + new Vector3(0,4f,0), new Vector2(170,50)), $"<color={ColorUtility.ToHtmlStringRGBA(Menu.InteractableGlow)}><size={size}>{text}</size></color>" );
-                    }
-                }
-
-            }
-        }
-
-        //Possibly add owner of bed?
-        internal static void UpdateBedLabels()
-        {
-            foreach (var bed in Beds)
-            {
-                var mypos = Camera.main.transform.position;
-                var targetpos = bed.transform.position;
-                var dist = Vector3.Distance(mypos, targetpos);
-
-                if (dist <= Menu.Distance || Menu.InfDistance)
-                {
-                    targetpos += new Vector3(0f, 1.5f, 0f);
-                    var scrnpt = Camera.main.WorldToScreenPoint(targetpos);
-
-                    if (scrnpt.z >= 0f)
-                    {
-                        scrnpt.y = Screen.height - scrnpt.y;
-                        var text = "";
-
-                        if (Menu.BedType)
-                        {
-                            text += "Bed";
-                        }
-
-                        if (Menu.BedDistance)
-                        {
-                            if (text.Length > 0)
-                                text += "\n";
-
-                            text += $"Distance: {Math.Round(dist, 0)}";
-                        }
-                        
-                        var size = Menu.ScaleText ? dist <= Menu.Dropoff ? Menu.CloseSize : Menu.FarSize : 10f;
-                        
-                        if(text.Length > 0)
-                            GUI.Label(new Rect(scrnpt + new Vector3(0,4f,0), new Vector2(170,50)), $"<color={ColorUtility.ToHtmlStringRGBA(Menu.InteractableGlow)}><size={size}>{text}</size></color>" );
-                    }
-                }
-
-            }
-        }
-
-        internal static void UpdateDoorLabels()
-        {
-            foreach (var door in Doors)
-            {
-                var mypos = Camera.main.transform.position;
-                var targetpos = door.transform.position;
-                var dist = Vector3.Distance(mypos, targetpos);
-
-                if (dist <= Menu.Distance || Menu.InfDistance)
-                {
-                    targetpos += new Vector3(0f, 1.5f, 0f);
-                    var scrnpt = Camera.main.WorldToScreenPoint(targetpos);
-
-                    if (scrnpt.z >= 0f)
-                    {
-                        scrnpt.y = Screen.height - scrnpt.y;
-                        var text = "";
-
-                        if (Menu.DoorType)
-                        {
-                            text += $"Door: {DoorIds[int.Parse(door.name)]}";
-                        }
-
-                        if (Menu.BedDistance)
-                        {
-                            if (text.Length > 0)
-                                text += "\n";
-
-                            text += $"Distance: {Math.Round(dist, 0)}";
-                        }
-
-                        var size = Menu.ScaleText ? dist <= Menu.Dropoff ? Menu.CloseSize : Menu.FarSize : 10f;
-
-                        if(text.Length > 0)
-                            GUI.Label(new Rect(scrnpt + new Vector3(0, 4f, 0), new Vector2(170, 50)),
-                            $"<color={ColorUtility.ToHtmlStringRGBA(Menu.InteractableGlow)}><size={size}>{text}</size></color>");
-                    }
-                }
-            }
-        }
-
-        internal static void UpdateFlagLabels()
-        {
-            foreach (var flag in Flags)
-            {
-                var mypos = Camera.main.transform.position;
-                var targetpos = flag.transform.position;
-                var dist = Vector3.Distance(mypos, targetpos);
-
-                if (dist <= Menu.Distance || Menu.InfDistance)
-                {
-                    targetpos += new Vector3(0f, 1.5f, 0f);
-                    var scrnpt = Camera.main.WorldToScreenPoint(targetpos);
-
-                    if (scrnpt.z >= 0f)
-                    {
-                        scrnpt.y = Screen.height - scrnpt.y;
-                        var text = "";
-
-                        if (Menu.FlagType)
-                        {
-                            text += "Claim Flag";
-                        }
-
-                        if (Menu.FlagDistance)
-                        {
-                            if (text.Length > 0)
-                                text += "\n";
-
-                            text += $"Distance: {Math.Round(dist, 0)}";
-                        }
-
-                        var size = Menu.ScaleText ? dist <= Menu.Dropoff ? Menu.CloseSize : Menu.FarSize : 10f;
-
-                        if(text.Length > 0)
-                            GUI.Label(new Rect(scrnpt + new Vector3(0, 4f, 0), new Vector2(170, 50)),
-                            $"<color={ColorUtility.ToHtmlStringRGBA(Menu.InteractableGlow)}><size={size}>{text}</size></color>");
-                    }
-                }
-            }
-        }
-
-        internal static void UpdateSentryLabels()
-        {
-            foreach (var sentry in Sentries)
-            {
-                var mypos = Camera.main.transform.position;
-                var targetpos = sentry.transform.position;
-                var dist = Vector3.Distance(mypos, targetpos);
-
-                if (dist <= Menu.Distance || Menu.InfDistance)
-                {
-                    targetpos += new Vector3(0f, 1.5f, 0f);
-                    var scrnpt = Camera.main.WorldToScreenPoint(targetpos);
-
-                    if (scrnpt.z >= 0f)
-                    {
-                        scrnpt.y = Screen.height - scrnpt.y;
-                        var text = "";
-
-                        if (Menu.SentryType)
-                        {
-                            text += "Sentry";
-                        }
-
-//                        if (menu.SentryWeapon)        FIX NULLCHECK
-//                        {
-//                            if (text.Length > 0)
-//                                text += "\n";
-//
-//                            if(sentry.displayItem.id != null) 
-//                               text += $"Weapon: {sentry.displayItem.id}";
-//                        }
-
-                        if (Menu.SentryState)
-                        {
-                            if (text.Length > 0)
-                                text += "\n";
-
-                            var state = sentry.enabled ? "On" : "Off";
-                            text += $"State: {state}";
-                        }
-                        
-                        if (Menu.SentryDistance)
-                        {
-                            if (text.Length > 0)
-                                text += "\n";
-
-                            text += $"Distance: {Math.Round(dist, 0)}";
-                        }
-
-                        var size = Menu.ScaleText ? dist <= Menu.Dropoff ? Menu.CloseSize : Menu.FarSize : 10f;
-
-                        if(text.Length > 0)
-                            GUI.Label(new Rect(scrnpt + new Vector3(0, 4f, 0), new Vector2(170, 70)),
-                            $"<color={ColorUtility.ToHtmlStringRGBA(Menu.InteractableGlow)}><size={size}>{text}</size></color>");
-                    }
-                }
-            }
-        }
-
-        internal static void UpdateAdminLabels()
-        {
-            foreach (var player in Players)
-            {
-                if (player.isAdmin && player.player != Player.player)
-                {
-                    var mypos = Camera.main.transform.position;
-                    var targetpos = player.player.transform.position;
-                    var dist = Vector3.Distance(mypos, targetpos);
-
-                    if (dist <= Menu.Distance || Menu.InfDistance)
-                    {
-                        targetpos += new Vector3(0f, 3f, 0f);
-                        var scrnpt = Camera.main.WorldToScreenPoint(targetpos);
-
-                        if (scrnpt.z >= 0f)
-                        {
-                            scrnpt.y = Screen.height - scrnpt.y;
-                            var text = "";
-
-                            if (Menu.Admins)
-                            {
-                                text += "ADMIN";
-                            }
-
-                            var size = Menu.ScaleText ? dist <= Menu.Dropoff ? Menu.CloseSize : Menu.FarSize : 10f;
-
-                            if(text.Length > 0)
-                                GUI.Label(new Rect(scrnpt - new Vector3(0, 5.3f, 0), new Vector2(170, 50)),
-                                $"<color=#FF0000><size={size}>{text}</size></color>");
-                        }
-                    }
-                }  
-            }
         }
         
-        //---------------Glows------------------------------------------------------------------------------------
-        
-        internal static void CheckGlows()
+        public void OnGUIUpdate()
         {
-            UpdateLists();
             
-            UpdatePlayerGlow();
-            UpdateZombieGlow();
-            UpdateItemGlow();
-            UpdateInteractableGlow();
-            UpdateVehicleGlow();
-                
         }
 
-        internal static void UpdatePlayerGlow()
+        public void  CheckGlow()
         {
-            if (Players != null)
+            if (ZombieGlow && EnableEsp)
             {
-                
-                foreach (var player in Players)
+                Logging.Log("Inside zom");
+                if (CR_ZombieGlow == null)
                 {
+                    Logging.Log("A");
+                    var dist = ZombieOverrideDistance ? ZombieInfDistance ? 10000 : ZombieEspDistance : EspDistance; 
+               
+                    CR_ZombieGlow = UpdateZGlowEsp(dist, InterpColor(ZombieColor));
+                    StartCoroutine(CR_ZombieGlow);
+                }   
+            }
+            else
+            {
+                if (CR_ZombieGlow != null)
+                {
+                    StopCoroutine(CR_ZombieGlow);
+                    CR_ZombieGlow = null;
 
-                    if (Menu.EnableEsp && Menu.GlowPlayers)
-                    {
-                        var myPos = Camera.main.transform.position;
-                        var targetPos = player.player.transform.position;
-                        
-                        var dist = Vector3.Distance(myPos, targetPos);
+                    StartCoroutine(ScrubGlowEsp(Zombielist));
+                }
+            }
 
-                        if (dist <= Menu.Distance || Menu.InfDistance)
-                        {
-                            var highlighter = player.player.gameObject.GetComponent<Highlighter>() ?? player.player.gameObject.AddComponent<Highlighter>();
 
-                            var color = WaveMaker.Friends.Contains(player.playerID.steamID.m_SteamID)
-                                ? Menu.FriendlyPlayerGlow
-                                : Menu.EnemyPlayerGlow;
-                        
-                            highlighter.ConstantParams(color);
-                            highlighter.OccluderOn();
-                            highlighter.SeeThroughOn();
-                            highlighter.ConstantOn();
-                        }
-                        else
-                        {
-                            var highlighter = player.player.gameObject.GetComponent<Highlighter>();
+            if (PlayerGlow && EnableEsp)
+            {
+                if (CR_PlayerGlow == null)
+                {
+                    var dist = PlayerOverrideDistance ? PlayerInfDistance ? 10000 : PlayerEspDistance : EspDistance;
 
-                            if (highlighter != null)
-                                highlighter.ConstantOffImmediate();
-                        }
-                    }
-                    else
-                    {
-                        var highlighter = player.player.gameObject.GetComponent<Highlighter>();
+                    CR_PlayerGlow = UpdatePGlowEsp(dist);
+                    StartCoroutine(CR_PlayerGlow);
+                }
+            }
+            else
+            {
+                if (CR_PlayerGlow != null)
+                {
+                    StopCoroutine(CR_PlayerGlow);
+                    CR_PlayerGlow = null;
 
-                        if (highlighter != null)
-                        {
-                            highlighter.ConstantOffImmediate();
-                        }
-                    }
-                
+                    StartCoroutine(ScrubGlowEsp(Playerlist));
+                }
+            }
+
+            
+            if (ItemGlow && EnableEsp)
+            {
+                if (CR_ItemGlow == null)
+                {
+                    var dist = ItemOverrideDistance ? PlayerInfDistance ? 10000 : ItemEspDistance : EspDistance;
+
+                    CR_ItemGlow = UpdateIGlowEsp(dist, InterpColor(ItemColor));
+                    StartCoroutine(CR_ItemGlow);
+                }
+            }
+            else
+            {
+                if (CR_ItemGlow != null)
+                {
+                    StopCoroutine(CR_ItemGlow);
+                    CR_ItemGlow = null;
+
+                    StartCoroutine(ScrubGlowEsp(Itemlist));
                 }
             }
             
-        }
-        
-        internal static void UpdateZombieGlow()
-        {
-            if(Zombies != null)
-                 foreach (var zombie in Zombies)
-                 {
-                     if (Camera.main != null && zombie != null)
-                     {
-                         var myPos = Camera.main.transform.position;
-                         var zomPos = zombie.gameObject.transform.position;
-
-                         if (Menu.EnableEsp && Menu.GlowZombies)
-                         {
-                             var dist = Vector3.Distance(myPos, zomPos);
-
-                             if (dist <= Menu.Distance || Menu.InfDistance)
-                             {
-                                 var highlighter = zombie.gameObject.GetComponent<Highlighter>() ?? zombie.gameObject.AddComponent<Highlighter>();
-
-                                 highlighter.ConstantParams(Menu.ZombieGlow);
-                                 highlighter.OccluderOn();
-                                 highlighter.SeeThroughOn();
-                                 highlighter.ConstantOn();
-                             }
-                             else
-                             {
-                                 var highlighter = zombie.gameObject.GetComponent<Highlighter>();
-
-                                 if (highlighter != null)
-                                     highlighter.ConstantOffImmediate();
-                             }
-                         }
-                         else
-                         {
-                             var highlighter = zombie.gameObject.GetComponent<Highlighter>();
-
-                             if (highlighter != null)
-                             {
-                                 highlighter.ConstantOffImmediate();
-                             }
-                         }
-                     } 
-                  }
-        }
-        
-        internal static void UpdateVehicleGlow()
-        {
-            if (Vehicles != null)
-            {
-
-                foreach (var vehicle in Vehicles)
-                {
-                    
-
-                    if (Camera.main != null && vehicle != null)
-                    {
-                        
-
-                        var myPos = Camera.main.transform.position;
-                        
-
-                        var zomPos = vehicle.gameObject.transform.position;
-
-                        
-
-                        if (Menu.EnableEsp && Menu.GlowVehicles)
-                        {
-                            var dist = Vector3.Distance(myPos, zomPos);
-
-                            if (dist <= Menu.Distance || Menu.InfDistance)
-                            {
-                                var highlighter = vehicle.gameObject.GetComponent<Highlighter>() ?? vehicle.gameObject.AddComponent<Highlighter>();
-
-                                highlighter.ConstantParams(Menu.VehicleGlow);
-                                highlighter.OccluderOn();
-                                highlighter.SeeThroughOn();
-                                highlighter.ConstantOn();
-                            }
-                            else
-                            {
-                                var highlighter = vehicle.gameObject.GetComponent<Highlighter>();
-
-                                if (highlighter != null)
-                                    highlighter.ConstantOffImmediate();
-                            }
-                        }
-                        else
-                        {
-                            var highlighter = vehicle.gameObject.GetComponent<Highlighter>();
-
-                            if (highlighter != null)
-                            {
-                                highlighter.ConstantOffImmediate();
-                            }
-                        }
-                    }
-                    
-                }
-            }
-            
-        }
-        
-        internal static void UpdateItemGlow()
-        {
-            if (Items != null)
-            {
-                foreach (var item in Items)
-                {
-                    
-                    if (Camera.main != null && item != null)
-                    {
-                        if (Menu.EnableEsp && Menu.GlowItems)
-                        {
-                        
-                        
-                            var myPos = Camera.main.transform.position;
-                            var targetpos = item.gameObject.transform.position;
-                        
-                            var dist = Vector3.Distance(myPos, targetpos);
-
-                            if (dist <= Menu.Distance || Menu.InfDistance)
-                            {
-                                var highlighter = item.gameObject.GetComponent<Highlighter>() ?? item.gameObject.AddComponent<Highlighter>();
-
-                                highlighter.ConstantParams(Menu.ItemGlow);
-                                highlighter.OccluderOn();
-                                highlighter.SeeThroughOn();
-                                highlighter.ConstantOn();
-                            }
-                            else
-                            {
-                                var highlighter = item.gameObject.GetComponent<Highlighter>();
-
-                                if (highlighter != null)
-                                    highlighter.ConstantOffImmediate();
-                            }
-                        }
-                        else
-                        {
-                            var highlighter = item.gameObject.GetComponent<Highlighter>();
-
-                            if (highlighter != null)
-                            {
-                                highlighter.ConstantOffImmediate();
-                            }
-                        }  
-                    }
-                }
-            }   
+            Logging.Log("6");
         }
         
         
-        internal static void UpdateInteractableGlow()
+        
+        public IEnumerator UpdateZGlowEsp(int distance, Color glowcolor)
         {
-            
-//            UpdateAnimalGlow();
-//            UpdateStorageGlow();
-//            UpdateForageGlow();
-//            UpdateBedGlow();
-//            UpdateDoorsGlow();
-////            UpdateTrapsGlow();
-//            UpdateFlagsGlow();
-////            UpdateAirdropGlow();
-//            UpdateSentryGlow();
-        }
-
-        internal static void UpdateAnimalGlow()
-        {
-            if (Animals.Length > 0)
-            {
-                foreach (var animal in Animals)
+            Zombielist.Clear();
+            foreach (var region in ZombieManager.regions)
+            {                
+                foreach (var zombie in region.zombies)
                 {
-                
-                    if (Menu.EnableEsp && Menu.GlowInteractables && Menu.Animals)
-                    {
-                        var myPos = Camera.main.transform.position;
-                        var targetPos = animal.transform.position;
-                        var dist = Vector3.Distance(myPos, targetPos);
-
-                        if (dist <= Menu.Distance || Menu.InfDistance)
-                        {
-                            var highlighter = animal.gameObject.GetComponent<Highlighter>() ?? animal.gameObject.AddComponent<Highlighter>();
-
-                            highlighter.ConstantParams(Menu.InteractableGlow);
-                            highlighter.OccluderOn();
-                            highlighter.SeeThroughOn();
-                            highlighter.ConstantOn();
-                        }
-                        else
-                        {
-                            var highlighter = animal.gameObject.GetComponent<Highlighter>();
-                    
-                            if(highlighter != null)
-                                highlighter.ConstantOffImmediate();
-                        }
-                    }
-                    else
-                    {
-                        var highlighter = animal.gameObject.GetComponent<Highlighter>();
-                    
-                        if(highlighter != null)
-                            highlighter.ConstantOffImmediate();
-                    }
+                    Zombielist.Add(zombie);
                 }
-            }
+            }    
             
-        }
-
-        internal static void UpdateStorageGlow()
-        {
-            if (Storages.Length > 0)
-            {
-                foreach (var storage in Storages)
-                {
-                    var myPos = Camera.main.transform.position;
-                    var targetPos = storage.transform.position;
-                    var dist = Vector3.Distance(myPos, targetPos);
-
-                    if (Menu.EnableEsp && Menu.GlowInteractables && Menu.Storages)
-                    {
-                        if (dist <= Menu.Distance || Menu.InfDistance)
-                        {
-                            var highlighter = storage.gameObject.GetComponent<Highlighter>() ?? storage.gameObject.AddComponent<Highlighter>();
-
-                            highlighter.ConstantParams(Menu.InteractableGlow);
-                            highlighter.OccluderOn();
-                            highlighter.SeeThroughOn();
-                            highlighter.ConstantOn();
-                        }
-                        else
-                        {
-                            var highlighter = storage.gameObject.GetComponent<Highlighter>();
-
-                            if (highlighter != null)
-                                highlighter.ConstantOffImmediate();
-                        }
-                    }
-                    else
-                    {
-                        var highlighter = storage.gameObject.GetComponent<Highlighter>();
-                    
-                        if(highlighter != null)
-                            highlighter.ConstantOffImmediate();
-                    }
-
-                }
-            }
             
-        }
-
-        internal static void UpdateForageGlow()
-        {
-            if (Forages.Length > 0)
+            foreach (var obj in Zombielist.ToList())
             {
-                foreach (var forage in Forages)
+                if (Vector3.Distance(Main.transform.position, obj.transform.position) <= distance)
                 {
-                    var myPos = Camera.main.transform.position;
-                    var targetpos = forage.transform.position;
-                    var dist = Vector3.Distance(myPos, targetpos);
-
-                    if (Menu.EnableEsp && Menu.GlowInteractables && Menu.Forages)
-                    {
-                        if (dist <= Menu.Distance || Menu.InfDistance)
-                        {
-                            var highlighter = forage.gameObject.GetComponent<Highlighter>() ?? forage.gameObject.AddComponent<Highlighter>();
-
-                            highlighter.ConstantParams(Menu.InteractableGlow);
-                            highlighter.OccluderOn();
-                            highlighter.SeeThroughOn();
-                            highlighter.ConstantOn();
-                        }
-                        else
-                        {
-                            var highlighter = forage.gameObject.GetComponent<Highlighter>();
-                        
-                            if(highlighter != null)
-                                highlighter.ConstantOffImmediate();
-                        }
-                    }
-                    else
-                    {
-                        var highlighter = forage.gameObject.GetComponent<Highlighter>();
+                    var highlighter = obj.gameObject.GetComponent<Highlighter>() ?? obj.gameObject.AddComponent<Highlighter>();
                     
-                        if(highlighter != null)
-                            highlighter.ConstantOffImmediate();
-                    }
+                    highlighter.ConstantParams(glowcolor);
+                    highlighter.OccluderOn();
+                    highlighter.SeeThroughOn();
+                    highlighter.ConstantOnImmediate();
                 }
+                else
+                    obj.gameObject.GetComponent<Highlighter>()?.ConstantOffImmediate();
+
+                yield return null;
             }
-            
-        }
-
-        internal static void UpdateBedGlow()
-        {
-            if (Beds.Length > 0)
-            {
-                foreach (var bed in Beds)
-                {
-                    var myPos = Camera.main.transform.position;
-                
-                    var targetPos = bed.transform.position;
-                    var dist = Vector3.Distance(myPos, targetPos);
-
-                    if (Menu.EnableEsp && Menu.GlowInteractables && Menu.Bed)
-                    {
-                        if (dist <= Menu.Distance || Menu.InfDistance)
-                        {
-                            var highlighter = bed.gameObject.GetComponent<Highlighter>() ?? bed.gameObject.AddComponent<Highlighter>();
-
-                            highlighter.ConstantParams(Menu.InteractableGlow);
-                            highlighter.OccluderOn();
-                            highlighter.SeeThroughOn();
-                            highlighter.ConstantOn();
-                        }
-                        else
-                        {
-                            var highlighter = bed.gameObject.GetComponent<Highlighter>();
-                        
-                            if(highlighter != null)
-                                highlighter.ConstantOffImmediate();
-                        }
-                    }
-                    else
-                    {
-                        var highlighter = bed.gameObject.GetComponent<Highlighter>();
-                    
-                        if(highlighter != null)
-                            highlighter.ConstantOffImmediate();
-                    }
-
-                }
-            }
-            
-        }
-
-        internal static void UpdateDoorsGlow()
-        {
-            if (Doors.Length > 0)
-            {
-                foreach (var door in Doors)
-                {
-                    var mypos = Camera.main.transform.position;
-                    var targetpos = door.transform.position;
-                    var dist = Vector3.Distance(mypos, targetpos);
-
-                    if (Menu.EnableEsp && Menu.GlowInteractables && Menu.Doors)
-                    {
-                        if (dist <= Menu.Distance || Menu.InfDistance)
-                        {
-                            var highlighter = door.gameObject.GetComponent<Highlighter>() ?? door.gameObject.AddComponent<Highlighter>();
-
-                            highlighter.ConstantParams(Menu.InteractableGlow);
-                            highlighter.OccluderOn();
-                            highlighter.SeeThroughOn();
-                            highlighter.ConstantOn();
-                        }
-                        else
-                        {
-                            var highlighter = door.gameObject.GetComponent<Highlighter>();
-                        
-                            if(highlighter != null)
-                                highlighter.ConstantOffImmediate();
-                            
-                        }
-                    }
-                    else
-                    {
-                        var highlighter = door.gameObject.GetComponent<Highlighter>();
-                    
-                        if(highlighter != null)
-                            highlighter.ConstantOffImmediate();
-                    }
-                }
-            }
-           
-        }
-
-        //Fix traps
-        internal static void UpdateTrapsGlow()
-        {
-            if (Traps.Length > 0)
-            {
-                foreach (var trap in Traps)
-                {
-                    var mypos = Camera.main.transform.position;
-                    var targetpos = trap.transform.position;
-                    var dist = Vector3.Distance(mypos, targetpos);
-
-                    if (Menu.EnableEsp && Menu.GlowInteractables && Menu.Traps)
-                    {
-                        if (dist <= Menu.Distance || Menu.InfDistance)
-                        {
-                            var highligter = trap.gameObject.GetComponent<Highlighter>() ?? trap.gameObject.AddComponent<Highlighter>();
-
-                            highligter.ConstantParams(Menu.InteractableGlow);
-                            highligter.OccluderOn();
-                            highligter.SeeThroughOn();
-                            highligter.ConstantOn();
-                        }
-                        else
-                        {
-                            var highlighter = trap.gameObject.GetComponent<Highlighter>();
-                        
-                            if(highlighter != null)
-                                highlighter.ConstantOffImmediate();
-                        }
-                    }
-                    else
-                    {
-                        var highlighter = trap.gameObject.GetComponent<Highlighter>();
-                    
-                        if(highlighter != null)
-                            highlighter.ConstantOffImmediate();
-                    }
-                }
-            }
-            
-        }
-
-        internal static void UpdateFlagsGlow()
-        {
-            if (Flags.Length > 0)
-            {
-                foreach (var flag in Flags)
-                {
-                    var mypos = Camera.main.transform.position;
-                    var targetpos = flag.transform.position;
-                    var dist = Vector3.Distance(mypos, targetpos);
-
-                    if (Menu.EnableEsp && Menu.GlowInteractables && Menu.Flag)
-                    {
-                        if (dist <= Menu.Distance || Menu.InfDistance)
-                        {
-                            var highlighter = flag.gameObject.GetComponent<Highlighter>() ?? flag.gameObject.AddComponent<Highlighter>();
-
-                            highlighter.ConstantParams(Menu.InteractableGlow);
-                            highlighter.OccluderOn();
-                            highlighter.SeeThroughOn();
-                            highlighter.ConstantOn();
-                        }
-                        else
-                        {
-                            var highlighter = flag.gameObject.GetComponent<Highlighter>();
-                        
-                            if(highlighter != null)
-                                highlighter.ConstantOffImmediate();
-                        }
-                    }
-                    else
-                    {
-                        var highlighter = flag.gameObject.GetComponent<Highlighter>();
-                    
-                        if(highlighter != null)
-                            highlighter.ConstantOffImmediate();
-                    }
-                }
-            }
-            
-        }
-
-        internal static void UpdateSentryGlow()
-        {
-            if (Sentries.Length > 0)
-            {
-                foreach (var sentry in Sentries)
-                {
-                    var mypos = Camera.main.transform.position;
-                    var targetpos = sentry.transform.position;
-                    var dist = Vector3.Distance(mypos, targetpos);
-
-                    if (Menu.EnableEsp && Menu.GlowInteractables && Menu.Sentries)
-                    {
-                        if (dist <= Menu.Distance || Menu.InfDistance)
-                        {
-                            var highlighter = sentry.gameObject.GetComponent<Highlighter>() ?? sentry.gameObject.AddComponent<Highlighter>();
-
-                            highlighter.ConstantParams(Menu.InteractableGlow);
-                            highlighter.OccluderOn();
-                            highlighter.SeeThroughOn();
-                            highlighter.ConstantOn();
-                        }
-                        else
-                        {
-                            var highlighter = sentry.gameObject.GetComponent<Highlighter>();
-                        
-                            if(highlighter != null)
-                                highlighter.ConstantOffImmediate();
-                        
-                        }
-                    }
-                    else
-                    {
-                        var highlighter = sentry.gameObject.GetComponent<Highlighter>();
-                    
-                        if(highlighter != null)
-                            highlighter.ConstantOffImmediate();
-                    }
-                }
-            }
-            
-        }
-
-        //Fix Airdrops
-        internal static void UpdateAirdropGlow()
-        {
-            if (Storages.Length > 0)
-            {
-                foreach (var airdrop in Storages)
-                {
-                    if (airdrop.name == "1374")
-                    {
-                        var mypos = Camera.main.transform.position;
-                        var targetpos = airdrop.transform.position;
-                        var dist = Vector3.Distance(mypos, targetpos);
-
-                        if (Menu.EnableEsp && Menu.GlowInteractables && Menu.Airdrop)
-                        {
-                            if (dist <= Menu.Distance || Menu.InfDistance)
-                            {
-                                var highlighter = airdrop.gameObject.GetComponent<Highlighter>() ?? airdrop.gameObject.AddComponent<Highlighter>();
-
-                                highlighter.ConstantParams(Menu.InteractableGlow);
-                                highlighter.OccluderOn();
-                                highlighter.SeeThroughOn();
-                                highlighter.ConstantOn();
-                            }
-                            else
-                            {
-                                var highlighter = airdrop.gameObject.GetComponent<Highlighter>();
-
-                                if (highlighter != null)
-                                    highlighter.ConstantOffImmediate();
-                            }
-                        }
-                        else
-                        {
-                            var highlighter = airdrop.gameObject.GetComponent<Highlighter>();
-                    
-                            if(highlighter != null)
-                                highlighter.ConstantOffImmediate();
-                        }
-                    }
-                
-                }
-            }
-            
-        }
-
-        internal static void UpdateNpcGlow()
-        {
-            if (Npcs.Length > 0)
-            {
-                foreach (var npc in Npcs)
-                {
-                    var mypos = Camera.main.transform.position;
-                    var targetpos = npc.transform.position;
-                    var dist = Vector3.Distance(mypos, targetpos);
-
-                    if (Menu.EnableEsp && Menu.GlowInteractables && Menu.Npc)
-                    {
-                        if (dist <= Menu.Distance || Menu.InfDistance)
-                        {
-                            var highlighter = npc.gameObject.GetComponent<Highlighter>() ?? npc.gameObject.AddComponent<Highlighter>();
-
-                            highlighter.ConstantParams(Menu.InteractableGlow);
-                            highlighter.OccluderOn();
-                            highlighter.SeeThroughOn();
-                            highlighter.ConstantOn();
-                        }
-                        else
-                        {
-                            var highlighter = npc.gameObject.GetComponent<Highlighter>();
-
-                            if (highlighter != null)
-                                highlighter.ConstantOffImmediate();
-                        }
-                    }
-                    else
-                    {
-                        var highlighter = npc.gameObject.GetComponent<Highlighter>();
-                    
-                        if(highlighter != null)
-                            highlighter.ConstantOffImmediate();
-                    }
-                }
-            }
-            
         }
         
-        //------------------Env-------------------------------------------------------------------------------
-
-        
-        
-        //------------------Misc----------------------------------------------------------------------------------
-        
-        internal static void UpdateColors()
+        public IEnumerator UpdatePGlowEsp(int distance)
         {
-            EnemyPlayerGlow = Menu.EnemyPlayerGlow;
-            FriendlyPlayerGlow = Menu.FriendlyPlayerGlow;
-            ZombieGlow = Menu.ZombieGlow;
-            ItemGlow = Menu.ItemGlow;
-            InteractableGlow = Menu.InteractableGlow;
-            VehicleGlow = Menu.VehicleGlow;
-
-            BoxPlayerFriendly = Menu.BoxPlayerFriendly;
-            BoxPlayerEnemy = Menu.BoxPlayerEnemy;
-            BoxZombie = Menu.BoxZombie;
-        }
+            Playerlist = Provider.clients;
+            
+            foreach (var steamPlayer in Playerlist)
+            {
+                if (Vector3.Distance(Main.transform.position, steamPlayer.player.transform.position) <= distance && steamPlayer.player != Player.player)
+                {
+                    var highlighter = steamPlayer.player.gameObject.GetComponent<Highlighter>() ?? steamPlayer.player.gameObject.AddComponent<Highlighter>();
         
-        internal static void UpdateLists()
-        {
-
-                if (Menu.GlowPlayers || Menu.PlayerName || Menu.PlayerWeapon || Menu.PlayerDistance)
-                    Players = Provider.clients.ToArray();
-                if (Menu.GlowZombies || Menu.ZombieName || Menu.ZombieDistance || Menu.ZombieSpecialty)
-                    Zombies = Object.FindObjectsOfType<Zombie>();
-                if (Menu.GlowItems || Menu.ItemName || Menu.ItemDistance)
-                    Items = Object.FindObjectsOfType<InteractableItem>();
-                if (Menu.GlowVehicles || Menu.VehicleName || Menu.VehicleDistance)
-                    Vehicles = Object.FindObjectsOfType<InteractableVehicle>();
-                if (Menu.GlowInteractables && Menu.Animals || Menu.AnimalName || Menu.AnimalDistance)
-                    Animals = Object.FindObjectsOfType<Animal>();
-                if (Menu.GlowInteractables && Menu.Forages || Menu.ForageType || Menu.ForageDistance)
-                    Forages = Object.FindObjectsOfType<InteractableForage>();
-                if (Menu.GlowInteractables && Menu.Storages || Menu.StorageType || Menu.StorageDistance)
-                    Storages = Object.FindObjectsOfType<InteractableStorage>();
-                if (Menu.GlowInteractables && Menu.Bed || Menu.BedDistance)
-                    Beds = Object.FindObjectsOfType<InteractableBed>();
-                if (Menu.GlowInteractables && Menu.Doors || Menu.DoorType || Menu.DoorDistance)
-                    Doors = Object.FindObjectsOfType<InteractableDoor>();
-                if (Menu.GlowInteractables && Menu.Traps || Menu.TrapType || Menu.TrapDistance)
-                    Traps = Object.FindObjectsOfType<InteractableTrap>();
-                if (Menu.GlowInteractables && Menu.Flag || Menu.FlagDistance)
-                    Flags = Object.FindObjectsOfType<InteractableClaim>();
-                if (Menu.GlowInteractables && Menu.Sentries || Menu.SentryState || Menu.SentryWeapon ||
-                    Menu.SentryDistance)
-                    Sentries = Object.FindObjectsOfType<InteractableSentry>();
-                if (Menu.GlowInteractables && Menu.Airdrop || Menu.AirdropDistance)
-                    Airdrops = Object.FindObjectsOfType<Carepackage>();
-                if (Menu.GlowInteractables && Menu.Npc || Menu.NpcName || Menu.NpcWeapon || Menu.NpcDistance)
-                    Npcs = Object.FindObjectsOfType<InteractableObjectNPC>();
+                    var glowcolor = WaveMaker.Friends.IsFriend(steamPlayer.playerID.steamID.m_SteamID) ? InterpColor(FriendlyPlayerColor) : InterpColor(EnemyPlayerColor);
+                    
+                    highlighter.ConstantParams(glowcolor);
+                    highlighter.OccluderOn();
+                    highlighter.SeeThroughOn();
+                    highlighter.ConstantOnImmediate();
+                }
+                else
+                    steamPlayer.player.gameObject.GetComponent<Highlighter>()?.ConstantOffImmediate();
+        
+                yield return null;
+            }
             
         }
 
-        internal static Vector3 GetTargetVector(Transform target, string objName)
+        public IEnumerator UpdateIGlowEsp(int distance, Color glowColor)
         {
-            var componentsInChildren = target.transform.GetComponentsInChildren<Transform>();
-            var result = Vector3.zero;
+            Itemlist.Clear();
+            Itemlist = Object.FindObjectsOfType<InteractableItem>().ToList();
 
-            if (componentsInChildren != null)
+            var filteredList = new List<InteractableItem>();
+            
+            if (ItemFilter)
             {
-                var array = componentsInChildren;
-                foreach (var transform in array)
+                foreach (var item in Itemlist)
                 {
-                    if (transform.name.Trim() == objName)
-                    {
-                        result = transform.position + new Vector3(0f, 0.4f, 0f);
-                        break;
-                    }
+                    if( (FilterClothes && isOfType(1, item)) || (FilterAmmo && isOfType(2, item)) || (FilterGuns && isOfType(3, item)) || (FilterAttach && isOfType(4, item)) || (FilterFood && isOfType(5, item)) || (FilterMed && isOfType(6, item)) || (FilterWeapons && isOfType(7, item)) || (FilterMisc && isOfType(8, item) || (FilterPacks && isOfType(9, item))))
+                        filteredList.Add(item);
+                }
+
+                var inverse = Itemlist.Except(filteredList).ToList();
+                if(inverse.Count > 0)
+                    StartCoroutine(ScrubGlowEsp(inverse));
+            }
+            else
+            {
+                filteredList = Itemlist;
+            }
+            
+            yield return null;
+
+            foreach (var item in filteredList)
+            {
+                if (Vector3.Distance(Main.transform.position, item.transform.position) <= distance)
+                {
+                    var highligter = item.gameObject.GetComponent<Highlighter>() ?? item.gameObject.AddComponent<Highlighter>();
+                    
+                    highligter.ConstantParams(glowColor);
+                    highligter.OccluderOn();
+                    highligter.SeeThroughOn();
+                    highligter.ConstantOnImmediate();
+                }
+                else
+                    item.gameObject.GetComponent<Highlighter>()?.ConstantOffImmediate();
+
+                yield return null;
+            }
+        }
+        
+        public IEnumerator ScrubGlowEsp(List<Zombie> list)
+        {
+            foreach (var obj in list)
+            {
+                obj.GetComponent<Highlighter>()?.ConstantOffImmediate();
+                yield return null;
+            }
+        }
+        
+        public IEnumerator ScrubGlowEsp(List<SteamPlayer> list)
+        {
+            foreach (var obj in list)
+            {
+                obj.player.gameObject.GetComponent<Highlighter>()?.ConstantOffImmediate();
+                yield return null;
+            }
+        }
+        
+        public IEnumerator ScrubGlowEsp(List<InteractableItem> list)
+        {
+            foreach (var obj in list)
+            {
+                obj.GetComponent<Highlighter>()?.ConstantOffImmediate();
+                yield return null;
+            }
+        }
+        
+        public IEnumerator ScrubGlowEsp(List<InteractableVehicle> list)
+        {
+            foreach (var obj in list)
+            {
+                obj.GetComponent<Highlighter>()?.ConstantOffImmediate();
+                yield return null;
+            }
+        }
+        
+        public IEnumerator ScrubGlowEsp(List<Animal> list)
+        {
+            foreach (var obj in list)
+            {
+                obj.GetComponent<Highlighter>()?.ConstantOffImmediate();
+                yield return null;
+            }
+        }
+        
+        public IEnumerator ScrubGlowEsp(List<InteractableStorage> list)
+        {
+            foreach (var obj in list)
+            {
+                obj.GetComponent<Highlighter>()?.ConstantOffImmediate();
+                yield return null;
+            }
+        }
+        
+        public static Color InterpColor(ColorOptions input)
+        {
+            switch (input)
+            {
+                    case ColorOptions.aqua:
+                        return new Color(0, 255, 255, 255);
+                    case ColorOptions.black:
+                        return new Color(0, 0, 0, 255);
+                    case ColorOptions.blue:
+                        return new Color(0, 0, 255, 255);
+                    case ColorOptions.darkblue:
+                        return new Color(0, 0, 160, 255);
+                    case ColorOptions.magenta:
+                        return new Color(255, 0, 255, 255);
+                    case ColorOptions.green:
+                        return new Color(0, 128, 0, 255);
+                    case ColorOptions.lime:
+                        return new Color(0, 255, 0, 255);
+                    case ColorOptions.maroon:
+                        return new Color(128, 0, 0, 255);
+                    case ColorOptions.navy:
+                        return new Color(0, 0, 128, 255);
+                    case ColorOptions.olive:
+                        return new Color(128, 128, 0, 255);
+                    case ColorOptions.purple:
+                        return new Color(128, 0, 128, 255);
+                    case ColorOptions.red:
+                        return new Color(255, 0, 0, 255);
+                    case ColorOptions.silver:
+                        return new Color(192, 192, 192, 255);
+                    case ColorOptions.teal:
+                        return new Color(0, 128, 128, 255);
+                    case ColorOptions.white:
+                        return new Color(255, 255, 255, 255);
+                    case ColorOptions.yellow:
+                        return new Color(255, 255, 0, 255);
+                    default:
+                        goto case ColorOptions.white;
+            }
+        }
+        
+        public static bool isOfType(int type, InteractableItem input)
+        {
+            if (type == 1)
+            {
+                if (input.asset.type == EItemType.HAT || input.asset.type == EItemType.PANTS ||
+                    input.asset.type == EItemType.SHIRT || input.asset.type == EItemType.MASK || input.asset.type == EItemType.VEST ||
+                    input.asset.type == EItemType.GLASSES)
+                {
+                    return true;
                 }
             }
-            return result;
+            else if (type == 2)
+            {
+                if (input.asset.type == EItemType.MAGAZINE || input.asset.type == EItemType.REFILL)
+                {
+                    return true;
+                }
+            }
+            else if (type == 3)
+            {
+                if (input.asset.type == EItemType.GUN)
+                {
+                    return true;
+                }
+            }
+            else if (type == 4)
+            {
+                if (input.asset.type == EItemType.SIGHT || input.asset.type == EItemType.TACTICAL ||
+                    input.asset.type == EItemType.GRIP || input.asset.type == EItemType.BARREL || input.asset.type == EItemType.OPTIC)
+                {
+                    return true;
+                }
+            }
+            else if (type == 5)
+            {
+                if (input.asset.type == EItemType.FOOD || input.asset.type == EItemType.WATER)
+                {
+                    return true;
+                }
+            }
+            else if (type == 6)
+            {
+                if (input.asset.type == EItemType.MEDICAL)
+                    return true;
+            }
+            else if (type == 7)
+            {
+                if (input.asset.type == EItemType.MELEE || input.asset.type == EItemType.THROWABLE ||
+                    input.asset.type == EItemType.DETONATOR || input.asset.type == EItemType.CHARGE ||
+                    input.asset.type == EItemType.TRAP)
+                {
+                    return true;
+                }
+            }
+            else if (type == 9)
+            {
+                if (input.asset.type == EItemType.BACKPACK)
+                    return true;
+            }
+            else if (type == 8)
+                return true;
+
+            return false;
         }
         
-        internal static void DrawBox(Transform target, Vector3 position, Color color)
-        {
-            var  targetPos = GetTargetVector(target, "Skull");
-            var  scrnPt = Camera.main.WorldToScreenPoint(targetPos);
-            scrnPt.y = Screen.height - scrnPt.y;
-            
-            var  dist = Math.Abs(position.y - scrnPt.y);
-            var  hlfDist = dist / 2f;
-            var  xVal = position.x - hlfDist / 2f;
-            var  yVal = position.y - dist;
-            
-            GL.PushMatrix();
-            GL.Begin(1);
-            BoxMaterial.SetPass(0);
-            GL.Color(color);
-            
-            GL.Vertex3(xVal, yVal, 0f);
-            GL.Vertex3(xVal, yVal + dist, 0f);
-            GL.Vertex3(xVal, yVal, 0f);
-            GL.Vertex3(xVal + hlfDist, yVal, 0f);
-            GL.Vertex3(xVal + hlfDist, yVal, 0f);
-            GL.Vertex3(xVal + hlfDist, yVal + dist, 0f);
-            GL.Vertex3(xVal, yVal + dist, 0f);
-            GL.Vertex3(xVal + hlfDist, yVal + dist, 0f);
-            
-            GL.End();
-            GL.PopMatrix();
-        }
-
-        internal static void DrawTracers()
-        {
-            
-        }
-
-        internal static void GenerateDicts()
-        {
-            StorageIds = new Dictionary<int, string>
-            {
-                {367, "Birch Crate"},
-                {366, "Maple Crate"},
-                {368, "Pine Crate"},
-                {328, "Locker"},
-                {1246, "Birch Counter"},
-                {1245, "Maple Counter"},
-                {1247, "Pine Counter"},
-                {1248, "Metal Counter"},
-                {1279, "Birch Wardrobe"},
-                {1278, "Maple Wardrobe"},
-                {1280, "Pine Wardrobe"},
-                {1281, "Metal Wardrobe"},
-                {1206, "Birch Trophy Case"},
-                {1205, "Maple Trophy Case"},
-                {1207, "Pine Trophy Case"},
-                {1221, "Metal Trophy Case"},
-                {1203, "Birch Rifle Rack"},
-                {1202, "Maple Rifle Rack"},
-                {1204, "Pine Rifle Rack"},
-                {1220, "Metal Rifle Rack"},
-                {1283, "Cooler"},
-                {1249, "Fridge"}
-            };
-
-            DoorIds = new Dictionary<int, string>
-            {
-                {282, "Birch Door"},
-                {281, "Maple Door"},
-                {283, "Pine Door"},
-                {378, "Metal Door"},
-                {284, "Jail Door"},
-                {286, "Vault Door"},
-                {1236, "Birch Double Doors"},
-                {1235, "Maple Double Doors"},
-                {1237, "Pine Double Doors"},
-                {1238, "Metal Double Doors"},
-                {1330, "Birch Hatch"},
-                {1331, "Pine Hatch"},
-                {1332, "Metal Hatch"},
-                {1329, "Maple Hatch"}
-            };
-
-        }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
     }
 }

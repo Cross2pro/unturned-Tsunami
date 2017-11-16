@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using SDG.Unturned;
+using Steamworks;
 using TsunamiHack.Tsunami.Util;
 
 namespace TsunamiHack.Tsunami.Types.Lists
@@ -22,13 +23,21 @@ namespace TsunamiHack.Tsunami.Types.Lists
 
         public void RemoveFriend(Friend oldFriend)
         {
-            if (Userlist.Any(friend => friend == oldFriend))
-                Userlist.Remove(oldFriend);
+            var index = Userlist.IndexOf(oldFriend); 
+            
+            if(index != -1)
+                Userlist.RemoveAt(index);
         }
 
         public bool IsFriend(ulong steamid)
         {
-            return Userlist.Any(friend => friend.SteamId == steamid);
+            foreach (var user in Userlist)
+            {
+                if (user.SteamId == steamid)
+                    return true;
+            }
+
+            return false;
         }
 
         public void SaveFriends()

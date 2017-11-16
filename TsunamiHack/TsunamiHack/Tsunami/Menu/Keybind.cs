@@ -13,6 +13,7 @@ namespace TsunamiHack.Tsunami.Menu
         public bool Changing;
         public string Focus;
         public bool KeybindsChanged;
+        public static Texture _cursorTexture;
 
 
         private KeyCode _mainKey;
@@ -117,7 +118,7 @@ namespace TsunamiHack.Tsunami.Menu
             {
                 WaveMaker.MenuOpened = id;
                 PlayerPauseUI.active = true;
-                PlayerUI.window.showCursor = false;
+                PlayerUI.window.showCursor = true;
             }
             
         }
@@ -145,6 +146,19 @@ namespace TsunamiHack.Tsunami.Menu
                 {
                     _windowRect = GUI.Window(2, _windowRect, MenuFunct, "Keybind Menu");
                 }
+            }
+
+            if (WaveMaker.MenuOpened != 0)
+            {
+                if (_cursorTexture == null)
+                    _cursorTexture = Resources.Load("UI/Cursor") as Texture;
+                
+                PlayerUI.window.showCursor = true;
+                var _cursor = new Rect();
+                _cursor.x = Input.mousePosition.x;
+                _cursor.y = Screen.height - Input.mousePosition.y;
+                GUI.depth = 0;
+                GUI.DrawTexture(_cursor, _cursorTexture);
             }
 
         }
