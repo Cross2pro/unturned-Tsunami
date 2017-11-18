@@ -359,29 +359,21 @@ namespace TsunamiHack.Tsunami.Lib
 								targetpoint.y = Camera.main.pixelHeight - targetpoint.y;
 								var centerpoint = new Vector3((float) Camera.main.pixelWidth / 2, (float) Camera.main.pixelHeight / 2);
 
-								Logging.Log($"CENTER POINT: X: {centerpoint.x} Y: {centerpoint.y}"); //840/525
 
-//Logging.Log("E");
 								//Calculate the pixels in specified 
 								var ppd = Camera.main.pixelWidth / Camera.main.fieldOfView;
 								var wafov = ((menu.AimFov * ppd) / 2);
 
-								Logging.Log($"PPD: {ppd}");
-								Logging.Log($"WAFOV: {wafov}");
 
-//Logging.Log("F");
 								//elimnate targets if they are not in the fov
 								var distToXHair = Vector2.Distance(centerpoint, targetpoint);
-								Logging.Log($"Dist to Xhair: {distToXHair}");
 								if (!menu.Aim360)
 									if (distToXHair > wafov) continue;
 
-//Logging.Log("G");
 								//elminate targets if they are further than the current lowest distance;
 								if (distToXHair > currClosest) continue;
 								currClosest = distToXHair;
 
-//Logging.Log("H");
 								target = zombie.transform;
 
 

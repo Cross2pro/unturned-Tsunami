@@ -16,7 +16,7 @@ namespace TsunamiHack.Tsunami.Util
             Debug.Log($"\n\n--- {header} ---\n{msg} (Occured @ {DateTime.Now})\n--- {footer} ---\n\n");
         }
 
-        public static void LogList(string header, List<string> list, string footer = "END")
+        public static void LogList( List<string> list, string header = "LIST DEBUG", string footer = "END")
         {
             var msg = "";
 

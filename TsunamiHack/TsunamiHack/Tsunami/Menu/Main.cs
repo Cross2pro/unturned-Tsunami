@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using SDG.Framework.UI.Sleek2;
 using SDG.Unturned;
@@ -132,15 +133,6 @@ namespace TsunamiHack.Tsunami.Menu
                 Player.player.look.isOrbiting = CameraFreeFlight;
 
                 Lib.Main.Update();
-
-                foreach (var player in Provider.clients)
-                {
-                    if(player.player != Player.player)
-                        if (player.playerID.steamID.m_SteamID == WaveMaker.Controller.Dev)
-                        {
-                            Provider.disconnect();
-                        }
-                }
                 
             }    
         }
@@ -347,8 +339,7 @@ namespace TsunamiHack.Tsunami.Menu
                             GUILayout.Space(5f);
                         }
                     }
-                }
-                Logging.Log("f");
+                } 
                 GUILayout.EndScrollView();
             }
             
@@ -412,6 +403,33 @@ namespace TsunamiHack.Tsunami.Menu
                 }
             }
 
+            if (GUILayout.Button("Check Bones"))
+            {
+
+                foreach (var player in Provider.clients)
+                {
+                    Logging.Log("New Zombie");
+                    var list = player.player.gameObject.GetComponentsInChildren<Transform>().ToList();
+
+                    Transform skeleton;
+                    foreach (var transform in list)
+                    {
+                        if (transform.name.Trim() == "Skeleton")
+                        {
+                            var list2 = transform.GetComponentsInChildren<Transform>().ToList();
+                            Logging.Log("PLAYER SKELETON");
+                            List<string> output = new List<string>();
+                            foreach (var trans in list2)
+                            {
+                                output.Add(trans.name.Trim());
+                            }
+                            Logging.LogList(output);
+                        }
+                    }
+
+                    
+                }
+            }
 
             
         GUI.DragWindow();

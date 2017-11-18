@@ -19,45 +19,10 @@ namespace TsunamiHack.Tsunami.Menu
         public VisualsV2 VisualsLib;
         public VisualsPage CurrentPage;
         public IEnumerator CR_ESP;
-        
-        public enum VisualsPage
-        {
-            Player,
-            Zombie,
-            Item,
-            Vehicle,
-            Animal,
-            Storages,
-            Environment,
-            Filter
-        }
-    
-        public enum ColorOptions
-        {
-            aqua,
-            black,
-            blue,
-            darkblue,
-            magenta,
-            green,
-            lime,
-            maroon,
-            navy,
-            olive,
-            purple,
-            red,
-            silver,
-            teal,
-            white,
-            yellow
-        }
 
         public Rect MenuBar;
         public Rect CenterMenu;
         public Rect SettingsBar;
-
-
-
 
         public bool EnableEsp;
         public bool EnableHacksList;
@@ -214,12 +179,24 @@ namespace TsunamiHack.Tsunami.Menu
 
             //set starting color indexs for colors
             FPlayerColorIndex = 0;
-            EPlayerColorIndex = 15;
-            ZombieColorIndex = 6;
+            EPlayerColorIndex = 9;
+            ZombieColorIndex = 4;
             ItemColorIndex = 2;
-            VehicleColorIndex = 14;
-            AnimalColorIndex = 19;
-            StorageColorIndex = 5;
+            VehicleColorIndex = 11;
+            AnimalColorIndex = 12;
+            StorageColorIndex = 8;
+
+            //Set colors from indicies;
+            FriendlyPlayerColor = (ColorOptions) FPlayerColorIndex;
+            EnemyPlayerColor = (ColorOptions) EPlayerColorIndex;
+            ZombieColor = (ColorOptions) ZombieColorIndex;
+            ItemColor = (ColorOptions) ItemColorIndex;
+            VehicleColor = (ColorOptions) VehicleColorIndex;
+            AnimalColor = (ColorOptions) AnimalColorIndex;
+            StorageColor = (ColorOptions) StorageColorIndex;
+            
+            //Set starting NV
+            Nv = NvType.None;
         }
 
         public void Update()
@@ -305,13 +282,13 @@ namespace TsunamiHack.Tsunami.Menu
                     VehiclePage();
                     break;
                 case VisualsPage.Animal:
-                    AnimalPage(id);
+                    AnimalPage();
                     break;
                 case VisualsPage.Storages:
-                    StoragePage(id);
+                    StoragePage();
                     break;
                 case VisualsPage.Environment:
-                    EnvironmentPage(id);
+                    EnvironmentPage();
                     break;
                 
             }
@@ -384,14 +361,14 @@ namespace TsunamiHack.Tsunami.Menu
             if (GUILayout.Button($" Friendly: {FriendlyPlayerColor.ToString().First().ToString().ToUpper() + FriendlyPlayerColor.ToString().Substring(1)}"))
             {
                 FPlayerColorIndex++;
-                if (FPlayerColorIndex > 16)
+                if (FPlayerColorIndex > 12)
                     FPlayerColorIndex = 0;
                 FriendlyPlayerColor = (ColorOptions) FPlayerColorIndex;
             }
             if (GUILayout.Button($" Enemy: {EnemyPlayerColor.ToString().First().ToString().ToUpper() + EnemyPlayerColor.ToString().Substring(1)}"))
             {
                 EPlayerColorIndex++;
-                if (EPlayerColorIndex > 16)
+                if (EPlayerColorIndex > 12)
                     EPlayerColorIndex = 0;
                 EnemyPlayerColor = (ColorOptions) EPlayerColorIndex;
             }
@@ -443,7 +420,7 @@ namespace TsunamiHack.Tsunami.Menu
             if (GUILayout.Button($" Zombies: {ZombieColor.ToString().First().ToString().ToUpper() + ZombieColor.ToString().Substring(1)}"))
             {
                 ZombieColorIndex++;
-                if (ZombieColorIndex > 19)
+                if (ZombieColorIndex > 12)
                     ZombieColorIndex = 0;
                 ZombieColor = (ColorOptions) ZombieColorIndex;
             }
@@ -491,7 +468,7 @@ namespace TsunamiHack.Tsunami.Menu
             if (GUILayout.Button($" Items: {ItemColor.ToString().First().ToString().ToUpper() + ItemColor.ToString().Substring(1)}"))
             {
                 ItemColorIndex++;
-                if (ItemColorIndex > 19)
+                if (ItemColorIndex > 12)
                     ItemColorIndex = 0;
                 ItemColor = (ColorOptions) ItemColorIndex;
             }
@@ -535,9 +512,9 @@ namespace TsunamiHack.Tsunami.Menu
             GUILayout.Space(3f);
 
             GUILayout.BeginVertical();
-            GUILayout.Space(2f);   
-            GUILayout.Label(" Glow\n --------------------------------------");
-            VehicleGlow = GUILayout.Toggle(VehicleGlow, " Glow ESP");
+//            GUILayout.Space(2f);   
+//            GUILayout.Label(" Glow\n --------------------------------------");
+//            VehicleGlow = GUILayout.Toggle(VehicleGlow, " Glow ESP");
 
             GUILayout.Space(2f);
             GUILayout.Label(" Labels\n --------------------------------------");
@@ -559,7 +536,7 @@ namespace TsunamiHack.Tsunami.Menu
             if (GUILayout.Button($" Vehicles: {VehicleColor.ToString().First().ToString().ToUpper() + VehicleColor.ToString().Substring(1)}"))
             {
                 VehicleColorIndex++;
-                if (VehicleColorIndex > 19)
+                if (VehicleColorIndex > 12)
                     VehicleColorIndex = 0;
                 VehicleColor = (ColorOptions) VehicleColorIndex;
             }
@@ -570,7 +547,7 @@ namespace TsunamiHack.Tsunami.Menu
             GUILayout.EndHorizontal();
         }
 
-        private void AnimalPage(int id)
+        private void AnimalPage()
         {
             GUILayout.BeginHorizontal();
             GUILayout.Space(3f);
@@ -594,7 +571,7 @@ namespace TsunamiHack.Tsunami.Menu
             if (GUILayout.Button($" Animals: {AnimalColor.ToString().First().ToString().ToUpper() + AnimalColor.ToString().Substring(1)}"))
             {
                 AnimalColorIndex++;
-                if (AnimalColorIndex > 19)
+                if (AnimalColorIndex > 12)
                     AnimalColorIndex = 0;
                 AnimalColor = (ColorOptions) AnimalColorIndex;
             }
@@ -605,7 +582,7 @@ namespace TsunamiHack.Tsunami.Menu
             GUILayout.EndHorizontal();
         }
 
-        private void StoragePage(int id)
+        private void StoragePage()
         {
             GUILayout.BeginHorizontal();
             GUILayout.Space(3f);
@@ -634,7 +611,7 @@ namespace TsunamiHack.Tsunami.Menu
             if (GUILayout.Button($" Storages: {StorageColor.ToString().First().ToString().ToUpper() + StorageColor.ToString().Substring(1)}"))
             {
                 StorageColorIndex++;
-                if (StorageColorIndex > 19)
+                if (StorageColorIndex > 12)
                     StorageColorIndex = 0;
                 StorageColor = (ColorOptions) StorageColorIndex;
             }
@@ -645,7 +622,7 @@ namespace TsunamiHack.Tsunami.Menu
             GUILayout.EndHorizontal();
         }
 
-        private void EnvironmentPage(int id)
+        private void EnvironmentPage()
         {
             GUILayout.Space(2f);
             GUILayout.Label("Weather\n--------------------------------------");
@@ -727,7 +704,7 @@ namespace TsunamiHack.Tsunami.Menu
             {
                 Player.player.life.askView(60);
             }
-            if (GUILayout.Button("Get High (5 mins"))
+            if (GUILayout.Button("Get High (5 mins)"))
             {
                 Player.player.life.askView(255);
             }

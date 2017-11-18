@@ -54,14 +54,9 @@ namespace TsunamiHack.Tsunami.Manager
 
         public static ulong LocalSteamId;
 
-        public static readonly string Version = "1.4";
-        public static readonly string GameVersion = "3.21.2.1";
+        public const string Version = "2.0";
+        public const string GameVersion = "3.21.3.1";
 
-        private string messagetoanyone =
-                "If you are reading this, youve obviously had to use some modified tool to open it. If you are really that desperate " +
-                "to get my source code, just fucking ask me im going to open source it anyway. Dont use this to make money, however, or" +
-                "we will be having some legal proceedings.";
-        
         private GameObject _obj;
         private GameObject _blockerObj;
 
@@ -100,13 +95,9 @@ namespace TsunamiHack.Tsunami.Manager
 
             if (Controller.Version != Version)
             {
-                Logging.Log("Setting Disabled Type");
                 Blocker.DisabledType = Blocker.Type.OutOfDate;
-                Logging.Log("Enabling Blocker");
                 Blocker.BlockerEnabled = true;
-                Logging.Log("setting hackdisabed to true");
                 HackDisabled = true;
-                Logging.Log("Setting controller disabled to true");
                 Controller.Disabled = true;
             }
             else if (GameVersion != Provider.APP_VERSION)
