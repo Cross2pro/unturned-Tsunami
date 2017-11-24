@@ -6,8 +6,6 @@ namespace TsunamiHack.Tsunami.Types
     
     internal class Popup
     {
-        //TODO: Add moving rects
-        //TODO: Add limited duration popups
 
 
         public Rect PopupRect;

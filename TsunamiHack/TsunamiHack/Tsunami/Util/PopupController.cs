@@ -9,7 +9,6 @@ namespace TsunamiHack.Tsunami.Util
     internal class PopupController : MonoBehaviour
     {        
     
-        //TODO: Add a way to deallocate unused windows using "Inuse" Popup var
         
         private  List<Popup> _menuList;
         private  List<Popup> _dynamicList;
@@ -22,7 +21,6 @@ namespace TsunamiHack.Tsunami.Util
             _menuList = new List<Popup>();
             _dynamicList = new List<Popup>();
             
-            //TODO: add default popups
 
             var msg =$"Use {WaveMaker.Keybinds.GetBind("main")} to open the main menu ";
             var rect = MenuTools.GetRectAtLoc(new Vector2(200, 50), MenuTools.Horizontal.Right, MenuTools.Vertical.Bottom, true, 5f);
@@ -34,11 +32,7 @@ namespace TsunamiHack.Tsunami.Util
         }
 
         private void Update()
-        {
-            //TODO: simplify dynamic popup checking
-            
-            //TODO: add dynamic popup moving logic 
-            
+        {          
             if (WaveMaker.FirstTime && Provider.isConnected)
             {
                 GetPopup(WaveMaker.FtPopupId).PopupOpened = true;

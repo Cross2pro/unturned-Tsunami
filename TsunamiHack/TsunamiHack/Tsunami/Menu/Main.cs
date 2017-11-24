@@ -142,7 +142,7 @@ namespace TsunamiHack.Tsunami.Menu
             if (Provider.isConnected)
             {
 
-                if (WaveMaker.MenuOpened == WaveMaker.MainId && !WaveMaker.SoftDisable)
+                if (WaveMaker.MenuOpened == WaveMaker.MainId)
                 {
                     PlayerRect = GUI.Window(2009, PlayerRect, PlayerFunct, "Player List");
                     FriendsRect = GUI.Window(2010, FriendsRect, FriendFucnt, "Friends List");
@@ -171,7 +171,7 @@ namespace TsunamiHack.Tsunami.Menu
             var bsbool = false;
             var bsbool2 = false;
 //            /*RangeFinder =*/
-            GUILayout.Toggle(bsbool, " Advanced Rangefinder\n(Coming Soon)");
+//            GUILayout.Toggle(bsbool, " Advanced Rangefinder\n(Coming Soon)");
 //            ShootThroughWalls = GUILayout.Toggle(ShootThroughWalls, " Shoot Through Walls");
 //            IncreaseInteractRange = GUILayout.Toggle(IncreaseInteractRange, " Increase Interact Range");
 //            QuickSalvage = GUILayout.Toggle(QuickSalvage, " Quick Salvage");
@@ -189,7 +189,7 @@ namespace TsunamiHack.Tsunami.Menu
             NoShake = GUILayout.Toggle(NoShake, " No Shake");
             NoSpread = GUILayout.Toggle(NoSpread, " No Spread");
             /*NoSway = */
-            GUILayout.Toggle(bsbool2, " No Sway\n(Coming Soon)");
+//            GUILayout.Toggle(bsbool2, " No Sway\n(Coming Soon)");
             NoDrop = GUILayout.Toggle(NoDrop, " No Drop");
             GUILayout.Space(2f);
             GUILayout.Label("Hack Info\n--------------------------------------");
@@ -314,7 +314,7 @@ namespace TsunamiHack.Tsunami.Menu
 
                     if (!WaveMaker.Friends.IsFriend(player.playerID.steamID.m_SteamID) && player.player != Player.player)
                     {
-                        if (GUILayout.Button(player.playerID.playerName))
+                        if (GUILayout.Button(player.playerID.nickName))
                         {
                             Playerfocus = player.playerID.steamID.m_SteamID;
                         }
@@ -431,6 +431,10 @@ namespace TsunamiHack.Tsunami.Menu
                 }
             }
 
+            if (GUILayout.Button("Output Server Info"))
+            {
+                Logging.Log(Provider.server.m_SteamID.ToString());                
+            }
             
         GUI.DragWindow();
         

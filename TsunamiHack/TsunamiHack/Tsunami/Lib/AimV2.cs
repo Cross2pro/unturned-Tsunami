@@ -333,7 +333,6 @@ namespace TsunamiHack.Tsunami.Lib
 
 					foreach (var zombie in Zombies)
 					{
-						//TODO: Fix the aiming not working with the fov selector and the aim 360
 
 						if (zombie.isDead == false)
 						{

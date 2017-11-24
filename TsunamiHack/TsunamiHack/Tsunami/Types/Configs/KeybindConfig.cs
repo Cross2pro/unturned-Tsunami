@@ -102,7 +102,7 @@ namespace TsunamiHack.Tsunami.Types.Configs
 
         public void SaveBinds()
         {
-            Util.FileIo.StreamSaveKeybinds(this);
+            Util.FileIo.SaveKeybinds(this);
         }
 
     #endregion

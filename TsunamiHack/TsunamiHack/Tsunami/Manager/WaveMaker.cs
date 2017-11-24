@@ -4,6 +4,7 @@ using TsunamiHack.Tsunami.Types.Lists;
 using TsunamiHack.Tsunami.Types.Configs;
 using TsunamiHack.Tsunami.Util;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace TsunamiHack.Tsunami.Manager
 {
@@ -50,66 +51,49 @@ namespace TsunamiHack.Tsunami.Manager
 
         public static readonly int BannedId = 11;
         public static readonly int FtPopupId = 12;
-        public static readonly int InfoPopupId = 13;
-
-        public static ulong LocalSteamId;
 
         public const string Version = "2.0";
         public const string GameVersion = "3.21.3.1";
+        public const string OmittedServer = "90111985339994117";
 
         private GameObject _obj;
         private GameObject _blockerObj;
 
         public void Start()
-        {                     
-            
-            if (ShowEula)
-            {
-                
-                WebAccess.DownloadEula(out eula);
-                Blocker.BlockerEnabled = true;
-                Blocker.DisabledType = Blocker.Type.EulaAgree;
-            }
-            
-            //Checking if player is dev
-            LocalSteamId = Provider.client.m_SteamID;
-            
-            if (LocalSteamId == Controller.Dev || LocalSteamId == ulong.Parse("76561198308025096"))
+        {
+            //Check if they are of any particular rank
+            if (Provider.client.m_SteamID == Controller.Dev)
             {
                 isDev = true;
                 isBeta = true;
                 isPremium = true;
             }
-
-            if (Prem.Contain(LocalSteamId.ToString()))
+            
+            if (Prem.Contain(Provider.client.m_SteamID.ToString()))
                 isPremium = true;
-  
-            if (Beta.Contain(LocalSteamId.ToString()))
+            
+            if (Beta.Contain(Provider.client.m_SteamID.ToString()))
                 isBeta = true;
-                       
-            //Checking if first time
-            if (FirstTime)
+            
+            //Show the EULA
+            if (ShowEula)
             {
-                PopupController.EnableFirstTime = true;
+                WebAccess.DownloadEula(out eula);
+                Blocker.BlockerEnabled = true;
+                Blocker.DisabledType = Blocker.Type.EulaAgree;
             }
-
+            
+            //Set blocker
             if (Controller.Version != Version)
             {
-                Blocker.DisabledType = Blocker.Type.OutOfDate;
-                Blocker.BlockerEnabled = true;
-                HackDisabled = true;
-                Controller.Disabled = true;
+                Blocker.SetDisabled(Blocker.Type.OutOfDate);
             }
-            else if (GameVersion != Provider.APP_VERSION)
+            else if (Provider.APP_VERSION != GameVersion)
             {
-                Blocker.DisabledType = Blocker.Type.GameOutOfDate;
-                Blocker.BlockerEnabled = true;
-                HackDisabled = true;
-                Controller.Disabled = true;
+                Blocker.SetDisabled(Blocker.Type.GameOutOfDate);
             }
-            else if (Ban.Contains(LocalSteamId.ToString()))
+            else if (Ban.Contains(Provider.client.m_SteamID.ToString()))
             {
-                Logging.Log("YOU HAVE BEEN BANNED, CONTACT TIDAL ON STEAM TO DISPUTE WWW.STEAMCOMMUNITY.COM/ID/TIDALL", "FATAL ERROR, BANNED");
                 Controller.BanOverride("YOU HAVE BEEN GLOBALLY BANNED FROM USING TSUNAMI HACK, VERIFY GAME FILES TO UNINSTALL");
                 Blocker.DisabledType = Blocker.Type.Disabled;
             }
@@ -117,15 +101,8 @@ namespace TsunamiHack.Tsunami.Manager
             {
                 Blocker.DisabledType = Blocker.Type.Disabled;
             }
-            
-            //Whitelist me from all disabling
-//            if (PlayerTools.GetSteamPlayer(Player.player).playerID.steamID.m_SteamID == Controller.Dev)
-//            {
-//                HackDisabled = false;
-//                Controller.Disabled = false;
-//                Blocker.BlockerEnabled = false;
-//            }
-                 
+
+           
         }
 
         public void OnUpdate()
@@ -138,6 +115,21 @@ namespace TsunamiHack.Tsunami.Manager
                 Object.DontDestroyOnLoad(Blocker);
             }
 
+            if (Provider.isConnected && Provider.server.m_SteamID.ToString() == OmittedServer && !isDev && !isPremium)
+            {
+                if(HackDisabled != true && !Blocker.DontShowBlocker)
+                    Blocker.SetDisabled(Blocker.Type.OmittedServer);
+            }
+            
+            if (Provider.isConnected && Provider.server.m_SteamID.ToString() != OmittedServer && Blocker.DontShowBlocker)
+            {
+                Blocker.DisabledType = Blocker.Type.Disabled;
+                Blocker.BlockerEnabled = false;
+                HackDisabled = false;
+                Controller.Disabled = false;
+                Blocker.DontShowBlocker = false;
+            }
+            
             if (Provider.isConnected && !HackDisabled)
             {
                 if (_obj == null)
@@ -158,7 +150,6 @@ namespace TsunamiHack.Tsunami.Manager
                     Object.DontDestroyOnLoad(MenuAim);
                     Object.DontDestroyOnLoad(Enabler);
 
-                    //TODO: add other hack objects
                 }
             }
 
@@ -183,6 +174,7 @@ namespace TsunamiHack.Tsunami.Manager
 
                 }
             }
+
             
         }
     }

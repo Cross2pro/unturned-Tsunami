@@ -1291,7 +1291,12 @@ namespace TsunamiHack.Tsunami.Menu
                     if (scrnpt.z >= 0)
                     {
                         scrnpt.y = Screen.height - scrnpt.y;
-                        var color = WaveMaker.Friends.IsFriend(player.playerID.steamID.m_SteamID) ? InterpColor(FriendlyPlayerColor) : InterpColor(EnemyPlayerColor);
+                        var isfriend = WaveMaker.Friends.IsFriend(player.playerID.steamID.m_SteamID);
+                        var color =  isfriend ? InterpColor(FriendlyPlayerColor) : InterpColor(EnemyPlayerColor);
+
+                        if (PlayerChamesque && isVisible(player.player.transform))
+                            color = InterpColor(VisibleEnemyPlayerColor);
+                        
                         Draw2DBox(player.player.transform, scrnpt, color);
                     }
                 }
@@ -1547,21 +1552,17 @@ namespace TsunamiHack.Tsunami.Menu
             };
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        public bool isHidden(Transform input)
+        {
+            RaycastHit hit;
+            Physics.Raycast(Main.transform.position, Main.transform.forward, out hit, float.PositiveInfinity, RayMasks.DAMAGE_CLIENT);
+            return !hit.transform.CompareTag("Enemy");
+        }
+        
+        public bool isVisible(Transform pos)
+        {
+            return Physics.Linecast(Main.transform.position, pos.position, RayMasks.DAMAGE_CLIENT);
+        }
+       
     }
 }

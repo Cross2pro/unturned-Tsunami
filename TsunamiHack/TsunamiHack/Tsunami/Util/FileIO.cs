@@ -90,7 +90,7 @@ namespace TsunamiHack.Tsunami.Util
             SaveKeybinds(keybinds);// --------------------// --------------------
         }
 
-        private static void SaveKeybinds(KeybindConfig config)
+        public static void SaveKeybinds(KeybindConfig config)
         {
             var json = JsonConvert.SerializeObject(config);
 
@@ -223,7 +223,6 @@ namespace TsunamiHack.Tsunami.Util
                                         
                     using (var writer = new StreamWriter(KeybindPath))
                     {
-                        //TODO: Add all the other keybinds
                         var keybinds = new KeybindConfig();
                         keybinds.AddBind("main", KeyCode.F1);
                         keybinds.AddBind("visuals", KeyCode.F2);
@@ -242,7 +241,6 @@ namespace TsunamiHack.Tsunami.Util
 
                     using (var writer = new StreamWriter(SettingsPath))
                     {
-                        //TODO: add all other settings
                         var settings = new Settings();
 
                         settings.ColorList.Add("enemyplayer", new TsuColor(new Color(255,45,45)));

@@ -93,7 +93,6 @@ namespace TsunamiHack.Tsunami.Menu
                     else if (pressed == _aimbotToggleKey)
                         WaveMaker.MenuAim.EnableAimbot = !WaveMaker.MenuAim.EnableAimbot;
                         
-                    //TODO: add other menus
 
                     if (pressed == KeyCode.Escape && WaveMaker.MenuOpened != 0)
                     {

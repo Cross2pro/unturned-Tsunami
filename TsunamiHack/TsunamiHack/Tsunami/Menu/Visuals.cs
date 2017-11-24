@@ -16,9 +16,7 @@ namespace TsunamiHack.Tsunami.Menu
     internal partial class Visuals : MonoBehaviour
     {
 
-        public VisualsV2 VisualsLib;
         public VisualsPage CurrentPage;
-        public IEnumerator CR_ESP;
 
         public Rect MenuBar;
         public Rect CenterMenu;
@@ -34,6 +32,7 @@ namespace TsunamiHack.Tsunami.Menu
         public bool PlayerGlow;
         public bool PlayerSkeleton;
         public bool PlayerTracers;
+        public bool PlayerChamesque;
 
         public bool PlayerName;
         public bool PlayerWeapon;
@@ -42,8 +41,10 @@ namespace TsunamiHack.Tsunami.Menu
 
         public ColorOptions FriendlyPlayerColor;
         public ColorOptions EnemyPlayerColor;
+        public ColorOptions VisibleEnemyPlayerColor;
         public int FPlayerColorIndex;
         public int EPlayerColorIndex;
+        public int VEPlayerColorIndex;
         public bool PlayerOverrideDistance;
         public int PlayerEspDistance;
         public bool PlayerInfDistance;
@@ -180,15 +181,17 @@ namespace TsunamiHack.Tsunami.Menu
             //set starting color indexs for colors
             FPlayerColorIndex = 0;
             EPlayerColorIndex = 9;
-            ZombieColorIndex = 4;
+            VEPlayerColorIndex = 4;
+            ZombieColorIndex = 12;
             ItemColorIndex = 2;
             VehicleColorIndex = 11;
-            AnimalColorIndex = 12;
+            AnimalColorIndex = 6;
             StorageColorIndex = 8;
 
             //Set colors from indicies;
             FriendlyPlayerColor = (ColorOptions) FPlayerColorIndex;
             EnemyPlayerColor = (ColorOptions) EPlayerColorIndex;
+            VisibleEnemyPlayerColor = (ColorOptions) VEPlayerColorIndex;
             ZombieColor = (ColorOptions) ZombieColorIndex;
             ItemColor = (ColorOptions) ItemColorIndex;
             VehicleColor = (ColorOptions) VehicleColorIndex;
@@ -352,6 +355,7 @@ namespace TsunamiHack.Tsunami.Menu
             PlayerSkeleton = GUILayout.Toggle(PlayerSkeleton, " Skeleton ESP");
             PlayerTracers = GUILayout.Toggle(PlayerTracers, " Tracers (Beta Only)");
             AdminWarn = GUILayout.Toggle(AdminWarn, " Show Admin Warning");
+            PlayerChamesque = GUILayout.Toggle(PlayerChamesque, " Box Chamesque");
             GUILayout.EndVertical();
 
             GUILayout.BeginVertical();
@@ -373,6 +377,8 @@ namespace TsunamiHack.Tsunami.Menu
                 EnemyPlayerColor = (ColorOptions) EPlayerColorIndex;
             }
 
+            
+
             GUILayout.Label(" Override Dist\n --------------------------------------");
             GUILayout.Space(2f);
             PlayerOverrideDistance = GUILayout.Toggle(PlayerOverrideDistance, " Enable Override");
@@ -380,6 +386,28 @@ namespace TsunamiHack.Tsunami.Menu
             PlayerInfDistance = GUILayout.Toggle(PlayerInfDistance, " Infinite Player Dist");
             GUILayout.Label($" Player Esp Distance: {PlayerEspDistance}");
             PlayerEspDistance = (int) GUILayout.HorizontalSlider(PlayerEspDistance, 50f, 10000f);
+            
+            
+            if (PlayerChamesque)
+            {
+                GUILayout.Label(" Chamesque Colors\n --------------------------------------");
+                GUILayout.Space(2f);
+                if (GUILayout.Button($" Visible: {VisibleEnemyPlayerColor.ToString().First().ToString().ToUpper() + VisibleEnemyPlayerColor.ToString().Substring(1)}"))
+                {
+                    VEPlayerColorIndex++;
+                    if (VEPlayerColorIndex > 12)
+                        VEPlayerColorIndex = 0;
+                    VisibleEnemyPlayerColor = (ColorOptions) VEPlayerColorIndex;
+                }
+                if (GUILayout.Button($" Hidden: {EnemyPlayerColor.ToString().First().ToString().ToUpper() + EnemyPlayerColor.ToString().Substring(1)}"))
+                {
+                    EPlayerColorIndex++;
+                    if (EPlayerColorIndex > 12)
+                        EPlayerColorIndex = 0;
+                    EnemyPlayerColor = (ColorOptions) EPlayerColorIndex;
+                }
+            }
+            
             GUILayout.EndVertical();
 
 
@@ -645,6 +673,9 @@ namespace TsunamiHack.Tsunami.Menu
                 
                 LevelLighting.seaLevel = LevelLighting.seaLevel == 0f ? Altitude : 0f;
             }
+            
+            GUILayout.Label("Time: " + LightingManager.time);
+            LightingManager.time = (uint)Math.Round(GUILayout.HorizontalSlider(LightingManager.time, 0, 3600));
             
             GUILayout.Space(2f);
             GUILayout.Label("--------------------------------------");

@@ -1,4 +1,5 @@
-﻿using Pathfinding;
+﻿using System.Runtime.InteropServices;
+using Pathfinding;
 using SDG.Unturned;
 using TsunamiHack.Tsunami.Manager;
 using TsunamiHack.Tsunami.Types;
@@ -8,7 +9,7 @@ namespace TsunamiHack.Tsunami.Util
 {
     internal class Blocker : MonoBehaviour
     {
-        internal enum Type { Banned, Disabled, OutOfDate, GameOutOfDate, EulaAgree}
+        internal enum Type { Banned, Disabled, OutOfDate, GameOutOfDate, EulaAgree, OmittedServer}
         
         private HackController _ctrl;
 
@@ -18,6 +19,7 @@ namespace TsunamiHack.Tsunami.Util
         internal static Type DisabledType;
         internal static Vector2 scrollpos;
         internal static bool EulaAgreed;
+        internal static bool DontShowBlocker;
         
         private void Start()
         {
@@ -29,8 +31,14 @@ namespace TsunamiHack.Tsunami.Util
             if (_ctrl.Disabled)
                 BlockerEnabled = true;
             
-            
-            
+        }
+
+        public static void SetDisabled(Type input)
+        {
+            DisabledType = input;
+            BlockerEnabled = true;
+            WaveMaker.HackDisabled = true;
+            WaveMaker.Controller.Disabled = true;
         }
 
         private void OnGUI()
@@ -42,7 +50,7 @@ namespace TsunamiHack.Tsunami.Util
                 goto End;
             }
             
-            if (BlockerEnabled)
+            if (BlockerEnabled && !DontShowBlocker)
             {
                 switch (DisabledType)
                 {
@@ -58,6 +66,10 @@ namespace TsunamiHack.Tsunami.Util
                             break;
                         case Type.GameOutOfDate:
                             WindowRect = GUI.Window(WaveMaker.BannedId, WindowRect, GameOutOfDateMenuFunct, "YOU ARE USING AN OUT OF DATE HACK");
+                            break;
+                        case Type.OmittedServer:
+                            WindowRect = GUI.Window(WaveMaker.BannedId, WindowRect, OmittedServerFunct,
+                                "YOU HAVE JOINED AN OMITTED SERVER");
                             break;
                 }
             }
@@ -179,6 +191,32 @@ namespace TsunamiHack.Tsunami.Util
                     PlayerUI.window.showCursor = false;
                 }
                 
+            }
+        }
+
+        private void OmittedServerFunct(int id)
+        {
+            PlayerPauseUI.active = true;
+            PlayerUI.window.showCursor = true;
+            
+            GUILayout.Space(50f);
+            GUILayout.Label("The server you have joined has requested that the use of Tsunami Hack");
+            GUILayout.Label("On their server is disabled.");
+            GUILayout.Space(8f);
+            GUILayout.Label("You can return to the game and play without using Tsunami, or get premium");
+            GUILayout.Label("To bypass this block, and any other server who wish to be omitted.");
+            GUILayout.Label("Sorry for any inconvenience this may cause!");
+            GUILayout.Space(8f);
+            if (GUILayout.Button("Get Premium through discord"))
+            {
+                System.Diagnostics.Process.Start("https://discord.gg/QhakXeK");
+            }
+            GUILayout.Space(8f);
+            if (GUILayout.Button("Return to game"))
+            {
+                PlayerPauseUI.active = false;
+                PlayerUI.window.showCursor = false;
+                DontShowBlocker = true;
             }
         }
     }
