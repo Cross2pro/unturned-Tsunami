@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace TsunamiHack.Tsunami.Menu
 {
-    internal class Keybind : MonoBehaviour, IMenuParent
+    internal class Keybind : MonoBehaviour
     {
         public bool MenuOpened { get; private set; }
         private Rect _windowRect;

@@ -433,7 +433,7 @@ namespace TsunamiHack.Tsunami.Menu
 
             if (GUILayout.Button("Output Server Info"))
             {
-                Logging.Log(Provider.server.m_SteamID.ToString());                
+                Logging.Log(Provider.server.GetAccountID().m_AccountID.ToString());
             }
             
         GUI.DragWindow();

@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using SDG.Unturned;
-using TsunamiHack.Tsunami.Lib;
 using TsunamiHack.Tsunami.Manager;
 using TsunamiHack.Tsunami.Types;
 using TsunamiHack.Tsunami.Util;
 using UnityEngine;
-using UnityEngine.UI;
 // ReSharper disable InconsistentNaming
 
 namespace TsunamiHack.Tsunami.Menu
@@ -339,7 +335,7 @@ namespace TsunamiHack.Tsunami.Menu
             GUILayout.Space(2f);
             GUILayout.Label(" Box\n --------------------------------------");
             Player2DBoxes = GUILayout.Toggle(Player2DBoxes, " 2D Boxes");
-            Player3DBoxes = GUILayout.Toggle(Player3DBoxes, " 3D Boxes");
+//            Player3DBoxes = GUILayout.Toggle(Player3DBoxes, " 3D Boxes");
             
             GUILayout.Label(" Glow\n --------------------------------------");
             PlayerGlow = GUILayout.Toggle(PlayerGlow, " Glow ESP");
@@ -355,7 +351,7 @@ namespace TsunamiHack.Tsunami.Menu
             PlayerSkeleton = GUILayout.Toggle(PlayerSkeleton, " Skeleton ESP");
             PlayerTracers = GUILayout.Toggle(PlayerTracers, " Tracers (Beta Only)");
             AdminWarn = GUILayout.Toggle(AdminWarn, " Show Admin Warning");
-            PlayerChamesque = GUILayout.Toggle(PlayerChamesque, " Box Chamesque");
+//            PlayerChamesque = GUILayout.Toggle(PlayerChamesque, " Box Chamesque");
             GUILayout.EndVertical();
 
             GUILayout.BeginVertical();

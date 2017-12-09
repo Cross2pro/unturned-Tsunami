@@ -35,6 +35,7 @@ namespace TsunamiHack.Tsunami.Menu
         public List<Zombie> ZombieSkeletonlist;
         public List<Zombie> ZombieBoxlist;
         public List<Zombie> ZombieLabellist;
+        public List<Zombie> ZombieTracerlist;
         public List<SteamPlayer> Playerlist;
         public List<InteractableItem> Itemlist;
         public List<InteractableItem> ItemLabelList;
@@ -53,13 +54,14 @@ namespace TsunamiHack.Tsunami.Menu
         
         public void OnStart()
         {
-            Main = Main;
+            Main = Camera.main;
             UpLastUpdate = DateTime.Now;
 
             Zombielist = new List<Zombie>();
             ZombieSkeletonlist = new List<Zombie>();
             ZombieBoxlist = new List<Zombie>();
             ZombieLabellist = new List<Zombie>();
+            ZombieTracerlist = new List<Zombie>();
             Playerlist = new List<SteamPlayer>();
             Itemlist = new List<InteractableItem>();
             ItemLabelList = new List<InteractableItem>();
@@ -84,6 +86,7 @@ namespace TsunamiHack.Tsunami.Menu
             StartCoroutine(UpdateZombieLabelList());
             StartCoroutine(UpdateItemLabelList());
             StartCoroutine(UpdateStorageLabelList());
+            StartCoroutine(UpdateZombieTracerList());
         }
         
         public void OnUpdate()
@@ -108,7 +111,7 @@ namespace TsunamiHack.Tsunami.Menu
                 CheckSkeleton();
                 CheckBoxes();
                 CheckLabels();
-                
+                CheckTracers();    
             }
         }
 
@@ -1293,9 +1296,6 @@ namespace TsunamiHack.Tsunami.Menu
                         scrnpt.y = Screen.height - scrnpt.y;
                         var isfriend = WaveMaker.Friends.IsFriend(player.playerID.steamID.m_SteamID);
                         var color =  isfriend ? InterpColor(FriendlyPlayerColor) : InterpColor(EnemyPlayerColor);
-
-                        if (PlayerChamesque && isVisible(player.player.transform))
-                            color = InterpColor(VisibleEnemyPlayerColor);
                         
                         Draw2DBox(player.player.transform, scrnpt, color);
                     }
@@ -1334,8 +1334,10 @@ namespace TsunamiHack.Tsunami.Menu
                     var scrnpt = Main.WorldToScreenPoint(zombie.transform.position);
                     if (scrnpt.z >= 0f)
                     {
+                        var color = InterpColor(ZombieColor);
+                    
                         scrnpt.y = Screen.height - scrnpt.y;
-                        Draw2DBox(zombie.transform, scrnpt, InterpColor(ZombieColor));
+                        Draw2DBox(zombie.transform, scrnpt, color);
                     }
                 }
             }
@@ -1375,6 +1377,10 @@ namespace TsunamiHack.Tsunami.Menu
 
         public void Draw3DBox(Transform target, Vector3 position, Color color)
         {
+
+//            var collider = target.GetComponent<BoxCollider>();
+//            collider.bounds.
+
 //            var skullpos = GetTargetVector(target, "Skull");
 //            var dist = Math.Abs(position.y - skullpos.y);
 //            var fright = new Vector3(position.x += dist, position.y += dist, position.z += dist );
@@ -1419,6 +1425,80 @@ namespace TsunamiHack.Tsunami.Menu
                 }
             }
             return result;
+        }
+        
+        #endregion
+        
+        #region tracers
+
+        public void CheckTracers()
+        {
+            if (PlayerTracers)
+            {
+                UpdatePlayerTracers();
+            }
+            if (ZombieTracers)
+            {
+                UpdateZombieTracers();
+            }
+        }
+
+        public IEnumerator UpdateZombieTracerList()
+        {
+            while (!WaveMaker.HackDisabled)
+            {
+                if (ZombieTracers && EnableEsp)
+                {
+                    var updatelist = new List<Zombie>();
+                    foreach (var region in ZombieManager.regions)
+                    {
+                        foreach (var zombie in region.zombies)
+                        {
+                            updatelist.Add(zombie);
+                        }
+                    }
+
+                    ZombieTracerlist = updatelist;
+                    yield return new WaitForSeconds(5f);    
+                }
+
+                yield return null;
+            }
+        }
+        
+        public void UpdateZombieTracers()
+        {
+//            foreach (var zombie in ZombieTracerlist)
+//            {
+//                var dist = ZombieOverrideDistance ? ZombieInfDistance ? 10000 : ZombieEspDistance : EspDistance;
+//
+//                if (Vector3.Distance(zombie.transform.position, Main.transform.position) <= dist || InfiniteDistance)
+//                {
+//                    if (!zombie.isDead)
+//                    {
+//                        var lr = zombie.gameObject.GetComponent<LineRenderer>() ??
+//                                 zombie.gameObject.AddComponent<LineRenderer>();
+//
+//                        lr.sortingLayerName = "OnTop";
+//                        lr.sortingOrder = 5;
+//
+//                        lr.numPositions = 3;
+//                        lr.SetPosition(0, zombie.transform.position);
+//                        lr.SetPosition(1, Player.player.transform.position);
+//
+//                        lr.startWidth = .5f;
+//                        lr.endWidth = .5f;
+//
+//                        lr.useWorldSpace = true;
+//                        lr.material = DrawingMaterial;
+//                    }
+//                }
+//            }
+        }
+        
+        public void UpdatePlayerTracers()
+        {
+            
         }
         
         #endregion
@@ -1552,17 +1632,7 @@ namespace TsunamiHack.Tsunami.Menu
             };
         }
 
-        public bool isHidden(Transform input)
-        {
-            RaycastHit hit;
-            Physics.Raycast(Main.transform.position, Main.transform.forward, out hit, float.PositiveInfinity, RayMasks.DAMAGE_CLIENT);
-            return !hit.transform.CompareTag("Enemy");
-        }
-        
-        public bool isVisible(Transform pos)
-        {
-            return Physics.Linecast(Main.transform.position, pos.position, RayMasks.DAMAGE_CLIENT);
-        }
-       
+        public bool isVisible(Transform target) => !Physics.Linecast(Main.transform.position, target.transform.position);
+
     }
 }

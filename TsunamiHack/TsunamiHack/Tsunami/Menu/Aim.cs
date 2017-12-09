@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace TsunamiHack.Tsunami.Menu
 {
-     internal class Aim : MonoBehaviour, IMenuParent
+     internal class Aim : MonoBehaviour
     {
                 
         internal Rect BotRect;

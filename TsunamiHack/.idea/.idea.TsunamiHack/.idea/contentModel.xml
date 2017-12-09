@@ -14,9 +14,6 @@
           <e p="AssemblyInfo.cs" t="Include" />
         </e>
         <e p="Tsunami" t="Include">
-          <e p="Identifier.cs" t="Include" />
-          <e p="ILibParent.cs" t="Include" />
-          <e p="IMenuParent.cs" t="Include" />
           <e p="Lib" t="Include">
             <e p="AimV2.cs" t="Include" />
             <e p="AimV3.cs" t="Include" />

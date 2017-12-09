@@ -4,7 +4,6 @@ using TsunamiHack.Tsunami.Types.Lists;
 using TsunamiHack.Tsunami.Types.Configs;
 using TsunamiHack.Tsunami.Util;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace TsunamiHack.Tsunami.Manager
 {
@@ -31,7 +30,6 @@ namespace TsunamiHack.Tsunami.Manager
 
         public static bool FirstTime;
         public static bool HackDisabled;
-        public static bool SoftDisable;
 
         public static int MenuOpened;
 
@@ -52,9 +50,9 @@ namespace TsunamiHack.Tsunami.Manager
         public static readonly int BannedId = 11;
         public static readonly int FtPopupId = 12;
 
-        public const string Version = "2.0";
-        public const string GameVersion = "3.21.3.1";
-        public const string OmittedServer = "90111985339994117";
+        public const string Version         = "2.0.1";
+        public const string GameVersion     = "3.22.0.0";
+        public const string OmittedServer   = "3298740231";
 
         private GameObject _obj;
         private GameObject _blockerObj;
@@ -115,7 +113,7 @@ namespace TsunamiHack.Tsunami.Manager
                 Object.DontDestroyOnLoad(Blocker);
             }
 
-            if (Provider.isConnected && Provider.server.m_SteamID.ToString() == OmittedServer && !isDev && !isPremium)
+            if (Provider.isConnected && Provider.server.GetAccountID().m_AccountID.ToString() == OmittedServer && !isDev && !isPremium)
             {
                 if(HackDisabled != true && !Blocker.DontShowBlocker)
                     Blocker.SetDisabled(Blocker.Type.OmittedServer);

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Net;
+﻿using System.Net;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 using TsunamiHack.Tsunami.Types;
@@ -16,69 +15,28 @@ namespace TsunamiHack.Tsunami.Util
         private const string ControllerInfoUrl = "https://pastebin.com/raw/f8NyLp37"; //"https://pastebin.com/raw/v3VCgGCE";
         private const string EulaUrl = "https://pastebin.com/raw/c0FD93MP";
 
-        public enum ListType { Premium, Ban, Beta}
-
-        public static bool Validator(object sender, X509Certificate certificate, X509Chain chain,
-            SslPolicyErrors errors)
-        {
-            return true;
-        }
-
-        [Obsolete]
-        public static void DownloadList(out InfoList list, ListType type)
-        {
-            // ReSharper disable once RedundantAssignment
-            list = null;
-
-            var web = new WebClient();
-            var raw = "";
-
-            switch (type)
-            {
-                case ListType.Premium:
-                    raw = web.DownloadString(PremlistUrl);
-                    break;
-                case ListType.Ban:
-                    raw = web.DownloadString(BanListUrl);
-                    break;
-                case ListType.Beta:
-                    raw = web.DownloadString(BetaListUrl);
-                    break;
-            }
-
-            list = JsonConvert.DeserializeObject<InfoList>(raw);
-        }
+        private static bool Validator(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors errors) => true;
                 
         public static void DownloadAll(out PremiumList premiumList, out BanList banList, out BetaList betaList)
         {
             ServicePointManager.ServerCertificateValidationCallback = Validator;
             var web = new WebClient();
-            var json = "";
-
-            json = web.DownloadString(PremlistUrl);
-            premiumList = JsonConvert.DeserializeObject<PremiumList>(json);
-
-            json = web.DownloadString(BanListUrl);
-            banList = JsonConvert.DeserializeObject<BanList>(json);
-
-            json = web.DownloadString(BetaListUrl);
-            betaList = JsonConvert.DeserializeObject<BetaList>(json);
-
+            
+            premiumList = JsonConvert.DeserializeObject<PremiumList>(web.DownloadString(PremlistUrl));
+            banList = JsonConvert.DeserializeObject<BanList>(web.DownloadString(BanListUrl));
+            betaList = JsonConvert.DeserializeObject<BetaList>(web.DownloadString(BetaListUrl));
         }
 
         public static void DownloadInfo(out HackController ctrl)
         {
             ServicePointManager.ServerCertificateValidationCallback = Validator;
-            var web = new WebClient();
-            var raw = web.DownloadString(ControllerInfoUrl);
-            ctrl = JsonConvert.DeserializeObject<HackController>(raw);
+            ctrl = JsonConvert.DeserializeObject<HackController>(new WebClient().DownloadString(ControllerInfoUrl));
         }
 
         public static void DownloadEula(out string eula)
         {
             ServicePointManager.ServerCertificateValidationCallback = Validator;
-            var web = new WebClient();
-            eula = web.DownloadString(EulaUrl);
+            eula = new WebClient().DownloadString(EulaUrl);
         }
     }
 }
