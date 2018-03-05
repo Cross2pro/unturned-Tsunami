@@ -77,3 +77,13 @@ If youve got a question about any of the classes, just let me know on discord or
 www.steamcommunity.com/id/tidall
 https://discord.gg/QhakXeK
 ... Ill try to help!
+
+
+  _____                 _           _                       _ 
+ / ____|               | |         (_)                     | |
+| (___   ___ ___   ___ | |_ _   _   _ ___    __ _  ___   __| |
+ \___ \ / __/ _ \ / _ \| __| | | | | / __|  / _` |/ _ \ / _` |
+ ____) | (_| (_) | (_) | |_| |_| | | \__ \ | (_| | (_) | (_| |
+|_____/ \___\___/ \___/ \__|\__, | |_|___/  \__, |\___/ \__,_|
+                             __/ |           __/ |            
+                            |___/           |___/         
